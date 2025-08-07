@@ -1,0 +1,571 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /*facilita o layout responsivo*/
+  font-family: "Roboto", arial;
+  scroll-behavior: smooth;
+  /*rolagem suave*/
+  
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #000000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #7d28d9;
+    border-radius: 70px;
+}
+}
+
+body {
+  color: #f0f0f0;
+  font-family: 'Roboto', arial;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #090909;
+  border-bottom: 2px solid #222;
+  padding: 1rem 5rem;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.header-container {
+  display: flex;
+  gap: 10px;
+}
+
+.header-container h1 {
+  font-weight: lighter;
+  font-size: 25px;
+  align-content: center;
+}
+
+.logo {
+  height: 100px;
+  box-shadow: 8px 10px 10px #000000;
+  border-radius: 3px;
+}
+
+ul {
+  display: flex;
+  gap: 35px;
+  list-style: none;
+}
+
+nav {
+  display: flex;
+  justify-content: end;
+  flex-direction: row;
+}
+
+nav a,
+span {
+  color: #cccccc;
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+
+.atual {
+  color: #b084f8;
+}
+
+nav a:hover {
+  color: #b084f8;
+}
+
+/* Fim da nav/header */
+
+/* section hero */
+.title {
+  font-size: 2.2rem;
+}
+
+.section-hero {
+  display: flex;
+  gap: 1.5rem;
+  padding: 2rem 5rem 0 5rem;
+  background-color: #0f0f0f;
+  border-bottom: solid 2px #222;
+  flex-wrap: wrap;
+}
+
+.container-hero {
+  flex: 1;
+  max-width: 600px;
+}
+
+.highlight1 {
+  font-size: 2.2rem;
+  color: #b084f8;
+}
+
+.highlight {
+  font-size: 1rem;
+  color: #b084f8;
+  margin-left: 8px;
+}
+
+.sub-titulo {
+  font-size: 1rem;
+  color: #ccc;
+  margin-top: 1rem;
+  padding-right: 4px;
+}
+
+p {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  color: #fffffe;
+}
+
+.btn {
+  display: flex;
+  width: 57%;
+  background-color: #7256c8;
+  color: #fffffe;
+  border: 1px solid #ccc;
+  font-size: 25px;
+  border-radius: 28px;
+  text-decoration: none;
+  justify-content: center;
+}
+
+.btn:hover {
+  background-color: #6d28d9;
+}
+
+.hero-image {
+  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.hero-image img {
+  align-content: center;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 8px 10px 10px #000000;
+}
+
+/* Frase bíblica */
+.verse {
+  text-align: center;
+  font-style: italic;
+  margin: 1rem auto;
+  color: #cccccc;
+  font-size: 1rem;
+}
+
+.verse-bible {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* Alinha conteúdo no centro */
+  font-style: italic;
+  color: #bbb;
+  font-size: 1rem;
+  margin: 3rem 0 10px 0;
+}
+
+/* Fim da section hero */
+
+/* Info Cards */
+.section-info {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 5rem;
+  padding-bottom: 6rem;
+  background-color: #16161a;
+  border-bottom: solid 2px #222;
+  flex-wrap: wrap;
+}
+
+.title-info {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 2.2rem;
+  margin-bottom: 4rem;
+}
+
+.container-cards {
+  display: flex;
+  gap: 2rem;
+}
+
+.card {
+  background-color: #1f1f1f;
+  padding: 2rem;
+  border-radius: 40px;
+  box-shadow: 8px 10px 10px #000000;
+}
+
+b {
+  color: #b084f8;
+}
+
+.card p {
+  font-size: 1.2rem;
+}
+
+.card h2 {
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* Fim da section info */
+
+
+/* section statistic */
+
+.section-statistic {
+  display: flex;
+  gap: 1.5rem;
+  padding: 2rem 5rem 0 5rem;
+  background-color: #0f0f0f;
+  border-bottom: solid 2px #222;
+  flex-wrap: wrap;
+}
+
+.container-statistic {
+  flex: 1;
+  max-width: 700px;
+}
+
+.statistic-text {
+  background-color: #222;
+  box-shadow: 8px 10px 10px #000000;
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+.statistic-text h2 {
+  font-size: 1.5rem;
+}
+
+.statistic-text p {
+  font-size: 1.1rem;
+}
+
+canvas {
+  background-color: #222;
+  padding: 1rem;
+  max-width: 520px;
+  max-height: 384px;
+  border-radius: 20px;
+  box-shadow: 8px 10px 10px #000000;
+}
+
+.kpis {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 163px;
+  max-height: 384px;
+}
+
+.kpi-box {
+  background-color: #222;
+  border: solid 1px #b084f8;
+  box-shadow: 8px 10px 10px #000000;
+  padding: 1rem;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.kpi-box span {
+  font-size: 1rem;
+}
+
+.kpi-box select {
+  background-color: #7256c8;
+  color: white;
+  border: black;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.kpi-box select:hover {
+  background-color: #6d28d9;
+}
+
+.kpi-media {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin: 0;
+  height: 53px;
+}
+
+.tempo {
+  color: #cccccc;
+  text-align: center;
+  font-size: 0.7rem;
+  margin: 0;
+}
+
+/* Fim da section statistic */
+
+
+/* Footer */
+
+footer {
+  display: flex;
+  background-color: #000000;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.social {
+  margin-top: 1rem;
+  display: flex;
+  gap: 5rem;
+  text-align: center;
+}
+
+.container-social>ul {
+  margin-bottom: 15px;
+  justify-content: center;
+  font-weight: bolder;
+}
+
+.container-social>p {
+  font-size: 1.2rem;
+}
+
+.container-social ul:first-of-type a {
+  color: #6d28d9;
+  text-decoration: none;
+  font-size: large;
+}
+
+.container-social ul>a:hover {
+  color: #b084f8;
+  text-decoration: underline;
+}
+
+.container-social ul:nth-of-type(2) a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: large;
+}
+
+.container-social ul:nth-of-type(2) a:hover {
+  color: #b084f8;
+  text-decoration: underline;
+}
+
+.author {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Fim do Footer */
+
+/* Inicio do Login */
+
+.login {
+  background-color: #090909;
+  border-bottom: solid 2px #cccc;
+  border-top: solid 2px #cccc;
+  min-height: 500px;
+  align-content: center;
+}
+
+.login .container {
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  max-width: 80%;
+}
+
+
+.card-deLogin {
+  width: 50%;
+  height: 400px;
+  background-color: #000000;
+  border-radius: 28px;
+  border: 1px solid #7256c8;
+  box-shadow: 12px 10px #000000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+.card-deLogin h2 {
+  background-color: #7d28d9;
+  color: #000000;
+  width: 65%;
+  text-align: center;
+  border-radius: 28px;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  border: 1px solid #cccc;
+}
+
+.formulario {
+  display: flex;
+  height: 90%;
+  width: 80%;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.formulario span {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.formulario input {
+  padding: 0.8rem;
+  border: 2px solid #7d28d9;
+  text-align: center;
+  border-radius: 28px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 5px 0;
+}
+
+.botao {
+  cursor: pointer;
+  font-family: "Barlow", sans-serif;
+  border-radius: 28px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: black;
+  background-color: #7d28d9;
+  border: 1px solid #cccc;
+  width: 120px;
+  height: 30px;
+}
+
+.botao:hover {
+  background-color: #b084f8;
+}
+
+.login-in {
+  text-decoration: none;
+  color: #7d28d9;
+  align-self: end;
+  text-align: end;
+}
+
+.login-in:hover {
+  text-decoration: underline;
+  color: #cccc;
+}
+
+.loading-div {
+  width: 50px;
+  display: none;
+}
+
+.login-cadastro {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.loading-div img {
+  height: 50px;
+  width: 50px;
+}
+
+#div_erros_login {
+  display: none;
+}
+
+/* alertas error */
+.alerta_erro {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card_erro {
+  display: none;
+  background-color: #000000;
+  color: #cccccc;
+  width: 230px;
+  position: fixed;
+  border-radius: 4px;
+  border: #7d28d9 3px solid;
+  padding: 10px;
+  margin-right: 10%;
+}
+
+.card_erro #mensagem_erro {
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.formulario .tipo_campo {
+  font-size: 20px;
+  font-weight: 600 !important;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+}
+
+.loading-div {
+  width: 50px;
+  margin: auto;
+  display: none;
+}
+
+.loading-div img {
+  height: 50px;
+  width: 50px;
+}
+
+/* Fim do Login */
+
+/* Inicio do cadastro */
+
+.card-cadastro {
+  height: 100%;
+}
+
+
+.cadastrar {
+  margin-top: 2rem;
+  align-self: center;
+  width: 300px;
+  height: 35px;
+}
+
+.ctn-cadastro {
+  margin: 3rem;
+}

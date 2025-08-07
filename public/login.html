@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Roadmap Cibersegurança</title>
+
+    <script src="./js/sessao.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="icon" href="/assets/icon/Logan.png">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html"><img class="logo" src="/assets/icon/Logan.png"
+                        alt="Logo Roadmap Cibersegurança" /></a>
+                <h1 class="titulo">ROADMAP<br>CIBERSEGURANÇA</h1>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="login.html">Roadmap</a></li>
+                    <li><a href="login.html">Entretenimento</a></li>
+                    <li><a href="login.html">Insights</a></li>
+                    <li><a class="atual" href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="login">
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card-deLogin">
+                <h2>Login</h2>
+
+                <div class="formulario">
+                    <div class="campo">
+                        <span>E-mail ou Apelido:</span>
+                        <input class="ipt" id="email_input" type="email" placeholder="Login">
+                    </div>
+                    <div class="campo">
+                        <span>Senha:</span>
+                        <input id="senha_input" type="password" placeholder="******">
+
+                    </div>
+
+                    <div class="login-cadastro">
+                        <button class="botao" onclick="entrar()">Entrar</button>
+
+                        <a href="cadastro.html" class="login-in">
+                            <span>Nenhuma conta? </span> <smal>Criar conta agora.</smal>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="div_aguardar" class="loading-div">
+                    <img src="/assets/log/aguarde-pink.gif" id="loading-gif">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social">
+            <div class="container-social">
+                <ul>
+                    <a href="https://www.linkedin.com/in/LucasAmorim-lcxAmorim/">Linkedin</a>
+                    <a href="https://github.com/LPAmorim">GitHub</a>
+                    <a href="https://open.spotify.com/playlist/6quxUsvyvcCh60BZAWldWb?pi=4KZGO39iTuyqn">Spotify</a>
+                </ul>
+                <ul class="autoria">
+                    <a href="index.html">Home</a>
+                    <a href="login.html">Roadmap</a>
+                    <a href="login.html">Entretenimento</a>
+                    <a href="login.html">Insights</a>
+                    <a href="login.html">Login</a>
+                </ul>
+                <p>&copy; 2025 LPAmorim. Desenvolvido por Lucas Pereira Amorim Santos. &#10013;</p>
+            </div>
+
+            <div class="author">
+                <a href="https://sptech.school/"><img src="/assets/icon/Logan-SPTech.png" alt="Logan-SPTech"></a>
+                <small>V1.0.0</small>
+
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
+
+<script>
+    function entrar() {
+        aguardar();
+
+        var emailORApelidoVar = email_input.value;
+        var senhaVar = senha_input.value;
+
+        if (emailORApelidoVar == "" || senhaVar == "") {
+            cardErro.style.display = "block"
+            mensagem_erro.innerHTML = "Preencha todos os campos!";
+            finalizarAguardar();
+            return false;
+        }
+        else {
+            setInterval(sumirMensagem, 5000)
+        }
+
+        console.log("FORM LOGIN: ", emailORApelidoVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                loginServer: emailORApelidoVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log("usuario logado:", json);
+                    console.log(JSON.stringify(json));
+
+                    //salvando dados
+                    sessionStorage.ID_user = json.id
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.APELIDO_USUARIO = json.apelido;
+
+                    setTimeout(function () {
+                        window.location = "./roadmap/roadmap.html";
+                    }, 1000);
+
+                });
+
+            } else {
+
+
+                resposta.text().then(texto => {
+                    console.log("Erro ao tentar realizar o login!", texto);
+                    mensagem_erro.innerHTML = texto;
+                    cardErro.style.display = "block";
+                    finalizarAguardar();
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log("Erro na requisição:", erro);
+            mensagem_erro.innerHTML = "Erro ao conectar com o servidor.";
+            cardErro.style.display = "block";
+            finalizarAguardar();
+        })
+
+        return false;
+    }
+
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+
+</script>
