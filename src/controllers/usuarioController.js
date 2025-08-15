@@ -23,11 +23,10 @@ async function cadastrar(req, res) {
     }
 
     // Cadastrando Usuario no banco
-    const resultado = await usuarioModel.cadastrar(nome, email, passwordHash);
+    const resultado = await usuarioModel.cadastrar(nome, email, senhaHash);
     
     if (resultado) {
       res.status(201).json(resultado);
-      
     } else {
       res.status(500).send("Erro ao cadastrar o usuário.");
     }
@@ -38,42 +37,36 @@ async function cadastrar(req, res) {
   }
 }
 
-function autenticar(req, res) {
-  var login = req.body.loginServer;
-  var senha = req.body.senhaServer;
+async function autenticar(req, res) {
+  try {
+    const {loginEmail, loginSenha} = req.body
+    
+    // validação
+    if (!loginEmail || !loginSenha) {
+      return res.status(400).send("Erro ao fazer login! Preencha os campos.")
+    }
+    
+    //pegando dados do banco
+    const verificarLogin = await usuarioModel.verificarLogin(loginEmail, loginSenha);
+    
+    if (!verificarLogin) {
+      return res.status(404).send("Login não encontrado! Realize o cadastro ou insira novamente seu login.")
+    }
 
-  if (!login) {
-    res.status(400).send("Seu login está undefined!");
-  } else if (!senha) {
-    res.status(400).send("Sua senha está indefinida!");
-  } else {
-    usuarioModel.autenticar(login, senha)
-      .then((resultado) => {
-        console.log(`\nResultados encontrados: ${resultado.length}`);
-        console.log(`Resultados: ${JSON.stringify(resultado)}`);
+    // Bollean de hash (comparação)
+    const validacaoHash = await hashPwdUser.comparePassaword(loginSenha, verificarLogin.senhaHash);
 
-        if (resultado.length === 1) {
-          const user = resultado[0];
+    if (!validacaoHash) {
+      return res.status(400).send("Senha incorreta!")
+    }
 
-          return res.json({
-            id: user.id,
-            email: user.email,
-            nome: user.nome,
-            senha: user.senha,
-            apelido: user.apelido,
-          });
-          
-        } else if (resultado.length === 0) {
-          res.status(403).send("Login ou senha inválido(s)");
-        } else {
-          res.status(403).send("Mais de um usuário com o mesmo login!");
-        }
-      })
-      .catch((erro) => {
-        console.log(erro);
-        console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-      });
+    console.log(`Resultados: `, JSON.stringify(verificarLogin));
+
+    return res.json(verificarLogin);
+  }
+  catch (erro) {
+    console.error("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage || erro);
+    res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
   }
 }
 

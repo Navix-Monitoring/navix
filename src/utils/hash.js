@@ -1,16 +1,16 @@
 const bcrypt = require('bcrypt');
 
-async function hashPassword(password) {
+async function hashPassword(senha) {
     const saltRounds = 10;
-    const myPlaintextPassword = password;
+    const myPlaintextPassword = senha;
 
     console.log("Fazendo Criptografia");
     return await bcrypt.hash(myPlaintextPassword, saltRounds)
 }
 
-async function comparePassaword (password, hashedPassword) {
-    // pega a senha ditada no login e hash que foi armazenado no banco de dados
-    return await bcrypt.compare(password, hashedPassword);
+async function comparePassaword (loginSenha, senhaHash) {
+    // pega a senha ditada no login e hash da senha no banco
+    return await bcrypt.compare(loginSenha, senhaHash);
 }
 
 module.exports = {
