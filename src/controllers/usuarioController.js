@@ -1,4 +1,42 @@
 var usuarioModel = require("../models/usuarioModel");
+var hashPwdUser = require("../utils/hash")
+
+async function cadastrar(req, res) {
+  try {
+    const { nome, email, senha } = req.body;
+
+    // Validação
+    if (!nome || !email || !senha) {
+      return res.status(400).send("Preencha todos os campos corretamente.");
+    }
+
+    // criptografando a senha
+    const passwordHash = await hashPwdUser.hashPassword(senha);
+  
+    // Verificação de duplicidade
+    const usuarios = await usuarioModel.verificarEmail(email);
+
+    const emailJaExiste = usuarios.some(user => user.email === email);
+
+    if (emailJaExiste) {
+      return res.status(409).send("Email já cadastrado.");
+    }
+
+    // Cadastrando Usuario no banco
+    const resultado = await usuarioModel.cadastrar(nome, email, passwordHash);
+    
+    if (resultado) {
+      res.status(201).json(resultado);
+      
+    } else {
+      res.status(500).send("Erro ao cadastrar o usuário.");
+    }
+  }
+  catch (erro) {
+    console.error("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage || erro);
+    res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
+  }
+}
 
 function autenticar(req, res) {
   var login = req.body.loginServer;
@@ -34,61 +72,6 @@ function autenticar(req, res) {
       .catch((erro) => {
         console.log(erro);
         console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-      });
-  }
-}
-
-
-function cadastrar(req, res) {
-  // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-  var nome = req.body.nomeServer;
-  var email = req.body.emailServer;
-  var apelido = req.body.apelidoServer;
-  var senha = req.body.senhaServer;
-
-  // Faça as validações dos valores | da pra simplificar
-  if (nome == undefined) {
-    res.status(400).send("Seu nome está undefined!");
-  } else if (apelido == undefined) {
-    res.status(400).send("Seu apelido está undefined!");
-  } else if (email == undefined) {
-    res.status(400).send("Seu email está undefined!");
-  } else if (senha == undefined) {
-    res.status(400).send("Sua senha está undefined!");
-  } else {
-
-    usuarioModel.verificarEmailOuApelidoExistente(email, apelido)
-      .then(usuarios => {
-        let mensagem = "";
-
-          for (i = 0; i < usuarios.length; i++) {
-            const user = usuarios[i];
-
-            if (user.email === email && !mensagem.includes('Email já Cadastrado')) {
-              mensagem += "Email já cadastrado. ";
-            }
-
-            if (user.apelido === apelido && !mensagem.includes("Apelido já cadastrado")) {
-              mensagem += "Apelido já cadastrado. ";
-            }
-          }
-          
-          if (mensagem !== "") {
-            return res.status(409).send(mensagem);
-          }
-
-        return usuarioModel.cadastrar(nome, apelido, email, senha);
-      })
-      .then(resultado => { // e o res
-        if (resultado) {
-          res.status(201).json(resultado);
-        } else {
-          res.status(500).send("Erro ao cadastrar o usuário.");
-        }
-      })
-      .catch(erro => {
-        console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
         res.status(500).json(erro.sqlMessage);
       });
   }

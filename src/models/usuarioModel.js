@@ -36,16 +36,18 @@ function cadastrar(nome, apelido, email, senha) {
     return database.executar(instrucaoSql);
 }
 
-function verificarEmailOuApelidoExistente(email, apelido) {
-    var instrucaoSql = `
-        SELECT id, nome, apelido, email, senha FROM users WHERE email = '${email}' AND apelido = '${apelido}';
+function verificarEmail(email) {
+    const instrucaoSql = `
+        SELECT email 
+        FROM users 
+        WHERE email = ?;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+
+    return database.executar(instrucaoSql, [email]);
 }
 
 module.exports = {
     autenticar,
     cadastrar,
-    verificarEmailOuApelidoExistente
+    verificarEmail
 };
