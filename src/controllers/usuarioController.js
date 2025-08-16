@@ -11,7 +11,7 @@ async function cadastrar(req, res) {
     }
 
     // criptografando a senha
-    const passwordHash = await hashPwdUser.hashPassword(senha);
+    const senhaHash = await hashPwdUser.hashPassword(senha);
   
     // Verificação de duplicidade
     const usuarios = await usuarioModel.verificarEmail(email);
@@ -67,6 +67,26 @@ async function autenticar(req, res) {
   catch (erro) {
     console.error("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage || erro);
     res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
+  }
+}
+
+async function atualizar(req, res) {
+  try {
+    const email = sessionStorage.EMAIL_USUARIO;
+
+    
+  } catch (error) {
+    
+  }
+}
+
+async function deletar(req, res) {
+  try {
+    const email = sessionStorage.EMAIL_USUARIO;
+
+    
+  } catch (error) {
+    
   }
 }
 
