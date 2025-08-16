@@ -6,6 +6,10 @@
     border-bottom: 2px solid #00000080;
 }
 
+.footer{
+    border-top: 2px solid #00000080;
+}
+
 .cabecalho{
     color: #002B50;
 }
