@@ -13,3 +13,11 @@
 .cabecalho{
     color: #002B50;
 }
+
+.contato li{
+    padding: 5px;
+}
+
+.redes-sociais li{
+    padding: 10px;
+}
