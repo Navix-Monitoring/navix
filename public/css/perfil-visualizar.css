@@ -10,15 +10,15 @@ body {
     background-color: white;
 }
 
-/* Barra superior */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 40px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+.header{
+    border-bottom: 2px solid #00000080;
 }
+
+.cabecalho{
+    color: #002B50;
+}
+
 
 header img.logo {
     width: 50px;
@@ -39,6 +39,7 @@ header .perfil-icone {
     border-radius: 50%;
     background-color: #0d2b4d;
 }
+
 
 /* Card de atualização */
 .card {
