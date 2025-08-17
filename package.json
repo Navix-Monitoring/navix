@@ -1,7 +1,7 @@
 {
-  "name": "projeto-roadmap_ciberseguranca",
+  "name": "navix-navegacao_tecnologica",
   "version": "1.0.0",
-  "description": "Versão expandida do projeto web-data-viz, com foco em desenvolvimento FullStack e o tema cibersegurança.",
+  "description": "Versão expandida do projeto web-data-viz, com foco em desenvolvimento FullStack e monitoramento de hardware.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -13,25 +13,46 @@
       "name": "Lucas Pereira Amorim Santos",
       "email": "lucas.santos058@sptech.school",
       "url": "https://github.com/LPAmorim"
+    },
+    {
+      "name": "Gustavo Muniz",
+      "email": "gustavo.muniz@sptech.school",
+      "url": "https://github.com/gustamuniz7"
+    },
+    {
+      "name": "Lucas Rocha",
+      "email": "lucas.rocha@sptech.school",
+      "url": "https://github.com/Lucas-nrocha"
+    },
+    {
+      "name": "Gabriela",
+      "email": "gabriela@sptech.school",
+      "url": "https://github.com/gabrielavmxx"
+    },
+    {
+      "name": "Nicolas Javed",
+      "email": "nicolas.javed@sptech.school",
+      "url": "https://github.com/NicolasBJaved"
     }
   ],
   "license": "MIT",
   "keywords": [
-    "Kali-Linux",
-    "ciberseguranca",
-    "roadmap",
-    "iniciantes",
-    "seguranca-da-informacao",
+    "AWS",
+    "monitoramento",
+    "hardware",
+    "java",
     "educacao-tecnologica",
-    "aprendizado",
-    "roteiro",
+    "api",
     "conteudo-tecnico",
     "dashboard",
     "web-data-viz",
     "nodejs",
     "express",
     "mysql",
-    "chartjs"
+    "chartjs",
+    "python",
+    "rest",
+    "crud"
   ],
   "dependencies": {
     "cors": "^2.8.5",
