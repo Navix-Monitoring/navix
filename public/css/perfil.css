@@ -39,7 +39,7 @@ header .perfil-icone {
 }
 
 /* Card de atualização */
-.card {
+/* .card {
     background-color: #E1E7EC;
     width: 350px;
     margin: 80px auto;
@@ -47,8 +47,8 @@ header .perfil-icone {
     border-radius: 6px;
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
     text-align: center;
-}
-
+} */
+/* 
 .card h2 {
     color: #002B50;
     font-size: 20px;
@@ -75,16 +75,16 @@ header .perfil-icone {
 }
 
 /* Campos de entrada */
-.card input {
+/* .card input {
     width: 100%;
     padding: 8px;
     margin: 10px 0;
     border-radius: 3px;
     border: 1px solid #ccc;
-}
+} */
 
 /* Botão */
-.card button {
+/* .card button {
     width: 100%;
     padding: 10px;
     background-color: #002B50;
@@ -93,11 +93,11 @@ header .perfil-icone {
     border-radius: 3px;
     cursor: pointer;
     font-weight: bold;
-}
+} */ 
 
-.card button:hover {
+/* .card button:hover {
     background-color: #002B50;
-}
+} */
 .footer{
     border-top: 2px solid #00000080;
 }
