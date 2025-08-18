@@ -24,21 +24,34 @@
                 </div>
             </div>
         </div>
-    </header> 
+    </header>    
 
-    <!-- Card de atualização -->
-    <div class="card">
-        <h2>Perfil</h2>
-        <div class="foto-perfil">📷</div>
-        
-        <input type="text" placeholder="Nome">
-        <input type="email" placeholder="Email">
-        
-        <div class="botao">
-            <button class="buttonAtt">Atualizar Perfil</button>
-            <button class="buttonDel">Deletar Usuario</button>
-        </div>
-    </div>
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="bg-[#E1E7EC] p-6 rounded-lg shadow-xl text-center w-[350px]">
+      <h2 class="text-[#002B50] text-lg font-semibold mb-4">Atualizar perfil</h2>
+      
+      <div class="bg-[#002B50] rounded-full w-20 h-20 flex justify-center items-center mx-auto text-white text-2xl">
+        📷
+      </div>
+      
+      <p class="text-[#002B50] mt-2 text-sm cursor-pointer">Alterar foto de perfil</p>
+      
+      <input class="w-full p-2 mt-4 rounded-md border" type="text" placeholder="Nome">
+      <input class="w-full p-2 mt-3 rounded-md border" type="email" placeholder="Email">
+      
+      
+      <button class="w-full p-2 mt-4 bg-[#002B50] text-white rounded-md hover:bg-[#001C35]">
+        Atualizar Perfil
+      </button>
+
+      <button class="w-full p-2 mt-4 bg-red-600 text-white rounded-md hover:bg-[#001C35]">
+        Deletar Usuário
+      </button>
+  </div>
+
+</div>
+
+
         <footer class="footer flex content-center justify-center" style="height: 253px;">
         <div style="width: 90%;" class="flex items-center justify-between">
             <div class="flex flex-col items-center" style="width: 20%;">
