@@ -4,12 +4,9 @@ var hashPwdUser = require("../utils/hash")
 async function cadastrar(req, res) {
   try {
     const { 
-      output_tipoCadastro,
-      output_nome,
-      output_sobrenome,
+      output_razaoSocial,
       output_email,
       output_senha,
-      output_razaoSocial,
       output_cnpj
     } = req.body;
 
@@ -17,12 +14,8 @@ async function cadastrar(req, res) {
     if (!output_email || !output_senha) {
       return res.status(400).send("Preencha E-mail e Senha.");
     }
-
-    if (output_tipoCadastro === "usuario" && (!output_nome || !output_sobrenome)) {
-      return res.status(400).send("Preencha o Nome e Sobrenome.")
-    }
     
-    if (output_tipoCadastro === "empresa" && (!output_razaoSocial || !output_cnpj)) {
+    if (!output_razaoSocial || !output_cnpj) {
       return res.status(400).send("Preencha CNPJ e Razão Social.")
     }
 
@@ -30,20 +23,15 @@ async function cadastrar(req, res) {
     const senhaHash = await hashPwdUser.hashPassword(output_senha);
 
     // Verificação de duplicidade
-    const usuarios = await usuarioModel.verificarEmail(output_email);
+    const usuarios = await usuarioModel.verificarEmail_CNPJ(output_email, output_cnpj);
 
     if (usuarios.some(user => user.output_email === output_email)) {
       return res.status(409).send("Email já cadastrado.");
     }
 
-    let resultado;
-    if (output_tipoCadastro == "usuario") {
-      resultado = await usuarioModel.cadastrar(output_nome, output_sobrenome, output_email, senhaHash);
-    } else {
       resultado = await usuarioModel.cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash);
-    }
-
-    // Cadastrando Usuario no banco
+    
+    // Reusultado do cadastro no banco
     if (resultado) {
       res.status(201).json(resultado);
     } else {
