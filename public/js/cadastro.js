@@ -65,14 +65,12 @@ async function cadastrar() {
       setTimeout(() => {
         window.location = "login.html";
       }, 3000);
-    } else {
-      let mensagem = "Erro ao cadastrar: " + resposta.status;
-      return mostrarErro(mensagem);
 
+    } else {
+      throw new Error("Erro ao cadastrar: " + resposta.status);
     }
+
   } catch (error) {
-    console.log("Erro na requisição: ", error);
-    let mensagem = "Erro inesperado ao tentar realizar o cadastro";
-    return mostrarErro(mensagem);
+    return mostrarErro(error);
   }
 }
