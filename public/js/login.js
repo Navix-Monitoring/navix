@@ -3,10 +3,23 @@ async function entrar() {
 
     var email = email_input.value;
     var senha = senha_input.value;
+    const padrao = /["'!()\/\\|;\-\]\[{}=]/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email || !senha) {
         let mensagem = "Campos invalidos! Preencha email e senha.";
         return mostrarErro(mensagem);
+
+    } else if (!emailRegex.teste(email)) {
+        let mensagem = "Email inválido!";
+        return mostrarErro(mensagem);
+
+    } else if (verificacao.some(campo => padrao.test(campo))) {
+        let mensagem = 'Caracteres especiais são invalidos!'
+        return mostrarErro(mensagem);
+
+    } else {
+        setTimeout(sumirMensagem, 5000);
     }
 
     console.log("FORM LOGIN: ", email);
