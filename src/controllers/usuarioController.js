@@ -3,28 +3,47 @@ var hashPwdUser = require("../utils/hash")
 
 async function cadastrar(req, res) {
   try {
-    const { nome, email, senha } = req.body;
+    const { 
+      output_tipoCadastro,
+      output_nome,
+      output_sobrenome,
+      output_email,
+      output_senha,
+      output_razaoSocial,
+      output_cnpj
+    } = req.body;
 
-    // Validação
-    if (!nome || !email || !senha) {
-      return res.status(400).send("Preencha todos os campos corretamente.");
+    // Validação do campos
+    if (!output_email || !output_senha) {
+      return res.status(400).send("Preencha E-mail e Senha.");
+    }
+
+    if (output_tipoCadastro === "usuario" && (!output_nome || !output_sobrenome)) {
+      return res.status(400).send("Preencha o Nome e Sobrenome.")
+    }
+    
+    if (output_tipoCadastro === "empresa" && (!output_razaoSocial || !output_cnpj)) {
+      return res.status(400).send("Preencha CNPJ e Razão Social.")
     }
 
     // criptografando a senha
-    const senhaHash = await hashPwdUser.hashPassword(senha);
-  
+    const senhaHash = await hashPwdUser.hashPassword(output_senha);
+
     // Verificação de duplicidade
-    const usuarios = await usuarioModel.verificarEmail(email);
+    const usuarios = await usuarioModel.verificarEmail(output_email);
 
-    const emailJaExiste = usuarios.some(user => user.email === email);
-
-    if (emailJaExiste) {
+    if (usuarios.some(user => user.output_email === output_email)) {
       return res.status(409).send("Email já cadastrado.");
     }
 
+    let resultado;
+    if (output_tipoCadastro == "usuario") {
+      resultado = await usuarioModel.cadastrar(output_nome, output_sobrenome, output_email, senhaHash);
+    } else {
+      resultado = await usuarioModel.cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash);
+    }
+
     // Cadastrando Usuario no banco
-    const resultado = await usuarioModel.cadastrar(nome, email, senhaHash);
-    
     if (resultado) {
       res.status(201).json(resultado);
     } else {
@@ -39,16 +58,16 @@ async function cadastrar(req, res) {
 
 async function autenticar(req, res) {
   try {
-    const {loginEmail, loginSenha} = req.body
-    
+    const { loginEmail, loginSenha } = req.body
+
     // validação
     if (!loginEmail || !loginSenha) {
       return res.status(400).send("Erro ao fazer login! Preencha os campos.")
     }
-    
+
     //pegando dados do banco
     const verificarLogin = await usuarioModel.verificarLogin(loginEmail, loginSenha);
-    
+
     if (!verificarLogin) {
       return res.status(404).send("Login não encontrado! Realize o cadastro ou insira novamente seu login.")
     }
@@ -74,9 +93,9 @@ async function atualizar(req, res) {
   try {
     const email = sessionStorage.EMAIL_USUARIO;
 
-    
+
   } catch (error) {
-    
+
   }
 }
 
@@ -84,9 +103,9 @@ async function deletar(req, res) {
   try {
     const email = sessionStorage.EMAIL_USUARIO;
 
-    
+
   } catch (error) {
-    
+
   }
 }
 
