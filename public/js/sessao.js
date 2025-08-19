@@ -21,21 +21,9 @@ function aguardar() {
     divAguardar.style.display = "flex";
 }
 
-function finalizarAguardar(texto) {
+function finalizarAguardar() {
     var divAguardar = document.getElementById("div_aguardar");
     divAguardar.style.display = "none";
 
-    var divErrosLogin = document.getElementById("div_erros_login");
-    if (texto) {
-        divErrosLogin.style.display = "flex";
-        divErrosLogin.innerHTML = texto;
-    }
-}
-
-function finalizarAtualizar() {
     cardErro.style.display = "none";
-}
-
-function iniciarQuizz() {
-    window.location = "./quizz.html";
 }
