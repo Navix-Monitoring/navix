@@ -27,3 +27,15 @@ function finalizarAguardar() {
 
     cardErro.style.display = "none";
 }
+
+function sumirMensagem() {
+  cardErro.style.display = "none";
+}
+
+function mostrarErro(mensagem) {
+  cardErro.style.display = "flex";
+  mensagem_erro.innerHTML = mensagem;
+  setTimeout(() => {
+    finalizarAguardar();
+  }, 3000);
+}

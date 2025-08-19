@@ -76,15 +76,3 @@ async function cadastrar() {
     return mostrarErro(mensagem);
   }
 }
-
-function sumirMensagem() {
-  cardErro.style.display = "none";
-}
-
-function mostrarErro(mensagem) {
-  cardErro.style.display = "flex";
-  mensagem_erro.innerHTML = mensagem;
-  setTimeout(() => {
-    finalizarAguardar();
-  }, 3000);
-}
