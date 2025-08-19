@@ -10,36 +10,30 @@
 </head>
 
 <body>
-    <header class="header h-30 w-full content-center fixed">
-        <div class="flex justify-center">
-            <div class="flex justify-between" style="width: 90%;">
-                <div>
-                    <img src="./assets/grey.jpg" alt="" class="h-22 w-22 rounded-full">
-                </div>
-                <div class="w-90 content-center">
-                    <ul class="flex justify-between cabecalho">
-                        <a href="" class="content-center">
-                            <li>Sobre nós</li>
-                        </a>
-                        <a href="">
-                            <li class="border border-4 border-solid pb-2 pt-2 pl-7 pr-7 rounded-sm"
-                                style="color: #002B50;">
-                                Entrar</li>
-                        </a>
-                        <a href="" class="content-center pl-7 pr-7 rounded-sm text-white"
-                            style="background-color: #002B50;">
-                            <li>
-                                Cadastro</li>
-                        </a>
-                    </ul>
-                </div>
-            </div>
+    <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50">
+        <div>
+            <div class="h-22 w-22 bg-slate-300 rounded-full"></div>
+        </div>
+        <div class="w-90 content-center">
+            <ul class="flex justify-between cabecalho">
+                <a href="" class="content-center">
+                    <li class="text-slate-100">Sobre nós</li>
+                </a>
+                <a href="">
+                    <li
+                        class="border border-4 border-solid border-slate-100 pb-2 pt-2 pl-7 pr-7 rounded-sm text-slate-100">
+                        Entrar</li>
+                </a>
+                <a href="" class="content-center pl-7 pr-7 rounded-sm bg-slate-100" <li class="text-blue-950">
+                    Cadastro</li>
+                </a>
+            </ul>
         </div>
     </header>
     <div>
-        <div class="flex items-center justify-center" style="height: 80vh;">
-            <div class="flex justify-evenly" style="width: 90%;">
-                <div style="width: 35%;" class="content-center">
+        <div class="flex justify-center h-210 max-lg:h-290">
+            <div class="flex justify-evenly w-screen max-lg:flex-col mt-60">
+                <div class="content-center w-140 max-lg:w-screen">
                     <h1 style="font-size: 64px; color: #002B50;">Inovação e Desenvolvimento</h1>
                     <p style="font-size: 30px; color: #002B50;">
                         Monitoramos o coração tecnológico dos veículos para garantir segurança, eficiência e
@@ -48,17 +42,18 @@
                         reduzindo custos para sua empresas.
                     </p>
                 </div>
-                <div>
-                    <img src="./assets/imagensIndex/carroIndex.png" alt="" width="660px" height="660px">
+                <div class="flex items-center max-lg:justify-center">
+                    <img src="./assets/imagensIndex/carroIndex.png" alt="" class="w-160 h-160">
                 </div>
             </div>
         </div>
-        <div class="flex items-center justify-center" style="height: 60vh; ">
-            <div class="flex justify-evenly justify-between" style="width: 90%;">
-                <div>
-                    <img src="./assets/imagensIndex/diagramaSolucaoNegocio.png" alt="" width="660px" height="660px">
+        <div class="flex items-center justify-center h-170">
+            <div class="flex justify-evenly justify-between w-screen max-lg:flex-col-reverse h-screen">
+                <div class="flex items-center max-lg:justify-center">
+                    <img src="./assets/imagensIndex/diagramaSolucaoNegocio.png" alt=""class="w-160 h-140 max-lg:hidden">
+                    <img src="./assets/imagensIndex/diagramaSolucaoNegocioTelaMenor.png" alt=""class="w-190 h-90 hidden max-lg:block">
                 </div>
-                <div style="width: 40%;" class="content-center">
+                <div class="content-center w-160 max-lg:w-screen">
                     <h1 style="font-size: 64px; color: #002B50;">Informações de valor para o seu negócio</h1>
                     <p style="font-size: 30px; color: #636363;">
                         Nosso sistema coleta e analisa dados de hardware de veículos com piloto automático ou sistemas
@@ -69,16 +64,16 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center" style="height: 60vh;">
-            <div class="flex justify-evenly" style="width: 90%;">
-                <div style="width: 35%;" class="content-center">
+        <div class="flex justify-center h-150">
+            <div class="flex h-150 justify-evenly w-screen max-lg:flex-col h-screen">
+                <div class="w-160 h-110 content-center max-lg:w-screen">
                     <h1 style="font-size: 64px; color: #002B50;">Conheça a NAVIX</h1>
                     <p style="font-size: 30px; color: #002B50;">
                         Descubra como transformamos dados em valor, ajudando empresas a reduzir custos, aumentar a
                         segurança e
                         antecipar falhas tecnológicas. Clique abaixo e saiba mais sobre quem somos.
                     </p>
-                    <div class="flex justify-end" style="width: 90%;">
+                    <div class="flex justify-end mt-10" style="width: 90%;">
                         <a href="#" class="border-4 border-solid border-blue-900 bg-[#002B50] text-white 
                             px-7 py-3 rounded-sm inline-block">
                             Sobre nós
@@ -86,8 +81,8 @@
                     </div>
 
                 </div>
-                <div class="flex items-center">
-                    <img src="./assets/imagensIndex/sobreNos-removebg-preview.png" alt="" class="w-120 h-110">
+                <div class="flex items-center h-110">
+                    <img src="./assets/imagensIndex/sobreNos-removebg-preview.png" alt="" class="w-130 h-110">
                 </div>
             </div>
         </div>
