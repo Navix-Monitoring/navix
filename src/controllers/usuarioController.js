@@ -23,13 +23,13 @@ async function cadastrar(req, res) {
     const senhaHash = await hashPwdUser.hashPassword(output_senha);
 
     // Verificação de duplicidade
-    const usuarios = await usuarioModel.verificarEmail_CNPJ(output_email, output_cnpj);
+    const usuarios = await usuarioModel.verificarEmail(output_email);
 
-    if (usuarios.some(user => user.output_email === output_email)) {
+    if (usuarios.some(user => user.email === output_email)) {
       return res.status(409).send("Email já cadastrado.");
     }
 
-      resultado = await usuarioModel.cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash);
+      const resultado = await usuarioModel.cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash);
     
     // Reusultado do cadastro no banco
     if (resultado) {
@@ -46,30 +46,38 @@ async function cadastrar(req, res) {
 
 async function autenticar(req, res) {
   try {
-    const { loginEmail, loginSenha } = req.body
+    const { output_email, output_senha } = req.body
 
-    // validação
-    if (!loginEmail || !loginSenha) {
-      return res.status(400).send("Erro ao fazer login! Preencha os campos.")
+    // validação dos campos
+    if (!output_email || !output_senha) {
+      return res.status(400).send("Erro ao fazer login! Preencha todos os campos");
     }
+
+    // // verificação de ativação de conta
+    // const resultadoAtivacao = await usuarioModel.verificarAtivacaoConta(output_email);
+
+    // if (!resultadoAtivacao) {
+    //   return res.status(400).send("Login não encontrado. Realize o cadastro ou insira novamente seu login.");
+    // }
+
+    // if (resultadoAtivacao.status == "inativo") {
+    //   return res.status(400).send("Faça a ativação da conta. Verifique seu E-mail.");
+    // }
 
     //pegando dados do banco
-    const verificarLogin = await usuarioModel.verificarLogin(loginEmail, loginSenha);
-
-    if (!verificarLogin) {
-      return res.status(404).send("Login não encontrado! Realize o cadastro ou insira novamente seu login.")
-    }
+    const verificarLogin = await usuarioModel.autenticarLogin(output_email);
 
     // Bollean de hash (comparação)
-    const validacaoHash = await hashPwdUser.comparePassaword(loginSenha, verificarLogin.senhaHash);
+    const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLogin.senhaHash);
 
     if (!validacaoHash) {
       return res.status(400).send("Senha incorreta!")
     }
 
-    console.log(`Resultados: `, JSON.stringify(verificarLogin));
+    console.log(`Resultados: `, verificarLogin);
 
     return res.json(verificarLogin);
+    
   }
   catch (erro) {
     console.error("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage || erro);

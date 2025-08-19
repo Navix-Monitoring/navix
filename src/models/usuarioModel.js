@@ -1,36 +1,36 @@
 var database = require("../database/config")
 
-function verificarLogin(loginEmail) {
+function autenticarLogin(output_email) {
     const instrucaoSql = `
-        SELECT id, nome, email, senhaHash 
-        FROM users 
+        SELECT razaoSocial, email, senhaHash 
+        FROM empresa 
         WHERE email = ?;
     `;
 
-    return database.executar(instrucaoSql, [loginEmail]);
+    return database.executar(instrucaoSql, [output_email]);
 }
 
 function cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash) {
     const instrucaoSql = `
-        INSERT INTO users (nome, email, senhaHash) 
-        VALUES (?, ?, ?);
+        INSERT INTO empresa (razaoSocial, cnpj, email, senhaHash) 
+        VALUES (?, ?, ?, ?);
     `;
 
     return database.executar(instrucaoSql, [output_razaoSocial, output_cnpj, output_email, senhaHash]);
 }
 
-function verificarEmail_CNPJ(output_email, output_cnpj) {
+function verificarEmail(output_email) {
     const instrucaoSql = `
         SELECT email 
-        FROM users 
+        FROM empresa
         WHERE email = ?;
     `;
 
-    return database.executar(instrucaoSql, [output_email, output_cnpj]);
+    return database.executar(instrucaoSql, [output_email]);
 }
 
 module.exports = {
-    verificarLogin,
+    autenticarLogin,
     cadastrar,
-    verificarEmail_CNPJ
+    verificarEmail
 };
