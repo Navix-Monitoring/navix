@@ -21,3 +21,9 @@
 .redes-sociais li{
     padding: 10px;
 }
+
+#fundo-aboutus
+{
+    background-image: url(../assets/img/servidor.jpg);
+    object-fit: cover;
+}
