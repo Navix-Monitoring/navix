@@ -29,8 +29,18 @@ function verificarEmail(output_email) {
     return database.executar(instrucaoSql, [output_email]);
 }
 
+function deletar_conta(output_email) {
+    const instrucaoSql = `
+        delete empresa
+        WHERE email = ?;
+    `;
+
+    return database.executar(instrucaoSql, [output_email]);
+}
+
 module.exports = {
     autenticarLogin,
     cadastrar,
-    verificarEmail
+    verificarEmail,
+    deletar_conta
 };
