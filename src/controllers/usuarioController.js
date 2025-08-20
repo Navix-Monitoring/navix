@@ -50,7 +50,7 @@ async function autenticar(req, res) {
 
     // validação dos campos
     if (!output_email || !output_senha) {
-      return res.status(400).send("Erro ao fazer login! Preencha todos os campos");
+      return res.status(401).send("Erro ao fazer login! Preencha todos os campos");
     }
 
     // // verificação de ativação de conta
