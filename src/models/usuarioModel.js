@@ -38,9 +38,20 @@ function deletar_conta(output_email) {
     return database.executar(instrucaoSql, [output_email]);
 }
 
+function atualizarCampos(output_razaoSocial, output_email, senhaHash, output_emailAntigo) {
+    const instrucaoSql = `
+        UPDATE empresa
+        SET razaoSocial = ?, email = ?, senhaHash = ?
+        WHERE email = ?;
+    `;
+
+    return database.executar(instrucaoSql, [output_razaoSocial, output_email, senhaHash, output_emailAntigo]);
+}
+
 module.exports = {
     autenticarLogin,
     cadastrar,
     verificarEmail,
-    deletar_conta
+    deletar_conta,
+    atualizarCampos
 };

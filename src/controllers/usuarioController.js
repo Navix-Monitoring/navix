@@ -87,11 +87,34 @@ async function autenticar(req, res) {
 
 async function atualizar(req, res) {
   try {
-    const email = sessionStorage.EMAIL_USUARIO;
+    const {
+      output_razaoSocial,
+      output_email,
+      output_senha,
+      output_emailAntigo
+    } = req.body;
 
+    // Validação do campos
+    if (!output_email || !output_senha || !output_razaoSocial) {
+      return res.status(400).send("Preencha E-mail, Senha e Razão Social.");
+    }
 
-  } catch (error) {
+    // criptografando a senha
+    const senhaHash = await hashPwdUser.hashPassword(output_senha);
 
+    const resultado = await usuarioModel.atualizarCampos(output_razaoSocial, output_email, senhaHash, output_emailAntigo);
+
+    // Reusultado da atualização dos dados no banco
+    if (resultado) {
+      res.status(201).json(resultado);
+    } else {
+      res.status(500).send("Erro ao atualizar dados da conta.");
+    }
+    
+  }
+  catch (erro) {
+    console.error("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage || erro);
+    res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
   }
 }
 
@@ -125,5 +148,6 @@ async function deletar(req, res) {
 module.exports = {
   autenticar,
   cadastrar,
-  deletar
+  deletar,
+  atualizar
 }
