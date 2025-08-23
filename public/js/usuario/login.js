@@ -16,7 +16,7 @@ async function entrar() {
         return mostrarErro(mensagem);
 
     } else if (verificacao.some(campo => padrao.test(campo))) {
-        let mensagem = 'Caracteres especiais são invalidos!'
+        let mensagem = 'Caracteres especiais são invalidos!';
         return mostrarErro(mensagem);
 
     } else {
