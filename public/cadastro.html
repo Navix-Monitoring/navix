@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - NAVIX</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/cadastro.js" defer></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen flex flex-col">
+    <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50">
+        <div>
+            <div class="h-22 w-22 bg-slate-300 rounded-full"></div>
+        </div>
+        <div class="w-90 content-center">
+            <ul class="flex justify-between cabecalho">
+                <a href="index.html" class="content-center">
+                    <li class="text-slate-100">Home</li>
+                </a>
+                <a href="login.html">
+                    <li class="border border-4 border-solid border-slate-100 px-7 py-2 rounded-sm text-slate-100">
+                        Entrar
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </header>
+    <div class="flex-grow flex items-center justify-center px-6">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mt-40 p-10">
+
+            <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Cadastro da Empresa</h1>
+
+            <div id="cardErro" class="hidden bg-red-200 text-red-800 px-4 py-3 rounded mb-4">
+                <span id="mensagem_erro"></span>
+            </div>
+
+            <form onsubmit="event.preventDefault(); cadastrar();" class="flex flex-col gap-4">
+
+                <input id="razaoSocial_input" type="text" placeholder="Razão Social"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <input id="cnpj_input" type="text" placeholder="CNPJ (somente números)"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <input id="email_input" type="email" placeholder="Email corporativo"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <input id="senha_input" type="password" placeholder="Senha"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <input id="confirmar_senha_input" type="password" placeholder="Confirmar senha"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <button type="submit" class="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800 transition">
+                    Cadastrar
+                </button>
+            </form>
+
+            <p class="mt-4 text-center text-gray-600 text-sm">
+                Já tem uma conta? <a href="login.html" class="text-blue-800 font-semibold">Entrar</a>
+            </p>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
