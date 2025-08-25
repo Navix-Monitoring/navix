@@ -1,100 +1,153 @@
 var usuarioModel = require("../models/usuarioModel");
+var hashPwdUser = require("../utils/hash")
 
-function autenticar(req, res) {
-  var login = req.body.loginServer;
-  var senha = req.body.senhaServer;
+async function cadastrar(req, res) {
+  try {
+    const {
+      output_razaoSocial,
+      output_email,
+      output_senha,
+      output_cnpj
+    } = req.body;
 
-  if (!login) {
-    res.status(400).send("Seu login está undefined!");
-  } else if (!senha) {
-    res.status(400).send("Sua senha está indefinida!");
-  } else {
-    usuarioModel.autenticar(login, senha)
-      .then((resultado) => {
-        console.log(`\nResultados encontrados: ${resultado.length}`);
-        console.log(`Resultados: ${JSON.stringify(resultado)}`);
+    // Validação do campos
+    if (!output_email || !output_senha) {
+      return res.status(400).send("Preencha E-mail e Senha.");
+    }
 
-        if (resultado.length === 1) {
-          const user = resultado[0];
+    if (!output_razaoSocial || !output_cnpj) {
+      return res.status(400).send("Preencha CNPJ e Razão Social.")
+    }
 
-          return res.json({
-            id: user.id,
-            email: user.email,
-            nome: user.nome,
-            senha: user.senha,
-            apelido: user.apelido,
-          });
-          
-        } else if (resultado.length === 0) {
-          res.status(403).send("Login ou senha inválido(s)");
-        } else {
-          res.status(403).send("Mais de um usuário com o mesmo login!");
-        }
-      })
-      .catch((erro) => {
-        console.log(erro);
-        console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-      });
+    // criptografando a senha
+    const senhaHash = await hashPwdUser.hashPassword(output_senha);
+
+    // Verificação de duplicidade
+    const usuarios = await usuarioModel.verificarEmail(output_email);
+
+    if (usuarios.some(user => user.email === output_email)) {
+      return res.status(409).send("Email já cadastrado.");
+    }
+
+    const resultado = await usuarioModel.cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash);
+
+    // Reusultado do cadastro no banco
+    if (resultado) {
+      res.status(201).json(resultado);
+    } else {
+      res.status(500).send("Erro ao cadastrar o usuário.");
+    }
+  }
+  catch (erro) {
+    console.error("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage || erro);
+    res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
   }
 }
 
+async function autenticar(req, res) {
+  try {
+    const { output_email, output_senha } = req.body
 
-function cadastrar(req, res) {
-  // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-  var nome = req.body.nomeServer;
-  var email = req.body.emailServer;
-  var apelido = req.body.apelidoServer;
-  var senha = req.body.senhaServer;
+    // validação dos campos
+    if (!output_email || !output_senha) {
+      return res.status(401).send("Erro ao fazer login! Preencha todos os campos");
+    }
 
-  // Faça as validações dos valores | da pra simplificar
-  if (nome == undefined) {
-    res.status(400).send("Seu nome está undefined!");
-  } else if (apelido == undefined) {
-    res.status(400).send("Seu apelido está undefined!");
-  } else if (email == undefined) {
-    res.status(400).send("Seu email está undefined!");
-  } else if (senha == undefined) {
-    res.status(400).send("Sua senha está undefined!");
-  } else {
+    // // verificação de ativação de conta
+    // const resultadoAtivacao = await usuarioModel.verificarAtivacaoConta(output_email);
 
-    usuarioModel.verificarEmailOuApelidoExistente(email, apelido)
-      .then(usuarios => {
-        let mensagem = "";
+    // if (!resultadoAtivacao) {
+    //   return res.status(400).send("Login não encontrado. Realize o cadastro ou insira novamente seu login.");
+    // }
 
-          for (i = 0; i < usuarios.length; i++) {
-            const user = usuarios[i];
+    // if (resultadoAtivacao.status == "inativo") {
+    //   return res.status(400).send("Faça a ativação da conta. Verifique seu E-mail.");
+    // }
 
-            if (user.email === email && !mensagem.includes('Email já Cadastrado')) {
-              mensagem += "Email já cadastrado. ";
-            }
+    //pegando dados do banco
+    const verificarLogin = await usuarioModel.autenticarLogin(output_email);
 
-            if (user.apelido === apelido && !mensagem.includes("Apelido já cadastrado")) {
-              mensagem += "Apelido já cadastrado. ";
-            }
-          }
-          
-          if (mensagem !== "") {
-            return res.status(409).send(mensagem);
-          }
+    // Bollean de hash (comparação)
+    const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLogin.senhaHash);
 
-        return usuarioModel.cadastrar(nome, apelido, email, senha);
-      })
-      .then(resultado => { // e o res
-        if (resultado) {
-          res.status(201).json(resultado);
-        } else {
-          res.status(500).send("Erro ao cadastrar o usuário.");
-        }
-      })
-      .catch(erro => {
-        console.log("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
-      });
+    if (!validacaoHash) {
+      return res.status(400).send("Senha incorreta!");
+    }
+
+    console.log(`Resultados: `, verificarLogin);
+
+    return res.json(verificarLogin);
+
+  }
+  catch (erro) {
+    console.error("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage || erro);
+    res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
+  }
+}
+
+async function atualizar(req, res) {
+  try {
+    const {
+      output_razaoSocial,
+      output_email,
+      output_senha,
+      output_emailAntigo
+    } = req.body;
+
+    // Validação do campos
+    if (!output_email || !output_senha || !output_razaoSocial) {
+      return res.status(400).send("Preencha E-mail, Senha e Razão Social.");
+    }
+
+    // criptografando a senha
+    const senhaHash = await hashPwdUser.hashPassword(output_senha);
+
+    const resultado = await usuarioModel.atualizarCampos(output_razaoSocial, output_email, senhaHash, output_emailAntigo);
+
+    // Reusultado da atualização dos dados no banco
+    if (resultado) {
+      res.status(201).json(resultado);
+    } else {
+      res.status(500).send("Erro ao atualizar dados da conta.");
+    }
+    
+  }
+  catch (erro) {
+    console.error("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage || erro);
+    res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
+  }
+}
+
+async function deletar(req, res) {
+  try {
+    const { output_email } = req.body;
+
+    // validação de campo
+    if (!output_email) {
+      return res.status(400).send("Erro ao fazer deletar conta! Entre em contato com a gente (navixsuporte@gmail.com)");
+    }
+
+    // remoção da conta no BD
+    const resultado = await usuarioModel.deletar_conta(output_email);
+
+    // validação de remoção de conta
+    if (resultado) {
+      res.status(200).json("Conta deletada com sucesso!");
+    }
+
+    if (!resultado) {
+      return res.status(404).send("Conta não encontrada.");
+    }
+
+  } catch (error) {
+    console.error("\nHouve um erro no servidor ao deletar conta.: ", error.sqlMessage || error);
+    res.status(500).json(error.sqlMessage || "Erro interno do servidor.");
   }
 }
 
 module.exports = {
   autenticar,
   cadastrar,
+  deletar,
+  atualizar
 }

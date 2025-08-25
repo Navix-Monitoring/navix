@@ -41,3 +41,27 @@ create table veiculo (
     primary key (id_veiculo),
     constraint fk_veiculo_empresa foreign key (fkempresa) references empresa(id_empresa)
 );
+
+create table alerta (
+	id_alerta INT NOT NULL auto_increment,
+    fkVeiculo INT NOT NULL,
+    tipo_alerta ENUM('CPU', 'RAM', 'REDE', 'SISTEMA', 'OUTRO') NOT NULL,
+    descricao text,
+    nivel enum('baixo', 'medio', 'alto') NOT NULL,
+    data_alerta DATETIME NOT NULL default CURRENT_TIMESTAMP,
+    status enum('pendente', 'em análise', 'resolvido') NOT NULL, 
+    prioridade int not null,
+    PRIMARY KEY (id_alerta),
+    CONSTRAINT fk_alerta_veiculo FOREIGN KEY (fkVeiculo) REFERENCES veiculo(id_veiculo),
+    CONSTRAINT chk_prioridade CHECK (prioridade IN (1, 2, 3, 4, 5))
+);
+
+create table alerta_veiculo_empresa (
+	id_alerta INT NOT NULL,
+    fkVeiculo INT NOT NULL,
+    fkEmpresa INT NOT NULL,
+    PRIMARY KEY (id_alerta, fkVeiculo, fkEmpresa),
+    CONSTRAINT fk_alerta_veiculo FOREIGN KEY (id_alerta) REFERENCES alerta(id_alerta),
+    CONSTRAINT fk_alerta_veiculo_veiculo FOREIGN KEY (fkVeiculo) REFERENCES veiculo(id_veiculo),
+    CONSTRAINT fk_alerta_veiculo_empresa FOREIGN KEY (fkEmpresa) REFERENCES empresa(id_empresa)
+);
