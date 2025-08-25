@@ -4,11 +4,12 @@ USE navix;
 
 CREATE TABLE empresa (
 	id_empresa INT NOT NULL auto_increment,
-    nome VARCHAR(50) NOT NULL,
+    razaoSocial VARCHAR(50) NOT NULL,
     cnpj VARCHAR(14) NOT NULL,
-    telefone VARCHAR(11),
+    emailCorporativo char(50) not null,
+    senhaHash char(250) not null,
     PRIMARY KEY (id_empresa),
-    UNIQUE (cnpj)
+    UNIQUE (emailCorporativo, cnpj)
 );
 
 create table usuario (
