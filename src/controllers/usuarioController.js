@@ -23,6 +23,7 @@ async function cadastrar(req, res) {
     const senhaHash = await hashPwdUser.hashPassword(output_senha);
 
     // Verificação de duplicidade
+    console.log("output email  " + output_email)
     const usuarios = await usuarioModel.verificarEmail(output_email);
 
     if (usuarios.some(user => user.email === output_email)) {
