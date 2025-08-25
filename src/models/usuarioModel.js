@@ -12,13 +12,8 @@ function autenticarLogin(output_email) {
 
 function cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash) {
     const instrucaoSql = `
-<<<<<<< HEAD
         INSERT INTO empresa (razaoSocial, cnpj, email, senha) 
         VALUES ("${output_razaoSocial}", "${output_cnpj}", "${output_email}", "${senhaHash}");
-=======
-        INSERT INTO empresa (razaoSocial, cnpj, emailCorporativo, senhaHash) 
-        VALUES (?, ?, ?, ?);
->>>>>>> 79ee1f84db90287bccc3ff755825f2b69af75841
     `;
 
     return database.executar(instrucaoSql);
@@ -26,15 +21,9 @@ function cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash) {
 
 function verificarEmail(output_email) {
     const instrucaoSql = `
-<<<<<<< HEAD
         SELECT email 
         FROM usuario
         WHERE email = "${output_email}";
-=======
-        SELECT emailCorporativo 
-        FROM empresa
-        WHERE emailCorporativo = ?;
->>>>>>> 79ee1f84db90287bccc3ff755825f2b69af75841
     `;
 
     return database.executar(instrucaoSql);
