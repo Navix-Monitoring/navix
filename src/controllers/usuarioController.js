@@ -71,7 +71,7 @@ async function autenticar(req, res) {
     const verificarLogin = await usuarioModel.autenticarLogin(output_email);
 
     // Bollean de hash (comparação)
-    const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLogin.senhaHash);
+    const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLogin[0].senhaHash);
 
     if (!validacaoHash) {
       return res.status(400).send("Senha incorreta!");
