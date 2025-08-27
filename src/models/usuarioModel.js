@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function autenticarLogin(output_email) {
     const instrucaoSql = `
-        SELECT razaoSocial, email, senhaHash 
+        SELECT razaoSocial, email, senha
         FROM empresa 
         WHERE email = ?;
     `;
@@ -12,7 +12,7 @@ function autenticarLogin(output_email) {
 
 function cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash) {
     const instrucaoSql = `
-        INSERT INTO empresa (razaoSocial, cnpj, email, senhaHash) 
+        INSERT INTO empresa (razaoSocial, cnpj, email, senha) 
         VALUES (?, ?, ?, ?);
     `;
 
@@ -41,7 +41,7 @@ function deletar_conta(output_email) {
 function atualizarCampos(output_razaoSocial, output_email, senhaHash, output_emailAntigo) {
     const instrucaoSql = `
         UPDATE empresa
-        SET razaoSocial = ?, email = ?, senhaHash = ?
+        SET razaoSocial = ?, email = ?, senha = ?
         WHERE email = ?;
     `;
 
