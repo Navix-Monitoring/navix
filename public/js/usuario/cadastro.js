@@ -1,5 +1,6 @@
+import {mostrarErro, sumirMensagem} from '../sessao.js'
+
 async function cadastrar() {
-  aguardar();
 
   var razaoSocial = razaoSocial_input.value;
   var email = email_input.value;
@@ -73,3 +74,5 @@ async function cadastrar() {
     return mostrarErro(error);
   }
 }
+
+window.cadastrar = cadastrar;

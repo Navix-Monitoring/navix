@@ -12,21 +12,21 @@ function autenticarLogin(output_email) {
 
 function cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash) {
     const instrucaoSql = `
-        INSERT INTO empresa (razaoSocial, cnpj, emailCorporativo, senhaHash) 
-        VALUES (?, ?, ?, ?);
+        INSERT INTO empresa (razaoSocial, cnpj, email, senha) 
+        VALUES ("${output_razaoSocial}", "${output_cnpj}", "${output_email}", "${senhaHash}");
     `;
 
-    return database.executar(instrucaoSql, [output_razaoSocial, output_cnpj, output_email, senhaHash]);
+    return database.executar(instrucaoSql);
 }
 
 function verificarEmail(output_email) {
     const instrucaoSql = `
-        SELECT emailCorporativo 
-        FROM empresa
-        WHERE emailCorporativo = ?;
+        SELECT email 
+        FROM usuario
+        WHERE email = "${output_email}";
     `;
 
-    return database.executar(instrucaoSql, [output_email]);
+    return database.executar(instrucaoSql);
 }
 
 function deletar_conta(output_email) {

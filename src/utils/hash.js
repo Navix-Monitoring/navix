@@ -5,7 +5,9 @@ async function hashPassword(senha) {
     const myPlaintextPassword = senha;
 
     console.log("Fazendo Criptografia");
-    return await bcrypt.hash(myPlaintextPassword, saltRounds)
+    const senhaCriptografada = await bcrypt.hash(myPlaintextPassword, saltRounds);
+    console.log(senhaCriptografada)
+    return senhaCriptografada
 }
 
 async function comparePassaword (loginSenha, senhaHash) {

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Navix</title>
-  <script src="js/usuario/login.js"></script>
+  <script type="module" src="js/usuario/login.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
@@ -37,18 +37,19 @@
      <div class="bg-slate-200 flex-grow flex items-center justify-center px-6 py-6 h-screen">
       <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mt-40 p-10">
 
-      <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Entrar Navix</h1>
+      <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Entre na sua conta</h1>
 
         <div id="cardErro" class="hidden bg-red-200 text-red-800 px-4 py-3 rounded mb-4">
           <span id="mensagem_erro"></span>
         </div>
 
-        <form id="loginForm" class="flex flex-col gap-4">
-            <input type="email" id="id_email" placeholder="seuemail@exemplo.com"
+        <form onsubmit="event.preventDefault(); entrar();" id="loginForm" class="flex flex-col gap-4">
+            <label for="email_input" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="email_input" placeholder="seuemail@exemplo.com"
             class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
-            <label for="id_senha" class="block text-sm font-medium text-gray-700">Senha</label>
-            <input type="password" id="id_senha" placeholder="••••••••"
+            <label for="senha_input" class="block text-sm font-medium text-gray-700">Senha</label>
+            <input type="password" id="senha_input" placeholder="••••••••"
             class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
             <button type="submit" class="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800 transition">
