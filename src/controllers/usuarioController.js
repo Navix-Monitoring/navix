@@ -23,6 +23,7 @@ async function cadastrar(req, res) {
     const senhaHash = await hashPwdUser.hashPassword(output_senha);
 
     // Verificação de duplicidade
+    console.log("output email  " + output_email)
     const usuarios = await usuarioModel.verificarEmail(output_email);
 
     if (usuarios.some(user => user.email === output_email)) {
@@ -65,6 +66,8 @@ async function autenticar(req, res) {
     // }
 
     //pegando dados do banco
+    console.log("VAI VERIFICAR O LOGIN: ")
+
     const verificarLogin = await usuarioModel.autenticarLogin(output_email);
 
     // Bollean de hash (comparação)

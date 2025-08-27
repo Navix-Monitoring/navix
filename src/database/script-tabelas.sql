@@ -4,11 +4,12 @@ USE navix;
 
 CREATE TABLE empresa (
 	id_empresa INT NOT NULL auto_increment,
-    nome VARCHAR(50) NOT NULL,
+    razaoSocial VARCHAR(50) NOT NULL,
     cnpj VARCHAR(14) NOT NULL,
-    telefone VARCHAR(11),
+    emailCorporativo VARCHAR(50) not null,
+    senhaHash VARCHAR(250) not null,
     PRIMARY KEY (id_empresa),
-    UNIQUE (cnpj)
+    UNIQUE (emailCorporativo, cnpj)
 );
 
 create table usuario (
@@ -61,7 +62,8 @@ create table alerta_veiculo_empresa (
     fkVeiculo INT NOT NULL,
     fkEmpresa INT NOT NULL,
     PRIMARY KEY (id_alerta, fkVeiculo, fkEmpresa),
-    CONSTRAINT fk_alerta_veiculo FOREIGN KEY (id_alerta) REFERENCES alerta(id_alerta),
+    CONSTRAINT fk_veiculo_alerta FOREIGN KEY (id_alerta) REFERENCES alerta(id_alerta),
     CONSTRAINT fk_alerta_veiculo_veiculo FOREIGN KEY (fkVeiculo) REFERENCES veiculo(id_veiculo),
     CONSTRAINT fk_alerta_veiculo_empresa FOREIGN KEY (fkEmpresa) REFERENCES empresa(id_empresa)
-);
+);	
+

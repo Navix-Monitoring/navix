@@ -7,6 +7,39 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-100">
+  <div class="fixed top-0 left-0 h-screen w-[300px] flex flex-col justify-evenly items-center bg-[#002B50] border-r border-[#002B50]">
+    <img src="./assets/imagensIndex/carroIndex.png" class="w-[400px] h-[250px]">
+
+    <div class="w-full ml-[20px] flex justify-center">
+        <h3 class="text-white font-light text-[1.2rem]">
+            Bem Vindo de volta, <span id="b_usuario" class="font-extrabold">usuário</span>!
+        </h3>
+    </div>
+
+    <div class="w-[40%] bg-blue-600 rounded-md text-center py-[2%] px-[5%]">
+        <a href="../quiz.html" class="no-underline text-white">
+            <h3 class="m-0 p-0">Perfil</h3>
+        </a>
+    </div>
+
+    <div class="w-[40%] bg-white border-2 border-black rounded-md text-center py-[2%] px-[5%]">
+        <a href="#" class="no-underline">
+            <h3 class="text-black m-0 p-0">Dashboard</h3>
+        </a>
+    </div>
+
+    <div class="w-[40%] bg-white border-2 border-black rounded-md text-center py-[2%] px-[5%]">
+        <a href="#" class="no-underline">
+            <h3 class="text-black m-0 p-0">Tela Inicial</h3>
+        </a>
+    </div>
+
+    <div class="w-[20%] bg-black text-white rounded-xl text-center px-[15px] py-[10px] mb-[100px] cursor-pointer" onclick="limparSessao()">
+        <a href="./login.html" class="no-underline text-white">
+            <h3 class="m-0 p-0">Sair</h3>
+        </a>
+    </div>
+</div>
 
 <div class="flex justify-center items-center min-h-screen">
   <div class="bg-[#E1E7EC] p-10 rounded-2xl shadow-2xl text-center w-[600px]">
