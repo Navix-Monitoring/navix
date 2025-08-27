@@ -1,5 +1,6 @@
+import {mostrarErro, sumirMensagem} from '../sessao.js'
+
 async function entrar() {
-    aguardar();
 
     var email = email_input.value;
     var senha = senha_input.value;
@@ -19,8 +20,6 @@ async function entrar() {
         let mensagem = 'Caracteres especiais são invalidos!';
         return mostrarErro(mensagem);
 
-    } else {
-        setTimeout(sumirMensagem, 5000);
     }
 
     console.log("FORM LOGIN: ", email);
@@ -56,3 +55,5 @@ async function entrar() {
         return mostrarErro(error);
     }
 }
+
+window.entrar = entrar; 

@@ -66,6 +66,8 @@ async function autenticar(req, res) {
     // }
 
     //pegando dados do banco
+    console.log("VAI VERIFICAR O LOGIN: ")
+
     const verificarLogin = await usuarioModel.autenticarLogin(output_email);
 
     // Bollean de hash (comparação)
