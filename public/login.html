@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Navix</title>
+  <script type="module" src="js/usuario/login.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body class="bg-slate-100 min-h-screen flex flex-col">
+
+    <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50">
+      <div>
+          <div class="h-22 w-22 bg-slate-300 rounded-full" id="logo"></div>
+      </div>
+      <div class="w-120 content-center">
+          <ul class="flex justify-between cabecalho">
+              <a href="./index.html" class="content-center">
+                  <li class="text-slate-100">Home</li>
+              </a>
+              <a href="./aboutUs.html" class="content-center">
+                  <li class="text-slate-100">Sobre nós</li>
+              </a>
+              <a href="./login.html">
+                  <li
+                      class="border border-4 border-solid border-slate-100 pb-2 pt-2 pl-7 pr-7 rounded-sm text-slate-100">
+                      Entrar</li>
+              </a>
+              <a href="./cadastro.html" class="content-center pl-7 pr-7 rounded-sm bg-slate-100" <li class="text-blue-950">
+                  Cadastro</li>
+              </a>
+          </ul>
+      </div>
+  </header>
+     <div class="bg-slate-200 flex-grow flex items-center justify-center px-6 py-6 h-screen">
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mt-40 p-10">
+
+      <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Entre na sua conta</h1>
+
+        <div id="cardErro" class="hidden bg-red-200 text-red-800 px-4 py-3 rounded mb-4">
+          <span id="mensagem_erro"></span>
+        </div>
+
+        <form onsubmit="event.preventDefault(); entrar();" id="loginForm" class="flex flex-col gap-4">
+            <label for="email_input" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="email_input" placeholder="seuemail@exemplo.com"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+            <label for="senha_input" class="block text-sm font-medium text-gray-700">Senha</label>
+            <input type="password" id="senha_input" placeholder="••••••••"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+            <button type="submit" class="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800 transition">
+            Entrar
+          </button>
+        </form>
+
+        <p class="mt-4 text-center text-gray-600 text-sm">
+          Ainda não tem uma conta?<a href="login.html" class="text-blue-800 font-semibold"> Cadastre-se</a>
+        </p>
+    </div>
+  </div>
+  <div
+        class="bg-slate-100 text-blue-950 flex flex-col justify-between lg:flex-row justify-between px-6 md:px-16 w-full py-16 gap-10 max-lg:items-center">
+        <div class="flex flex-col justify-center gap-7 items-start">
+            <div class="max-lg:flex w-[100%] justify-center">
+                <p class="text-2xl md:text-3xl">Entre em contato</p>
+            </div>
+            <div class="flex flex-col gap-5 max-lg:w-[100%]">
+                <div class="flex gap-2 items-center max-lg:justify-center">
+                    <i class="fa-solid fa-location-dot text-xl md:text-2xl"></i>
+                    <p class="text-base md:text-xl">Haddock Lobo, 595 </p>
+                </div>
+                <div class="flex gap-2 items-center max-lg:justify-center">
+                    <i class="fa-solid fa-envelope text-xl md:text-2xl"></i>
+                    <p class="text-base md:text-xl">navix@gmail.com</p>
+                </div>
+                <div class="flex gap-2 items-center max-lg:justify-center">
+                    <i class="fa-solid fa-phone text-xl md:text-2xl"></i>
+                    <p class="text-base md:text-xl">(11)99999-9999 </p>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col justify-center items-center max-w-lg gap-5 text-center max-lg:w-300">
+            <div class="flex gap-3 flex-wrap justify-center">
+                <div class="h-16 w-16 md:h-20 md:w-20 bg-slate-300 rounded-full flex items-center justify-center"><i
+                        class="fa-brands fa-instagram text-2xl md:text-3xl"></i></div>
+                <div class="h-16 w-16 md:h-20 md:w-20 bg-slate-300 rounded-full flex items-center justify-center"><i
+                        class="fa-brands fa-facebook text-2xl md:text-3xl"></i></div>
+                <div class="h-16 w-16 md:h-20 md:w-20 bg-slate-300 rounded-full flex items-center justify-center"><i
+                        class="fa-brands fa-x-twitter text-2xl md:text-3xl"></i></div>
+                <div class="h-16 w-16 md:h-20 md:w-20 bg-slate-300 rounded-full flex items-center justify-center"><i
+                        class="fa-brands fa-tiktok text-2xl md:text-3xl"></i></div>
+            </div>
+            <p class="text-base md:text-xl leading-relaxed">
+                Para acompanhar novidades sobre o desenvolvimento do projeto siga Navix nas redes sociais e conecte-se
+                com o projeto
+            </p>
+        </div>
+        <div class="flex flex-col justify-center items-start gap-3">
+            <div>
+                <p class="text-lg md:text-2xl">Quer fazer parte do projeto?</p>
+                <p class="text-lg md:text-2xl">Informe seu email</p>
+            </div>
+            <input type="text" class="px-4 rounded-sm py-2 bg-slate-200 w-full max-w-sm"
+                placeholder="exemplo@email.com">
+            <a href=""
+                class="px-6 py-3 bg-blue-700 rounded-sm text-slate-100 scale-100 hover:scale-110 transition-transform duration-300 transform-gpu">Enviar</a>
+        </div>
+    </div>
+</body>
+
+</html>

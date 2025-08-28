@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAVIX</title>
+    <title>Cadastro - NAVIX</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/usuario/cadastro.js" type="module" defer></script>
 </head>
 
-<body>
+<body class="bg-slate-100 min-h-screen flex flex-col">
     <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50">
         <div>
             <div class="h-22 w-22 bg-slate-300 rounded-full" id="logo"></div>
@@ -34,64 +35,40 @@
             </ul>
         </div>
     </header>
-    <div>
-        <div class="flex justify-center h-210 max-lg:h-290">
-            <div class="flex justify-evenly w-screen max-lg:flex-col mt-60">
-                <div class="content-center w-140 max-lg:w-screen">
-                    <h1 style="font-size: 64px; color: #002B50;">Inovação e Desenvolvimento</h1>
-                    <p style="font-size: 30px; color: #002B50;">
-                        Monitoramos o coração tecnológico dos veículos para garantir segurança, eficiência e
-                        previsibilidade.
-                        Nossa solução identifica falhas de hardware antes que elas aconteçam, protegendo vidas e
-                        reduzindo custos para sua empresas.
-                    </p>
-                </div>
-                <div class="flex items-center max-lg:justify-center">
-                    <img src="./assets/imagensIndex/carroIndex.png" alt="" class="w-160 h-160 max-md:h-14x0">
-                </div>
-            </div>
-        </div>
-        <div class="flex items-center justify-center h-190">
-            <div class="flex justify-evenly justify-between w-screen max-lg:flex-col-reverse h-screen">
-                <div class="flex items-center max-lg:justify-center">
-                    <img src="./assets/imagensIndex/diagramaSolucaoNegocio.png" alt=""
-                        class="w-160 h-140 max-lg:hidden">
-                    <img src="./assets/imagensIndex/diagramaSolucaoNegocioTelaMenor.png" alt=""
-                        class="w-190 h-90 hidden max-lg:block">
-                </div>
-                <div class="content-center w-160 max-lg:w-screen">
-                    <h1 style="font-size: 64px; color: #002B50;">Informações de valor para o seu negócio</h1>
-                    <p style="font-size: 30px; color: #636363;">
-                        Nosso sistema coleta e analisa dados de hardware de veículos com piloto automático ou sistemas
-                        ADAS, transformando-os em insights que ajudam a prever falhas, otimizar manutenções e reduzir
-                        custos. Assim, sua empresa ganha confiabilidade e valor estratégico a partir das informações
-                        certas no momento certo.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="flex justify-center h-160 max-lg:h-screen">
-            <div class="flex justify-evenly w-screen max-lg:flex-col">
-                <div class="w-160 h-110 content-center max-lg:w-screen">
-                    <h1 style="font-size: 64px; color: #002B50;">Conheça a NAVIX</h1>
-                    <p style="font-size: 30px; color: #002B50;">
-                        Descubra como transformamos dados em valor, ajudando empresas a reduzir custos, aumentar a
-                        segurança e
-                        antecipar falhas tecnológicas. Clique abaixo e saiba mais sobre quem somos.
-                    </p>
-                    <div class="flex justify-end mt-10" style="width: 90%;">
-                        <a href="#" class="border-4 border-solid border-blue-900 bg-[#002B50] text-white 
-                            px-7 py-3 rounded-sm inline-block">
-                            Sobre nós
-                        </a>
-                    </div>
+    <div class="bg-slate-200 flex-grow flex items-center justify-center px-6 py-6 h-screen">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mt-40 p-10">
 
-                </div>
-                <div class="flex items-center h-110 max-lg:justify-center">
-                    <img src="./assets/imagensIndex/sobreNos-removebg-preview.png" alt=""
-                        class="w-130 h-110 max-lg:w-160 h-100">
-                </div>
+            <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Cadastro da Empresa</h1>
+
+            <div id="cardErro" class="hidden bg-red-200 text-red-800 px-4 py-3 rounded mb-4">
+                <span id="mensagem_erro"></span>
             </div>
+
+            <form onsubmit="event.preventDefault(); cadastrar();" class="flex flex-col gap-4">
+
+                <input id="razaoSocial_input" type="text" placeholder="Razão Social"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <input id="cnpj_input" type="text" placeholder="CNPJ (somente números)"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <input id="email_input" type="email" placeholder="Email corporativo"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <input id="senha_input" type="password" placeholder="Senha"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <input id="confirmar_senha_input" type="password" placeholder="Confirmar senha"
+                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+                <button type="submit" class="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800 transition">
+                    Cadastrar
+                </button>
+            </form>
+
+            <p class="mt-4 text-center text-gray-600 text-sm">
+                Já tem uma conta? <a href="login.html" class="text-blue-800 font-semibold">Entrar</a>
+            </p>
         </div>
     </div>
     <div

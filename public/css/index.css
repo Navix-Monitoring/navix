@@ -74,8 +74,8 @@
 /*Foto Lucas Rocha (mudar no assets/img/{nomedafoto})*/
 #foto5
 {
-    background-image: url(../assets/img/gato.jpg);
-    background-size: contain;
+    background-image: url(../assets/img/rocha.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;
@@ -90,4 +90,14 @@
     background-position: center;
     height: 200px;
     width: 200px;
+}
+
+#logo
+{
+    background-image: url(../assets/img/Logo.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 90px;
+    width: 90px;
 }
