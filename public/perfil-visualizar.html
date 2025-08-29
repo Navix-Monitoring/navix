@@ -1,75 +1,100 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atualizar Perfil</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atualizar Perfil</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="bg-white-100">
+
+<body class="bg-gray-100">
+  <div class="fixed top-0 left-0 h-screen w-[300px] flex flex-col items-center bg-white border-r border-[#002B50] py-6">
+
+    <!-- Logo -->
+    <img src="./assets/navix-logo.jpg" class="w-[200px] h-[120px] mb-6">
+
+    <!-- Foto de perfil -->
+    <div class="rounded-full w-20 h-20 flex justify-center items-center bg-gray-300 mb-2">
+      <img src="./assets/img/foto-usuario.png" class="w-[32px] h-[32px]">
+    </div>
+
+    <!-- Nome do usuário -->
+    <h3 class="text-blue-900 font-extrabold text-[1.2rem] mb-8 text-center">
+      <span id="b_usuario">usuário</span>
+    </h3>
+
+    <!-- Botões -->
+    <div class="flex flex-col gap-4 w-[70%] items-center">
+      <div class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2">
+        <a href="#" class="no-underline">
+          <h3 class="text-black m-0 p-0">Dashboard</h3>
+        </a>
+      </div>
+
+      <div class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2">
+        <a href="index.html" class="no-underline">
+          <h3 class="text-black m-0 p-0">Tela Inicial</h3>
+        </a>
+      </div>
+    </div>
+
+    <!-- Botão Sair -->
+    <div class="w-[60%] bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
+      onclick="limparSessao()">
+      <a href="./login.html" class="no-underline text-white">
+        <h3 class="m-0 p-0">Sair</h3>
+      </a>
+    </div>
+  </div>
+</body>
 
 <div class="flex justify-center items-center min-h-screen">
-  <div class="fixed top-0 left-0 h-screen w-[300px] flex flex-col justify-evenly items-center bg-white-100 border-r border-white-100">
-    <img src="./assets/navix-logo.jpg" class="w-[400px] h-[250px]">
+  <div class="bg-slate-300 p-10 rounded-2xl shadow-2xl text-center w-[600px]">
 
-    <div class="w-full ml-[20px] flex justify-center">
-        <h3 class="text-white font-light text-[1.2rem]">
-            Bem Vindo de volta, <span id="b_usuario" class="font-extrabold">usuário</span>!
-        </h3>
+    <!-- Foto -->
+    <div class="bg-[#002B50] rounded-full w-32 h-32 flex justify-center items-center mx-auto text-white text-4xl">
+      📷
     </div>
 
-    <div class="w-[40%] bg-blue-900 rounded-md text-center py-[2%] px-[5%]">
-        <a href="#" class="no-underline text-white">
-            <h3 class="m-0 p-0">Perfil</h3>
-        </a>
+    <p class="text-[#002B50] mt-4 text-lg cursor-pointer">Alterar foto de perfil</p>
+
+    <!-- Inputs -->
+    <input class="w-full p-4 mt-6 rounded-md border text-lg" id="razaoSocial_input" type="text" placeholder="Nome">
+    <input class="w-full p-4 mt-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
+    <input class="w-full p-4 mt-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Senha">
+    <div id="iconeOlho">
+      <i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>
     </div>
 
-    <div class="w-[40%] bg-white border-2 border-black rounded-md text-center py-[2%] px-[5%]">
-        <a href="#" class="no-underline">
-            <h3 class="text-black m-0 p-0">Dashboard</h3>
-        </a>
+    <!-- Botão -->
+    <div>
+      <form onsubmit="event.preventDefault(); atualizar();">
+        <button class="w-full p-4 mt-6 bg-[#002B50] text-white text-lg rounded-md hover:bg-[#001C35]">
+          Alterar dados
+        </button>
+      </form>
+      <form onsubmit="event.preventDefault(); deletar();">
+        <button class="w-full p-4 mt-6 bg-red-600 text-white text-lg rounded-md hover:bg-[#001C35]">
+          Deletar Usuário
+        </button>
+      </form>
     </div>
-
-    <div class="w-[40%] bg-white border-2 border-black rounded-md text-center py-[2%] px-[5%]">
-        <a href="#" class="no-underline">
-            <h3 class="text-black m-0 p-0">Tela Inicial</h3>
-        </a>
-    </div>
-
-    <div class="w-[20%] bg-black text-white rounded-xl text-center px-[15px] py-[10px] mb-[100px] cursor-pointer" onclick="limparSessao()">
-        <a href="./login.html" class="no-underline text-white">
-            <h3 class="m-0 p-0">Sair</h3>
-        </a>
-    </div>
-</div>
-
-  <div class="bg-[#E1E7EC] p-10 rounded-2xl shadow-2xl text-center w-[600px]">
-      
-      <div class="bg-[#002B50] rounded-full w-32 h-32 flex justify-center items-center mx-auto text-white text-4xl">
-        📷
-      </div>
-      
-      <p class="text-[#002B50] mt-4 text-lg cursor-pointer">Alterar foto de perfil</p>
-      
-    
-      <input class="w-full p-4 mt-6 rounded-md border text-lg" type="text" placeholder="Nome">
-      <input class="w-full p-4 mt-4 rounded-md border text-lg" type="email" placeholder="Email">
-      <input class="w-full p-4 mt-4 rounded-md border text-lg" type="password" placeholder="Senha">
-      
-
-      <button class="w-full p-4 mt-6 bg-[#002B50] text-white text-lg rounded-md hover:bg-[#001C35]">
-        Alterar dados
-      </button>
-      <button class="w-full p-4 mt-6 bg-red-600 text-white text-lg rounded-md hover:bg-[#001C35]">
-        Deletar Usuário
-      </button>
   </div>
 </div>
 
 </body>
+
 </html>
-
-
-
-
-
+<script>
+  function visualizarSenha() {
+    var inputSenha = document.getElementById('ipt_senha');
+    if (inputSenha.type === 'password') {
+      iconeOlho.innerHTML = '<i class="fa-solid fa-eye" onclick="visualizarSenha()"></i>';
+      inputSenha.type = 'text';
+    } else {
+      inputSenha.type = 'password';
+      iconeOlho.innerHTML = '<i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>';
+    }
+  }
+</script>

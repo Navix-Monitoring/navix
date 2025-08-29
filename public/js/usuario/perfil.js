@@ -98,4 +98,39 @@ async function atualizar() {
     } catch (error) {
         return mostrarErro(error);
     }
+    
+    
+    async function carregarUsuario() {
+    try {
+        
+        const email = sessionStorage.email_ss;
+
+        const resposta = await fetch(`/usuarios/get_register/${email}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+        });
+
+        if (!resposta.ok) {
+            throw new Error("Erro ao carregar dados do usuário: " + resposta.status);
+        }
+
+        const usuario = await resposta.json();
+
+        
+        razaoSocial_input.value = usuario.razaoSocial;
+        email_input.value = usuario.email;
+        senha_input.value = usuario.senha;
+
+    } catch (error) {
+        console.error(error);
+        mostrarErro("Não foi possível carregar os dados da conta.");
+    }
+}
+
+
+window.onload = carregarUsuario;
+
+ 
+        
+    
 }

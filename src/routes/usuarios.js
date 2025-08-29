@@ -20,4 +20,8 @@ router.delete("/remove_register", function (req, res) {
     usuarioController.deletar(req, res);
 })
 
+router.get("/get_register", function(req, res){
+    usuarioController.carregarUsuario(req, res)
+})
+
 module.exports = router;
