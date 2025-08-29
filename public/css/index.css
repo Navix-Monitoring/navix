@@ -28,6 +28,13 @@
     object-fit: cover;
 }
 
+#fotoUsuario
+{
+    background-image: url(../assets/img/gato.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 /*Foto gabi (mudar no assets/img/{nomedafoto})*/
 #foto1
