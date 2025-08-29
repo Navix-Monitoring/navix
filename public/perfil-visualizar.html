@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atualizar Perfil</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="perfil.js"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -60,12 +61,14 @@
     <p class="text-[#002B50] mt-4 text-lg cursor-pointer">Alterar foto de perfil</p>
 
     <!-- Inputs -->
-    <input class="w-full p-4 mt-6 rounded-md border text-lg" id="razaoSocial_input" type="text" placeholder="Nome">
-    <input class="w-full p-4 mt-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
-    <input class="w-full p-4 mt-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Senha">
-    <div id="iconeOlho">
-      <i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>
-    </div>
+     <form onsubmit="event.preventDefault(); carregarInformacoes()">
+       <input class="w-full p-4 mt-6 rounded-md border text-lg" id="razaoSocial_input" type="text" placeholder="Nome">
+       <input class="w-full p-4 mt-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
+       <input class="w-full p-4 mt-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Senha">
+       <div id="iconeOlho">
+         <i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>
+       </div>
+     </form>
 
     <!-- Botão -->
     <div>

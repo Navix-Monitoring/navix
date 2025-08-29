@@ -100,35 +100,73 @@ async function atualizar() {
     }
     
     
-    async function carregarUsuario() {
-    try {
-        
-        const email = sessionStorage.email_ss;
+       async function carregarInformacoes() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var idUsuario = urlParams.get('id');
+        var idUsuarioSession = sessionStorage.ID_USUARIO;
 
-        const resposta = await fetch(`/usuarios/get_register/${email}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" }
-        });
+        var nome = null;
+        var email = null;
+        var senha = null;
 
-        if (!resposta.ok) {
-            throw new Error("Erro ao carregar dados do usuário: " + resposta.status);
+        if (idUsuarioSession == null || idUsuarioSession == "") {
+            alert("Você precisa estar logado para visualizar o perfil!");
+            window.location = "./login.html";
+            return;
         }
 
-        const usuario = await resposta.json();
+        if (idUsuarioSession != idUsuario) {
+            alert("Você não pode acessar o perfil de outro usuário!");
+            window.location = "./index.html";
+            return;
+        }
 
-        
-        razaoSocial_input.value = usuario.razaoSocial;
-        email_input.value = usuario.email;
-        senha_input.value = usuario.senha;
+        fetch("/usuarios/carregarInformacoes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }, body: JSON.stringify({
+                idUsuarioServer: idUsuario,
+            })
+        }).then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(function (resposta) {
+                    console.log(resposta);
+                    imagemUsuario.innerHTML = `
+                    <img src="${resposta[0].caminhoImagem}" alt="Imagem do Usuário">
+                    <input type="file" id="foto" name="foto" hidden>
+                    <label for="foto" class="upload" style="margin-top: 10px;">
+                        Escolher imagem
+                    </label>
+                    <p id="mensagemImagemUsuario" style="margin-top: 10px; padding-bottom: 10px"></p>
+                    `;
 
-    } catch (error) {
-        console.error(error);
-        mostrarErro("Não foi possível carregar os dados da conta.");
+                    var inputFoto = document.getElementById("foto");
+                    var mensagemImagemUsuario = document.getElementById("mensagemImagemUsuario");
+
+                    inputFoto.addEventListener('change', function () {
+                        if (inputFoto.files.length > 0) {
+                            var nomeArquivo = inputFoto.files[0].name;
+                            mensagemImagemUsuario.innerHTML = `Imagem selecionada: "${nomeArquivo}".`;
+                        } else {
+                            mensagemImagemUsuario.innerHTML = '';
+                        }
+                    })
+
+                    nome = resposta[0].nome;
+                    console.log("NOME: " + nome)
+                    document.getElementById('razaoSocial_input').value = nome;
+
+                    email = resposta[0].email;
+                    document.getElementById('email_input').value = email;
+
+                    senha = resposta[0].senha;
+                    document.getElementById('senha_input').value = senha;
+
+                })
+            }
+        })
     }
-}
-
-
-window.onload = carregarUsuario;
 
  
         
