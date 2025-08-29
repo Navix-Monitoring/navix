@@ -148,6 +148,33 @@ async function deletar(req, res) {
   }
 }
 
+async function buscarPorEmail(req, res) {
+  try {
+    const { email } = req.params;
+
+    if (!email) {
+      return res.status(400).send("E-mail é obrigatório.");
+    }
+
+    const usuario = await usuarioModel.buscarPorEmail(email);
+
+    if (usuario) {
+      
+      res.status(200).json({
+        razaoSocial: usuario.razaoSocial,
+        email: usuario.email,
+        senha: usuario.senha  
+      });
+    } else {
+      res.status(404).send("Usuário não encontrado.");
+    }
+
+  } catch (erro) {
+    console.error("\nErro ao buscar usuário: ", erro.sqlMessage || erro);
+    res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
+  }
+}
+
 module.exports = {
   autenticar,
   cadastrar,
