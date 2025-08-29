@@ -23,7 +23,7 @@ function verificarEmail(output_email) {
     const instrucaoSql = `
         SELECT emailCorporativo 
         FROM empresa
-        WHERE email = ?;
+        WHERE emailCorporativo = ?;
     `;
 
     return database.executar(instrucaoSql, [output_email]);
