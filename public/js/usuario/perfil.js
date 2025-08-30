@@ -98,77 +98,59 @@ async function atualizar() {
     } catch (error) {
         return mostrarErro(error);
     }
-    
-    
-       async function carregarInformacoes() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var idUsuario = urlParams.get('id');
-        var idUsuarioSession = sessionStorage.ID_USUARIO;
 
-        var nome = null;
-        var email = null;
-        var senha = null;
 
-        if (idUsuarioSession == null || idUsuarioSession == "") {
-            alert("Você precisa estar logado para visualizar o perfil!");
-            window.location = "./login.html";
-            return;
-        }
+    async function carregarInformacoes() {
+    var idUsuarioSession = sessionStorage.ID_USUARIO;
 
-        if (idUsuarioSession != idUsuario) {
-            alert("Você não pode acessar o perfil de outro usuário!");
-            window.location = "./index.html";
-            return;
-        }
+    if (!idUsuarioSession) {
+        alert("Você precisa estar logado para visualizar o perfil!");
+        window.location = "./login.html";
+        return;
+    }
 
-        fetch("/usuarios/carregarInformacoes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            }, body: JSON.stringify({
-                idUsuarioServer: idUsuario,
-            })
-        }).then(function (resposta) {
-            if (resposta.ok) {
-                resposta.json().then(function (resposta) {
-                    console.log(resposta);
-                    imagemUsuario.innerHTML = `
-                    <img src="${resposta[0].caminhoImagem}" alt="Imagem do Usuário">
+    fetch("/usuarios/carregarInformacoes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuarioSession,
+        })
+    })
+        .then(resposta => {
+            if (!resposta.ok) throw "Erro ao carregar informações";
+            return resposta.json();
+        })
+        .then(dados => {
+            console.log("Dados do usuário:", dados);
+
+            // preenche inputs
+            document.getElementById('razaoSocial_input').value = dados[0].nome;
+            document.getElementById('email_input').value = dados[0].email;
+            document.getElementById('senha_input').value = dados[0].senha;
+
+            // se tiver imagem
+            if (dados[0].caminhoImagem) {
+                document.getElementById("imagemUsuario").innerHTML = `
+                    <img src="${dados[0].caminhoImagem}" alt="Imagem do Usuário">
                     <input type="file" id="foto" name="foto" hidden>
                     <label for="foto" class="upload" style="margin-top: 10px;">
                         Escolher imagem
                     </label>
                     <p id="mensagemImagemUsuario" style="margin-top: 10px; padding-bottom: 10px"></p>
-                    `;
-
-                    var inputFoto = document.getElementById("foto");
-                    var mensagemImagemUsuario = document.getElementById("mensagemImagemUsuario");
-
-                    inputFoto.addEventListener('change', function () {
-                        if (inputFoto.files.length > 0) {
-                            var nomeArquivo = inputFoto.files[0].name;
-                            mensagemImagemUsuario.innerHTML = `Imagem selecionada: "${nomeArquivo}".`;
-                        } else {
-                            mensagemImagemUsuario.innerHTML = '';
-                        }
-                    })
-
-                    nome = resposta[0].nome;
-                    console.log("NOME: " + nome)
-                    document.getElementById('razaoSocial_input').value = nome;
-
-                    email = resposta[0].email;
-                    document.getElementById('email_input').value = email;
-
-                    senha = resposta[0].senha;
-                    document.getElementById('senha_input').value = senha;
-
-                })
+                `;
             }
         })
-    }
+        .catch(erro => {
+            console.error(erro);
+            alert("Não foi possível carregar as informações do usuário.");
+        });
+}
 
- 
-        
-    
+// Corrige o erro de "windou"
+window.onload = carregarInformacoes;
+
+
+
+
+
 }
