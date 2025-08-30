@@ -8,7 +8,7 @@ router.post("/register", function (req, res) {
     usuarioController.cadastrar(req, res);
 })
 
-router.get("/authentic", function (req, res) {
+router.post("/authentic", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
