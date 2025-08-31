@@ -11,7 +11,7 @@
 </head>
 
 <body class="overflow-x-hidden">
-    <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50 z-50">
+    <!-- <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50 z-50">
         <div>
             <div class="h-18 w-18 bg-slate-300 rounded-full" id="logo"></div>
         </div>
@@ -32,9 +32,52 @@
                 </a>
             </ul>
         </div>
-    </header>
-    <div class="px-15 bg-slate-300 pb-20">
-        <div class="flex pt-38 justify-between">
+    </header> -->
+
+    <div class="fixed top-0 left-0 h-screen w-[300px] flex flex-col items-center bg-slate-100 py-6">
+
+    <!-- Logo -->
+    <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-20">
+
+    <!-- Foto de perfil -->
+    <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2" style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    </div>
+
+    <!-- Nome do usuário -->
+    <p class="font-bold text-blue-900">Olá, Fábio da Silva Silva</p>
+    <p class="mb-4 text-blue-900">Product Onwer</p>
+
+    <!-- Botões -->
+    <div class="flex flex-col gap-4 w-[70%] items-center">
+      <div class="w-full bg-slate-100 border-2 border-blue-900 rounded-md text-center py-2">
+        <a href="#" class="no-underline">
+          <h3 class="text-black m-0 p-0">Dashboard</h3>
+        </a>
+      </div>
+
+      <div class="w-full bg-slate-100 border-2 border-blue-900 rounded-md text-center py-2">
+        <a href="index.html" class="no-underline">
+          <h3 class="text-black m-0 p-0">Tela Inicial</h3>
+        </a>
+      </div>
+      <div class="w-full bg-slate-100 border-2 border-blue-900 rounded-md text-center py-2">
+        <a href="admin.html" class="no-underline">
+          <h3 class="text-black m-0 p-0">Usuários</h3>
+        </a>
+      </div>
+    </div>
+
+    <!-- Botão Sair -->
+    <div class="w-[60%] bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
+      onclick="limparSessao()">
+      <a href="./login.html" class="no-underline text-white">
+        <h3 class="m-0 p-0">Sair</h3>
+      </a>
+    </div>
+  </div>
+
+    <div class="px-15 pl-80 bg-slate-300 pb-20">
+        <div class="flex pt-12 justify-between">
             <div class="flex gap-8 bg-slate-100 items-center px-10 py-6 rounded-md">
                 <a href="" class="font-semibold border-b-4 border-slate-700">Membros</a>
                 <a href="" class="font-semibold">Administradores</a>
@@ -50,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-between pt-8 items-center">
+        <div class="flex justify-between pt-12 items-center">
             <div class="flex gap-10 items-center">
                 <p class="text-3xl font-semibold">Membros</p>
                 <a href="" class="px-8 py-4 bg-blue-950 text-slate-100 font-semibold text-lg rounded-md">Adicionar</a>
