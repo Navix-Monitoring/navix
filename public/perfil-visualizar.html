@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atualizar Perfil</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="js/usuario/perfil.js"></script>
 </head>
 
 <body class="bg-gray-100" onload="carregarInformacoes()">
@@ -63,7 +64,7 @@
       <form onsubmit="event.preventDefault(); atualizar();">
         <input class="w-full p-4 mt-6 rounded-md border text-lg" id="razaoSocial_input" type="text" placeholder="Nome">
         <input class="w-full p-4 mt-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
-        <input class="w-full p-4 mt-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Senha">
+        <input class="w-full p-4 mt-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Digite sua nova senha">
 
         <div id="iconeOlho" class="mt-2 cursor-pointer">
           <i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>
@@ -80,8 +81,5 @@
       </form>
     </div>
   </div>
-
-
-  <script src="js/usuario/perfil.js"></script>
 </body>
 </html>

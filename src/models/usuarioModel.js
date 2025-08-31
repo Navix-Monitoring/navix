@@ -48,11 +48,18 @@ function atualizarCampos(output_razaoSocial, output_email, senhaHash, output_ema
     return database.executar(instrucaoSql, [output_razaoSocial, output_email, senhaHash, output_emailAntigo]);
 }
 
-function carregarInformacoes(idUsuario) {
+function carregarInformacoesUsuario(email) {
     console.log("Entrou no usuarioModel");
     var instrucao = `
-        SELECT * FROM usuario WHERE id_usuario = ${idUsuario};
+        SELECT * FROM usuario WHERE email = ${email};
     `;
+    console.log("Executando a query: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function carregarInformacoesEmpresa(email) {
+    console.log("Entrou no usuarioModel");
+    var instrucao = `SELECT * FROM empresa WHERE emailCorporativo = "${email}";`;
     console.log("Executando a query: \n" + instrucao);
     return database.executar(instrucao);
 }
@@ -64,5 +71,6 @@ module.exports = {
     verificarEmail,
     deletar_conta,
     atualizarCampos,
-    carregarInformacoes
+    carregarInformacoesUsuario,
+    carregarInformacoesEmpresa
 };

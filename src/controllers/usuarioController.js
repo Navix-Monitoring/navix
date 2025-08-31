@@ -150,11 +150,11 @@ async function deletar(req, res) {
 
 function carregarInformacoes(req, res) {
   console.log("Entrou no carregarInformacoes");
-  var idUsuario = req.body.idUsuarioServer;
+  var emailUsuario = req.body.emailUsuarioSession;
 
-  console.log("ID do usuário: ", idUsuario);
+  console.log("Email do usuário: ", emailUsuario);
 
-  usuarioModel.carregarInformacoes(idUsuario)
+  usuarioModel.carregarInformacoesEmpresa(emailUsuario)
     .then(function (resultado) {
       console.log("Resultado: ", resultado);
       res.json(resultado);

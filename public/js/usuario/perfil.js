@@ -98,12 +98,12 @@ async function atualizar() {
     } catch (error) {
         return mostrarErro(error);
     }
+}
 
+function carregarInformacoes() {
+    var emailUsuarioSession = sessionStorage.email_ss;
 
-    async function carregarInformacoes() {
-    var idUsuarioSession = sessionStorage.ID_USUARIO;
-
-    if (!idUsuarioSession) {
+    if (!emailUsuarioSession) {
         alert("Você precisa estar logado para visualizar o perfil!");
         window.location = "./login.html";
         return;
@@ -113,7 +113,7 @@ async function atualizar() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            idUsuarioServer: idUsuarioSession,
+            emailUsuarioSession: emailUsuarioSession,
         })
     })
         .then(resposta => {
@@ -124,9 +124,9 @@ async function atualizar() {
             console.log("Dados do usuário:", dados);
 
             // preenche inputs
-            document.getElementById('razaoSocial_input').value = dados[0].nome;
-            document.getElementById('email_input').value = dados[0].email;
-            document.getElementById('senha_input').value = dados[0].senha;
+            document.getElementById('razaoSocial_input').value = dados[0].razaoSocial;
+            document.getElementById('email_input').value = dados[0].emailCorporativo;
+            document.getElementById('b_usuario').innerHTML = dados[0].razaoSocial;
 
             // se tiver imagem
             if (dados[0].caminhoImagem) {
@@ -144,13 +144,6 @@ async function atualizar() {
             console.error(erro);
             alert("Não foi possível carregar as informações do usuário.");
         });
-}
-
-// Corrige o erro de "windou"
-window.onload = carregarInformacoes;
-
-
-
-
-
+    // Corrige o erro de "window"
+    window.onload = carregarInformacoes;
 }
