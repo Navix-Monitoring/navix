@@ -6,25 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atualizar Perfil</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="js/usuario/perfil.js"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100" onload="carregarInformacoes()">
   <div class="fixed top-0 left-0 h-screen w-[300px] flex flex-col items-center bg-white border-r border-[#002B50] py-6">
 
-    <!-- Logo -->
+   
     <img src="./assets/navix-logo.jpg" class="w-[200px] h-[120px] mb-6">
 
-    <!-- Foto de perfil -->
+    
     <div class="rounded-full w-20 h-20 flex justify-center items-center bg-gray-300 mb-2">
       <img src="./assets/img/foto-usuario.png" class="w-[32px] h-[32px]">
     </div>
 
-    <!-- Nome do usuário -->
+  
     <h3 class="text-blue-900 font-extrabold text-[1.2rem] mb-8 text-center">
       <span id="b_usuario">usuário</span>
     </h3>
 
-    <!-- Botões -->
+    
     <div class="flex flex-col gap-4 w-[70%] items-center">
       <div class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2">
         <a href="#" class="no-underline">
@@ -47,54 +48,41 @@
       </a>
     </div>
   </div>
-</body>
 
-<div class="flex justify-center items-center min-h-screen">
-  <div class="bg-slate-300 p-10 rounded-2xl shadow-2xl text-center w-[600px]">
 
-    <!-- Foto -->
-    <div class="bg-[#002B50] rounded-full w-32 h-32 flex justify-center items-center mx-auto text-white text-4xl">
-      📷
-    </div>
+  <div class="flex justify-center items-center min-h-screen">
+    <div class="bg-slate-300 p-10 rounded-2xl shadow-2xl text-center w-[600px]">
 
-    <p class="text-[#002B50] mt-4 text-lg cursor-pointer">Alterar foto de perfil</p>
+      <!-- Foto -->
+      <div class="bg-[#002B50] rounded-full w-32 h-32 flex justify-center items-center mx-auto text-white text-4xl">
+        📷
+      </div>
 
-    <!-- Inputs -->
-    <input class="w-full p-4 mt-6 rounded-md border text-lg" id="razaoSocial_input" type="text" placeholder="Nome">
-    <input class="w-full p-4 mt-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
-    <input class="w-full p-4 mt-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Senha">
-    <div id="iconeOlho">
-      <i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>
-    </div>
+      <p class="text-[#002B50] mt-4 text-lg cursor-pointer">Alterar foto de perfil</p>
 
-    <!-- Botão -->
-    <div>
+      <!-- Form -->
       <form onsubmit="event.preventDefault(); atualizar();">
-        <button class="w-full p-4 mt-6 bg-[#002B50] text-white text-lg rounded-md hover:bg-[#001C35]">
+        <label for="razaoSocial_input" class="flex mt-4 text-sm font-medium text-gray-700">Nome</label>
+        <input class="w-full p-4 rounded-md border text-lg" id="razaoSocial_input" type="text" placeholder="Nome">
+         <label for="email_input" class="flex mt-4 text-sm font-medium text-gray-700">Email</label>
+        <input class="w-full p-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
+        <label for="senha_input" class="flex mt-4 text-sm font-medium text-gray-700">Digite sua nova senha</label>
+        <input class="w-full p-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Digite sua nova senha">
+
+        <div id="iconeOlho" class="mt-2 cursor-pointer">
+          <i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>
+        </div>
+
+        <!-- Botões -->
+        <button type="submit" class="w-full p-4 mt-6 bg-[#002B50] text-white text-lg rounded-md hover:bg-[#001C35]">
           Alterar dados
         </button>
-      </form>
-      <form onsubmit="event.preventDefault(); deletar();">
-        <button class="w-full p-4 mt-6 bg-red-600 text-white text-lg rounded-md hover:bg-[#001C35]">
+
+        <button type="button" onclick="deletar()" class="w-full p-4 mt-6 bg-red-600 text-white text-lg rounded-md hover:bg-[#001C35]">
           Deletar Usuário
         </button>
       </form>
     </div>
   </div>
-</div>
-
 </body>
-
 </html>
-<script>
-  function visualizarSenha() {
-    var inputSenha = document.getElementById('ipt_senha');
-    if (inputSenha.type === 'password') {
-      iconeOlho.innerHTML = '<i class="fa-solid fa-eye" onclick="visualizarSenha()"></i>';
-      inputSenha.type = 'text';
-    } else {
-      inputSenha.type = 'password';
-      iconeOlho.innerHTML = '<i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>';
-    }
-  }
-</script>
