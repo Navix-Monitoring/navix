@@ -49,7 +49,7 @@ function deletar_conta(output_email) {
 }
 
 function atualizarFotoEmpresa(nome_imagem, output_email) {
-    var caminhoImagem = "../../public/assets/img/imagens-perfil/" + nome_imagem;
+    var caminhoImagem = "../assets/img/imagens-perfil/" + nome_imagem;
     const instrucaoSql = `
         UPDATE empresa
         SET caminhoImagem = "${caminhoImagem}"
@@ -60,7 +60,7 @@ function atualizarFotoEmpresa(nome_imagem, output_email) {
 }
 
 function atualizarFotoUsuario(nome_imagem, output_email) {
-    var caminhoImagem = "../../public/assets/img/imagens-perfil/" + nome_imagem;
+    var caminhoImagem = "../assets/img/imagens-perfil/" + nome_imagem;
     const instrucaoSql = `
         UPDATE usuario
         SET caminhoImagem = "${caminhoImagem}"
@@ -72,7 +72,7 @@ function atualizarFotoUsuario(nome_imagem, output_email) {
 function mudarNomeEmpresa(novoNome, emailUsuario) {
     console.log("Entrou no usuarioModel");
     var instrucao = `
-        UPDATE empresa SET nome = '${novoNome}' WHERE emailCorporativo = "${emailUsuario}";
+        UPDATE empresa SET razaoSocial = '${novoNome}' WHERE emailCorporativo = "${emailUsuario}";
     `;
     console.log("Executando a query: \n" + instrucao);
     return database.executar(instrucao);
