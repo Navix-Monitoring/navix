@@ -20,7 +20,7 @@ async function cadastrar(req, res) {
     }
 
     // criptografando a senha
-    const senhaHash = await hashPwdUser.hashPassword(output_senha);
+    const senha = await hashPwdUser.hashPassword(output_senha);
 
     // Verificação de duplicidade
     console.log("output email  " + output_email)
@@ -30,7 +30,7 @@ async function cadastrar(req, res) {
       return res.status(409).send("Email já cadastrado.");
     }
 
-    const resultado = await usuarioModel.cadastrar(output_razaoSocial, output_cnpj, output_email, senhaHash);
+    const resultado = await usuarioModel.cadastrar(output_razaoSocial, output_cnpj, output_email, senha);
 
     // Reusultado do cadastro no banco
     if (resultado) {
@@ -68,18 +68,38 @@ async function autenticar(req, res) {
     //pegando dados do banco
     console.log("VAI VERIFICAR O LOGIN: ")
 
-    const verificarLogin = await usuarioModel.autenticarLogin(output_email);
+    const verificarLoginEmpresa = await usuarioModel.autenticarLoginEmpresa(output_email);
 
-    // Bollean de hash (comparação)
-    const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLogin[0].senhaHash);
+    if (verificarLoginEmpresa.length > 0 && verificarLoginEmpresa[0].emailCorporativo) {
+      console.log("REPOSTA DO BANCO: " + verificarLoginEmpresa)
+      // Bollean de hash (comparação)
+      const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLoginEmpresa[0].senha);
 
-    if (!validacaoHash) {
-      return res.status(400).send("Senha incorreta!");
+      if (!validacaoHash) {
+        return res.status(400).send("Senha incorreta!");
+      }
+
+      console.log(`Resultados: `, verificarLoginEmpresa);
+
+      return res.json(verificarLoginEmpresa);
+    } else {
+      const verificarLoginUsuario = await usuarioModel.autenticarLoginUsuario(output_email);
+
+      if (verificarLoginUsuario[0].email) {
+
+        const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLoginUsuario[0].senha);
+
+        if (!validacaoHash) {
+          return res.status(400).send("Senha incorreta!");
+        }
+
+        console.log(`Resultados: `, verificarLoginUsuario);
+
+        return res.json(verificarLoginUsuario);
+      }else{
+        return res.status(400).send("Usuário não cadastrado")
+      }
     }
-
-    console.log(`Resultados: `, verificarLogin);
-
-    return res.json(verificarLogin);
 
   }
   catch (erro) {
@@ -103,9 +123,9 @@ async function atualizar(req, res) {
     }
 
     // criptografando a senha
-    const senhaHash = await hashPwdUser.hashPassword(output_senha);
+    const senha = await hashPwdUser.hashPassword(output_senha);
 
-    const resultado = await usuarioModel.atualizarCampos(output_razaoSocial, output_email, senhaHash, output_emailAntigo);
+    const resultado = await usuarioModel.atualizarCampos(output_razaoSocial, output_email, senha, output_emailAntigo);
 
     // Reusultado da atualização dos dados no banco
     if (resultado) {
