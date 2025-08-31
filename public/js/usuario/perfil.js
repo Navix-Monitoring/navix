@@ -37,7 +37,7 @@ async function deletar() {
 }
 
 async function atualizar() {
-    var razaoSocial = razaoSocial_input.value;
+    var razaoSocial = nome_input.value;
     var email = email_input.value;
     var senha = senha_input.value;
     var emailAntigo = sessionStorage.email_ss;
@@ -102,7 +102,7 @@ async function atualizar() {
 
 function carregarInformacoes() {
     var emailUsuarioSession = sessionStorage.email_ss;
-
+    var tipoUsuario = sessionStorage.tipo
     if (!emailUsuarioSession) {
         alert("Você precisa estar logado para visualizar o perfil!");
         window.location = "./login.html";
@@ -114,6 +114,7 @@ function carregarInformacoes() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             emailUsuarioSession: emailUsuarioSession,
+            tipoUsuarioSession: tipoUsuario
         })
     })
         .then(resposta => {
@@ -124,9 +125,17 @@ function carregarInformacoes() {
             console.log("Dados do usuário:", dados);
 
             // preenche inputs
-            document.getElementById('razaoSocial_input').value = dados[0].razaoSocial;
-            document.getElementById('email_input').value = dados[0].emailCorporativo;
-            document.getElementById('b_usuario').innerHTML = dados[0].razaoSocial;
+
+            if(dados[0].razaoSocial){
+                document.getElementById('nome_input').value = dados[0].razaoSocial;
+                document.getElementById('email_input').value = dados[0].emailCorporativo;
+                document.getElementById('b_usuario').innerHTML = dados[0].razaoSocial;
+            }else{
+                document.getElementById('nome_input').value = dados[0].nome;
+                document.getElementById('email_input').value = dados[0].email;
+                document.getElementById('b_usuario').innerHTML = dados[0].nome;
+            }
+            
 
             // se tiver imagem
             if (dados[0].caminhoImagem) {

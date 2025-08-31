@@ -171,14 +171,23 @@ async function deletar(req, res) {
 function carregarInformacoes(req, res) {
   console.log("Entrou no carregarInformacoes");
   var emailUsuario = req.body.emailUsuarioSession;
+  var tipoUsuario = req.body.tipoUsuarioSession;
 
   console.log("Email do usuário: ", emailUsuario);
 
-  usuarioModel.carregarInformacoesEmpresa(emailUsuario)
+  if(tipoUsuario == 1){
+    usuarioModel.carregarInformacoesEmpresa(emailUsuario)
     .then(function (resultado) {
       console.log("Resultado: ", resultado);
       res.json(resultado);
     });
+  }else{
+    usuarioModel.carregarInformacoesUsuario(emailUsuario)
+    .then(function (resultado) {
+      console.log("Resultado: ", resultado);
+      res.json(resultado);
+    });
+  }
 
 }
 

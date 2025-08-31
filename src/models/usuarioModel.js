@@ -60,9 +60,7 @@ function atualizarCampos(output_razaoSocial, output_email, senha, output_emailAn
 
 function carregarInformacoesUsuario(email) {
     console.log("Entrou no usuarioModel");
-    var instrucao = `
-        SELECT * FROM usuario WHERE email = ${email};
-    `;
+    var instrucao = `SELECT * FROM usuario WHERE email = "${email}";`;
     console.log("Executando a query: \n" + instrucao);
     return database.executar(instrucao);
 }
