@@ -44,11 +44,12 @@ async function entrar() {
         const json = await resposta.json();
 
         // salvando dados
-        sessionStorage.email_ss = json.email;
-        sessionStorage.nome_ss = json.nome;
+        
+        sessionStorage.email_ss = json[0].emailCorporativo;
+        sessionStorage.nome_ss = json[0].razaoSocial;
 
         setTimeout(() => {
-            window.location = "./" // arrumar aqui após criar as paginas
+            window.location = "../perfil-visualizar.html" // arrumar aqui após criar as paginas
         }, 3000);
 
     } catch (error) {

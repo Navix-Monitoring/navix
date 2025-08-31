@@ -51,8 +51,8 @@
 /*Foto Gustavo(mudar no assets/img/{nomedafoto})*/
 #foto2
 {
-    background-image: url(../assets/img/gato.jpg);
-    background-size: contain;
+    background-image: url(../assets/img/foto-Muniz.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;

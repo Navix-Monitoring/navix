@@ -98,39 +98,52 @@ async function atualizar() {
     } catch (error) {
         return mostrarErro(error);
     }
-    
-    
-    async function carregarUsuario() {
-    try {
-        
-        const email = sessionStorage.email_ss;
-
-        const resposta = await fetch(`/usuarios/get_register/${email}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" }
-        });
-
-        if (!resposta.ok) {
-            throw new Error("Erro ao carregar dados do usuário: " + resposta.status);
-        }
-
-        const usuario = await resposta.json();
-
-        
-        razaoSocial_input.value = usuario.razaoSocial;
-        email_input.value = usuario.email;
-        senha_input.value = usuario.senha;
-
-    } catch (error) {
-        console.error(error);
-        mostrarErro("Não foi possível carregar os dados da conta.");
-    }
 }
 
+function carregarInformacoes() {
+    var emailUsuarioSession = sessionStorage.email_ss;
 
-window.onload = carregarUsuario;
+    if (!emailUsuarioSession) {
+        alert("Você precisa estar logado para visualizar o perfil!");
+        window.location = "./login.html";
+        return;
+    }
 
- 
-        
-    
+    fetch("/usuarios/carregarInformacoes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            emailUsuarioSession: emailUsuarioSession,
+        })
+    })
+        .then(resposta => {
+            if (!resposta.ok) throw "Erro ao carregar informações";
+            return resposta.json();
+        })
+        .then(dados => {
+            console.log("Dados do usuário:", dados);
+
+            // preenche inputs
+            document.getElementById('razaoSocial_input').value = dados[0].razaoSocial;
+            document.getElementById('email_input').value = dados[0].emailCorporativo;
+            document.getElementById('b_usuario').innerHTML = dados[0].razaoSocial;
+
+            // se tiver imagem
+            if (dados[0].caminhoImagem) {
+                document.getElementById("imagemUsuario").innerHTML = `
+                    <img src="${dados[0].caminhoImagem}" alt="Imagem do Usuário">
+                    <input type="file" id="foto" name="foto" hidden>
+                    <label for="foto" class="upload" style="margin-top: 10px;">
+                        Escolher imagem
+                    </label>
+                    <p id="mensagemImagemUsuario" style="margin-top: 10px; padding-bottom: 10px"></p>
+                `;
+            }
+        })
+        .catch(erro => {
+            console.error(erro);
+            alert("Não foi possível carregar as informações do usuário.");
+        });
+    // Corrige o erro de "window"
+    window.onload = carregarInformacoes;
 }
