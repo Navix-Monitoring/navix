@@ -62,9 +62,12 @@
 
       <!-- Form -->
       <form onsubmit="event.preventDefault(); atualizar();">
-        <input class="w-full p-4 mt-6 rounded-md border text-lg" id="razaoSocial_input" type="text" placeholder="Nome">
-        <input class="w-full p-4 mt-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
-        <input class="w-full p-4 mt-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Digite sua nova senha">
+        <label for="razaoSocial_input" class="flex mt-4 text-sm font-medium text-gray-700">Nome</label>
+        <input class="w-full p-4 rounded-md border text-lg" id="razaoSocial_input" type="text" placeholder="Nome">
+         <label for="email_input" class="flex mt-4 text-sm font-medium text-gray-700">Email</label>
+        <input class="w-full p-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
+        <label for="senha_input" class="flex mt-4 text-sm font-medium text-gray-700">Digite sua nova senha</label>
+        <input class="w-full p-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Digite sua nova senha">
 
         <div id="iconeOlho" class="mt-2 cursor-pointer">
           <i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>
