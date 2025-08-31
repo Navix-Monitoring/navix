@@ -48,14 +48,79 @@ function deletar_conta(output_email) {
     return database.executar(instrucaoSql, [output_email]);
 }
 
-function atualizarCampos(output_razaoSocial, output_email, senha, output_emailAntigo) {
+function atualizarFotoEmpresa(nome_imagem, output_email) {
+    var caminhoImagem = "../../public/assets/img/imagens-perfil/" + nome_imagem;
     const instrucaoSql = `
         UPDATE empresa
-        SET razaoSocial = ?, emailCorporativo = ?, senha = ?
-        WHERE emailCorporativo = ?;
+        SET caminhoImagem = "${caminhoImagem}"
+        WHERE emailCorporativo = "${output_email}";
     `;
 
-    return database.executar(instrucaoSql, [output_razaoSocial, output_email, senha, output_emailAntigo]);
+    return database.executar(instrucaoSql);
+}
+
+function atualizarFotoUsuario(nome_imagem, output_email) {
+    var caminhoImagem = "../../public/assets/img/imagens-perfil/" + nome_imagem;
+    const instrucaoSql = `
+        UPDATE usuario
+        SET caminhoImagem = "${caminhoImagem}"
+        WHERE email = "${output_email}";
+    `;
+    return database.executar(instrucaoSql);
+}
+
+function mudarNomeEmpresa(novoNome, emailUsuario) {
+    console.log("Entrou no usuarioModel");
+    var instrucao = `
+        UPDATE empresa SET nome = '${novoNome}' WHERE emailCorporativo = "${emailUsuario}";
+    `;
+    console.log("Executando a query: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function mudarNomeUsuario(novoNome, emailUsuario) {
+    console.log("Entrou no usuarioModel");
+    var instrucao = `
+        UPDATE usuario SET nome = '${novoNome}' WHERE email = "${emailUsuario}";
+    `;
+    console.log("Executando a query: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function mudarEmailEmpresa(novoEmail, emailUsuario) {
+    console.log("Entrou no usuarioModel");
+    var instrucao = `
+        UPDATE empresa SET emailCorporativo = '${novoEmail}' WHERE emailCorporativo = "${emailUsuario}";
+    `;
+    console.log("Executando a query: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function mudarEmailUsuario(novoEmail, emailUsuario) {
+    console.log("Entrou no usuarioModel");
+    var instrucao = `
+        UPDATE usuario SET email = '${novoEmail}' WHERE email = "${emailUsuario}";
+    `;
+    console.log("Executando a query: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function mudarSenhaEmpresa(novaSenha, emailUsuario){
+    console.log("Entrou no usuarioModel");
+    var instrucao = `
+        UPDATE empresa SET senha = '${novaSenha}' WHERE emailCorporativo = "${emailUsuario}";
+    `;
+    console.log("Executando a query: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function mudarSenhaUsuario(novaSenha, emailUsuario){
+    console.log("Entrou no usuarioModel");
+    var instrucao = `
+        UPDATE usuario SET senha = '${novaSenha}' WHERE email = "${emailUsuario}";
+    `;
+    console.log("Executando a query: \n" + instrucao);
+    return database.executar(instrucao);
 }
 
 function carregarInformacoesUsuario(email) {
@@ -79,7 +144,14 @@ module.exports = {
     cadastrar,
     verificarEmail,
     deletar_conta,
-    atualizarCampos,
+    mudarNomeEmpresa,
+    mudarNomeUsuario,
+    atualizarFotoEmpresa,
+    atualizarFotoUsuario,
+    mudarEmailEmpresa,
+    mudarEmailUsuario,
+    mudarSenhaEmpresa,
+    mudarSenhaUsuario,
     carregarInformacoesUsuario,
     carregarInformacoesEmpresa
 };

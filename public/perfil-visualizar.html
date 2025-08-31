@@ -58,10 +58,12 @@
         📷
       </div>
 
-      <p class="text-[#002B50] mt-4 text-lg cursor-pointer">Alterar foto de perfil</p>
-
       <!-- Form -->
       <form onsubmit="event.preventDefault(); atualizar();">
+        <input type="file" id="foto" name="foto" hidden>
+                    <label for="foto" class="upload text-[#002B50] mt-4 text-lg cursor-pointer" style="margin-top: 10px;">
+                        Alterar foto de perfil
+                    </label>
         <label for="nome_input" class="flex mt-4 text-sm font-medium text-gray-700">Nome</label>
         <input class="w-full p-4 rounded-md border text-lg" id="nome_input" type="text" placeholder="Nome">
          <label for="email_input" class="flex mt-4 text-sm font-medium text-gray-700">Email</label>

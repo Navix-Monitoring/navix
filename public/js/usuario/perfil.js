@@ -37,55 +37,25 @@ async function deletar() {
 }
 
 async function atualizar() {
-    var razaoSocial = nome_input.value;
-    var email = email_input.value;
-    var senha = senha_input.value;
-    var emailAntigo = sessionStorage.email_ss;
-    const verificacao = [razaoSocial, email, senha];
-    const padrao = /["'!()\/\\|;\-\]\[{}=]/
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-    if (razaoSocial.length < 3) {
-        let mensagem = 'razaoSocial invalido! Minimo 3 caracteres';
-        return mostrarErro(mensagem);
-
-    } else if (!emailRegex.test(email)) {
-        let mensagem = "Email inválido!";
-        return mostrarErro(mensagem);
-
-    } else if (senha.length < 8 || !/[A-Z]/.test(senha)) {
-        let mensagem = 'Senha invalida! Minimo de 8 caracteres e deve conter 1 caracter maiúsculo';
-        return mostrarErro(mensagem);
-
-    } else if (verificacao.some(campo => padrao.test(campo))) {
-        let mensagem = 'Caracteres especiais são invalidos!'
-        return mostrarErro(mensagem);
-
-    } else {
-        setTimeout(sumirMensagem, 7000);
-    }
-
+    var email = sessionStorage.email_ss;
     try {
-        const resposta = await fetch("/usuarios/update_register", {
+        var formData = new FormData();
+        console.log(foto.files[0]);
+        formData.append('output_email', email)
+        formData.append('foto', foto.files[0])
+        formData.append('tipo', sessionStorage.tipo)
+        const resposta = await fetch("/usuarios/atualizarFoto", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                output_razaoSocial: razaoSocial,
-                output_email: email,
-                output_senha: senha,
-                output_emailAntigo: emailAntigo
-            }),
+            body: formData
         });
 
-        console.log("resposta: ", resposta.status);
-
         if (resposta.ok) {
-            mensagem_erro.innerHTML = "Dados da conta atualizado com sucesso!";
+            atualizarEmail(email);
+            atualizarNome(email);
+            atualizarSenha(email);
+            
+            mensagem_erro.innerHTML = "Dados da conta atualizados com sucesso";
             cardErro.style.display = "block";
-            setTimeout(sumirMensagem(), 3000);
 
             const json = await resposta.json();
             sessionStorage.email_ss = json.email;
@@ -97,6 +67,84 @@ async function atualizar() {
 
     } catch (error) {
         return mostrarErro(error);
+    }
+}
+
+function atualizarNome(emailUsuario) {
+    var inputNome = document.getElementById('nome_input');
+    if (inputNome.length < 3) {
+        let mensagem = 'nome invalido! Minimo 3 caracteres';
+        return mostrarErro(mensagem);
+
+    }
+    if (inputNome) {
+        var novoNome = inputNome.value;
+        if (novoNome != "") {
+            console.log("Atualizando nome para:", novoNome);
+            fetch("/usuarios/mudarNome", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    nomeServer: novoNome,
+                    emailUsuarioServer: emailUsuario,
+                    tipoUsuarioServer: sessionStorage.tipo
+                }),
+            });
+        }
+    }
+}
+
+function atualizarEmail(emailUsuario) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var inputEmail = document.getElementById('email_input');
+    if (!emailRegex.test(inputEmail)) {
+        let mensagem = "Email inválido!";
+        return mostrarErro(mensagem);
+
+    }
+    if (inputEmail) {
+        var novoEmail = inputEmail.value;
+        if (novoEmail != "") {
+            console.log("Atualizando nome para:", novoEmail);
+            fetch("/usuarios/mudarEmail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    novoEmailServer: novoEmail,
+                    emailUsuarioServer: emailUsuario,
+                    tipoUsuarioServer: sessionStorage.tipo
+                }),
+            });
+        }
+    }
+}
+
+function atualizarSenha(emailUsuario) {
+    var inputSenha = document.getElementById('senha_input');
+    if ((inputSenha.length < 8 || !/[A-Z]/.test(inputSenha))) {
+        let mensagem = 'Senha invalida! Minimo de 8 caracteres e deve conter 1 caracter maiúsculo';
+        return mostrarErro(mensagem);
+    }
+    if (inputSenha) {
+        var novaSenha = inputSenha.value;
+        if (novaSenha != "") {
+            console.log("Atualizando a senha para:", novaSenha);
+            fetch("/usuarios/mudarSenha", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    novaSenhaServer: novaSenha,
+                    emailUsuarioServer: emailUsuario,
+                    tipoUsuarioServer: sessionStorage.tipo
+                }),
+            });
+        }
     }
 }
 
@@ -123,36 +171,35 @@ function carregarInformacoes() {
         })
         .then(dados => {
             console.log("Dados do usuário:", dados);
-
             // preenche inputs
 
-            if(dados[0].razaoSocial){
+            if (dados[0].razaoSocial) {
                 document.getElementById('nome_input').value = dados[0].razaoSocial;
                 document.getElementById('email_input').value = dados[0].emailCorporativo;
                 document.getElementById('b_usuario').innerHTML = dados[0].razaoSocial;
-            }else{
+            } else {
                 document.getElementById('nome_input').value = dados[0].nome;
                 document.getElementById('email_input').value = dados[0].email;
                 document.getElementById('b_usuario').innerHTML = dados[0].nome;
             }
-            
+
 
             // se tiver imagem
-            if (dados[0].caminhoImagem) {
-                document.getElementById("imagemUsuario").innerHTML = `
-                    <img src="${dados[0].caminhoImagem}" alt="Imagem do Usuário">
-                    <input type="file" id="foto" name="foto" hidden>
-                    <label for="foto" class="upload" style="margin-top: 10px;">
-                        Escolher imagem
-                    </label>
-                    <p id="mensagemImagemUsuario" style="margin-top: 10px; padding-bottom: 10px"></p>
-                `;
-            }
+            // if (dados[0].caminhoImagem) {
+            //     document.getElementById("imagemUsuario").innerHTML = `
+            //         <img src="${dados[0].caminhoImagem}" alt="Imagem do Usuário">
+            //         <input type="file" id="foto" name="foto" hidden>
+            //         <label for="foto" class="upload" style="margin-top: 10px;">
+            //             Escolher imagem
+            //         </label>
+            //         <p id="mensagemImagemUsuario" style="margin-top: 10px; padding-bottom: 10px"></p>
+            //     `;
+            // }
         })
         .catch(erro => {
             console.error(erro);
             alert("Não foi possível carregar as informações do usuário.");
         });
     // Corrige o erro de "window"
-    window.onload = carregarInformacoes;
 }
+window.onload = carregarInformacoes;

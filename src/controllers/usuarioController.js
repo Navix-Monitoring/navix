@@ -108,37 +108,108 @@ async function autenticar(req, res) {
   }
 }
 
-async function atualizar(req, res) {
+function atualizar(req, res) {
   try {
-    const {
-      output_razaoSocial,
-      output_email,
-      output_senha,
-      output_emailAntigo
-    } = req.body;
+    console.log("ENTROU NO CONTROLLER ATUALIZAR")
+    var email = req.body.output_email;
+    var imagem = req.file.filename;
+    console.log("PASSOU")
+    var tipo = req.body.tipo;
 
-    // Validação do campos
-    if (!output_email || !output_senha || !output_razaoSocial) {
-      return res.status(400).send("Preencha E-mail, Senha e Razão Social.");
+    console.log("TIPO: ", typeof(tipo))
+    if(tipo == 1){
+      const resultado = usuarioModel.atualizarFotoEmpresa(imagem, email);
+
+      // Reusultado da atualização dos dados no banco
+      if (resultado) {
+        res.status(201).json(resultado);
+      } else {
+        res.status(500).send("Erro ao atualizar dados da conta.");
+      }
+    }else{
+      const resultado = usuarioModel.atualizarFotoUsuario(imagem, email);
+
+      // Reusultado da atualização dos dados no banco
+      if (resultado) {
+        res.status(201).json(resultado);
+      } else {
+        res.status(500).send("Erro ao atualizar dados da conta.");
+      }
     }
-
-    // criptografando a senha
-    const senha = await hashPwdUser.hashPassword(output_senha);
-
-    const resultado = await usuarioModel.atualizarCampos(output_razaoSocial, output_email, senha, output_emailAntigo);
-
-    // Reusultado da atualização dos dados no banco
-    if (resultado) {
-      res.status(201).json(resultado);
-    } else {
-      res.status(500).send("Erro ao atualizar dados da conta.");
-    }
-
+    
   }
   catch (erro) {
     console.error("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage || erro);
     res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
   }
+}
+
+
+function mudarNome(req, res){
+    var novoNome = req.body.nomeServer;
+    var emailUsuario = req.body.emailUsuarioServer;
+
+    var tipo = req.body.tipoUsuarioServer;
+
+    if(tipo == 1){
+      usuarioModel.mudarNomeEmpresa(novoNome, emailUsuario)
+        .then(function (resultado) {
+            console.log("Resultado: ", resultado);
+            res.json(resultado);
+        });
+    }else{
+       usuarioModel.mudarNomeUsuario(novoNome, emailUsuario)
+        .then(function (resultado) {
+            console.log("Resultado: ", resultado);
+            res.json(resultado);
+        });
+    }
+}
+
+function mudarEmail(req, res){
+    var novoEmail = req.body.novoEmailServer;
+    var emailUsuario = req.body.emailUsuarioServer;
+
+    var tipo =  req.body.tipoUsuarioServer;
+
+    if(tipo == 1){
+      usuarioModel.mudarEmailEmpresa(novoEmail, emailUsuario)
+        .then(function (resultado) {
+            console.log("Resultado: ", resultado);
+            res.json(resultado);
+        });
+    }else{
+       usuarioModel.mudarEmailUsuario(novoEmail, emailUsuario)
+        .then(function (resultado) {
+            console.log("Resultado: ", resultado);
+            res.json(resultado);
+        });
+    }
+    
+}
+
+function mudarSenha(req, res){
+    var novaSenha = req.body.novaSenhaServer;
+    var emailUsuario = req.body.emailUsuarioServer;
+
+    var tipo =  req.body.tipoUsuarioServer;
+
+    const senha =  hashPwdUser.hashPassword(novaSenha);
+    
+    if(tipo == 1){
+      usuarioModel.mudarSenhaEmpresa(senha, emailUsuario)
+        .then(function (resultado) {
+            console.log("Resultado: ", resultado);
+            res.json(resultado);
+        });
+    }else{
+       usuarioModel.mudarEmailUsuario(senha, emailUsuario)
+        .then(function (resultado) {
+            console.log("Resultado: ", resultado);
+            res.json(resultado);
+        });
+    }
+    
 }
 
 async function deletar(req, res) {
@@ -193,6 +264,9 @@ function carregarInformacoes(req, res) {
 
 module.exports = {
   autenticar,
+  mudarNome,
+  mudarEmail,
+  mudarSenha,
   cadastrar,
   deletar,
   atualizar,

@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt');
 
-async function hashPassword(senha) {
+function hashPassword(senha) {
     const saltRounds = 10;
     const myPlaintextPassword = senha;
 
     console.log("Fazendo Criptografia");
-    return await bcrypt.hash(myPlaintextPassword, saltRounds)
+    return bcrypt.hash(myPlaintextPassword, saltRounds)
 }
 
 async function comparePassaword (loginSenha, senha) {
