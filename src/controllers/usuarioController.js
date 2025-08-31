@@ -1,6 +1,80 @@
 var usuarioModel = require("../models/usuarioModel");
 var hashPwdUser = require("../utils/hash")
 
+async function deleteUser(req, res) {
+  try {
+    const {
+      userId
+    } = req.body
+
+    await usuarioModel.deleteUser(userId)
+
+    return res.status(200).send("Usuário foi deletado com sucesso!!!!!!")
+  } catch (erro) {
+    return res.status(500).send("Não deu certo ein!!")
+  }
+}
+
+async function addUser(req, res) {
+  try {
+    const {
+      fkEmpresa,
+      nome,
+      sobrenome,
+      telefone,
+      email,
+      senha,
+      cargo
+    } = req.body;
+
+    if (!fkEmpresa || nome == "" || sobrenome == "" || telefone == "" || email == "" || senha == "" || cargo == "") {
+      return res.status(400).send("Os campos não foram preenchidos corretamente")
+    }else{
+      await usuarioModel.addUser(fkEmpresa, nome, sobrenome, telefone, email, senha, cargo)
+      return res.status(200).send("Deu certo!!!")
+    }
+  } catch (erro) {
+    return res.status(500).send("Erro ao cadastrar usuário")
+  }
+}
+
+async function updateUser(req, res) {
+  try {
+    const {
+      id,
+      nome,
+      sobrenome,
+      telefone,
+      email,
+      cargo
+    } = req.body;
+    if (!fkEmpresa || nome == "" || sobrenome == "" || telefone == "" || email == "" || cargo =="" ) {
+      return res.status(400).send("Os campos não foram preenchidos corretamente")
+    }else{
+      await usuarioModel.updateUser(nome, sobrenome, telefone, email, cargo, id)
+      return res.status(200).send("Deu certo!!!")
+    }
+  } catch (erro) {
+    return res.status(500).send("Erro ao cadastrar usuário")
+  }
+}
+
+async function getUsersByCompanyId(req, res){
+  try{
+    const {
+      id
+    } = req.params
+
+    var usuarios = await usuarioModel.getUsersByCompanyId(id)
+    console.log(usuarios)
+    return res.status(200).json(usuarios)
+
+  } catch(erro){
+    console.log(erro)
+    return res.status(500).send("Não deu certo!!")
+  }
+}
+
 async function cadastrar(req, res) {
   try {
     const {
@@ -159,7 +233,6 @@ function carregarInformacoes(req, res) {
       console.log("Resultado: ", resultado);
       res.json(resultado);
     });
-
 }
 
 module.exports = {
@@ -167,5 +240,9 @@ module.exports = {
   cadastrar,
   deletar,
   atualizar,
-  carregarInformacoes
+  carregarInformacoes,
+  deleteUser,
+  addUser,
+  updateUser,
+  getUsersByCompanyId
 }

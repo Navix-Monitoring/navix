@@ -45,6 +45,7 @@ async function entrar() {
 
         // salvando dados
         
+        sessionStorage.id_empresa = json[0].id_empresa;
         sessionStorage.email_ss = json[0].emailCorporativo;
         sessionStorage.nome_ss = json[0].razaoSocial;
 

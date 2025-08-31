@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function autenticarLogin(output_email) {
     const instrucaoSql = `
-        SELECT razaoSocial, emailCorporativo, senhaHash
+        SELECT razaoSocial, emailCorporativo, senhaHash, id_empresa
         FROM empresa 
         WHERE emailCorporativo = ?;
     `;
@@ -64,6 +64,27 @@ function carregarInformacoesEmpresa(email) {
     return database.executar(instrucao);
 }
 
+function addUser(fkEmpresa, nome, sobrenome, telefone, email, senha, cargo) {
+    console.log("Entrou na model de criação de usuário")
+    var instrucaoSql = `INSERT INTO usuario(fkEmpresa,nome,sobrenome,telefone,email,senha,cargo) VALUES(${fkEmpresa},"${nome}","${sobrenome}","${telefone}","${email}","${senha}","${cargo}");`
+    return database.executar(instrucaoSql)
+
+}
+
+function getUsersByCompanyId(idEmpresa) {
+    const instrucaoSql = `SELECT * FROM usuario WHERE fkEmpresa = ${idEmpresa}`
+    return database.executar(instrucaoSql)
+}
+
+function deleteUser(id) {
+    const instrucaoSql = `DELETE FROM usuario u WHERE u.id = ${id}`
+    return database.executar(instrucaoSql)
+}
+
+function updateUser(nome, sobrenome, email, telefone, cargo, id) {
+    const instrucaoSql = `UPDATE usuario SET nome = "${nome}", sobrenome = "${sobrenome}", telefone = "${telefone}", email = "${email}", cargo = "${cargo}" where id_usuario = ${id}`
+    return database.executar(instrucaoSql)
+}
 
 module.exports = {
     autenticarLogin,
@@ -72,5 +93,9 @@ module.exports = {
     deletar_conta,
     atualizarCampos,
     carregarInformacoesUsuario,
-    carregarInformacoesEmpresa
+    carregarInformacoesEmpresa,
+    deleteUser,
+    getUsersByCompanyId,
+    addUser,
+    updateUser
 };
