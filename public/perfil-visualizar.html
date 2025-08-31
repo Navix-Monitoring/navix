@@ -12,11 +12,13 @@
 <body class="bg-gray-100" onload="carregarInformacoes()">
   <div class="fixed top-0 left-0 h-screen w-[300px] flex flex-col items-center bg-white border-r border-[#002B50] py-6">
 
-   
-    <img src="./assets/navix-logo.jpg" class="w-[200px] h-[120px] mb-6">
+    
+    <div>
+        <img src="./assets/navix-logo.jpg" class="w-[200px] h-[120px] mb-6">
+    </div>
 
     
-    <div class="rounded-full w-20 h-20 flex justify-center items-center bg-gray-300 mb-2">
+    <div class="rounded-full w-20 h-20 flex justify-center items-center bg-gray-300 mb-2" id="imagemUsuario">
       <img src="./assets/img/foto-usuario.png" class="w-[32px] h-[32px]">
     </div>
 
@@ -54,16 +56,19 @@
     <div class="bg-slate-300 p-10 rounded-2xl shadow-2xl text-center w-[600px]">
 
       <!-- Foto -->
-      <div class="bg-[#002B50] rounded-full w-32 h-32 flex justify-center items-center mx-auto text-white text-4xl">
+      <div class="bg-[#002B50] rounded-full w-32 h-32 flex justify-center items-center mx-auto text-white text-4xl" id="imagemUsuarioPerfil" >
         📷
       </div>
 
-      <p class="text-[#002B50] mt-4 text-lg cursor-pointer">Alterar foto de perfil</p>
-
       <!-- Form -->
       <form onsubmit="event.preventDefault(); atualizar();">
-        <label for="razaoSocial_input" class="flex mt-4 text-sm font-medium text-gray-700">Nome</label>
-        <input class="w-full p-4 rounded-md border text-lg" id="razaoSocial_input" type="text" placeholder="Nome">
+        <input type="file" id="foto" name="foto" hidden>
+                    <label for="foto" class="upload text-[#002B50] mt-4 text-lg cursor-pointer" style="margin-top: 10px;">
+                        Alterar foto de perfil
+                    </label>
+        <p id="mensagemImagemUsuario" style="margin-top: 10px; margin-bottom: 10px"></p>
+        <label for="nome_input" class="flex mt-4 text-sm font-medium text-gray-700">Nome</label>
+        <input class="w-full p-4 rounded-md border text-lg" id="nome_input" type="text" placeholder="Nome">
          <label for="email_input" class="flex mt-4 text-sm font-medium text-gray-700">Email</label>
         <input class="w-full p-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
         <label for="senha_input" class="flex mt-4 text-sm font-medium text-gray-700">Digite sua nova senha</label>
