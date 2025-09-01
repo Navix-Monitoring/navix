@@ -33,8 +33,9 @@
             </div>
 
             <!-- Nome do usuário -->
-            <p class="font-bold text-blue-900">Olá, Fábio da Silva Silva</p>
-            <p class="mb-4 text-blue-900">Product Onwer</p>
+            <div id="nomeProfissao">
+            
+            </div>
 
             <div class="flex flex-col gap-4 w-[70%] items-center">
 
@@ -171,3 +172,15 @@
 </body>
 
 </html>
+
+<script>
+  var nomeEmpresa = sessionStorage.nome_ss
+    var cnpj = sessionStorage.cnpj
+    console.log(sessionStorage)
+
+    nomeProfissao.innerHTML += 
+            `
+            <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa}</p>
+            <p class="mb-4 text-blue-900">CNPJ: ${cnpj}</p>
+            `
+</script>
