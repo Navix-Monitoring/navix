@@ -25,7 +25,7 @@ router.post("/carregarInformacoes", function (req, res) {
     usuarioController.carregarInformacoes(req, res);
 });
 
-router.delete("/deleteUser",function(req, res){
+router.delete("/deleteUser/:id",function(req, res){
     console.log("Passou na rota /deleteUser");
     usuarioController.deleteUser(req, res);
 });

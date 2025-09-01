@@ -77,7 +77,7 @@ function getUsersByCompanyId(idEmpresa) {
 }
 
 function deleteUser(id) {
-    const instrucaoSql = `DELETE FROM usuario u WHERE u.id = ${id}`
+    const instrucaoSql = `DELETE FROM usuario WHERE id_usuario = ${id}`
     return database.executar(instrucaoSql)
 }
 

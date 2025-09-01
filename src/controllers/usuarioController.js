@@ -4,10 +4,10 @@ var hashPwdUser = require("../utils/hash")
 async function deleteUser(req, res) {
   try {
     const {
-      userId
-    } = req.body
+      id
+    } = req.params
 
-    await usuarioModel.deleteUser(userId)
+    await usuarioModel.deleteUser(id)
 
     return res.status(200).send("Usuário foi deletado com sucesso!!!!!!")
   } catch (erro) {
@@ -46,12 +46,12 @@ async function updateUser(req, res) {
       sobrenome,
       telefone,
       email,
-      cargo
+      cargo,
     } = req.body;
-    if (!fkEmpresa || nome == "" || sobrenome == "" || telefone == "" || email == "" || cargo =="" ) {
+    if (nome == "" || sobrenome == "" || telefone == "" || email == "" || cargo =="" ) {
       return res.status(400).send("Os campos não foram preenchidos corretamente")
     }else{
-      await usuarioModel.updateUser(nome, sobrenome, telefone, email, cargo, id)
+      await usuarioModel.updateUser(nome, sobrenome, email, telefone, cargo, id)
       return res.status(200).send("Deu certo!!!")
     }
   } catch (erro) {
