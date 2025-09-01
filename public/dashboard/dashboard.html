@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="../js/sessao.js"></script>
+</head>
+
+<body class="bg-gray-100" onload="carregarInformacoes(), validarSessao()">
+  <!-- Em breve -->
+  <div class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+    <h1 class="text-white text-5xl font-bold">Em breve</h1>
+  </div>
+
+
+
+  <!-- nav bar -->
+  <nav class="fixed top-0 left-0 h-screen w-[250px] flex flex-col items-center bg-white border-r border-[#002B50] py-8">
+
+    <img src="../assets/navix-logo.jpg" class="w-[250px] h-[120px]">
+
+    <!-- Usuario -->
+    <div class="py-4 flex-col text-[1rem] mx-auto">
+      <p class="font-bold flex py-2">
+        <img src="../assets/img/foto-usuario.png" alt="" class="w-4 h-5 mr-1">
+        Usuário:
+        <span id="b_usuario" class="font-semibold text-blue-900 ml-1">usuário</span>
+      </p>
+      <hr class="w-[150px] ">
+    </div>
+
+    <!-- Menu da Sidebar -->
+    <div class="flex flex-col gap-4 w-[70%] items-center">
+
+      <!-- Lista de opções -->
+      <a href="../perfil-visualizar.html"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Perfil
+      </a>
+
+      <a href="#"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Dashboard
+      </a>
+
+      <a href="./alertas.html"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Alertas
+      </a>
+
+      <a href="../admin.html"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Painel de Controle
+      </a>
+
+      <a href="../admin.html"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Cadastrar Funcionários
+      </a>
+    </div>
+
+    <!-- Botão Sair -->
+    <a href="./login.html" onclick="limparSessao()"
+      class="w-[60%] bg-blue-950 text-white rounded-md text-center py-2 mt-auto mb-6 cursor-pointer hover:bg-blue-800">
+      Sair
+    </a>
+
+
+    <!-- Suporte -->
+    <div class="w-[150px] text-center">
+      <img src="../assets/imagensIndex/icon-suporte.png" alt="Suporte" class="w-8 mx-auto">
+      <a href="./" class="no-underline text-blue-900 text-lg hover:cursor-pointer hover:font-medium">Suporte</a>
+    </div>
+  </nav>
+
+  <!-- section de graficos -->
+  <main class="ml-[250px] p-6 shadow-xl h-[350px]">
+    <section class="grid grid-cols-3 h-full">
+      <!-- Esquerda -->
+      <div class="border-r border-black flex items-center justify-center">
+        <p>Gráfico Esquerda</p>
+      </div>
+
+      <!-- Meio (dividido em 2) -->
+      <div class="grid grid-rows-2 border-r border-black">
+
+        <div class="flex items-center justify-center">
+          <p>Parte de cima (Modelos)</p>
+        </div>
+
+        <div class="flex items-center justify-center">
+          <p>Parte de baixo (Alertas)</p>
+        </div>
+
+      </div>
+
+      <!-- Direita -->
+      <div class="flex items-center justify-center">
+        <p>Gráfico Direita</p>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- nav de atalhos de busca -->
+  <aside class="ml-[250px] p-6 h-[120px] border-b">
+    <ul class="flex flex-wrap gap-15 w-full justify-center">
+      <li>
+        <p class="font-bold mb-1">Modelo ou id do automovel:</p>
+        <div class="relative w-64">
+          <input type="text" placeholder="Pesquisar..." class="border rounded-md pl-10 pr-4 py-2 w-full">
+          <img src="../assets/imagensIndex/icons8-pesquisar-24.png"
+            class="absolute left-2 top-1/2 -translate-y-1/2 w-5 h-5 opacity-70">
+        </div>
+      </li>
+
+      <li>
+        <p class="font-bold mb-2">Status de atividade:</p>
+        <div class="flex gap-6">
+          <p class="flex items-center gap-2">
+            <input type="checkbox" id="inp_statusAtividade" name="status" value="ativo" class="accent-blue-600">
+            Ativo
+          </p>
+          <p class="flex items-center gap-2">
+            <input type="checkbox" id="inp_statusInatividade" name="status" value="inativo" class="accent-blue-600">
+            Inativo
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <p class="font-bold mb-1">Ver em ordem:</p>
+        <select id="ordem" class="border rounded-md pl-10 pr-2 py-2">
+          <option value="#">Selecione</option>
+          <option value="asc">Crescente</option>
+          <option value="desc">Decrescente</option>
+        </select>
+      </li>
+
+      <li>
+        <p class="font-bold mb-1">Data:</p>
+        <div>
+          <input type="date" id="data" class="border rounded-md pl-10 pr-2 py-2">
+        </div>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Exemplos de cards -->
+  <section class="ml-[250px] h-[300px] overflow-y-auto rounded-md p-4 bg-white">
+    <div class="grid grid-cols-1 gap-4">
+      <div class="bg-blue-800 p-4 rounded-lg">Card 1</div>
+      <div class="bg-black p-4 rounded-lg">Card 2</div>
+      <div class="bg-blue-800 p-4 rounded-lg">Card 3</div>
+      <div class="bg-black p-4 rounded-lg">Card 4</div>
+      <div class="bg-blue-800 p-4 rounded-lg">Card 5</div>
+      <div class="bg-black p-4 rounded-lg">Card 6</div>
+      <div class="bg-blue-800 p-4 rounded-lg">Card 7</div>
+      <div class="bg-black p-4 rounded-lg">Card 8</div>
+    </div>
+  </section>
+
+</body>
+
+</html>
