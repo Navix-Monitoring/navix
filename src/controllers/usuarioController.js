@@ -125,18 +125,16 @@ async function autenticar(req, res) {
 
     // validação dos campos
     if (!output_email || !output_senha) {
-      return res.status(401).send("Erro ao fazer login! Preencha todos os campos");
+      return res.status(401).json({ erro: "preenchimento" }); // JSON estruturado
     }
 
     // // verificação de ativação de conta
     // const resultadoAtivacao = await usuarioModel.verificarAtivacaoConta(output_email);
-
     // if (!resultadoAtivacao) {
-    //   return res.status(400).send("Login não encontrado. Realize o cadastro ou insira novamente seu login.");
+    //   return res.status(400).json({ erro: "login_nao_encontrado" });
     // }
-
     // if (resultadoAtivacao.status == "inativo") {
-    //   return res.status(400).send("Faça a ativação da conta. Verifique seu E-mail.");
+    //   return res.status(400).json({ erro: "conta_inativa" });
     // }
 
     //pegando dados do banco
@@ -146,41 +144,38 @@ async function autenticar(req, res) {
 
     if (verificarLoginEmpresa.length > 0 && verificarLoginEmpresa[0].emailCorporativo) {
       console.log("REPOSTA DO BANCO: " + verificarLoginEmpresa)
-      // Bollean de hash (comparação)
       const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLoginEmpresa[0].senha);
 
       if (!validacaoHash) {
-        return res.status(400).send("Senha incorreta!");
+        return res.status(400).json({ erro: "senha" }); // senha incorreta
       }
 
       console.log(`Resultados: `, verificarLoginEmpresa);
-
       return res.json(verificarLoginEmpresa);
     } else {
       const verificarLoginUsuario = await usuarioModel.autenticarLoginUsuario(output_email);
 
-      if (verificarLoginUsuario[0].email) {
+      if (verificarLoginUsuario[0] && verificarLoginUsuario[0].email) {
 
         const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLoginUsuario[0].senha);
 
         if (!validacaoHash) {
-          return res.status(400).send("Senha incorreta!");
+          return res.status(400).json({ erro: "senha" }); // senha incorreta
         }
 
         console.log(`Resultados: `, verificarLoginUsuario);
-
         return res.json(verificarLoginUsuario);
       } else {
-        return res.status(400).send("Usuário não cadastrado")
+        return res.status(400).json({ erro: "email" }); // usuário não cadastrado
       }
     }
 
-  }
-  catch (erro) {
+  } catch (erro) {
     console.error("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage || erro);
-    res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
+    res.status(500).json({ erro: "interno", detalhes: erro.sqlMessage || "Erro interno do servidor." });
   }
 }
+
 
 function atualizar(req, res) {
   try {
