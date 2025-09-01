@@ -38,7 +38,15 @@ async function entrar() {
         });
 
         if (!resposta.ok) {
-            throw new Error("Erro ao fazer login: " + resposta.status);
+            if (json && json.erro === "email") {
+                return mostrarErro("Email não cadastrado na base de dados!");
+            } else if (json && json.erro === "senha") {
+                return mostrarErro("Senha inválida!");
+            } else if (json && json.erro === "preenchimento") {
+                return mostrarErro("Preencha todos os campos!");
+            } else {
+                return mostrarErro("Erro ao fazer login!");
+            }
         }
 
         const json = await resposta.json();
