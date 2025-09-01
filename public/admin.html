@@ -165,8 +165,9 @@
             </div>
 
             <!-- Nome do usuário -->
-            <p class="font-bold text-blue-900">Olá, Fábio da Silva Silva</p>
-            <p class="mb-4 text-blue-900">Product Onwer</p>
+             <div id="nomeProfissao">
+            
+            </div>
 
             <div class="flex flex-col gap-4 w-[70%] items-center">
 
@@ -176,17 +177,17 @@
                     Perfil
                 </a>
 
-                <a href="#"
+                <a href="dashboard/dashboard.html"
                     class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                     Dashboard
                 </a>
 
-                <a href="./alertas.html"
+                <a href=""
                     class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                     Alertas
                 </a>
 
-                <a href="../admin.html"
+                <a href=""
                     class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                     Painel de Controle
                 </a>
@@ -195,7 +196,7 @@
                     class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                     Cadastrar Funcionários
                 </a>
-                <a href="../admin.html"
+                <a href=""
                     class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                     Suporte
                 </a>
@@ -463,5 +464,14 @@
             usuarios.appendChild(row);
         });
     }
+    var nomeEmpresa = sessionStorage.nome_ss
+    var cnpj = sessionStorage.cnpj
+    console.log(sessionStorage)
+
+    nomeProfissao.innerHTML += 
+            `
+            <p class="font-bold text-blue-900">${nomeEmpresa}</p>
+            <p class="mb-4 text-blue-900">${cnpj}</p>
+            `
 
 </script>
