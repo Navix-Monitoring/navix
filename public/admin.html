@@ -98,7 +98,7 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <p class="text-3xl font-semibold text-blue-900 pb-10">Atualizar Dados</p>
+            <p class="text-3xl font-semibold text-blue-900">Atualizar Dados</p>
 
             <div class="flex gap-5 w-full">
                 <div class="flex flex-col gap-2 w-full">
@@ -290,6 +290,7 @@
 
     async function getUser() {
         try {
+            console.log(sessionStorage)
             var idEmpresa = sessionStorage.id_empresa
 
             const data = await fetch(`http://localhost:3333/usuarios/getUsersByCompanyId/${idEmpresa}`, { method: "GET" })
@@ -337,7 +338,7 @@
         } catch (erro) {
             console.log(erro)
         }
-        fecharModal()
+        fecharTela('telaAdicionarUser')
         getUser()
     }
 
@@ -349,7 +350,7 @@
         } catch (erro) {
             console.log(erro)
         }
-        fecharTelaDel()
+        fecharTela('telaDeletar')
     }
 
     var idUser
