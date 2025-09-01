@@ -21,6 +21,7 @@ create table usuario (
     telefone VARCHAR(11),
     email VARCHAR(100) NOT NULL,
     senha VARCHAR(250) NOT NULL,
+    cargo VARCHAR(30) NOT NULL,
 	caminhoImagem VARCHAR(500) NOT NULL DEFAULT './img/defaultProfile.jpg',
     CONSTRAINT chk_telefone CHECK (CHAR_LENGTH(telefone) IN (10, 11)),
     PRIMARY KEY (id_usuario),
@@ -153,5 +154,6 @@ drop database navix;
 select * from usuario;
 select * from empresa;
 
+INSERT INTO usuario(fkEmpresa,nome,sobrenome,telefone,email,senha,cargo) VALUES(1,"Travis","Scott","11994945728","travis@email.com","senha123*","Tech Lead");
 
-*/
+
