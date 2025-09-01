@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atualizar Perfil</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
     <script src="js/usuario/perfil.js"></script>
 </head>
 
@@ -68,31 +69,30 @@
             </div>
         </div>
 
-  <div class="flex  min-h-screen w-[65%]">
-    <div class="bg-slate-300 p-10 rounded-2xl shadow-2xl text-center w-[600px]">
+  <div class="flex py-4 w-[65%]">
+    <div class="flex flex-col bg-slate-300 p-10 rounded-2xl shadow-2xl text-center w-[600px]">
 
       <!-- Foto -->
-      <div class="bg-[#002B50] rounded-full w-32 h-32 flex justify-center items-center mx-auto text-white text-4xl" id="imagemUsuarioPerfil" >
-        📷
+       <div class="flex items-center justify-start gap-4">
+      <div class="bg-[#002B50] rounded-md w-26 h-26 flex justify-center items-center text-white text-4xl" id="imagemUsuarioPerfil" >
+        <i class="fa-solid fa-user text-slate-100 text-md"></i>
       </div>
 
       <!-- Form -->
       <form onsubmit="event.preventDefault(); atualizar();">
         <input type="file" id="foto" name="foto" hidden>
-                    <label for="foto" class="upload text-[#002B50] mt-4 text-lg cursor-pointer" style="margin-top: 10px;">
+                    <label for="foto" class="upload text-slate-950 font-semibold mt-4 text-lg cursor-pointer" style="margin-top: 10px;">
                         Alterar foto de perfil
                     </label>
         <p id="mensagemImagemUsuario" style="margin-top: 10px; margin-bottom: 10px"></p>
-        <label for="nome_input" class="flex mt-4 text-sm font-medium text-gray-700">Nome</label>
-        <input class="w-full p-4 rounded-md border text-lg" id="nome_input" type="text" placeholder="Nome">
-         <label for="email_input" class="flex mt-4 text-sm font-medium text-gray-700">Email</label>
-        <input class="w-full p-4 rounded-md border text-lg" id="email_input" type="email" placeholder="Email">
-        <label for="senha_input" class="flex mt-4 text-sm font-medium text-gray-700">Digite sua nova senha</label>
-        <input class="w-full p-4 rounded-md border text-lg" id="senha_input" type="password" placeholder="Digite sua nova senha">
-
-        <div id="iconeOlho" class="mt-2 cursor-pointer">
-          <i class="fa-solid fa-eye-slash" onclick="visualizarSenha()"></i>
         </div>
+        <label for="nome_input" class="flex mt-4 text-md font-medium text-gray-700 py-1">Nome</label>
+        <input class="w-full p-4 bg-slate-100 rounded-md  text-lg" id="nome_input" type="text" placeholder="Nome">
+         <label for="email_input" class="flex  mt-4 text-md font-medium text-gray-700 py-1">Email</label>
+        <input class="w-full p-4 bg-slate-100 rounded-md  text-lg" id="email_input" type="email" placeholder="Email">
+        <label for="senha_input" class="flex mt-4 text-md font-medium text-gray-700 py-1">Digite sua nova senha</label>
+        <input class="w-full p-4 bg-slate-100 rounded-md  text-lg" id="senha_input" type="password" placeholder="Digite sua nova senha">
+
 
         <!-- Botões -->
         <button type="submit" class="w-full p-4 mt-6 bg-[#002B50] text-white text-lg rounded-md hover:bg-[#001C35]">
