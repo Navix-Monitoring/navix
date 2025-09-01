@@ -61,7 +61,7 @@
 /*Foto Isaak(mudar no assets/img/{nomedafoto})*/
 #foto3
 {
-    background-image: url(../assets/img/gato.jpg);
+    background-image: url(../assets/img/isaak.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -91,7 +91,7 @@
 /*Foto Nicolas (mudar no assets/img/{nomedafoto})*/
 #foto6
 {
-    background-image: url(../assets/img/gato.jpg);
+    background-image: url(../assets/img/nicolas.jpeg);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

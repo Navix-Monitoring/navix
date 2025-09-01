@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function autenticarLoginEmpresa(output_email) {
     const instrucaoSql = `
-        SELECT razaoSocial, emailCorporativo, senha, id_empresa
+        SELECT razaoSocial, emailCorporativo, senha, cnpj, id_empresa
         FROM empresa 
         WHERE emailCorporativo = ?;
     `;

@@ -38,7 +38,15 @@ async function entrar() {
         });
 
         if (!resposta.ok) {
-            throw new Error("Erro ao fazer login: " + resposta.status);
+            if (json && json.erro === "email") {
+                return mostrarErro("Email não cadastrado na base de dados!");
+            } else if (json && json.erro === "senha") {
+                return mostrarErro("Senha inválida!");
+            } else if (json && json.erro === "preenchimento") {
+                return mostrarErro("Preencha todos os campos!");
+            } else {
+                return mostrarErro("Erro ao fazer login!");
+            }
         }
 
         const json = await resposta.json();
@@ -49,6 +57,7 @@ async function entrar() {
             sessionStorage.email_ss = json[0].emailCorporativo;
             sessionStorage.nome_ss = json[0].razaoSocial;
             sessionStorage.id_empresa = json[0].id_empresa;
+            sessionStorage.cnpj = json[0].cnpj;
             sessionStorage.tipo = 1;
         }else{
             sessionStorage.email_ss = json[0].email;
