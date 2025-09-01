@@ -42,4 +42,23 @@ router.post("/carregarInformacoes", function (req, res) {
     usuarioController.carregarInformacoes(req, res);
 });
 
+router.delete("/deleteUser/:id",function(req, res){
+    console.log("Passou na rota /deleteUser");
+    usuarioController.deleteUser(req, res);
+});
+
+router.post("/addUser", function(req, res){
+    console.log("Passou pela rota /addUser")
+    usuarioController.addUser(req, res)
+})
+
+router.post("/updateUser", function(req, res){
+    console.log("Passou aqui na rota /updateUser")
+    usuarioController.updateUser(req,res)
+})
+
+router.get("/getUsersByCompanyId/:id", function(req, res){
+    console.log("Passou na rota /getUserByCompanyId")
+    usuarioController.getUsersByCompanyId(req,res)
+})
 module.exports = router;

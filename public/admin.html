@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="./css/index.css">
 </head>
 
-<body class="overflow-x-hidden">
-    <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50 z-50">
+<body class="overflow-x-hidden flex flex-col">
+    <!-- <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50 z-50">
         <div>
             <div class="h-18 w-18 bg-slate-300 rounded-full" id="logo"></div>
         </div>
@@ -32,79 +32,208 @@
                 </a>
             </ul>
         </div>
-    </header>
-    <div class="px-15 bg-slate-300 pb-20">
-        <div class="flex pt-38 justify-between">
-            <div class="flex gap-8 bg-slate-100 items-center px-10 py-6 rounded-md">
-                <a href="" class="font-semibold border-b-4 border-slate-700">Membros</a>
-                <a href="" class="font-semibold">Administradores</a>
+    </header> -->
+
+    <div class="w-full min-h-screen fixed inset-0 z-10 flex justify-center items-center bg-black/50"
+        style="display: none;" id="telaAdicionarUser">
+        <div
+            class="relative bg-slate-100 border-blue-900 shadow-2xl p-16 gap-8 flex flex-col z-20 justify-center items-center w-1/2 h-9/10 rounded-xl">
+
+            <button onclick="fecharTela('telaAdicionarUser')"
+                class="absolute top-6 right-10 text-2xl text-gray-500 hover:text-red-600">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <p class="text-3xl font-semibold text-blue-900 pb-10">Adicionar Usuário</p>
+
+            <div class="flex gap-5 w-full">
+                <div class="flex flex-col gap-2 w-full">
+                    <p class="text-xl font-semibold text-blue-950">Nome</p>
+                    <input type="text" id="nome" class="bg-slate-300 px-4 py-2 rounded-md">
+                </div>
+
+                <div class="flex flex-col gap-2 w-full">
+                    <p class="text-xl font-semibold text-blue-950">Sobrenome</p>
+                    <input type="text" id="sobrenome" class="bg-slate-300 px-4 py-2 rounded-md">
+                </div>
             </div>
-            <div class="flex flex-col">
-                <div class="flex gap-2">
-                    <p class="text-slate-500">Membros totais: </p>
-                    <p class="font-semibold">2000</p>
+
+            <div class="flex gap-5 w-full">
+                <div class="flex flex-col gap-2 w-full">
+                    <p class="text-xl font-semibold text-blue-950">Telefone</p>
+                    <input type="text" id="telefone" class="bg-slate-300 px-4 py-2 rounded-md">
                 </div>
-                <div class="flex gap-2">
-                    <p class="text-slate-500">Membros ativos: </p>
-                    <p class="font-semibold">1800</p>
+                <div class="flex flex-col gap-2 w-full">
+                    <p class="text-xl font-semibold text-blue-950">Cargo</p>
+                    <input type="text" id="cargo" class="bg-slate-300 px-4 py-2 rounded-md">
                 </div>
+            </div>
+
+            <div class="flex gap-5 w-full pb-6">
+                <div class="flex flex-col gap-2 w-full">
+                    <p class="text-xl font-semibold text-blue-950">Email</p>
+                    <input type="email" id="email" class="bg-slate-300 px-4 py-2 rounded-md">
+                </div>
+
+                <div class="flex flex-col gap-2 w-full">
+                    <p class="text-xl font-semibold text-blue-950">Senha</p>
+                    <input type="password" id="senha" class="bg-slate-300 px-4 py-2 rounded-md">
+                </div>
+            </div>
+            <div class="flex justify-center w-full">
+                <a onclick="salvar()"
+                    class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl font-semibold rounded-md">Salvar
+                    Dados</a>
             </div>
         </div>
-        <div class="flex justify-between pt-8 items-center">
-            <div class="flex gap-10 items-center">
-                <p class="text-3xl font-semibold">Membros</p>
-                <a href="" class="px-8 py-4 bg-blue-950 text-slate-100 font-semibold text-lg rounded-md">Adicionar</a>
-                <div class="relative">
-                    <input type="text" class="bg-slate-100 py-4 pl-12 pr-4 rounded-md w-72"
-                        placeholder="Pesquisar..." />
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pl-1"></i>
+    </div>
+
+    <div class="w-full min-h-screen fixed inset-0 z-10 flex justify-center items-center bg-black/50"
+        style="display: none;" id="telaAtualizar">
+        <div
+            class="relative bg-slate-100 border-blue-900 shadow-2xl p-16 gap-8 flex flex-col z-20 justify-center items-center w-1/2 h-9/10 rounded-xl">
+
+            <button onclick="fecharTela('telaAtualizar')"
+                class="absolute top-6 right-10 text-2xl text-gray-500 hover:text-red-600">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <p class="text-3xl font-semibold text-blue-900 pb-10">Atualizar Dados</p>
+
+            <div class="flex gap-5 w-full">
+                <div class="flex flex-col gap-2 w-full">
+                    <p class="text-xl font-semibold text-blue-950">Nome</p>
+                    <input type="text" id="nomeUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+                </div>
+
+                <div class="flex flex-col gap-2 w-full">
+                    <p class="text-xl font-semibold text-blue-950">Sobrenome</p>
+                    <input type="text" id="sobrenomeUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
                 </div>
             </div>
-            <div>
-                <a href="" class="px-8 py-4 bg-blue-950 text-slate-100 rounded-md"><i
-                        class="fa-solid fa-chevron-left pr-2"></i>Filtro</a>
+
+
+            <div class="flex flex-col gap-2 w-full">
+                <p class="text-xl font-semibold text-blue-950">Telefone</p>
+                <input type="text" id="telefoneUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+            </div>
+            <div class="flex flex-col gap-2 w-full">
+                <p class="text-xl font-semibold text-blue-950">Cargo</p>
+                <input type="text" id="cargoUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+            </div>
+            <div class="flex gap-5 w-full pb-6">
+                <div class="flex flex-col gap-2 w-full">
+                    <p class="text-xl font-semibold text-blue-950">Email</p>
+                    <input type="email" id="emailUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+                </div>
+            </div>
+            <div class="flex justify-center w-full">
+                <a onclick="atualizar()"
+                    class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl font-semibold rounded-md">Atualizar
+                    Dados</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full min-h-screen fixed inset-0 z-10 flex justify-center items-center bg-black/50"
+        style="display: none;" id="telaDeletar">
+        <div
+            class="relative bg-slate-100 border-blue-900 shadow-2xl p-16 gap-8 flex flex-col z-20 justify-center items-center w-1/3 h-1/2 rounded-xl">
+            <p class="text-3xl font-bold text-blue-950">Deseja apagar usuário?</p>
+            <div class="flex justify-center w-full gap-4">
+                <a onclick="excluir()"
+                    class="text-xl font-semibold text-slate-100 px-8 py-3 bg-red-900 rounded-md">Deletar</a>
+                <a onclick="fecharTela('telaDeletar')"
+                    class="text-xl font-semibold text-slate-100 px-8 py-3 bg-slate-800 rounded-md">Não</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="flex flex-row w-full ">
+        <div
+            class="min-h-screen w-[300px] flex flex-col items-center bg-slate-100 py-6 z-1 shadow-2xl shadow-slate-600">
+
+            <!-- Logo -->
+            <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-20">
+
+            <!-- Foto de perfil -->
+            <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            </div>
+
+            <!-- Nome do usuário -->
+            <p class="font-bold text-blue-900">Olá, Fábio da Silva Silva</p>
+            <p class="mb-4 text-blue-900">Product Onwer</p>
+
+            <!-- Botões -->
+            <div class="flex flex-col gap-4 w-[70%] items-center">
+                <div class="w-full bg-slate-100 border-2 border-blue-900 rounded-md text-center py-2">
+                    <a href="#" class="no-underline">
+                        <h3 class="text-black m-0 p-0">Dashboard</h3>
+                    </a>
+                </div>
+
+                <div class="w-full bg-slate-100 border-2 border-blue-900 rounded-md text-center py-2">
+                    <a href="index.html" class="no-underline">
+                        <h3 class="text-black m-0 p-0">Tela Inicial</h3>
+                    </a>
+                </div>
+                <div class="w-full bg-slate-100 border-2 border-blue-900 rounded-md text-center py-2">
+                    <a href="admin.html" class="no-underline">
+                        <h3 class="text-black m-0 p-0">Usuários</h3>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Botão Sair -->
+            <div class="w-[60%] bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
+                onclick="limparSessao()">
+                <a href="./login.html" class="no-underline text-white">
+                    <h3 class="m-0 p-0">Sair</h3>
+                </a>
             </div>
         </div>
 
-        <div class="bg-slate-100 p-8 flex justify-between mt-4">
-            <div class="flex flex-col gap-2 items-center">
-                <p class="pb-4 font-semibold text-slate-500">Foto</p>
-                <div class="w-14 h-14 rounded-md bg-slate-900 mb-4" id="fotoUser"
-                    style="background-image: url(./assets/img/gato2.jpg); background-size: cover;background-repeat: no-repeat; background-position: center;">
+        <div class="px-15 w-full bg-slate-300 pb-20">
+            <div class="flex pt-12 justify-between">
+                <div class="flex gap-8 bg-slate-100 items-center px-10 py-6 rounded-md">
+                    <a href="" class="font-semibold border-b-4 border-slate-700">Membros</a>
+                    <a href="" class="font-semibold">Administradores</a>
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex gap-2">
+                        <p class="text-slate-500">Membros totais: </p>
+                        <p class="font-semibold" id="membrosTotais"></p>
+                    </div>
                 </div>
             </div>
-            <div class="flex flex-col gap-2 justify-between">
-                <p class="font-semibold text-slate-500">Nome</p>
-                <p class="pb-6">Sabrino da Silva</p>
-            </div>
-            <div class="flex flex-col gap-2 justify-between">
-                <p class="font-semibold text-slate-500">Contato</p>
-                <p class="pb-6">(11) 99393-9393</p>
-            </div>
-            <div class="flex flex-col gap-2 justify-between">
-                <p class="font-semibold text-slate-500">Email</p>
-                <p class="pb-6">sabrino.silva@email.com</p>
-            </div>
-            <div class="flex flex-col gap-2 justify-between items-center">
-                <p class="font-semibold text-slate-500">Status</p>
-                <p class="px-8 py-2 mb-4 bg-green-400 rounded-full text-green-900">Ativo</p>
-            </div>
-            <div class="flex flex-col gap-2 justify-between">
-                <p class="font-semibold text-slate-500">Cargo</p>
-                <p class="pb-6">Quality Assurance</p>
-            </div>
-            <div class="flex flex-col gap-2 justify-between items-center">
-                <p class="font-semibold text-slate-500">Operação</p>
-                <div class="flex gap-6 items-center justify-center pb-6">
-                    <a href=""><i class="fa-solid fa-pen-to-square text-2xl text-slate-800"></i></a>
-                    <a href=""><i class="fa-solid fa-pen text-2xl text-slate-800"></i></a>
-                    <a href=""><i class="fa-solid fa-trash text-2xl text-slate-800"></i></a>
+            <div class="flex justify-between pt-12 items-center">
+                <div class="flex gap-10 items-center">
+                    <p class="text-3xl font-semibold">Membros</p>
+                    <a onclick="abrirTela('telaAdicionarUser')"
+                        class="px-8 py-4 bg-blue-950 text-slate-100 font-semibold text-lg rounded-md">Adicionar</a>
+                    <div class="relative">
+                        <input type="text" class="bg-slate-100 py-4 pl-12 pr-4 rounded-md w-72"
+                            placeholder="Pesquisar..." oninput="search()" id="inputPesquisar" />
+                        <i
+                            class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pl-1"></i>
+                    </div>
                 </div>
+                <div>
+                    <a href="" class="px-8 py-4 bg-blue-950 text-slate-100 rounded-md"><i
+                            class="fa-solid fa-chevron-left pr-2"></i>Filtro</a>
+                </div>
+            </div>
+
+            <div class="bg-slate-100 p-8 flex flex-col justify-between mt-4" id="usuarios">
             </div>
         </div>
     </div>
     <div class="bg-slate-100 text-blue-950 flex flex-col justify-between lg:flex-row justify-between px-6 md:px-16 w-full
-        py-16 gap-10 max-lg:items-center">
+        py-16 gap-10 max-lg:items-center z-2">
         <div class="flex flex-col justify-center gap-7 items-start">
             <div class="max-lg:flex w-[100%] justify-center">
                 <p class="text-xl md:text-3xl">Entre em contato</p>
@@ -143,7 +272,7 @@
         </div>
         <div class="flex flex-col justify-center items-start gap-3">
             <div>
-                <p class="text-lg md:text-xl">Quer fazer parte do projeto?</p>
+                <p class="text-lg md:text-xl">Quer fazer parte do projueto?</p>
                 <p class="text-lg md:text-xl">Informe seu email</p>
             </div>
             <input type="text" class="px-4 rounded-sm py-2 bg-slate-200 w-full max-w-sm"
@@ -155,3 +284,171 @@
 </body>
 
 </html>
+
+<script>
+    var users = []
+
+    async function getUser() {
+        try {
+            var idEmpresa = sessionStorage.id_empresa
+
+            const data = await fetch(`http://localhost:3333/usuarios/getUsersByCompanyId/${idEmpresa}`, { method: "GET" })
+            const getUsers = await data.json()
+            membrosTotais.innerHTML = getUsers.length
+
+            listarUsuarios(getUsers)
+
+            users = getUsers
+        } catch (erro) {
+            console.log("Não foi!!!!!!")
+            console.log(erro)
+        }
+    }
+    getUser()
+
+    function fecharTela(tela) {
+        document.getElementById(tela).style.display = "none";
+    }
+
+    function addUser() {
+        telaAdicionarUser.style.display = "flex"
+    }
+
+    async function salvar() {
+        try {
+            var idEmpresa = sessionStorage.id_empresa
+            console.log(idEmpresa, sessionStorage)
+            const users = await fetch(`http://localhost:3333/usuarios/addUser`,
+                {
+                    method: "POST",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify({
+                        fkEmpresa: idEmpresa,
+                        nome: nome.value,
+                        email: email.value,
+                        cargo: cargo.value,
+                        senha: senha.value,
+                        telefone: telefone.value,
+                        sobrenome: sobrenome.value
+                    })
+                })
+
+
+        } catch (erro) {
+            console.log(erro)
+        }
+        fecharModal()
+        getUser()
+    }
+
+    async function excluir() {
+        try {
+            const users = await fetch(`http://localhost:3333/usuarios/deleteUser/${idUser}`, {
+                method: "DELETE"
+            })
+        } catch (erro) {
+            console.log(erro)
+        }
+        fecharTelaDel()
+    }
+
+    var idUser
+
+    function telaDel(id) {
+        telaDeletar.style.display = "flex"
+        idUser = id
+
+    }
+
+    function abrirTela(tela) {
+        document.getElementById(tela).style.display = "flex";
+    }
+
+    function abrirTelaUpdate(i) {
+        nomeUpdate.value = users[i].nome,
+            emailUpdate.value = users[i].email,
+            cargoUpdate.value = users[i].cargo,
+            telefoneUpdate.value = users[i].telefone,
+            sobrenomeUpdate.value = users[i].sobrenome
+
+        abrirTela('telaAtualizar')
+        idUser = users[i].id_usuario
+    }
+
+    async function atualizar() {
+        try {
+            await fetch(`http://localhost:3333/usuarios/updateUser`,
+                {
+                    method: "POST",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify({
+                        id: idUser,
+                        nome: nomeUpdate.value,
+                        email: emailUpdate.value,
+                        cargo: cargoUpdate.value,
+                        telefone: telefoneUpdate.value,
+                        sobrenome: sobrenomeUpdate.value
+                    })
+                })
+            await getUser()
+            fecharTela("telaAtualizar")
+        }
+        catch (erro) {
+            console.log(erro)
+        }
+    }
+
+    function search() {
+        const search = inputPesquisar.value
+        if (!search){
+           return listarUsuarios(users)
+        }
+        
+        const lista = users.map(u => {
+            if(u.nome.toUpperCase().includes(search.toUpperCase())){
+                console.log(u)
+                return u
+            }
+        }).filter(u => u)
+
+        listarUsuarios(lista)
+    }
+
+    function listarUsuarios(users) {
+        usuarios.innerHTML = `
+            <div style="display:grid; grid-template-columns:56px 2fr 1.2fr 2fr 120px 1.2fr 90px; gap:1rem; align-items:center" class="text-slate-500 font-semibold pb-2 border-b">
+                <div>Foto</div>
+                <div>Nome</div>
+                <div>Contato</div>
+                <div>Email</div>
+                <div style="text-align:center">Status</div>
+                <div>Cargo</div>
+                <div style="text-align:center">Operação</div>
+            </div>`
+
+
+        users.forEach((u, i) => {
+            const row = document.createElement('div');
+            row.style.display = 'grid';
+            row.style.gridTemplateColumns = '56px 2fr 1.2fr 2fr 120px 1.2fr 90px';
+            row.style.alignItems = 'center';
+            row.style.gap = '1rem';
+            row.className = 'py-3';
+
+            row.innerHTML = `
+                    <div class="w-14 h-14 rounded-md" style="background-image:url(./assets/img/gato2.jpg); background-size:cover; background-repeat:no-repeat; background-position:center"></div>
+                    <div class="font-semibold text-slate-600 truncate" title="${(u.nome || '') + ' ' + (u.sobrenome || '')}">${u.nome || ''} ${u.sobrenome || ''}</div>
+                    <div class="font-semibold text-slate-600">${u.telefone || ''}</div>
+                    <div class="font-semibold text-slate-600 truncate" title="${u.email || ''}">${u.email || ''}</div>
+                    <div style="justify-self:center"><span class="inline-flex items-center justify-center rounded-full bg-green-400 text-green-900 px-4 py-1 text-sm font-semibold w-24">Ativo</span></div>
+                    <div class="font-semibold text-slate-600 truncate" title="${u.cargo || ''}">${u.cargo || ''}</div>
+                    <div style="display:flex; align-items:center; justify-content:center; gap:0.75rem">
+                    <button title="Editar" onclick="abrirTelaUpdate(${i})"><i class="fa-solid fa-pen text-xl text-slate-800"></i></button>
+                    <button title="Excluir" onclick="telaDel(${u.id_usuario})"><i class="fa-solid fa-trash text-xl text-slate-800"></i></button>
+                    </div>
+                `;
+            usuarios.appendChild(row);
+        });
+    }
+
+</script>
