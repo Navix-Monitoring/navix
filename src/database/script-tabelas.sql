@@ -7,7 +7,8 @@ CREATE TABLE empresa (
     razaoSocial VARCHAR(50) NOT NULL,
     cnpj VARCHAR(14) NOT NULL,
     emailCorporativo VARCHAR(50) not null,
-    senhaHash VARCHAR(250) not null,
+    senha VARCHAR(250) not null,
+	caminhoImagem VARCHAR(500) NOT NULL DEFAULT './img/foto-usuario.png',
     PRIMARY KEY (id_empresa),
     UNIQUE (emailCorporativo, cnpj)
 );
@@ -19,7 +20,8 @@ create table usuario (
     sobrenome VARCHAR(50) NOT NULL,
     telefone VARCHAR(11),
     email VARCHAR(100) NOT NULL,
-    senha VARCHAR(20) NOT NULL,
+    senha VARCHAR(250) NOT NULL,
+	caminhoImagem VARCHAR(500) NOT NULL DEFAULT './img/defaultProfile.jpg',
     CONSTRAINT chk_telefone CHECK (CHAR_LENGTH(telefone) IN (10, 11)),
     PRIMARY KEY (id_usuario),
     UNIQUE (email), 

@@ -45,9 +45,16 @@ async function entrar() {
 
         // salvando dados
         
-        sessionStorage.id_empresa = json[0].id_empresa;
-        sessionStorage.email_ss = json[0].emailCorporativo;
-        sessionStorage.nome_ss = json[0].razaoSocial;
+        if(json[0].emailCorporativo){
+            sessionStorage.email_ss = json[0].emailCorporativo;
+            sessionStorage.nome_ss = json[0].razaoSocial;
+            sessionStorage.tipo = 1;
+        }else{
+            sessionStorage.email_ss = json[0].email;
+            sessionStorage.nome_ss = json[0].nome;
+            sessionStorage.tipo = 0;
+        }
+        
 
         setTimeout(() => {
             window.location = "../perfil-visualizar.html" // arrumar aqui após criar as paginas

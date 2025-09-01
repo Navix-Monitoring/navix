@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var upload = require('../utils/uploadImagem'); // ARQUIVO COM A CONFIGURAÇÃO DO UPLOAD
 
 var usuarioController = require("../controllers/usuarioController");
 
@@ -12,9 +13,25 @@ router.post("/authentic", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
-router.put("/update_register", function (req, res) {
+router.post("/atualizarFoto", upload.single('foto'), function (req, res) {
     usuarioController.atualizar(req, res);
 })
+
+router.post("/mudarNome", function(req, res){
+    console.log("Entrou na rota /mudarNome");
+    usuarioController.mudarNome(req, res);
+});
+
+router.post("/mudarEmail", function(req, res){
+    console.log("Entrou na rota /mudarEmail");
+    usuarioController.mudarEmail(req, res);
+});
+
+router.post("/mudarSenha", function(req, res){
+    console.log("Entrou na rota /mudarSenha");
+    usuarioController.mudarSenha(req, res);
+});
+
 
 router.delete("/remove_register", function (req, res) {
     usuarioController.deletar(req, res);
