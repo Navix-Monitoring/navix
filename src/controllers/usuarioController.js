@@ -177,6 +177,7 @@ async function autenticar(req, res) {
 }
 
 
+
 function atualizar(req, res) {
   try {
     console.log("ENTROU NO CONTROLLER ATUALIZAR")
