@@ -1,4 +1,4 @@
-import {mostrarErro, sumirMensagem} from '../sessao.js'
+import { mostrarErro, sumirMensagem} from '../sessao.js'
 
 async function entrar() {
 
@@ -28,50 +28,49 @@ async function entrar() {
     try {
         const resposta = await fetch("usuarios/authentic", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 output_email: email,
-                output_senha: senha,
-            }),
+                output_senha: senha
+            })
         });
-
+    
+        let json;
+        try {
+            json = await resposta.json();
+        } catch (e) {
+            json = null;
+        }
+    
         if (!resposta.ok) {
             if (json && json.erro === "email") {
-                return mostrarErro("Email não cadastrado na base de dados!");
+                return mostrarErro("Email inválido!");
             } else if (json && json.erro === "senha") {
                 return mostrarErro("Senha inválida!");
-            } else if (json && json.erro === "preenchimento") {
-                return mostrarErro("Preencha todos os campos!");
             } else {
                 return mostrarErro("Erro ao fazer login!");
             }
         }
-
-        const json = await resposta.json();
-
-        // salvando dados
-        
-        if(json[0].emailCorporativo){
+    
+        // Salvando dados no sessionStorage
+        if (json[0].emailCorporativo) {
             sessionStorage.email_ss = json[0].emailCorporativo;
             sessionStorage.nome_ss = json[0].razaoSocial;
             sessionStorage.id_empresa = json[0].id_empresa;
             sessionStorage.tipo = 1;
-        }else{
+        } else {
             sessionStorage.email_ss = json[0].email;
             sessionStorage.nome_ss = json[0].nome;
             sessionStorage.tipo = 0;
         }
-        
-
+    
         setTimeout(() => {
-            window.location = "../perfil-visualizar.html" // arrumar aqui após criar as paginas
+            window.location = "../perfil-visualizar.html";
         }, 3000);
-
+    
     } catch (error) {
-        return mostrarErro(error);
+        return mostrarErro("Não foi possível conectar ao servidor.");
     }
-}
+}    
 
 window.entrar = entrar; 
