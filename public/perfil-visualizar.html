@@ -10,47 +10,65 @@
 </head>
 
 <body class="bg-gray-100" onload="carregarInformacoes()">
-  <div class="fixed top-0 left-0 h-screen w-[300px] flex flex-col items-center bg-white border-r border-[#002B50] py-6">
+   <div class="flex flex-row w-full justify-between">
+  <!-- nav bar -->
+  <div
+            class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 z-1 shadow-2xl shadow-slate-600">
 
-    <!-- Logo -->
-    <img src="./assets/navix-logo.png" class="w-[200px] h-[120px] mb-6">
+            <!-- Logo -->
+            <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
 
-    
-    <div class="rounded-full w-20 h-20 flex justify-center items-center bg-gray-300 mb-2" id="imagemUsuario">
-      <img src="./assets/img/foto-usuario.png" class="w-[32px] h-[32px]">
-    </div>
+            <!-- Foto de perfil -->
+            <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            </div>
 
-  
-    <h3 class="text-blue-900 font-extrabold text-[1.2rem] mb-8 text-center">
-      <span id="b_usuario">usuário</span>
-    </h3>
+            <!-- Nome do usuário -->
+            <p class="font-bold text-blue-900">Olá, Fábio da Silva Silva</p>
+            <p class="mb-4 text-blue-900">Product Onwer</p>
 
-    
-    <div class="flex flex-col gap-4 w-[70%] items-center">
-      <div class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2">
-        <a href="#" class="no-underline">
-          <h3 class="text-black m-0 p-0">Dashboard</h3>
-        </a>
-      </div>
+            <div class="flex flex-col gap-4 w-[70%] items-center">
 
-      <div class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2">
-        <a href="index.html" class="no-underline">
-          <h3 class="text-black m-0 p-0">Tela Inicial</h3>
-        </a>
-      </div>
-    </div>
+                <!-- Lista de opções -->
+                <a href="../perfil-visualizar.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Perfil
+                </a>
 
-    <!-- Botão Sair -->
-    <div class="w-[60%] bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
-      onclick="limparSessao()">
-      <a href="./login.html" class="no-underline text-white">
-        <h3 class="m-0 p-0">Sair</h3>
-      </a>
-    </div>
-  </div>
+                <a href="#"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Dashboard
+                </a>
 
+                <a href="./alertas.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Alertas
+                </a>
 
-  <div class="flex justify-center items-center min-h-screen">
+                <a href="../admin.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Painel de Controle
+                </a>
+
+                <a href="../admin.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Cadastrar Funcionários
+                </a>
+                <a href="../admin.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Suporte
+                </a>
+                <!-- Botão Sair -->
+                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
+                    onclick="limparSessao()">
+                    <a href="./login.html" class="no-underline text-white">
+                        <h3 class="m-0 p-0">Sair</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+  <div class="flex  min-h-screen w-[65%]">
     <div class="bg-slate-300 p-10 rounded-2xl shadow-2xl text-center w-[600px]">
 
       <!-- Foto -->

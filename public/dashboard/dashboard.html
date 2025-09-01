@@ -13,72 +13,73 @@
 <body class="bg-gray-100" onload="carregarInformacoes(), validarSessao()">
   <!-- Em breve -->
   <div class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
-    <h1 class="text-white text-5xl font-bold">Em breve</h1>
+    <h1 class="text-white text-5xl font-extrabold text-slate-950">EM BREVE!!</h1>
   </div>
 
 
 
+  <div class="flex flex-row w-full">
   <!-- nav bar -->
-  <nav class="fixed top-0 left-0 h-screen w-[250px] flex flex-col items-center bg-white border-r border-[#002B50] py-8">
+  <div
+            class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 z-1 shadow-2xl shadow-slate-600">
 
-    <img src="../assets/navix-logo.jpg" class="w-[250px] h-[120px]">
+            <!-- Logo -->
+            <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
 
-    <!-- Usuario -->
-    <div class="py-4 flex-col text-[1rem] mx-auto">
-      <p class="font-bold flex py-2">
-        <img src="../assets/img/foto-usuario.png" alt="" class="w-4 h-5 mr-1">
-        Usuário:
-        <span id="b_usuario" class="font-semibold text-blue-900 ml-1">usuário</span>
-      </p>
-      <hr class="w-[150px] ">
-    </div>
+            <!-- Foto de perfil -->
+            <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            </div>
 
-    <!-- Menu da Sidebar -->
-    <div class="flex flex-col gap-4 w-[70%] items-center">
+            <!-- Nome do usuário -->
+            <p class="font-bold text-blue-900">Olá, Fábio da Silva Silva</p>
+            <p class="mb-4 text-blue-900">Product Onwer</p>
 
-      <!-- Lista de opções -->
-      <a href="../perfil-visualizar.html"
-        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-        Perfil
-      </a>
+            <div class="flex flex-col gap-4 w-[70%] items-center">
 
-      <a href="#"
-        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-        Dashboard
-      </a>
+                <!-- Lista de opções -->
+                <a href="../perfil-visualizar.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Perfil
+                </a>
 
-      <a href="./alertas.html"
-        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-        Alertas
-      </a>
+                <a href="#"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Dashboard
+                </a>
 
-      <a href="../admin.html"
-        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-        Painel de Controle
-      </a>
+                <a href="./alertas.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Alertas
+                </a>
 
-      <a href="../admin.html"
-        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-        Cadastrar Funcionários
-      </a>
-    </div>
+                <a href="../admin.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Painel de Controle
+                </a>
 
-    <!-- Botão Sair -->
-    <a href="./login.html" onclick="limparSessao()"
-      class="w-[60%] bg-blue-950 text-white rounded-md text-center py-2 mt-auto mb-6 cursor-pointer hover:bg-blue-800">
-      Sair
-    </a>
+                <a href="../admin.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Cadastrar Funcionários
+                </a>
+                <a href="../admin.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Suporte
+                </a>
+                <!-- Botão Sair -->
+                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
+                    onclick="limparSessao()">
+                    <a href="./login.html" class="no-underline text-white">
+                        <h3 class="m-0 p-0">Sair</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-
-    <!-- Suporte -->
-    <div class="w-[150px] text-center">
-      <img src="../assets/imagensIndex/icon-suporte.png" alt="Suporte" class="w-8 mx-auto">
-      <a href="./" class="no-underline text-blue-900 text-lg hover:cursor-pointer hover:font-medium">Suporte</a>
-    </div>
-  </nav>
-
+        <div class="flex flex-col">
   <!-- section de graficos -->
-  <main class="ml-[250px] p-6 shadow-xl h-[350px]">
+  <main class=" p-6 shadow-xl h-[350px]">
+    
     <section class="grid grid-cols-3 h-full">
       <!-- Esquerda -->
       <div class="border-r border-black flex items-center justify-center">
@@ -163,6 +164,8 @@
       <div class="bg-black p-4 rounded-lg">Card 8</div>
     </div>
   </section>
+  </div>
+  </div>
 
 </body>
 
