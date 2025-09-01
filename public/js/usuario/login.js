@@ -12,7 +12,6 @@ async function entrar() {
     const email = email_input.value;
     const senha = senha_input.value;
 
-    mostrarLoading();
 
     const verificacao = [email, senha];
     const padrao = /["'!()\/\\|;\-\]\[{}=]/;
@@ -75,6 +74,7 @@ async function entrar() {
         }
 
         // Redirecionamento após 3 segundos
+        mostrarLoading();
         setTimeout(() => {
             esconderLoading();
             window.location = "../perfil-visualizar.html";
