@@ -22,7 +22,6 @@ async function deletar() {
         console.log("resposta: ", resposta.status);
 
         if (resposta.ok) {
-            cardErro.style.display = "block";
             setTimeout(() => {
                 window.location = "../index.html";
             }, 3000);
