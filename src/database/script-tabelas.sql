@@ -42,6 +42,7 @@ create table veiculo (
     data_ativacao date,
     status enum('ativo', 'manutenção', 'inativo'),
     -- ultimo_checkup datetime,
+
     primary key (id_veiculo),
     constraint fk_veiculo_empresa foreign key (fkempresa) references empresa(id_empresa)
 );
@@ -71,6 +72,7 @@ create table alerta (
     status enum('pendente', 'em análise', 'resolvido') NOT NULL, 
     prioridade int not null,
     PRIMARY KEY (id_alerta),
+
     CONSTRAINT chk_prioridade CHECK (prioridade IN (1, 2, 3, 4, 5))
 );
 
@@ -85,7 +87,6 @@ create table hard_alerta (
     constraint fk__Hardware foreign key (fkHardware) references hardware(idHardware)
 );
 
-
 /*
 create table alerta_veiculo_empresa (
 	id_alerta INT NOT NULL,
@@ -96,7 +97,9 @@ create table alerta_veiculo_empresa (
     CONSTRAINT fk_alerta_veiculo_veiculo FOREIGN KEY (fkVeiculo) REFERENCES veiculo(id_veiculo),
     CONSTRAINT fk_alerta_veiculo_empresa FOREIGN KEY (fkEmpresa) REFERENCES empresa(id_empresa)
 );	
+
 */
+
 
 /*
 
@@ -176,7 +179,7 @@ insert into usuario(fkEmpresa, nome, sobrenome, telefone, email, senha)values(1,
 update usuario set nome = "sabrino", sobrenome = "silva da silva", telefone = "1193949842", email = "sabrino@gmail.com", senha = "senha123" where id_usuario = 1;
 /*Error Code: 1292. Truncated incorrect DOUBLE value: 'sabrino'
 */
-/*
+
 select * from usuario;
 select * from empresa;
 

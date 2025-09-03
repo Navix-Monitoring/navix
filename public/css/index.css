@@ -28,6 +28,13 @@
     object-fit: cover;
 }
 
+#fotoUsuario
+{
+    background-image: url(../assets/img/gato.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 /*Foto gabi (mudar no assets/img/{nomedafoto})*/
 #foto1
@@ -44,8 +51,8 @@
 /*Foto Gustavo(mudar no assets/img/{nomedafoto})*/
 #foto2
 {
-    background-image: url(../assets/img/gato.jpg);
-    background-size: contain;
+    background-image: url(../assets/img/foto-Muniz.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;
@@ -54,7 +61,7 @@
 /*Foto Isaak(mudar no assets/img/{nomedafoto})*/
 #foto3
 {
-    background-image: url(../assets/img/gato.jpg);
+    background-image: url(../assets/img/isaak.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -64,8 +71,8 @@
 /*Foto Lucas Pereira(mudar no assets/img/{nomedafoto})*/
 #foto4
 {
-    background-image: url(../assets/img/gato.jpg);
-    background-size: contain;
+    background-image: url(../assets/img/foto-amorim.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;
@@ -74,8 +81,8 @@
 /*Foto Lucas Rocha (mudar no assets/img/{nomedafoto})*/
 #foto5
 {
-    background-image: url(../assets/img/gato.jpg);
-    background-size: contain;
+    background-image: url(../assets/img/rocha.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;
@@ -84,10 +91,20 @@
 /*Foto Nicolas (mudar no assets/img/{nomedafoto})*/
 #foto6
 {
-    background-image: url(../assets/img/gato.jpg);
+    background-image: url(../assets/img/nicolas.jpeg);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;
     width: 200px;
+}
+
+#logo
+{
+    background-image: url(../assets/img/Logo.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 90px;
+    width: 90px;
 }

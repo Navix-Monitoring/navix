@@ -28,11 +28,11 @@ function finalizarAguardar() {
     cardErro.style.display = "none";
 }
 
-function sumirMensagem() {
+export function sumirMensagem() {
   cardErro.style.display = "none";
 }
 
-function mostrarErro(mensagem) {
+export function mostrarErro(mensagem) {
   cardErro.style.display = "flex";
   mensagem_erro.innerHTML = mensagem;
   setTimeout(() => {

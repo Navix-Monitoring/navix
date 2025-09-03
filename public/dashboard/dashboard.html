@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+  <script src="../js/sessao.js"></script>
+</head>
+
+<body class="bg-gray-100" onload="carregarInformacoes(), validarSessao()">
+  <!-- Em breve -->
+  <div class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+    <h1 class="text-white text-5xl font-extrabold text-slate-950">EM BREVE!!</h1>
+  </div>
+
+
+
+  <div class="flex flex-row w-full">
+  <!-- nav bar -->
+  <div
+            class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 z-1 shadow-2xl shadow-slate-600">
+
+            <!-- Logo -->
+            <img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
+
+            <!-- Foto de perfil -->
+            <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                style="background-image: url(../assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            </div>
+
+            <!-- Nome do usuário -->
+            <div id="nomeProfissao">
+            
+            </div>
+
+            <div class="flex flex-col gap-4 w-[70%] items-center">
+
+                <!-- Lista de opções -->
+                <a href="../perfil-visualizar.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Perfil
+                </a>
+
+                <a href="dashboard.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Dashboard
+                </a>
+
+                <a href=""
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Alertas
+                </a>
+
+                <a href=""
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Painel de Controle
+                </a>
+
+                <a href="../admin.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Cadastrar Funcionários
+                </a>
+                <a href=""
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Suporte
+                </a>
+                <!-- Botão Sair -->
+                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
+                    onclick="limparSessao()">
+                    <a href="./login.html" class="no-underline text-white">
+                        <h3 class="m-0 p-0">Sair</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col">
+  <!-- section de graficos -->
+  <main class=" p-6 shadow-xl h-[350px]">
+    
+    <section class="grid grid-cols-3 h-full">
+      <!-- Esquerda -->
+      <div class="border-r border-black flex items-center justify-center">
+        <p>Gráfico Esquerda</p>
+      </div>
+
+      <!-- Meio (dividido em 2) -->
+      <div class="grid grid-rows-2 border-r border-black">
+
+        <div class="flex items-center justify-center">
+          <p>Parte de cima (Modelos)</p>
+        </div>
+
+        <div class="flex items-center justify-center">
+          <p>Parte de baixo (Alertas)</p>
+        </div>
+
+      </div>
+
+      <!-- Direita -->
+      <div class="flex items-center justify-center">
+        <p>Gráfico Direita</p>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- nav de atalhos de busca -->
+  <aside class="ml-[250px] p-6 h-[120px] border-b">
+    <ul class="flex flex-wrap gap-15 w-full justify-center">
+      <li>
+        <p class="font-bold mb-1">Modelo ou id do automovel:</p>
+        <div class="relative w-64">
+          <input type="text" placeholder="Pesquisar..." class="border rounded-md pl-10 pr-4 py-2 w-full">
+          <img src="../assets/imagensIndex/icons8-pesquisar-24.png"
+            class="absolute left-2 top-1/2 -translate-y-1/2 w-5 h-5 opacity-70">
+        </div>
+      </li>
+
+      <li>
+        <p class="font-bold mb-2">Status de atividade:</p>
+        <div class="flex gap-6">
+          <p class="flex items-center gap-2">
+            <input type="checkbox" id="inp_statusAtividade" name="status" value="ativo" class="accent-blue-600">
+            Ativo
+          </p>
+          <p class="flex items-center gap-2">
+            <input type="checkbox" id="inp_statusInatividade" name="status" value="inativo" class="accent-blue-600">
+            Inativo
+          </p>
+        </div>
+      </li>
+
+      <li>
+        <p class="font-bold mb-1">Ver em ordem:</p>
+        <select id="ordem" class="border rounded-md pl-10 pr-2 py-2">
+          <option value="#">Selecione</option>
+          <option value="asc">Crescente</option>
+          <option value="desc">Decrescente</option>
+        </select>
+      </li>
+
+      <li>
+        <p class="font-bold mb-1">Data:</p>
+        <div>
+          <input type="date" id="data" class="border rounded-md pl-10 pr-2 py-2">
+        </div>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Exemplos de cards -->
+  <section class="ml-[250px] h-[300px] overflow-y-auto rounded-md p-4 bg-white">
+    <div class="grid grid-cols-1 gap-4">
+      <div class="bg-blue-800 p-4 rounded-lg">Card 1</div>
+      <div class="bg-black p-4 rounded-lg">Card 2</div>
+      <div class="bg-blue-800 p-4 rounded-lg">Card 3</div>
+      <div class="bg-black p-4 rounded-lg">Card 4</div>
+      <div class="bg-blue-800 p-4 rounded-lg">Card 5</div>
+      <div class="bg-black p-4 rounded-lg">Card 6</div>
+      <div class="bg-blue-800 p-4 rounded-lg">Card 7</div>
+      <div class="bg-black p-4 rounded-lg">Card 8</div>
+    </div>
+  </section>
+  </div>
+  </div>
+
+</body>
+
+</html>
+
+<script>
+  var nomeEmpresa = sessionStorage.nome_ss
+    var cnpj = sessionStorage.cnpj
+    console.log(sessionStorage)
+
+    nomeProfissao.innerHTML += 
+            `
+            <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa}</p>
+            <p class="mb-4 text-blue-900">CNPJ: ${cnpj}</p>
+            `
+</script>

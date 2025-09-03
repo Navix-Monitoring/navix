@@ -1,42 +1,121 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atualizar Perfil</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atualizar Perfil</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+    <script src="js/usuario/perfil.js"></script>
 </head>
-<body class="bg-gray-100">
 
-<div class="flex justify-center items-center min-h-screen">
-  <div class="bg-[#E1E7EC] p-10 rounded-2xl shadow-2xl text-center w-[600px]">
-      
+<body class="bg-gray-100" onload="carregarInformacoes()">
+   <div class="flex flex-row w-full justify-between">
+  <!-- nav bar -->
+  <div
+            class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 z-1 shadow-2xl shadow-slate-600">
+
+            <!-- Logo -->
+            <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
+
+            <!-- Foto de perfil -->
+            <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            </div>
+
+            <!-- Nome do usuário -->
+           <div id="nomeProfissao">
+            
+            </div>
+
+            <div class="flex flex-col gap-4 w-[70%] items-center">
+
+                <!-- Lista de opções -->
+                <a href="../perfil-visualizar.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Perfil
+                </a>
+
+                <a href="dashboard/dashboard.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Dashboard
+                </a>
+
+                <a href="./alertas.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Alertas
+                </a>
+
+                <a href=""
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Painel de Controle
+                </a>
+
+                <a href="../admin.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Cadastrar Funcionários
+                </a>
+                <a href=""
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Suporte
+                </a>
+                <!-- Botão Sair -->
+                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
+                    onclick="limparSessao()">
+                    <a href="./login.html" class="no-underline text-white">
+                        <h3 class="m-0 p-0">Sair</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+  <div class="flex py-4 w-[65%]">
+    <div class="flex flex-col bg-slate-300 p-10 rounded-2xl shadow-2xl text-center w-[600px]">
+
       <!-- Foto -->
-      <div class="bg-[#002B50] rounded-full w-32 h-32 flex justify-center items-center mx-auto text-white text-4xl">
-        📷
+       <div class="flex items-center justify-start gap-4">
+      <div class="bg-[#002B50] rounded-md w-26 h-26 flex justify-center items-center text-white text-4xl" id="imagemUsuarioPerfil" >
+        <i class="fa-solid fa-user text-slate-100 text-md"></i>
       </div>
-      
-      <p class="text-[#002B50] mt-4 text-lg cursor-pointer">Alterar foto de perfil</p>
-      
-      <!-- Inputs -->
-      <input class="w-full p-4 mt-6 rounded-md border text-lg" type="text" placeholder="Nome">
-      <input class="w-full p-4 mt-4 rounded-md border text-lg" type="email" placeholder="Email">
-      <input class="w-full p-4 mt-4 rounded-md border text-lg" type="password" placeholder="Senha">
-      
-      <!-- Botão -->
-      <button class="w-full p-4 mt-6 bg-[#002B50] text-white text-lg rounded-md hover:bg-[#001C35]">
-        Alterar dados
-      </button>
-      <button class="w-full p-4 mt-6 bg-red-600 text-white text-lg rounded-md hover:bg-[#001C35]">
-        Deletar Usuário
-      </button>
-  </div>
-</div>
 
+      <!-- Form -->
+      <form onsubmit="event.preventDefault(); atualizar();">
+        <input type="file" id="foto" name="foto" hidden>
+                    <label for="foto" class="upload text-slate-950 font-semibold mt-4 text-lg cursor-pointer" style="margin-top: 10px;">
+                        Alterar foto de perfil
+                    </label>
+        <p id="mensagemImagemUsuario" style="margin-top: 10px; margin-bottom: 10px"></p>
+        </div>
+        <label for="nome_input" class="flex mt-4 text-md font-medium text-gray-700 py-1">Nome</label>
+        <input class="w-full p-4 bg-slate-100 rounded-md  text-lg" id="nome_input" type="text" placeholder="Nome">
+         <label for="email_input" class="flex  mt-4 text-md font-medium text-gray-700 py-1">Email</label>
+        <input class="w-full p-4 bg-slate-100 rounded-md  text-lg" id="email_input" type="email" placeholder="Email">
+        <label for="senha_input" class="flex mt-4 text-md font-medium text-gray-700 py-1">Digite sua nova senha</label>
+        <input class="w-full p-4 bg-slate-100 rounded-md  text-lg" id="senha_input" type="password" placeholder="Digite sua nova senha">
+
+
+        <!-- Botões -->
+        <button type="submit" class="w-full p-4 mt-6 bg-[#002B50] text-white text-lg rounded-md hover:bg-[#001C35]">
+          Alterar dados
+        </button>
+        <button type="button" onclick="deletar()" class="w-full p-4 mt-6 bg-red-600 text-white text-lg rounded-md hover:bg-[#001C35]">
+          Deletar Usuário
+        </button>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
 
+<script>
+  var nomeEmpresa = sessionStorage.nome_ss
+    var cnpj = sessionStorage.cnpj
+    console.log(sessionStorage)
 
-
-
-
+    nomeProfissao.innerHTML += 
+            `
+            <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa}</p>
+            <p class="mb-4 text-blue-900">CNPJ: ${cnpj}</p>
+            `
+</script>
