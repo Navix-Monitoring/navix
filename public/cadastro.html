@@ -40,10 +40,11 @@
 
             <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Cadastro da Empresa</h1>
 
-            <div id="cardErro" class="hidden bg-green-200 text-black-800 px-4 py-3 rounded mb-4">
-                <span id="mensagem_erro"></span>
+            <div id="cardMensagem" class="hidden px-4 py-3 rounded mb-4">
+                <span id="mensagem_status"></span>
+            
             </div>
-
+              
             <form onsubmit="event.preventDefault(); cadastrar();" class="flex flex-col gap-4">
 
                 <input id="razaoSocial_input" type="text" placeholder="Razão Social"
