@@ -33,33 +33,61 @@ create table usuario (
 create table veiculo (
 	id_veiculo int not null auto_increment,
     fkempresa int not null,
-    placa varchar(10) not null,
-    numero_serie varchar(50),
+    -- placa varchar(10) not null,
+    -- numero_serie varchar(50),
     modelo varchar(50),
-    ano_fabricacao year,
-    tipo varchar(50), --  Passível a mudanças, enum se encaxaria melhor nessa parte, mas é necessa´rio alinhar primeioro
+    -- ano_fabricacao year,
+    -- tipo varchar(50), --  Passível a mudanças, enum se encaxaria melhor nessa parte, mas é necessa´rio alinhar primeioro
     pilotoAuto_versao varchar(20),
     data_ativacao date,
     status enum('ativo', 'manutenção', 'inativo'),
-    ultimo_checkup datetime,
+    -- ultimo_checkup datetime,
+
     primary key (id_veiculo),
     constraint fk_veiculo_empresa foreign key (fkempresa) references empresa(id_empresa)
 );
 
+create table t_hardware (
+	idTipo int not null primary key auto_increment,
+    tipo enum ('CPU','RAM','DISCO')
+);
+
+create table hardware (
+	idHardware int not null primary key,
+    fkTipo int not null,
+    fkVeiculo int not null,
+    parametro decimal(5,2) not null,
+    constraint fk_tipo foreign key (fkTipo) references t_hardware(idTipo),
+    constraint fk_veiculo foreign key (fkVeiculo) references veiculo(id_veiculo)
+);
+
+
 create table alerta (
 	id_alerta INT NOT NULL auto_increment,
-    fkVeiculo INT NOT NULL,
-    tipo_alerta ENUM('CPU', 'RAM', 'REDE', 'SISTEMA', 'OUTRO') NOT NULL,
+    -- fkVeiculo INT NOT NULL,
+    -- tipo_alerta ENUM('CPU', 'RAM', 'REDE', 'SISTEMA', 'OUTRO') NOT NULL,
     descricao text,
     nivel enum('baixo', 'medio', 'alto') NOT NULL,
     data_alerta DATETIME NOT NULL default CURRENT_TIMESTAMP,
     status enum('pendente', 'em análise', 'resolvido') NOT NULL, 
     prioridade int not null,
     PRIMARY KEY (id_alerta),
-    CONSTRAINT fk_alerta_veiculo FOREIGN KEY (fkVeiculo) REFERENCES veiculo(id_veiculo),
+
     CONSTRAINT chk_prioridade CHECK (prioridade IN (1, 2, 3, 4, 5))
 );
 
+
+create table hard_alerta (
+	idHAlerta int not null auto_increment,
+	fkAlerta int not null,
+    fkHardware int not null,
+    quantidade int,
+    primary key(idHAlerta, fkAlerta, fkHardware),
+    constraint fk_Alerta foreign key (fkAlerta) references alerta(id_Alerta),
+    constraint fk__Hardware foreign key (fkHardware) references hardware(idHardware)
+);
+
+/*
 create table alerta_veiculo_empresa (
 	id_alerta INT NOT NULL,
     fkVeiculo INT NOT NULL,
@@ -69,6 +97,8 @@ create table alerta_veiculo_empresa (
     CONSTRAINT fk_alerta_veiculo_veiculo FOREIGN KEY (fkVeiculo) REFERENCES veiculo(id_veiculo),
     CONSTRAINT fk_alerta_veiculo_empresa FOREIGN KEY (fkEmpresa) REFERENCES empresa(id_empresa)
 );	
+
+*/
 
 
 /*
@@ -150,10 +180,7 @@ update usuario set nome = "sabrino", sobrenome = "silva da silva", telefone = "1
 /*Error Code: 1292. Truncated incorrect DOUBLE value: 'sabrino'
 */
 
-drop database navix;
 select * from usuario;
 select * from empresa;
 
 INSERT INTO usuario(fkEmpresa,nome,sobrenome,telefone,email,senha,cargo) VALUES(1,"Travis","Scott","11994945728","travis@email.com","senha123*","Tech Lead");
-
-
