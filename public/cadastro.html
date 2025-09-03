@@ -40,7 +40,7 @@
 
             <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Cadastro da Empresa</h1>
 
-            <div id="cardErro" class="hidden bg-red-200 text-red-800 px-4 py-3 rounded mb-4">
+            <div id="cardErro" class="hidden bg-green-200 text-black-800 px-4 py-3 rounded mb-4">
                 <span id="mensagem_erro"></span>
             </div>
 
@@ -118,6 +118,10 @@
             <a href=""
                 class="px-6 py-3 bg-blue-700 rounded-sm text-slate-100 scale-100 hover:scale-110 transition-transform duration-300 transform-gpu">Enviar</a>
         </div>
+
+        <div id="loading" class="hidden fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-white/30">
+        <div class="w-16 h-16 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
+    </div>
     </div>
 </body>
 
