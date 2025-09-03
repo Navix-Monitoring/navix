@@ -101,10 +101,10 @@
 
 #logo
 {
-    background-image: url(../assets/img/Logo.png);
+    background-image: url(../assets/navix-logo.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    height: 90px;
     width: 90px;
+    height: 90px;
 }

@@ -189,17 +189,16 @@ function carregarInformacoes() {
 
             //se tiver imagem
             if (dados[0].caminhoImagem) {
-                console.log("CAMINHO IMAGEM: " + dados[0].caminhoImagem)
-
+                0
                 document.getElementById("imagemUsuario").innerHTML = `
-                <img src="${dados[0].caminhoImagem}" 
-                    alt="Imagem do Usuário" 
-                    class="w-20 h-20 object-cover rounded-full">`;
+                <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                    style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                </div>`;
 
                 document.getElementById("imagemUsuarioPerfil").innerHTML = `
-                <img src="${dados[0].caminhoImagem}" 
-                    alt="Imagem do Usuário" 
-                    class="w-32 h-32 object-cover rounded-full">`;
+                 <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                    style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                </div>`;
             }
 
             var inputFoto = document.getElementById("foto");
