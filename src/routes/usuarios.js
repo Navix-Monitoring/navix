@@ -35,7 +35,8 @@ router.post("/mudarSenha", function(req, res){
 
 router.delete("/remove_register", function (req, res) {
     usuarioController.deletar(req, res);
-})
+});
+
 
 router.post("/carregarInformacoes", function (req, res) {
     console.log("Entrou na rota /carregarInformacoes");

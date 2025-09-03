@@ -1,15 +1,16 @@
 async function deletar() {
-    var confimar = confirmar_input.value;
-    var email = sessionStorage.email_ss;
+    const email = sessionStorage.getItem("email_ss");
 
-    if (!confimar || confimar != "CONFIRMO") {
-        alert("Se deseja deletar a conta digite 'CONFIRMO'.")
-        return;
+    // janela de confirmação
+    const confirmar = confirm("Tem certeza que deseja deletar sua conta? Essa ação não pode ser desfeita.");
+
+    if (!confirmar) {
+        return; // usuário cancelou
     }
 
     try {
         const resposta = await fetch("/usuarios/remove_register", {
-            method: "POST",
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -21,19 +22,17 @@ async function deletar() {
         console.log("resposta: ", resposta.status);
 
         if (resposta.ok) {
-            cardErro.style.display = "block";
             setTimeout(() => {
                 window.location = "../index.html";
             }, 3000);
-
         } else {
             throw new Error("Erro ao deletar conta: " + resposta.status);
         }
-
     } catch (error) {
-        return alert(error);
+        alert("Erro: " + error.message);
     }
 }
+
 
 async function atualizar() {
     var email = sessionStorage.email_ss;
