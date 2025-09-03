@@ -22,6 +22,7 @@
       <div id="imagemUsuarioPerfil">
         <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
           style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+
         </div>
       </div>
 
@@ -107,6 +108,7 @@
 
         <button type="button" onclick="deletar()"
           class="w-full p-4 mt-6 bg-red-600 text-white text-lg rounded-md hover:bg-[#001C35]">
+
           Deletar Usuário
         </button>
         </form>
@@ -115,3 +117,15 @@
 </body>
 
 </html>
+
+<script>
+  var nomeEmpresa = sessionStorage.nome_ss
+    var cnpj = sessionStorage.cnpj
+    console.log(sessionStorage)
+
+    nomeProfissao.innerHTML += 
+            `
+            <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa}</p>
+            <p class="mb-4 text-blue-900">CNPJ: ${cnpj}</p>
+            `
+</script>
