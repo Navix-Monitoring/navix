@@ -82,6 +82,9 @@ async function cadastrar() {
       }, 3000);
     } else {
       esconderLoading();
+      if(resposta.status == 500) {
+        console.log(resposta.status)
+      }
       throw new Error("Erro ao cadastrar: " + resposta.status);
     }
 
