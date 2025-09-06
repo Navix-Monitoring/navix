@@ -70,7 +70,8 @@ async function atualizar() {
 
 function atualizarNome(emailUsuario) {
     var inputNome = document.getElementById('nome_input').value;
-    if (inputNome.length < 3) {
+    console.log("VALOR DE INPUT NOME:" + inputNome)
+    if (inputNome && inputNome.length < 3) {
         let mensagem = 'nome invalido! Minimo 3 caracteres';
         alert(mensagem);
         return
@@ -100,7 +101,7 @@ function atualizarEmail(emailUsuario) {
     console.log("ENTROU NO ATUALIZAR EMAIL")
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     var inputEmail = document.getElementById('email_input');
-    if (!emailRegex.test(inputEmail.value)) {
+    if (inputEmail.value && !emailRegex.test(inputEmail.value)) {
         alert("email invalido")
         return
     }
@@ -179,9 +180,11 @@ function carregarInformacoes() {
             if (dados[0].razaoSocial) {
                 sessionStorage.nome_ss = dados[0].razaoSocial;
                 sessionStorage.email_ss = dados[0].emailCorporativo;
+                sessionStorage.imagem = dados[0].caminhoImagem;
             } else {
                 sessionStorage.nome_ss = dados[0].nome;
                 sessionStorage.email_ss = dados[0].email;
+                sessionStorage.imagem = dados[0].caminhoImagem;
             }
 
 
@@ -196,6 +199,12 @@ function carregarInformacoes() {
                  <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
                     style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
                 </div>`;
+
+                document.getElementById("imagemUsuarioNavbar").innerHTML = `
+                    <div class="rounded-md w-20 h-20 mb-2"
+                        style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    </div>
+                `
             }else{
                 console.log("CAIU NO ELSE")
                 document.getElementById("imagemUsuario").innerHTML = `
@@ -207,6 +216,12 @@ function carregarInformacoes() {
                  <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
                     style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
                 </div>`;
+
+                document.getElementById("imagemUsuarioNavbar").innerHTML = `
+                    <div class="rounded-md w-20 h-20 mb-2"
+                        style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    </div>
+                `
             }
 
             var inputFoto = document.getElementById("foto");

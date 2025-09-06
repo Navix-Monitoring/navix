@@ -11,7 +11,7 @@
   <script src="../js/sessao.js"></script>
 </head>
 
-<body class="bg-gray-100 flex" onload="carregarInformacoes()"">
+<body class="bg-gray-100 flex" onload="carregarInformacoes()">
 
   <div class=" w-full min-h-screen fixed inset-0 z-10 flex flex-col justify-center items-center bg-black/50"
   style="display: none;" id="telaAtualizar">
@@ -44,20 +44,20 @@
 
       <div class="flex flex-col gap-2 w-full">
         <p class="text-xl font-semibold text-blue-950">Razão Social</p>
-        <input type="text" id="nomeUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+        <input type="text" id="nome_input" class="bg-slate-300 px-4 py-2 rounded-md">
       </div>
 
       <div class="flex gap-5 w-full pb-6">
         <div class="flex flex-col gap-2 w-full">
           <p class="text-xl font-semibold text-blue-950">Email</p>
-          <input type="email" id="emailUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+          <input type="email" id="email_input" class="bg-slate-300 px-4 py-2 rounded-md">
         </div>
       </div>
 
       <div class="flex gap-5 w-full pb-6">
         <div class="flex flex-col gap-2 w-full">
           <p class="text-xl font-semibold text-blue-950">Senha</p>
-          <input type="password" id="senhaUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+          <input type="password" id="senha_input" class="bg-slate-300 px-4 py-2 rounded-md">
         </div>
       </div>
 
@@ -80,10 +80,13 @@
 
   <!-- nav bar -->
   <div class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
-    <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
-    <div class="rounded-md w-20 h-20 mb-2"
-      style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    <a href="index.html"><img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10"></a>
+    <div id="imagemUsuarioNavbar">
+      <div class="rounded-md w-20 h-20 mb-2"
+        style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+      </div>
     </div>
+    
 
     <div id="nomeProfissao" class="text-center mb-6"></div>
 
