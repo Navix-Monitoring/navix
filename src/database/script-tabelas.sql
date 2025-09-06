@@ -13,8 +13,8 @@ CREATE TABLE empresa (
     UNIQUE (emailCorporativo, cnpj)
 );
 
-create table usuario (
-	id_usuario INT NOT NULL auto_increment,
+create table funcionario (
+	id_funcionario INT NOT NULL auto_increment,
     fkEmpresa INT,
     nome VARCHAR(50) NOT NULL,
     sobrenome VARCHAR(50) NOT NULL,
@@ -24,9 +24,9 @@ create table usuario (
     cargo VARCHAR(30) NOT NULL,
 	caminhoImagem VARCHAR(500) NOT NULL DEFAULT '../assets/img/foto-usuario.png',
     CONSTRAINT chk_telefone CHECK (CHAR_LENGTH(telefone) IN (10, 11)),
-    PRIMARY KEY (id_usuario),
+    PRIMARY KEY (id_funcionario),
     UNIQUE (email), 
-    CONSTRAINT fk_empresa_usuario FOREIGN KEY (fkEmpresa) REFERENCES empresa(id_empresa), 
+    CONSTRAINT fk_empresa_funcionario FOREIGN KEY (fkEmpresa) REFERENCES empresa(id_empresa), 
 	KEY ix_fkEmprsa (fkEmpresa) 
 );
 

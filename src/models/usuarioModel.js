@@ -13,7 +13,7 @@ function autenticarLoginEmpresa(output_email) {
 function autenticarLoginUsuario(output_email) {
     const instrucaoSql = `
         SELECT nome, email, senha, caminhoImagem
-        FROM usuario 
+        FROM funcionario 
         WHERE email = ?;
     `;
 
@@ -62,7 +62,7 @@ function atualizarFotoEmpresa(nome_imagem, output_email) {
 function atualizarFotoUsuario(nome_imagem, output_email) {
     var caminhoImagem = "../assets/img/imagens-perfil/" + nome_imagem;
     const instrucaoSql = `
-        UPDATE usuario
+        UPDATE funcionario
         SET caminhoImagem = "${caminhoImagem}"
         WHERE email = "${output_email}";
     `;
@@ -81,7 +81,7 @@ function mudarNomeEmpresa(novoNome, emailUsuario) {
 function mudarNomeUsuario(novoNome, emailUsuario) {
     console.log("Entrou no usuarioModel");
     var instrucao = `
-        UPDATE usuario SET nome = '${novoNome}' WHERE email = "${emailUsuario}";
+        UPDATE funcionario SET nome = '${novoNome}' WHERE email = "${emailUsuario}";
     `;
     console.log("Executando a query: \n" + instrucao);
     return database.executar(instrucao);
@@ -99,7 +99,7 @@ function mudarEmailEmpresa(novoEmail, emailUsuario) {
 function mudarEmailUsuario(novoEmail, emailUsuario) {
     console.log("Entrou no usuarioModel");
     var instrucao = `
-        UPDATE usuario SET email = '${novoEmail}' WHERE email = "${emailUsuario}";
+        UPDATE funcionario SET email = '${novoEmail}' WHERE email = "${emailUsuario}";
     `;
     console.log("Executando a query: \n" + instrucao);
     return database.executar(instrucao);
@@ -117,7 +117,7 @@ function mudarSenhaEmpresa(novaSenha, emailUsuario){
 function mudarSenhaUsuario(novaSenha, emailUsuario){
     console.log("Entrou no usuarioModel");
     var instrucao = `
-        UPDATE usuario SET senha = '${novaSenha}' WHERE email = "${emailUsuario}";
+        UPDATE funcionario SET senha = '${novaSenha}' WHERE email = "${emailUsuario}";
     `;
     console.log("Executando a query: \n" + instrucao);
     return database.executar(instrucao);
@@ -125,7 +125,7 @@ function mudarSenhaUsuario(novaSenha, emailUsuario){
 
 function carregarInformacoesUsuario(email) {
     console.log("Entrou no usuarioModel");
-    var instrucao = `SELECT * FROM usuario WHERE email = "${email}";`;
+    var instrucao = `SELECT * FROM funcionario WHERE email = "${email}";`;
     console.log("Executando a query: \n" + instrucao);
     return database.executar(instrucao);
 }
@@ -137,27 +137,44 @@ function carregarInformacoesEmpresa(email) {
     return database.executar(instrucao);
 }
 
+function addUserImagem(fkEmpresa, nome, sobrenome, telefone, email, senha, cargo, nome_imagem) {
+    console.log("Entrou na model de criação de usuário")
+    var caminhoImagem = "../assets/img/imagens-perfil/" + nome_imagem
+    var instrucaoSql = `INSERT INTO funcionario(fkEmpresa,nome,sobrenome,telefone,email,senha,cargo,caminhoImagem)
+     VALUES(${fkEmpresa},"${nome}","${sobrenome}","${telefone}","${email}","${senha}","${cargo}", "${caminhoImagem}");`
+    return database.executar(instrucaoSql)
+
+}
+
 function addUser(fkEmpresa, nome, sobrenome, telefone, email, senha, cargo) {
     console.log("Entrou na model de criação de usuário")
-    var instrucaoSql = `INSERT INTO usuario(fkEmpresa,nome,sobrenome,telefone,email,senha,cargo) VALUES(${fkEmpresa},"${nome}","${sobrenome}","${telefone}","${email}","${senha}","${cargo}");`
+    var instrucaoSql = `INSERT INTO funcionario(fkEmpresa,nome,sobrenome,telefone,email,senha,cargo) VALUES(${fkEmpresa},"${nome}","${sobrenome}","${telefone}","${email}","${senha}","${cargo}");`
     return database.executar(instrucaoSql)
 
 }
 
 function getUsersByCompanyId(idEmpresa) {
-    const instrucaoSql = `SELECT * FROM usuario WHERE fkEmpresa = ${idEmpresa}`
+    const instrucaoSql = `SELECT * FROM funcionario WHERE fkEmpresa = ${idEmpresa}`
     return database.executar(instrucaoSql)
 }
 
 function deleteUser(id) {
-    const instrucaoSql = `DELETE FROM usuario WHERE id_usuario = ${id}`
+    const instrucaoSql = `DELETE FROM funcionario WHERE id_funcionario = ${id}`
     return database.executar(instrucaoSql)
 }
 
 function updateUser(nome, sobrenome, email, telefone, cargo, id) {
-    const instrucaoSql = `UPDATE usuario SET nome = "${nome}", sobrenome = "${sobrenome}", telefone = "${telefone}", email = "${email}", cargo = "${cargo}" where id_usuario = ${id}`
+    const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}", telefone = "${telefone}", email = "${email}", cargo = "${cargo}" where id_funcionario = ${id}`
     return database.executar(instrucaoSql)
 }
+
+function updateUserImagem(nome, sobrenome, email, telefone, cargo, id, nome_imagem) {
+    var caminhoImagem = "../assets/img/imagens-perfil/" + nome_imagem
+    const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}",
+     telefone = "${telefone}", email = "${email}", cargo = "${cargo}", caminhoImagem = "${caminhoImagem}" where id_funcionario = ${id}`
+    return database.executar(instrucaoSql)
+}
+
 
 module.exports = {
     autenticarLoginEmpresa,
@@ -177,6 +194,8 @@ module.exports = {
     carregarInformacoesEmpresa,
     deleteUser,
     getUsersByCompanyId,
+    addUserImagem,
     addUser,
+    updateUserImagem,
     updateUser
 };

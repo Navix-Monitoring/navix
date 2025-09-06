@@ -129,7 +129,6 @@ function atualizarEmail(emailUsuario) {
 function atualizarSenha(emailUsuario) {
     var inputSenha = document.getElementById('senha_input').value;
 
-
     if (inputSenha) {
         if (inputSenha != "") {
             if ((inputSenha.length < 8 || !/[A-Z]/.test(inputSenha))) {
@@ -205,6 +204,7 @@ function carregarInformacoes() {
                         style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
                     </div>
                 `
+
             }else{
                 console.log("CAIU NO ELSE")
                 document.getElementById("imagemUsuario").innerHTML = `
@@ -223,6 +223,9 @@ function carregarInformacoes() {
                     </div>
                 `
             }
+
+            document.getElementById("nome_input").value = sessionStorage.nome_ss;
+            document.getElementById("email_input").value = sessionStorage.email_ss;
 
             var inputFoto = document.getElementById("foto");
             var mensagemImagemUsuario = document.getElementById("mensagemImagemUsuario");

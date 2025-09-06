@@ -11,7 +11,7 @@
   <script src="../js/sessao.js"></script>
 </head>
 
-<body class="bg-gray-100" onload="carregarInformacoes(), validarSessao()">
+<body class="bg-gray-100" onload=" carregarFotoUsuario()">
   <!-- Em breve -->
   <div class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
     <!-- Botão Voltar -->
@@ -27,10 +27,13 @@
   <div class="flex flex-row w-full">
     <!-- nav bar -->
     <div class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
-    <a href="index.html"><img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10"></a>
-      <div class="rounded-md w-20 h-20 mb-2"
-        style="background-image: url(../assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+      <a href="index.html"><img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10"></a>
+      <div id="imagemUsuarioNavbar">
+        <div class="rounded-md w-20 h-20 mb-2"
+          style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
+        </div>
       </div>
+
 
       <div id="nomeProfissao" class="text-center mb-6"></div>
 
@@ -43,11 +46,6 @@
         <a href="dashboard/dashboard.html"
           class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
           Dashboard
-        </a>
-
-        <a href="dashboard/dashboard.html"
-          class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-          Painel de Controle
         </a>
 
         <a href="../admin.html"
@@ -160,6 +158,15 @@
 </html>
 
 <script>
+
+  function carregarFotoUsuario() {
+    document.getElementById("imagemUsuarioNavbar").innerHTML = `
+             <div class="rounded-md w-20 h-20 mb-2"
+                style="background-image: url(${sessionStorage.imagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            </div>
+        `
+  }
+
   var nomeEmpresa = sessionStorage.nome_ss
   var cnpj = sessionStorage.cnpj
   console.log(sessionStorage)
