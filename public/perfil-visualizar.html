@@ -8,11 +8,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
   <script src="js/usuario/perfil.js"></script>
+  <script src="../js/sessao.js"></script>
 </head>
 
-<body class="bg-gray-100 flex">
+<body class="bg-gray-100 flex" onload="carregarInformacoes()">
 
-  <div class="w-full min-h-screen fixed inset-0 z-10 flex flex-col justify-center items-center bg-black/50"
+  <div class=" w-full min-h-screen fixed inset-0 z-10 flex flex-col justify-center items-center bg-black/50"
     style="display: none;" id="telaAtualizar">
     <div
       class="relative bg-slate-100 border-blue-900 shadow-2xl p-16  flex flex-col z-20 justify-center items-center w-1/2 h-9/10 rounded-xl">
@@ -21,52 +22,61 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
 
-      <p class="text-3xl font-semibold text-blue-900">Atualizar Dados</p>
+      <p class="text-4xl font-semibold text-blue-900">Atualizar Dados</p>
 
       <div class="flex gap-5 w-full flex flex-col">
 
         <div class="flex items-center justify-start gap-4">
-          <div id="imagemUsuario">
+          <div id="imagemUsuarioPerfil">
             <div class="bg-[#002B50] rounded-full w-26 h-26 flex justify-center items-center text-white text-4xl">
             </div>
           </div>
           <input type="file" id="foto" name="foto" hidden>
-          <label for="foto" class="upload text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 rounded-md border-3 border-slate-600">
-            Alterar foto de perfil
-          </label>
-          <p id="mensagemImagemUsuario"></p>
+          <div class="flex flex-col">
+            <label for="foto"
+              class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300
+               px-6 py-2 rounded-md border-3 border-slate-600 hover:opacity-90">
+              Alterar foto de perfil
+            </label>
+            <p id="mensagemImagemUsuario"></p>
+          </div>
+
         </div>
 
         <div class="flex flex-col gap-2 w-full">
           <p class="text-xl font-semibold text-blue-950">Razão Social</p>
-          <input type="text" id="nomeUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+          <input type="text" id="nome_input" class="bg-slate-300 px-4 py-2 rounded-md">
         </div>
 
         <div class="flex gap-5 w-full pb-6">
           <div class="flex flex-col gap-2 w-full">
             <p class="text-xl font-semibold text-blue-950">Email</p>
-            <input type="email" id="emailUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+            <input type="email" id="email_input" class="bg-slate-300 px-4 py-2 rounded-md">
           </div>
         </div>
 
         <div class="flex gap-5 w-full pb-6">
           <div class="flex flex-col gap-2 w-full">
             <p class="text-xl font-semibold text-blue-950">Senha</p>
-            <input type="password" id="senhaUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+            <input type="password" id="senha_input" class="bg-slate-300 px-4 py-2 rounded-md">
           </div>
         </div>
 
         <div class="flex flex-row gap-5">
           <div class="flex justify-center w-full">
             <a onclick="atualizar()"
-              class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl rounded-md">Atualizar
-              Dados</a>
+              class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl rounded-md cursor-pointer hover:opacity-90">
+              Atualizar Dados
+            </a>
           </div>
+
           <div class="flex justify-center w-full">
             <a onclick="deletar()"
-              class="flex w-full justify-center bg-red-900 py-4 text-slate-100 text-2xl rounded-md">Deletar
-              Conta</a>
+              class="flex w-full justify-center bg-red-900 py-4 text-slate-100 text-2xl rounded-md cursor-pointer hover:opacity-90">
+              Deletar Conta
+            </a>
           </div>
+
         </div>
       </div>
     </div>
@@ -75,10 +85,13 @@
 
   <!-- nav bar -->
   <div class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
-    <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
-    <div class="rounded-md w-20 h-20 mb-2"
-      style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    <a href="index.html"><img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10"></a>
+    <div id="imagemUsuarioNavbar">
+      <div class="rounded-md w-20 h-20 mb-2"
+        style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
+      </div>
     </div>
+
 
     <div id="nomeProfissao" class="text-center mb-6"></div>
 
@@ -91,11 +104,6 @@
       <a href="dashboard/dashboard.html"
         class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
         Dashboard
-      </a>
-
-      <a href="dashboard/dashboard.html"
-        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-        Painel de Controle
       </a>
 
       <a href="../admin.html"
@@ -120,7 +128,9 @@
         <i class="fas fa-edit text-2xl" onclick="abrirTela()"></i>
       </button>
 
-      <div class="h-32 w-32 bg-slate-600 rounded-full"></div>
+      <div id="imagemUsuario">
+
+      </div>
       <div class="flex flex-col">
         <p class="text-2xl font-semibold mb-2">Informações da empresa</p>
         <div class="flex gap-3">

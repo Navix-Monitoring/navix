@@ -48,12 +48,12 @@ router.delete("/deleteUser/:id",function(req, res){
     usuarioController.deleteUser(req, res);
 });
 
-router.post("/addUser", function(req, res){
+router.post("/addUser", upload.single('foto'), function(req, res){
     console.log("Passou pela rota /addUser")
     usuarioController.addUser(req, res)
 })
 
-router.post("/updateUser", function(req, res){
+router.post("/updateUser", upload.single('fotoAtualizar'), function(req, res){
     console.log("Passou aqui na rota /updateUser")
     usuarioController.updateUser(req,res)
 })

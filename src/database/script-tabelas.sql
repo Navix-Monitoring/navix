@@ -8,13 +8,13 @@ CREATE TABLE empresa (
     cnpj VARCHAR(14) NOT NULL,
     emailCorporativo VARCHAR(50) not null,
     senha VARCHAR(250) not null,
-	caminhoImagem VARCHAR(500) NOT NULL DEFAULT './img/foto-usuario.png',
+	caminhoImagem VARCHAR(500) NOT NULL DEFAULT '../assets/img/foto-usuario.png',
     PRIMARY KEY (id_empresa),
     UNIQUE (emailCorporativo, cnpj)
 );
 
-create table usuario (
-	id_usuario INT NOT NULL auto_increment,
+create table funcionario (
+	id_funcionario INT NOT NULL auto_increment,
     fkEmpresa INT,
     nome VARCHAR(50) NOT NULL,
     sobrenome VARCHAR(50) NOT NULL,
@@ -22,11 +22,11 @@ create table usuario (
     email VARCHAR(100) NOT NULL,
     senha VARCHAR(250) NOT NULL,
     cargo VARCHAR(30) NOT NULL,
-	caminhoImagem VARCHAR(500) NOT NULL DEFAULT './img/defaultProfile.jpg',
+	caminhoImagem VARCHAR(500) NOT NULL DEFAULT '../assets/img/foto-usuario.png',
     CONSTRAINT chk_telefone CHECK (CHAR_LENGTH(telefone) IN (10, 11)),
-    PRIMARY KEY (id_usuario),
+    PRIMARY KEY (id_funcionario),
     UNIQUE (email), 
-    CONSTRAINT fk_empresa_usuario FOREIGN KEY (fkEmpresa) REFERENCES empresa(id_empresa), 
+    CONSTRAINT fk_empresa_funcionario FOREIGN KEY (fkEmpresa) REFERENCES empresa(id_empresa), 
 	KEY ix_fkEmprsa (fkEmpresa) 
 );
 
@@ -86,3 +86,4 @@ create table hard_alerta (
     constraint fk_Alerta foreign key (fkAlerta) references alerta(id_Alerta),
     constraint fk__Hardware foreign key (fkHardware) references hardware(idHardware)
 );
+

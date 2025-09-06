@@ -70,7 +70,8 @@ async function atualizar() {
 
 function atualizarNome(emailUsuario) {
     var inputNome = document.getElementById('nome_input').value;
-    if (inputNome.length < 3) {
+    console.log("VALOR DE INPUT NOME:" + inputNome)
+    if (inputNome && inputNome.length < 3) {
         let mensagem = 'nome invalido! Minimo 3 caracteres';
         alert(mensagem);
         return
@@ -100,7 +101,7 @@ function atualizarEmail(emailUsuario) {
     console.log("ENTROU NO ATUALIZAR EMAIL")
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     var inputEmail = document.getElementById('email_input');
-    if (!emailRegex.test(inputEmail.value)) {
+    if (inputEmail.value && !emailRegex.test(inputEmail.value)) {
         alert("email invalido")
         return
     }
@@ -127,7 +128,6 @@ function atualizarEmail(emailUsuario) {
 
 function atualizarSenha(emailUsuario) {
     var inputSenha = document.getElementById('senha_input').value;
-
 
     if (inputSenha) {
         if (inputSenha != "") {
@@ -177,18 +177,17 @@ function carregarInformacoes() {
             // preenche inputs
 
             if (dados[0].razaoSocial) {
-                document.getElementById('nome_input').value = dados[0].razaoSocial;
-                document.getElementById('email_input').value = dados[0].emailCorporativo;
-                document.getElementById('b_usuario').innerHTML = dados[0].razaoSocial;
+                sessionStorage.nome_ss = dados[0].razaoSocial;
+                sessionStorage.email_ss = dados[0].emailCorporativo;
+                sessionStorage.imagem = dados[0].caminhoImagem;
             } else {
-                document.getElementById('nome_input').value = dados[0].nome;
-                document.getElementById('email_input').value = dados[0].email;
-                document.getElementById('b_usuario').innerHTML = dados[0].nome;
+                sessionStorage.nome_ss = dados[0].nome;
+                sessionStorage.email_ss = dados[0].email;
+                sessionStorage.imagem = dados[0].caminhoImagem;
             }
 
 
-            //se tiver imagem
-            if (dados[0].caminhoImagem) {
+            if (dados[0].caminhoImagem != "../assets/img/foto-usuario.png") {
                 0
                 document.getElementById("imagemUsuario").innerHTML = `
                 <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
@@ -199,7 +198,34 @@ function carregarInformacoes() {
                  <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
                     style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
                 </div>`;
+
+                document.getElementById("imagemUsuarioNavbar").innerHTML = `
+                    <div class="rounded-md w-20 h-20 mb-2"
+                        style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    </div>
+                `
+
+            }else{
+                console.log("CAIU NO ELSE")
+                document.getElementById("imagemUsuario").innerHTML = `
+                <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                    style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                </div>`;
+
+                document.getElementById("imagemUsuarioPerfil").innerHTML = `
+                 <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                    style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                </div>`;
+
+                document.getElementById("imagemUsuarioNavbar").innerHTML = `
+                    <div class="rounded-md w-20 h-20 mb-2"
+                        style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                    </div>
+                `
             }
+
+            document.getElementById("nome_input").value = sessionStorage.nome_ss;
+            document.getElementById("email_input").value = sessionStorage.email_ss;
 
             var inputFoto = document.getElementById("foto");
             var mensagemImagemUsuario = document.getElementById("mensagemImagemUsuario");

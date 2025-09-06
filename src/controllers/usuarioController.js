@@ -17,21 +17,22 @@ async function deleteUser(req, res) {
 
 async function addUser(req, res) {
   try {
-    const {
-      fkEmpresa,
-      nome,
-      sobrenome,
-      telefone,
-      email,
-      senha,
-      cargo
-    } = req.body;
 
-    if (!fkEmpresa || nome == "" || sobrenome == "" || telefone == "" || email == "" || senha == "" || cargo == "") {
+
+    if (!req.body.fkEmpresa || req.body.nome == "" || req.body.sobrenome == "" || req.body.telefone == ""
+      || req.body.email == "" || req.body.senha == "" || req.body.cargo == "") {
       return res.status(400).send("Os campos não foram preenchidos corretamente")
-    }else{
-      await usuarioModel.addUser(fkEmpresa, nome, sobrenome, telefone, email, senha, cargo)
-      return res.status(200).send("Deu certo!!!")
+    } else {
+      if (req.file) {
+        await usuarioModel.addUserImagem(req.body.fkEmpresa, req.body.nome, req.body.sobrenome, req.body.telefone,
+          req.body.email, req.body.senha, req.body.cargo, req.file.filename)
+        return res.status(200).send("Deu certo!!!")
+      } else {
+        await usuarioModel.addUser(req.body.fkEmpresa, req.body.nome, req.body.sobrenome, req.body.telefone,
+          req.body.email, req.body.senha, req.body.cargo)
+        return res.status(200).send("Deu certo!!!")
+      }
+
     }
   } catch (erro) {
     return res.status(500).send("Erro ao cadastrar usuário")
@@ -40,27 +41,27 @@ async function addUser(req, res) {
 
 async function updateUser(req, res) {
   try {
-    const {
-      id,
-      nome,
-      sobrenome,
-      telefone,
-      email,
-      cargo,
-    } = req.body;
-    if (nome == "" || sobrenome == "" || telefone == "" || email == "" || cargo =="" ) {
+    if (req.body.nome == "" || req.body.sobrenome == "" || req.body.telefone == "" || req.body.email == "" || req.body.cargo == "") {
       return res.status(400).send("Os campos não foram preenchidos corretamente")
-    }else{
-      await usuarioModel.updateUser(nome, sobrenome, email, telefone, cargo, id)
-      return res.status(200).send("Deu certo!!!")
+    } else {
+      if(req.file){
+        await usuarioModel.updateUserImagem(req.body.nome, req.body.sobrenome, req.body.email, req.body.telefone, req.body.cargo, req.body.id,
+          req.file.filename
+        )
+        return res.status(200).send("Deu certo!!!")
+      }else{
+        await usuarioModel.updateUser(req.body.nome, req.body.sobrenome, req.body.email, req.body.telefone, req.body.cargo, req.body.id)
+        return res.status(200).send("Deu certo!!!")
+      }
+      
     }
   } catch (erro) {
     return res.status(500).send("Erro ao cadastrar usuário")
   }
 }
 
-async function getUsersByCompanyId(req, res){
-  try{
+async function getUsersByCompanyId(req, res) {
+  try {
     const {
       id
     } = req.params
@@ -69,7 +70,7 @@ async function getUsersByCompanyId(req, res){
     console.log(usuarios)
     return res.status(200).json(usuarios)
 
-  } catch(erro){
+  } catch (erro) {
     console.log(erro)
     return res.status(500).send("Não deu certo!!")
   }
