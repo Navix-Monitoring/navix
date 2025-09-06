@@ -78,7 +78,7 @@ async function entrar() {
         mostrarLoading();
         setTimeout(() => {
             esconderLoading();
-            window.location = "../perfil-visualizar.html";
+            window.location = "../admin.html";
         }, 3000);
 
     } catch (error) {

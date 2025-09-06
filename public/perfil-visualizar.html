@@ -10,122 +10,169 @@
   <script src="js/usuario/perfil.js"></script>
 </head>
 
-<body class="bg-gray-100" onload="carregarInformacoes()">
-  <div class="flex flex-row w-full justify-between">
-    <!-- nav bar -->
-    <div class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 z-1 shadow-2xl shadow-slate-600">
+<body class="bg-gray-100 flex">
 
-      <!-- Logo -->
-      <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
+  <div class="w-full min-h-screen fixed inset-0 z-10 flex flex-col justify-center items-center bg-black/50"
+    style="display: none;" id="telaAtualizar">
+    <div
+      class="relative bg-slate-100 border-blue-900 shadow-2xl p-16  flex flex-col z-20 justify-center items-center w-1/2 h-9/10 rounded-xl">
 
-      <!-- Foto de perfil -->
-      <div id="imagemUsuarioPerfil">
-        <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
-          style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+      <button onclick="fecharTela()" class="absolute top-6 right-10 text-2xl text-gray-500 hover:text-red-600">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
-        </div>
-      </div>
+      <p class="text-3xl font-semibold text-blue-900">Atualizar Dados</p>
 
+      <div class="flex gap-5 w-full flex flex-col">
 
-      <!-- Nome do usuário -->
-      <p class="font-bold text-blue-900" id="b_usuario">Olá, Fábio da Silva Silva</p>
-
-      <div class="flex flex-col gap-4 w-[70%] items-center">
-
-        <!-- Lista de opções -->
-        <a href="../perfil-visualizar.html"
-          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-          Perfil
-        </a>
-
-        <a href="dashboard/dashboard.html"
-          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-          Dashboard
-        </a>
-
-        <a href="./alertas.html"
-          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-          Alertas
-        </a>
-
-        <a href=""
-          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-          Painel de Controle
-        </a>
-
-        <a href="../admin.html"
-          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-          Cadastrar Funcionários
-        </a>
-        <a href=""
-          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-          Suporte
-        </a>
-        <!-- Botão Sair -->
-        <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
-          onclick="limparSessao()">
-          <a href="./login.html" class="no-underline text-white">
-            <h3 class="m-0 p-0">Sair</h3>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex py-4 w-[65%]">
-      <div class="flex flex-col bg-slate-300 p-10 rounded-2xl shadow-2xl text-center w-[600px]">
-
-        <!-- Foto -->
         <div class="flex items-center justify-start gap-4">
           <div id="imagemUsuario">
-            <div class="bg-[#002B50] rounded-md w-26 h-26 flex justify-center items-center text-white text-4xl"
-              >
+            <div class="bg-[#002B50] rounded-full w-26 h-26 flex justify-center items-center text-white text-4xl">
             </div>
           </div>
-          
-
-          <!-- Form -->
-          <form onsubmit="event.preventDefault(); atualizar();">
-            <input type="file" id="foto" name="foto" hidden>
-            <label for="foto" class="upload text-slate-950 font-semibold mt-4 text-lg cursor-pointer"
-              style="margin-top: 10px;">
-              Alterar foto de perfil
-            </label>
-            <p id="mensagemImagemUsuario" style="margin-top: 10px; margin-bottom: 10px"></p>
+          <input type="file" id="foto" name="foto" hidden>
+          <label for="foto" class="upload text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 rounded-md border-3 border-slate-600">
+            Alterar foto de perfil
+          </label>
+          <p id="mensagemImagemUsuario"></p>
         </div>
-        <label for="nome_input" class="flex mt-4 text-md font-medium text-gray-700 py-1">Nome</label>
-        <input class="w-full p-4 bg-slate-100 rounded-md  text-lg" id="nome_input" type="text" placeholder="Nome">
-        <label for="email_input" class="flex  mt-4 text-md font-medium text-gray-700 py-1">Email</label>
-        <input class="w-full p-4 bg-slate-100 rounded-md  text-lg" id="email_input" type="email" placeholder="Email">
-        <label for="senha_input" class="flex mt-4 text-md font-medium text-gray-700 py-1">Digite sua nova senha</label>
-        <input class="w-full p-4 bg-slate-100 rounded-md  text-lg" id="senha_input" type="password"
-          placeholder="Digite sua nova senha">
 
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Razão Social</p>
+          <input type="text" id="nomeUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+        </div>
 
-        <!-- Botões -->
-        <button type="submit" class="w-full p-4 mt-6 bg-[#002B50] text-white text-lg rounded-md hover:bg-[#001C35]">
-          Alterar dados
-        </button>
+        <div class="flex gap-5 w-full pb-6">
+          <div class="flex flex-col gap-2 w-full">
+            <p class="text-xl font-semibold text-blue-950">Email</p>
+            <input type="email" id="emailUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+          </div>
+        </div>
 
-        <button type="button" onclick="deletar()"
-          class="w-full p-4 mt-6 bg-red-600 text-white text-lg rounded-md hover:bg-[#001C35]">
+        <div class="flex gap-5 w-full pb-6">
+          <div class="flex flex-col gap-2 w-full">
+            <p class="text-xl font-semibold text-blue-950">Senha</p>
+            <input type="password" id="senhaUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
+          </div>
+        </div>
 
-          Deletar Usuário
-        </button>
-        </form>
+        <div class="flex flex-row gap-5">
+          <div class="flex justify-center w-full">
+            <a onclick="atualizar()"
+              class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl rounded-md">Atualizar
+              Dados</a>
+          </div>
+          <div class="flex justify-center w-full">
+            <a onclick="deletar()"
+              class="flex w-full justify-center bg-red-900 py-4 text-slate-100 text-2xl rounded-md">Deletar
+              Conta</a>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+
+
+  <!-- nav bar -->
+  <div class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
+    <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
+    <div class="rounded-md w-20 h-20 mb-2"
+      style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+    </div>
+
+    <div id="nomeProfissao" class="text-center mb-6"></div>
+
+    <div class="flex flex-col gap-4 w-[80%]">
+      <a href="../perfil-visualizar.html"
+        class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Perfil
+      </a>
+
+      <a href="dashboard/dashboard.html"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Dashboard
+      </a>
+
+      <a href="dashboard/dashboard.html"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Painel de Controle
+      </a>
+
+      <a href="../admin.html"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Cadastrar Funcionários
+      </a>
+
+      <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
+        onclick="limparSessao()">
+        <a href="./login.html" class="no-underline text-white">
+          <h3 class="m-0 p-0">Sair</h3>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-1 px-8 py-6 bg-slate-300">
+    <div id="textoInicio"></div>
+
+    <div class="bg-slate-100 p-8 flex items-center gap-10 rounded-md relative shadow-md">
+      <button class="absolute top-4 right-4 text-blue-950 text-xl hover:text-blue-800">
+        <i class="fas fa-edit text-2xl" onclick="abrirTela()"></i>
+      </button>
+
+      <div class="h-32 w-32 bg-slate-600 rounded-full"></div>
+      <div class="flex flex-col">
+        <p class="text-2xl font-semibold mb-2">Informações da empresa</p>
+        <div class="flex gap-3">
+          <p class="text-slate-500 font-semibold">Nome: </p>
+          <div id="nomeEmpresaa"></div>
+        </div>
+        <div class="flex gap-3">
+          <p class="text-slate-500 font-semibold">Email: </p>
+          <div id="emailEmpresa"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-slate-100 rounded-md p-8 mt-8 shadow-md">
+      <div class="flex gap-4 items-center mb-6">
+        <p class="text-blue-950 font-semibold text-3xl">Alertas</p>
+        <i class="fa-solid fa-bell text-2xl text-blue-950"></i>
+      </div>
+      <div class="flex justify-center items-center py-20">
+        <p class="text-blue-950 text-3xl">EM BREVE!!</p>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
 
 <script>
-  var nomeEmpresa = sessionStorage.nome_ss
-    var cnpj = sessionStorage.cnpj
-    console.log(sessionStorage)
+  var nomeEmpresa = sessionStorage.getItem("nome_ss");
+  var cnpj = sessionStorage.getItem("cnpj");
+  var emailEmpresa = sessionStorage.getItem("email_ss");
 
-    nomeProfissao.innerHTML += 
-            `
-            <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa}</p>
-            <p class="mb-4 text-blue-900">CNPJ: ${cnpj}</p>
-            `
+  var nomeProfissao = document.getElementById("nomeProfissao");
+  var nomeEmpresaa = document.getElementById("nomeEmpresaa");
+  var emailEmpresaEl = document.getElementById("emailEmpresa");
+  var textoInicio = document.getElementById("textoInicio");
+
+  nomeProfissao.innerHTML = `
+    <p class="font-bold text-blue-900">${nomeEmpresa}</p>
+    <p class="mb-4 text-blue-900">CNPJ: ${cnpj}</p>
+  `;
+
+  nomeEmpresaa.innerHTML = `<p class="text-blue-950">${nomeEmpresa}</p>`;
+  emailEmpresaEl.innerHTML = `<p class="text-blue-950">${emailEmpresa}</p>`;
+
+  textoInicio.innerHTML = `<p class="text-4xl font-semibold text-blue-950 mb-6">Olá, ${nomeEmpresa}</p>`;
+
+  function abrirTela() {
+    document.getElementById("telaAtualizar").style.display = "flex";
+  }
+
+  function fecharTela() {
+    document.getElementById("telaAtualizar").style.display = "none";
+  }
 </script>
