@@ -31,7 +31,7 @@
             </div>
           </div>
           <input type="file" id="foto" name="foto" hidden>
-          <label for="foto" class="upload text-blue-950 font-semibold mt-4 text-xl cursor-pointer">
+          <label for="foto" class="upload text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 rounded-md border-3 border-slate-600">
             Alterar foto de perfil
           </label>
           <p id="mensagemImagemUsuario"></p>
@@ -56,10 +56,17 @@
           </div>
         </div>
 
-        <div class="flex justify-center w-full">
-          <a onclick="atualizar()"
-            class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl font-semibold rounded-md">Atualizar
-            Dados</a>
+        <div class="flex flex-row gap-5">
+          <div class="flex justify-center w-full">
+            <a onclick="atualizar()"
+              class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl rounded-md">Atualizar
+              Dados</a>
+          </div>
+          <div class="flex justify-center w-full">
+            <a onclick="deletar()"
+              class="flex w-full justify-center bg-red-900 py-4 text-slate-100 text-2xl rounded-md">Deletar
+              Conta</a>
+          </div>
         </div>
       </div>
     </div>
