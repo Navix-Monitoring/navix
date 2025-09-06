@@ -177,19 +177,27 @@ function carregarInformacoes() {
             // preenche inputs
 
             if (dados[0].razaoSocial) {
-                document.getElementById('nome_input').value = dados[0].razaoSocial;
-                document.getElementById('email_input').value = dados[0].emailCorporativo;
-                document.getElementById('b_usuario').innerHTML = dados[0].razaoSocial;
+                sessionStorage.nome_ss = dados[0].razaoSocial;
+                sessionStorage.email_ss = dados[0].emailCorporativo;
             } else {
-                document.getElementById('nome_input').value = dados[0].nome;
-                document.getElementById('email_input').value = dados[0].email;
-                document.getElementById('b_usuario').innerHTML = dados[0].nome;
+                sessionStorage.nome_ss = dados[0].nome;
+                sessionStorage.email_ss = dados[0].email;
             }
 
 
-            //se tiver imagem
-            if (dados[0].caminhoImagem) {
+            if (dados[0].caminhoImagem != "../assets/img/foto-usuario.png") {
                 0
+                document.getElementById("imagemUsuario").innerHTML = `
+                <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                    style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                </div>`;
+
+                document.getElementById("imagemUsuarioPerfil").innerHTML = `
+                 <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+                    style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                </div>`;
+            }else{
+                console.log("CAIU NO ELSE")
                 document.getElementById("imagemUsuario").innerHTML = `
                 <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
                     style="background-image: url(${dados[0].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">

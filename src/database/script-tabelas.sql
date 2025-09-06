@@ -8,7 +8,7 @@ CREATE TABLE empresa (
     cnpj VARCHAR(14) NOT NULL,
     emailCorporativo VARCHAR(50) not null,
     senha VARCHAR(250) not null,
-	caminhoImagem VARCHAR(500) NOT NULL DEFAULT './img/foto-usuario.png',
+	caminhoImagem VARCHAR(500) NOT NULL DEFAULT '../assets/img/foto-usuario.png',
     PRIMARY KEY (id_empresa),
     UNIQUE (emailCorporativo, cnpj)
 );
@@ -22,7 +22,7 @@ create table usuario (
     email VARCHAR(100) NOT NULL,
     senha VARCHAR(250) NOT NULL,
     cargo VARCHAR(30) NOT NULL,
-	caminhoImagem VARCHAR(500) NOT NULL DEFAULT './img/defaultProfile.jpg',
+	caminhoImagem VARCHAR(500) NOT NULL DEFAULT '../assets/img/foto-usuario.png',
     CONSTRAINT chk_telefone CHECK (CHAR_LENGTH(telefone) IN (10, 11)),
     PRIMARY KEY (id_usuario),
     UNIQUE (email), 
@@ -86,3 +86,4 @@ create table hard_alerta (
     constraint fk_Alerta foreign key (fkAlerta) references alerta(id_Alerta),
     constraint fk__Hardware foreign key (fkHardware) references hardware(idHardware)
 );
+
