@@ -153,25 +153,16 @@
 
 
     <div class="flex flex-row w-full ">
-        <div
-            class="min-h-screen w-[300px] flex flex-col items-center bg-slate-100 py-6 z-1 shadow-2xl shadow-slate-600">
-
-            <!-- Logo -->
+        <!-- nav bar -->
+        <div class="min-h-screen w-[300px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
             <img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
-
-            <!-- Foto de perfil -->
-            <div class="rounded-md w-20 h-20 flex justify-center items-center bg-gray-300 mb-2"
+            <div class="rounded-md w-20 h-20 mb-2"
                 style="background-image: url(assets/img/gato.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
             </div>
 
-            <!-- Nome do usuário -->
-             <div id="nomeProfissao">
-            
-            </div>
+            <div id="nomeProfissao" class="text-center mb-6"></div>
 
-            <div class="flex flex-col gap-4 w-[70%] items-center">
-
-                <!-- Lista de opções -->
+            <div class="flex flex-col gap-4 w-[80%]">
                 <a href="../perfil-visualizar.html"
                     class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                     Perfil
@@ -184,11 +175,6 @@
 
                 <a href="dashboard/dashboard.html"
                     class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-                    Alertas
-                </a>
-
-                <a href="dashboard/dashboard.html"
-                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                     Painel de Controle
                 </a>
 
@@ -196,8 +182,8 @@
                     class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                     Cadastrar Funcionários
                 </a>
-                <!-- Botão Sair -->
-                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto mb-10 cursor-pointer"
+
+                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
                     onclick="limparSessao()">
                     <a href="./login.html" class="no-underline text-white">
                         <h3 class="m-0 p-0">Sair</h3>
@@ -464,8 +450,8 @@
     var cnpj = sessionStorage.cnpj
     console.log(sessionStorage)
 
-    nomeProfissao.innerHTML += 
-            `
+    nomeProfissao.innerHTML +=
+        `
             <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa}</p>
             <p class="mb-4 text-blue-900">CNPJ: ${cnpj}</p>
             `
