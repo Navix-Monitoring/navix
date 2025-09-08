@@ -7,6 +7,7 @@
     <title>Cadastro - NAVIX</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="./assets/navix-logo.jpg">
     <link rel="stylesheet" href="./css/index.css">
     <script src="./js/usuario/cadastro.js" type="module" defer></script>
 </head>
@@ -29,7 +30,8 @@
                         class="border border-4 border-solid border-slate-100 pb-2 pt-2 pl-7 pr-7 rounded-sm text-slate-100">
                         Entrar</li>
                 </a>
-                <a href="./cadastro.html" class="content-center pl-7 pr-7 rounded-sm bg-slate-100" <li class="text-blue-950">
+                <a href="./cadastro.html" class="content-center pl-7 pr-7 rounded-sm bg-slate-100" <li
+                    class="text-blue-950">
                     Cadastro</li>
                 </a>
             </ul>
@@ -43,7 +45,7 @@
             <div id="cardMensagem" class="hidden px-4 py-3 rounded mb-4">
                 <span id="mensagem_status"></span>
             </div>
-              
+
             <form onsubmit="event.preventDefault(); cadastrar();" class="flex flex-col gap-4">
 
                 <input id="razaoSocial_input" type="text" placeholder="Razão Social"
@@ -119,9 +121,10 @@
                 class="px-6 py-3 bg-blue-700 rounded-sm text-slate-100 scale-100 hover:scale-110 transition-transform duration-300 transform-gpu">Enviar</a>
         </div>
 
-        <div id="loading" class="hidden fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-white/30">
-        <div class="w-16 h-16 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
-    </div>
+        <div id="loading"
+            class="hidden fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-white/30">
+            <div class="w-16 h-16 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
+        </div>
     </div>
 </body>
 
