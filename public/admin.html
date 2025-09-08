@@ -254,6 +254,11 @@
             </div>
         </div>
     </div>
+
+    <div id="loading" class="hidden fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-white/30">
+        <div class="w-16 h-16 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+
 </body>
 
 </html>
@@ -349,16 +354,32 @@
         getUser()
     }
 
+    function mostrarLoading() {
+    document.getElementById('loading').classList.remove('hidden');
+    }
+
+    function esconderLoading() {
+        document.getElementById('loading').classList.add('hidden');
+    }
+
     async function excluir() {
         try {
+            mostrarLoading();
+
             const users = await fetch(`http://localhost:3333/usuarios/deleteUser/${idUser}`, {
                 method: "DELETE"
             })
+            fecharTela('telaDeletar');
+
+            setTimeout(() => {
+            esconderLoading();
+            window.location.reload();
+            }, 1500);
+
         } catch (erro) {
-            console.log(erro)
-        }
-        fecharTela('telaDeletar')
-        window.location.reload()
+            console.log(erro);
+            esconderLoading();
+        }        
     }
 
     var idUser
