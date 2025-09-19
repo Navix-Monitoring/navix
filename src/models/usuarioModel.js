@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function autenticarLoginEmpresa(output_email) {
     const instrucaoSql = `
-        SELECT razaoSocial, emailCorporativo, senha, cnpj, id_empresa, caminhoImagem
+        SELECT razaoSocial, emailCorporativo, senha, cnpj, id, caminhoImagem
         FROM empresa 
         WHERE emailCorporativo = ?;
     `;
@@ -31,7 +31,7 @@ function cadastrar(output_razaoSocial, output_cnpj, output_email, senha) {
 
 function verificarEmail(output_email) {
     const instrucaoSql = `
-        SELECT emailCorporativo 
+        SELECT emailCorporativo
         FROM empresa
         WHERE emailCorporativo = ?;
     `;
@@ -159,19 +159,19 @@ function getUsersByCompanyId(idEmpresa) {
 }
 
 function deleteUser(id) {
-    const instrucaoSql = `DELETE FROM funcionario WHERE id_funcionario = ${id}`
+    const instrucaoSql = `DELETE FROM funcionario WHERE id = ${id}`
     return database.executar(instrucaoSql)
 }
 
 function updateUser(nome, sobrenome, email, telefone, cargo, id) {
-    const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}", telefone = "${telefone}", email = "${email}", cargo = "${cargo}" where id_funcionario = ${id}`
+    const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}", telefone = "${telefone}", email = "${email}", cargo = "${cargo}" where id = ${id}`
     return database.executar(instrucaoSql)
 }
 
 function updateUserImagem(nome, sobrenome, email, telefone, cargo, id, nome_imagem) {
     var caminhoImagem = "../assets/img/imagens-perfil/" + nome_imagem
     const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}",
-     telefone = "${telefone}", email = "${email}", cargo = "${cargo}", caminhoImagem = "${caminhoImagem}" where id_funcionario = ${id}`
+     telefone = "${telefone}", email = "${email}", cargo = "${cargo}", caminhoImagem = "${caminhoImagem}" where id = ${id}`
     return database.executar(instrucaoSql)
 }
 

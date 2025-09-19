@@ -65,7 +65,7 @@ async function entrar() {
         if (json[0].emailCorporativo) {
             sessionStorage.email_ss = json[0].emailCorporativo;
             sessionStorage.nome_ss = json[0].razaoSocial;
-            sessionStorage.id_empresa = json[0].id_empresa;
+            sessionStorage.id = json[0].id;
             sessionStorage.cnpj = json[0].cnpj;
             sessionStorage.imagem = json[0].caminhoImagem
             sessionStorage.tipo = 1;
