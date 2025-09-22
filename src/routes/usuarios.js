@@ -43,23 +43,23 @@ router.post("/carregarInformacoes", function (req, res) {
     usuarioController.carregarInformacoes(req, res);
 });
 
-router.delete("/deleteUser/:id",function(req, res){
-    console.log("Passou na rota /deleteUser");
-    usuarioController.deleteUser(req, res);
+router.delete("/deletarUsuario/:id",function(req, res){
+    console.log("Passou na rota /deletarUsuario");
+    usuarioController.deletarUsuario(req, res);
 });
 
-router.post("/addUser", upload.single('foto'), function(req, res){
-    console.log("Passou pela rota /addUser")
-    usuarioController.addUser(req, res)
+router.post("/cadastrarUsuario", upload.single('foto'), function(req, res){
+    console.log("Passou pela rota /cadastrarUsuario")
+    usuarioController.cadastrarUsuario(req, res)
 })
 
-router.post("/updateUser", upload.single('fotoAtualizar'), function(req, res){
-    console.log("Passou aqui na rota /updateUser")
-    usuarioController.updateUser(req,res)
+router.post("/atualizarUsuario", upload.single('fotoAtualizar'), function(req, res){
+    console.log("Passou aqui na rota /atualizarUsuario")
+    usuarioController.atualizarUsuario(req,res)
 })
 
-router.get("/getUsersByCompanyId/:id", function(req, res){
+router.get("/listarUsuariosEmpresa/:id", function(req, res){
     console.log("Passou na rota /getUserByCompanyId")
-    usuarioController.getUsersByCompanyId(req,res)
+    usuarioController.listarUsuariosEmpresa(req,res)
 })
 module.exports = router;

@@ -298,12 +298,12 @@
         }
     })
 
-    async function getUser() {
+    async function buscarUsuario() {
         try {
             console.log(sessionStorage)
-            var idEmpresa = sessionStorage.id_empresa
+            var idEmpresa = sessionStorage.id
 
-            const data = await fetch(`http://localhost:3333/usuarios/getUsersByCompanyId/${idEmpresa}`, { method: "GET" })
+            const data = await fetch(`http://localhost:3333/usuarios/listarUsuariosEmpresa/${idEmpresa}`, { method: "GET" })
             const getUsers = await data.json()
             membrosTotais.innerHTML = getUsers.length
 
@@ -311,23 +311,23 @@
 
             users = getUsers
         } catch (erro) {
-            console.log("Não foi!!!!!!")
+            console.log("Falha ao buscar usuario")
             console.log(erro)
         }
     }
-    getUser()
+    buscarUsuario()
 
     function fecharTela(tela) {
         document.getElementById(tela).style.display = "none";
     }
 
-    function addUser() {
+    function cadastrarUsuario() {
         telaAdicionarUser.style.display = "flex"
     }
 
     async function salvar() {
         try {
-            var idEmpresa = sessionStorage.id_empresa
+            var idEmpresa = sessionStorage.id
             var formData = new FormData();
             formData.append('foto', foto.files[0])
             formData.append('fkEmpresa', idEmpresa)
@@ -340,7 +340,7 @@
             
 
             console.log(idEmpresa, sessionStorage)
-            const users = await fetch(`http://localhost:3333/usuarios/addUser`,
+            const users = await fetch(`http://localhost:3333/usuarios/cadastrarUsuario`,
                 {
                     method: "POST",
                    body: formData
@@ -351,7 +351,7 @@
             console.log(erro)
         }
         fecharTela('telaAdicionarUser')
-        getUser()
+        buscarUsuario()
     }
 
     function mostrarLoading() {
@@ -366,7 +366,7 @@
         try {
             mostrarLoading();
 
-            const users = await fetch(`http://localhost:3333/usuarios/deleteUser/${idUser}`, {
+            const users = await fetch(`http://localhost:3333/usuarios/deletarUsuario/${idUsuario}`, {
                 method: "DELETE"
             })
             fecharTela('telaDeletar');
@@ -382,11 +382,11 @@
         }        
     }
 
-    var idUser
+    var idUsuario
 
     function telaDel(id) {
         telaDeletar.style.display = "flex"
-        idUser = id
+        idUsuario = id
 
     }
 
@@ -407,7 +407,7 @@
         `
 
         abrirTela('telaAtualizar')
-        idUser = users[i].id_funcionario
+        idUsuario = users[i].id
     }
 
     async function atualizar() {
@@ -421,12 +421,12 @@
             formData.append('telefone', telefoneUpdate.value)
             formData.append('sobrenome', sobrenomeUpdate.value)
             formData.append('id',idUser)
-            await fetch(`http://localhost:3333/usuarios/updateUser`,
+            await fetch(`http://localhost:3333/usuarios/atualizarUsuario`,
                 {
                     method: "POST",
                     body:formData
                 })
-            await getUser()
+            await buscarUsuario()
             fecharTela("telaAtualizar")
         }
         catch (erro) {
