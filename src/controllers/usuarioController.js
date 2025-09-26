@@ -17,8 +17,6 @@ async function deletarUsuario(req, res) {
 
 async function cadastrarUsuario(req, res) {
   try {
-
-
     if (!req.body.fkEmpresa || req.body.nome == "" || req.body.sobrenome == "" || req.body.telefone == ""
       || req.body.email == "" || req.body.senha == "" || req.body.cargo == "") {
       return res.status(400).send("Os campos não foram preenchidos corretamente")

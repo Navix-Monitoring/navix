@@ -1,96 +1,41 @@
-var database = require("../database/config")
+var database = require("../database/config");
 
-function autenticarLoginEmpresa(output_email) {
-    const instrucaoSql = `
-        SELECT razaoSocial, emailCorporativo, senha, cnpj, id, caminhoImagem
-        FROM empresa 
-        WHERE emailCorporativo = ?;
-    `;
+function buscarDadosEmpresa() {
+  var instrucaoSql = `SELECT id as IdEmpresa, nome as razaoSocialEmpresa, codigo_ativacao as Codigo FROM empresa;`;
 
-    return database.executar(instrucaoSql, [output_email]);
+  return database.executar(instrucaoSql);
 }
 
-function cadastrar(output_razaoSocial, output_cnpj, output_email, senha) {
-    const instrucaoSql = `
-        INSERT INTO empresa (razaoSocial, cnpj, emailCorporativo, senha) 
-        VALUES (?, ?, ?, ?);
-    `;
+async function cadastrar_empresa(
+  razaoSocial,
+  cnpj,
+  codigo_ativacao,
+  cep,
+  estado,
+  cidade,
+  bairro,
+  rua,
+  numero
+) {
+  console.log("ACESSEI O EMPRESA MODEL - Iniciando cadastro...");
 
-    return database.executar(instrucaoSql, [output_razaoSocial, output_cnpj, output_email, senha]);
-}
+  const instrucaoEndereco = `INSERT INTO endereco (rua, numero, cep, bairro, cidade, estado, pais) VALUES ('${rua}', '${numero}', '${cep}', '${bairro}', '${cidade}', '${estado}', '${pais}');`;
+  console.log("Executando SQL para endereco: \n" + instrucaoEndereco);
 
-function verificarEmail(output_email) {
-    const instrucaoSql = `
-        SELECT emailCorporativo 
-        FROM empresa
-        WHERE emailCorporativo = ?;
-    `;
+  return database
+    .executar(instrucaoEndereco)
+    .then(function (resultadoEndereco) {
+      const idEndereco = resultadoEndereco.insertId;
+      console.log("ID do Estado inserido:", idEndereco);
 
-    return database.executar(instrucaoSql, [output_email]);
-}
+      const instrucaoEmpresa = `INSERT INTO empresa (razaoSocial, cnpj, codigo_ativacao, fkEndereco) VALUES ('${razaoSocial}', '${cnpj}', '${codigo_ativacao}', '${idEndereco}');`;
+      console.log("Executando SQL para Empresa: \n" + instrucaoEmpresa);
 
-function deletarEmpresa(output_email) {
-    const instrucaoSql = `
-        delete from empresa
-        WHERE emailCorporativo = ?;
-    `;
-
-    return database.executar(instrucaoSql, [output_email]);
-}
-
-function atualizarFotoEmpresa(nome_imagem, output_email) {
-    var caminhoImagem = "../assets/img/imagens-perfil/" + nome_imagem;
-    const instrucaoSql = `
-        UPDATE empresa
-        SET caminhoImagem = "${caminhoImagem}"
-        WHERE emailCorporativo = "${output_email}";
-    `;
-
-    return database.executar(instrucaoSql);
-}
-
-function atualizarNomeEmpresa(novoNome, emailUsuario) {
-    console.log("Entrou no usuarioModel");
-    var instrucao = `
-        UPDATE empresa SET razaoSocial = '${novoNome}' WHERE emailCorporativo = "${emailUsuario}";
-    `;
-    console.log("Executando a query: \n" + instrucao);
-    return database.executar(instrucao);
-}
-
-function atualizarEmailEmpresa(novoEmail, emailUsuario) {
-    console.log("Entrou no usuarioModel");
-    var instrucao = `
-        UPDATE empresa SET emailCorporativo = '${novoEmail}' WHERE emailCorporativo = "${emailUsuario}";
-    `;
-    console.log("Executando a query: \n" + instrucao);
-    return database.executar(instrucao);
-}
-
-function atualizarSenhaEmpresa(novaSenha, emailUsuario){
-    console.log("Entrou no usuarioModel");
-    var instrucao = `
-        UPDATE empresa SET senha = '${novaSenha}' WHERE emailCorporativo = "${emailUsuario}";
-    `;
-    console.log("Executando a query: \n" + instrucao);
-    return database.executar(instrucao);
-}
-
-function carregarInformacoesEmpresa(email) {
-    console.log("Entrou no usuarioModel");
-    var instrucao = `SELECT * FROM empresa WHERE emailCorporativo = "${email}";`;
-    console.log("Executando a query: \n" + instrucao);
-    return database.executar(instrucao);
+      return database.executar(instrucaoEmpresa);
+    });
 }
 
 module.exports = {
-  autenticarLoginEmpresa,
-  cadastrar,
-  verificarEmail,
-  deletarEmpresa,
-  atualizarFotoEmpresa,
-  atualizarNomeEmpresa,
-  atualizarEmailEmpresa,
-  atualizarSenhaEmpresa,
-  carregarInformacoesEmpresa
+  buscarDadosEmpresa,
+  cadastrar_empresa,
 };

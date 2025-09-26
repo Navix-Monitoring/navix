@@ -1,77 +1,58 @@
-var usuarioModel = require("../models/empresaModel");
-var hashPwdUser = require("../utils/hash")
+var empresaModel = require("../models/empresaModel");
 
-/*async function deletar(req, res) {
-  try {
-    const { output_email } = req.body;
+function buscarDadosEmpresa(req, res) {
+  empresaModel.buscarDadosEmpresa().then((resultado) => {
+    res.status(200).json(resultado);
+  });
+}
 
-    // validação de campo
-    if (!output_email) {
-      return res.status(400).send("Erro ao fazer deletar conta! Entre em contato com a gente (navixsuporte@gmail.com)");
-    }
+async function cadastrar_empresa(req, res) {
+  var razaoSocial = req.body.razaoSocialServer;
+  var cnpj = req.body.cnpjServer;
+  var codigo_ativacao = req.body.codigoServer;
+  var cep = req.body.cepServer;
+  var estado = req.body.estadoServer;
+  var cidade = req.body.cidadeServer;
+  var bairro = req.body.bairroServer;
+  var rua = req.body.ruaServer;
+  var numero = req.body.numeroServer;
 
-    // remoção da conta no BD
-    const resultado = await usuarioModel.deletarempresa(output_email);
-
-    // validação de remoção de conta
-    if (resultado) {
-      res.status(200).json("Conta deletada com sucesso!");
-    }
-
-    if (!resultado) {
-      return res.status(404).send("Conta não encontrada.");
-    }
-
-  } catch (error) {
-    console.error("\nHouve um erro no servidor ao deletar conta.: ", error.sqlMessage || error);
-    res.status(500).json(error.sqlMessage || "Erro interno do servidor.");
-  }
-}*/
-
-async function cadastrar(req, res) {
-  try {
-    const {
-      output_razaoSocial,
-      output_email,
-      output_senha,
-      output_cnpj
-    } = req.body;
-
-    // Validação do campos
-    if (!output_email || !output_senha) {
-      return res.status(400).send("Preencha E-mail e Senha.");
-    }
-
-    if (!output_razaoSocial || !output_cnpj) {
-      return res.status(400).send("Preencha CNPJ e Razão Social.")
-    }
-
-    // criptografando a senha
-    const senha = await hashPwdUser.hashPassword(output_senha);
-
-    // Verificação de duplicidade
-    console.log("output email  " + output_email)
-    const usuarios = await empresaModel.verificarEmail(output_email);
-
-    if (usuarios.some(user => user.email === output_email)) {
-      return res.status(409).send("Email já cadastrado.");
-    }
-
-    const resultado = await empresaModel.cadastrar(output_razaoSocial, output_cnpj, output_email, senha);
-
-    // Reusultado do cadastro no banco
-    if (resultado) {
-      res.status(201).json(resultado);
-    } else {
-      res.status(500).send("Erro ao cadastrar o usuário.");
-    }
-  }
-  catch (erro) {
-    console.error("\nHouve um erro ao realizar o cadastro! Erro: ", erro.sqlMessage || erro);
-    res.status(500).json(erro.sqlMessage || "Erro interno do servidor.");
+  if (razaoSocial == undefined) {
+    res.status(400).send("Nome empresa está undefined!");
+  } else if (cnpj == undefined) {
+    res.status(400).send("CNPJ está undefined!");
+  } else if (codigo_ativacao == undefined) {
+    res.status(400).send("Codigo está undefined!");
+  } else if (cep == undefined) {
+    res.status(400).send("CEP está undefined!");
+  } else if (estado == undefined) {
+    res.status(400).send("Estado está undefined!");
+  } else if (cidade == undefined) {
+    res.status(400).send("Cidade está undefined!");
+  } else if (bairro == undefined) {
+    res.status(400).send("Bairro está undefined!");
+  } else if (rua == undefined) {
+    res.status(400).send("Rua está undefined!");
+  } else if (numero == undefined) {
+    res.status(400).send("Numero está undefined!");
+  } else {
+    empresaModel
+      .cadastrar_empresa(razaoSocial, cnpj, codigo_ativacao, cep, estado, cidade, bairro, rua, numero)
+      .then(function (resultado) {
+        res.json(resultado);
+      })
+      .catch(function (erro) {
+        console.log(erro);
+        console.log(
+          "\nHouve um erro ao realizar o cadastro! Erro: ",
+          erro.sqlMessage
+        );
+        res.status(500).json(erro.sqlMessage);
+      });
   }
 }
 
 module.exports = {
-cadastrar
-}
+  buscarDadosEmpresa,
+  cadastrar_empresa,
+};
