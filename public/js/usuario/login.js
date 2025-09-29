@@ -32,7 +32,7 @@ async function entrar() {
             return mostrarErro("Caracteres especiais são inválidos!");
         }
 
-        const resposta = await fetch("usuarios/authentic", {
+        const resposta = await fetch("usuarios/autenticar", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -47,34 +47,19 @@ async function entrar() {
         } catch (e) {
             json = null;
         }
+        console.log(json)
 
         if (!resposta.ok) {
             esconderLoading();
-            if (json && json.erro === "email") {
-                return mostrarErro("Email não cadastrado na base de dados!");
-            } else if (json && json.erro === "senha") {
-                return mostrarErro("Senha inválida!");
-            } else if (json && json.erro === "preenchimento") {
-                return mostrarErro("Preencha todos os campos!");
-            } else {
-                return mostrarErro("Erro ao fazer login!");
-            }
+            const textoErro = resposta.text();
+            console.error("Erro do servidor:", textoErro);
+            return mostrarErro("Email e/ou senha inválido(s)");
         }
 
         // Salvando dados no sessionStorage
-        if (json[0].emailCorporativo) {
-            sessionStorage.email_ss = json[0].emailCorporativo;
-            sessionStorage.nome_ss = json[0].razaoSocial;
-            sessionStorage.id_empresa = json[0].id_empresa;
-            sessionStorage.cnpj = json[0].cnpj;
-            sessionStorage.imagem = json[0].caminhoImagem
-            sessionStorage.tipo = 1;
-        } else {
-            sessionStorage.email_ss = json[0].email;
-            sessionStorage.nome_ss = json[0].nome;
-            sessionStorage.imagem = json[0].caminhoImagem
-            sessionStorage.tipo = 0;
-        }
+            sessionStorage.email_ss = json.email;
+            sessionStorage.nome_ss = json.nome;
+            sessionStorage.imagem = json.caminhoImagem
 
         // Redirecionamento após 3 segundos
         mostrarLoading();

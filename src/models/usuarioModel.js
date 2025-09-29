@@ -1,13 +1,14 @@
 var database = require("../database/config")
 
-function autenticarLoginUsuario(output_email) {
+function autenticar(email, senha) {
     const instrucaoSql = `
-        SELECT nome, email, senha, caminhoImagem
-        FROM funcionario 
-        WHERE email = ?;
-    `;
+        SELECT func.nome, func.email, func.senha, func.caminhoImagem, func.cargo, emp.codigo_ativacao
+        FROM funcionario func 
+        INNER JOIN empresa emp ON emp.id = func.fkEmpresa
+        WHERE func.email = '${email}' AND func.senha = '${senha}'
+    `;  
 
-    return database.executar(instrucaoSql, [output_email]);
+    return database.executar(instrucaoSql);
 }
 
 function atualizarFotoUsuario(nome_imagem, output_email) {
@@ -94,7 +95,7 @@ function atualizarImagemUsuario(nome, sobrenome, email, telefone, cargo, id, nom
 
 
 module.exports = {
-    autenticarLoginUsuario,
+    autenticar,
     atualizarNomeUsuario,
     atualizarFotoUsuario,
     atualizarEmailUsuario,

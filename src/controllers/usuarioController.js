@@ -1,5 +1,4 @@
 var usuarioModel = require("../models/usuarioModel");
-var hashPwdUser = require("../utils/hash")
 
 async function deletarUsuario(req, res) {
   try {
@@ -75,61 +74,31 @@ async function listarUsuariosEmpresa(req, res) {
 }
 
 async function autenticar(req, res) {
-  try {
-    const { output_email, output_senha } = req.body
+var email = req.body.output_email;
+  var senha = req.body.output_senha;
 
-    // validação dos campos
-    if (!output_email || !output_senha) {
-      return res.status(401).json({ erro: "preenchimento" }); // JSON estruturado
-    }
-
-    // // verificação de ativação de conta
-    // const resultadoAtivacao = await usuarioModel.verificarAtivacaoConta(output_email);
-    // if (!resultadoAtivacao) {
-    //   return res.status(400).json({ erro: "login_nao_encontrado" });
-    // }
-    // if (resultadoAtivacao.status == "inativo") {
-    //   return res.status(400).json({ erro: "conta_inativa" });
-    // }
-
-    //pegando dados do banco
-    console.log("VAI VERIFICAR O LOGIN: ")
-
-    //const verificarLoginEmpresa = await empresaModel.autenticarLoginEmpresa(output_email);
-
-    /*if (verificarLoginEmpresa.length > 0 && verificarLoginEmpresa[0].emailCorporativo) {
-      console.log("REPOSTA DO BANCO: " + verificarLoginEmpresa)
-      const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLoginEmpresa[0].senha);
-
-      if (!validacaoHash) {
-        return res.status(400).json({ erro: "senha" }); // senha incorreta
-      }
-
-      console.log(`Resultados: `, verificarLoginEmpresa);
-      return res.json(verificarLoginEmpresa);
-    } 
-    else {*/
-      
-      const verificarLoginUsuario = await usuarioModel.autenticarLoginUsuario(output_email);
-
-      if (verificarLoginUsuario[0] && verificarLoginUsuario[0].email) {
-
-        const validacaoHash = await hashPwdUser.comparePassaword(output_senha, verificarLoginUsuario[0].senha);
-
-        if (!validacaoHash) {
-          return res.status(400).json({ erro: "senha" }); // senha incorreta
+  if (email == undefined) {
+    res.status(400).send("Seu email está undefined!");
+  } else if (senha == undefined) {
+    res.status(400).send("Sua senha está indefinida!");
+  } else {
+    usuarioModel.autenticar(email, senha)
+      .then(function (resultadoAutenticar) {
+        if (resultadoAutenticar.length == 1) {
+          res.json({
+            id: resultadoAutenticar[0].id,
+            email: resultadoAutenticar[0].email,
+            nome: resultadoAutenticar[0].nome,
+            codigoAtivacao: resultadoAutenticar[0].codigoAtivacao,
+            cargo: resultadoAutenticar[0].cargo
+          });
+        } else {
+          res.status(403).send("Email e/ou senha inválido(s)");
         }
-
-        console.log(`Resultados: `, verificarLoginUsuario);
-        return res.json(verificarLoginUsuario);
-      } else {
-        return res.status(400).json({ erro: "email" }); // usuário não cadastrado
-      }
-    //}
-
-  } catch (erro) {
-    console.error("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage || erro);
-    res.status(500).json({ erro: "interno", detalhes: erro.sqlMessage || "Erro interno do servidor." });
+      })
+      .catch(function (erro) {
+        res.status(500).json(erro.sqlMessage);
+      });
   }
 }
 
@@ -225,10 +194,6 @@ async function mudarSenha(req, res) {
   console.log("MUDAR SENHA")
   var novaSenha = req.body.novaSenhaServer;
   var emailUsuario = req.body.emailUsuarioServer;
-
-  var tipo = req.body.tipoUsuarioServer;
-
-  const senha = await hashPwdUser.hashPassword(novaSenha);
 
  /* if (tipo == 1) {
     usuarioModel.atualizarSenhaEmpresa(senha, emailUsuario)
