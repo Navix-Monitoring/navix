@@ -32,7 +32,7 @@ CREATE TABLE funcionario (
     telefone VARCHAR(11),
     email VARCHAR(100) NOT NULL,
     senha VARCHAR(250) NOT NULL,
-    cargo VARCHAR(100) NOT NULL,
+    cargo ENUM("Funcionario", "Administrador") NOT NULL,
 	caminhoImagem VARCHAR(500) NOT NULL DEFAULT '../assets/img/foto-usuario.png',
     CONSTRAINT chk_telefone CHECK (CHAR_LENGTH(telefone) IN (10, 11)),
     PRIMARY KEY (id),
@@ -68,7 +68,7 @@ CREATE TABLE t_hardware (
 );
 
 CREATE TABLE hardware (
-	id INT NOT NULL PRIMARY KEY,
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     fkTipo INT NOT NULL,
     fkVeiculo INT NOT NULL,
     parametro INT NOT NULL,
@@ -96,3 +96,59 @@ CREATE TABLE hard_alerta (
     CONSTRAINT fk_Alerta FOREIGN KEY (fkAlerta) REFERENCES alerta(id),
     CONSTRAINT fk__Hardware FOREIGN KEY (fkHardware) REFERENCES hardware(id)
 );
+
+-- Inserir Endereços
+INSERT INTO endereco (rua, numero, cep, bairro, cidade, estado, pais)
+VALUES 
+('Rua das Flores', 123, '12345678', 'Centro', 'São Paulo', 'SP', 'Brasil'),
+('Av. Paulista', 1000, '87654321', 'Bela Vista', 'São Paulo', 'SP', 'Brasil');
+
+-- Inserir Empresas
+INSERT INTO empresa (razaoSocial, cnpj, codigo_ativacao, fkEndereco)
+VALUES 
+('Tech Solutions LTDA', '12345678000195', 'ABC123', 1),
+('Auto Veículos S.A.', '98765432000189', 'XYZ987', 2);
+
+-- Inserir Funcionários
+INSERT INTO funcionario (fkEmpresa, nome, sobrenome, telefone, email, senha, cargo)
+VALUES 
+(1, 'Carlos', 'Silva', '11987654321', 'carlos.silva@tech.com', 'senha123', 'Administrador'),
+(2, 'Ana', 'Oliveira', '11987654322', 'ana.oliveira@auto.com', 'senha456', 'Funcionario');
+
+-- Inserir Lotes
+INSERT INTO lote (codigo_lote, data_fabricacao)
+VALUES 
+('Lote001', '2025-01-15'),
+('Lote002', '2025-03-10');
+
+-- Inserir Veículos
+INSERT INTO veiculo (fkEmpresa, fkLote, modelo, pilotoAuto_versao, data_ativacao, status)
+VALUES 
+(1, 1, 'Modelo X', 'V1', '2025-06-01', 'ativo'),
+(2, 2, 'Modelo Y', 'V2', '2025-07-01', 'manutenção');
+
+-- Inserir Tipos de Hardware
+INSERT INTO t_hardware (tipo, unidadeMedida)
+VALUES 
+('CPU', 'GHz'),
+('RAM', 'GB'),
+('DISCO', 'TB');
+
+-- Inserir Hardware
+INSERT INTO hardware (fkTipo, fkVeiculo, parametro)
+VALUES 
+(1, 1, 3),  -- 3 GHz de CPU no Veículo 1
+(2, 1, 16), -- 16 GB de RAM no Veículo 1
+(3, 2, 1);  -- 1 TB de Disco no Veículo 2
+
+-- Inserir Alertas
+INSERT INTO alerta (descricao, nivel, status, prioridade)
+VALUES 
+('Erro no sistema de navegação', 'alto', 'pendente', 1),
+('Temperatura elevada no motor', 'medio', 'em análise', 2);
+
+-- Inserir Alerta para Hardware
+INSERT INTO hard_alerta (fkAlerta, fkHardware, quantidade)
+VALUES 
+(1, 1, 2),  -- 2 alertas para o hardware de CPU
+(2, 3, 1);  -- 1 alerta para o hardware de Disco
