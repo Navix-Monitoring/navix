@@ -1,17 +1,17 @@
 var usuarioModel = require("../models/usuarioModel");
 
-async function deletarUsuario(req, res) {
-  try {
-    const {
-      id
-    } = req.params
-
-    await usuarioModel.deletarUsuario(id)
-
-    return res.status(200).send("Usuário foi deletado com sucesso!!!!!!")
-  } catch (erro) {
-    return res.status(500).send("Não deu certo ein!!")
-  }
+function deletarUsuario(req, res) {
+  var id = req.params.id;
+  usuarioModel
+    .deletarUsuario(id)
+    .then(function (resultado) {
+      res.json(resultado);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log("Houve um erro ao deletar o usuário");
+      res.status(500).json(erro.sqlMessage);
+    });
 }
 
 async function cadastrarUsuario(req, res) {
@@ -90,7 +90,9 @@ var email = req.body.output_email;
             email: resultadoAutenticar[0].email,
             nome: resultadoAutenticar[0].nome,
             codigoAtivacao: resultadoAutenticar[0].codigoAtivacao,
-            cargo: resultadoAutenticar[0].cargo
+            cargo: resultadoAutenticar[0].cargo,
+            fkEmpresa: resultadoAutenticar[0].fkEmpresa,
+            cnpj: resultadoAutenticar[0].cnpj
           });
         } else {
           res.status(403).send("Email e/ou senha inválido(s)");

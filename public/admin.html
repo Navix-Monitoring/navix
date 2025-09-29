@@ -51,11 +51,10 @@
                     style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
                 </div>
             </div>
-            
+
             <input type="file" id="foto" name="foto" hidden>
             <div class="flex flex-col">
-                <label for="foto"
-                    class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 
+                <label for="foto" class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 
                     rounded-md border-3 border-slate-600 cursor-pointer hover:opacity-90">
                     Adicionar foto do funcionário
                 </label>
@@ -122,8 +121,7 @@
             </div>
             <input type="file" id="fotoAtualizar" name="fotoAtualizar" hidden>
             <div class="flex flex-col">
-                <label for="fotoAtualizar"
-                    class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2
+                <label for="fotoAtualizar" class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2
                      rounded-md border-3 border-slate-600 cursor-pointer hover:opacity-90">
                     Atualizar foto do funcionário
                 </label>
@@ -157,8 +155,7 @@
                 </div>
             </div>
             <div class="flex justify-center w-full">
-                <a onclick="atualizar()"
-                    class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl font-semibold rounded-md 
+                <a onclick="atualizar()" class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl font-semibold rounded-md 
                     cursor-pointer hover:opacity-90">Atualizar
                     Dados</a>
             </div>
@@ -223,7 +220,6 @@
             <div class="flex pt-12 justify-between">
                 <div class="flex gap-8 bg-slate-100 items-center px-10 py-6 rounded-md">
                     <a href="" class="font-semibold border-b-4 border-slate-700">Membros</a>
-                    <a href="" class="font-semibold">Administradores</a>
                 </div>
                 <div class="flex flex-col">
                     <div class="flex gap-2">
@@ -301,7 +297,7 @@
     async function buscarUsuario() {
         try {
             console.log(sessionStorage)
-            var idEmpresa = sessionStorage.id
+            const idEmpresa = sessionStorage.getItem('id_empresa_ss');
 
             const data = await fetch(`http://localhost:3333/usuarios/listarUsuariosEmpresa/${idEmpresa}`, { method: "GET" })
             const getUsers = await data.json()
@@ -327,7 +323,7 @@
 
     async function salvar() {
         try {
-            var idEmpresa = sessionStorage.id
+            var idEmpresa = sessionStorage.id_empresa_ss
             var formData = new FormData();
             formData.append('foto', foto.files[0])
             formData.append('fkEmpresa', idEmpresa)
@@ -337,13 +333,13 @@
             formData.append('senha', senha.value)
             formData.append('telefone', telefone.value)
             formData.append('sobrenome', sobrenome.value)
-            
+
 
             console.log(idEmpresa, sessionStorage)
             const users = await fetch(`http://localhost:3333/usuarios/cadastrarUsuario`,
                 {
                     method: "POST",
-                   body: formData
+                    body: formData
                 })
 
 
@@ -355,7 +351,7 @@
     }
 
     function mostrarLoading() {
-    document.getElementById('loading').classList.remove('hidden');
+        document.getElementById('loading').classList.remove('hidden');
     }
 
     function esconderLoading() {
@@ -372,14 +368,14 @@
             fecharTela('telaDeletar');
 
             setTimeout(() => {
-            esconderLoading();
-            window.location.reload();
+                esconderLoading();
+                window.location.reload();
             }, 1500);
 
         } catch (erro) {
             console.log(erro);
             esconderLoading();
-        }        
+        }
     }
 
     var idUsuario
@@ -412,7 +408,7 @@
 
     async function atualizar() {
         try {
-            var idEmpresa = sessionStorage.id_empresa
+            var idEmpresa = sessionStorage.id_empresa_ss
             var formData = new FormData();
             formData.append('fotoAtualizar', fotoAtualizar.files[0])
             formData.append('nome', nomeUpdate.value)
@@ -420,11 +416,11 @@
             formData.append('cargo', cargoUpdate.value)
             formData.append('telefone', telefoneUpdate.value)
             formData.append('sobrenome', sobrenomeUpdate.value)
-            formData.append('id',idUser)
+            formData.append('id', idUsuario)
             await fetch(`http://localhost:3333/usuarios/atualizarUsuario`,
                 {
                     method: "POST",
-                    body:formData
+                    body: formData
                 })
             await buscarUsuario()
             fecharTela("telaAtualizar")
@@ -480,7 +476,7 @@
                     <div class="font-semibold text-slate-600 truncate" title="${u.cargo || ''}">${u.cargo || ''}</div>
                     <div style="display:flex; align-items:center; justify-content:center; gap:0.75rem">
                     <button title="Editar" onclick="abrirTelaUpdate(${i})"><i class="fa-solid fa-pen text-xl text-slate-800 cursor-pointer"></i></button>
-                    <button title="Excluir" onclick="telaDel(${u.id_funcionario})"><i class="fa-solid fa-trash text-xl text-slate-800 cursor-pointer"></i></button>
+                    <button title="Excluir" onclick="telaDel(${u.id})"><i class="fa-solid fa-trash text-xl text-slate-800 cursor-pointer"></i></button>
                     </div>
                 `;
             usuarios.appendChild(row);

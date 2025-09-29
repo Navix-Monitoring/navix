@@ -51,7 +51,7 @@ async function entrar() {
 
         if (!resposta.ok) {
             esconderLoading();
-            const textoErro = resposta.text();
+            const textoErro = await resposta.text();
             console.error("Erro do servidor:", textoErro);
             return mostrarErro("Email e/ou senha inválido(s)");
         }
@@ -59,7 +59,8 @@ async function entrar() {
         // Salvando dados no sessionStorage
             sessionStorage.email_ss = json.email;
             sessionStorage.nome_ss = json.nome;
-            sessionStorage.imagem = json.caminhoImagem
+            sessionStorage.imagem_ss = json.caminhoImagem;
+            sessionStorage.id_empresa_ss = json.fkEmpresa;
 
         // Redirecionamento após 3 segundos
         mostrarLoading();
