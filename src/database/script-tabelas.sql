@@ -113,7 +113,8 @@ VALUES
 INSERT INTO funcionario (fkEmpresa, nome, sobrenome, telefone, email, senha, cargo)
 VALUES 
 (1, 'Carlos', 'Silva', '11987654321', 'carlos.silva@tech.com', 'senha123', 'Administrador'),
-(2, 'Ana', 'Oliveira', '11987654322', 'ana.oliveira@auto.com', 'senha456', 'Funcionario');
+(2, 'Ana', 'Oliveira', '11987654322', 'ana.oliveira@auto.com', 'senha456', 'Funcionario'),
+(1, 'gab', 'Silva', '11982654321', 'gab.silva@tech.com', 'senha143', 'Funcionario');
 
 -- Inserir Lotes
 INSERT INTO lote (codigo_lote, data_fabricacao)
@@ -152,3 +153,6 @@ INSERT INTO hard_alerta (fkAlerta, fkHardware, quantidade)
 VALUES 
 (1, 1, 2),  -- 2 alertas para o hardware de CPU
 (2, 3, 1);  -- 1 alerta para o hardware de Disco
+
+select * from funcionario;
+select * from empresa;

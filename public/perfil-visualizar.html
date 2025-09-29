@@ -12,7 +12,7 @@
   <script src="../js/sessao.js"></script>
 </head>
 
-<body class="bg-gray-100 flex" onload="carregarInformacoes()">
+<body class="bg-gray-100 flex" onload="carregarInformacoes();">
 
   <div class=" w-full min-h-screen fixed inset-0 z-10 flex flex-col justify-center items-center bg-black/50"
     style="display: none;" id="telaAtualizar">
@@ -132,7 +132,7 @@
 
       </div>
       <div class="flex flex-col">
-        <p class="text-2xl font-semibold mb-2">Informações da empresa</p>
+        <p class="text-2xl font-semibold mb-2">Informações da conta</p>
         <div class="flex gap-3">
           <p class="text-slate-500 font-semibold">Nome: </p>
           <div id="nomeEmpresaa"></div>
@@ -160,7 +160,7 @@
 
 <script>
   var nomeEmpresa = sessionStorage.getItem("nome_ss");
-  var cnpj = sessionStorage.getItem("cnpj");
+  var cargo = sessionStorage.getItem("cargo_ss");
   var emailEmpresa = sessionStorage.getItem("email_ss");
 
   var nomeProfissao = document.getElementById("nomeProfissao");
@@ -170,7 +170,7 @@
 
   nomeProfissao.innerHTML = `
     <p class="font-bold text-blue-900">${nomeEmpresa}</p>
-    <p class="mb-4 text-blue-900">CNPJ: ${cnpj}</p>
+    <p class="mb-4 text-blue-900">Cargo: ${cargo}</p>
   `;
 
   nomeEmpresaa.innerHTML = `<p class="text-blue-950">${nomeEmpresa}</p>`;

@@ -59,8 +59,8 @@ async function entrar() {
         // Salvando dados no sessionStorage
             sessionStorage.email_ss = json.email;
             sessionStorage.nome_ss = json.nome;
-            sessionStorage.imagem_ss = json.caminhoImagem;
             sessionStorage.id_empresa_ss = json.fkEmpresa;
+            sessionStorage.cargo_ss = json.cargo;
 
         // Redirecionamento após 3 segundos
         mostrarLoading();

@@ -191,7 +191,7 @@
 
             <div id="nomeProfissao" class="text-center mb-6"></div>
 
-            <div class="flex flex-col gap-4 w-[80%]">
+            <div class="flex flex-col gap-4 w-[80%]" id="teste">
                 <a href="../perfil-visualizar.html"
                     class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                     Perfil
@@ -203,7 +203,7 @@
                 </a>
 
                 <a href="../admin.html"
-                    class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium" id="adm-only">
                     Cadastrar Funcionários
                 </a>
 
@@ -256,7 +256,6 @@
     </div>
 
 </body>
-
 </html>
 
 <script>
@@ -482,14 +481,26 @@
             usuarios.appendChild(row);
         });
     }
-    var nomeEmpresa = sessionStorage.nome_ss
-    var cnpj = sessionStorage.cnpj
-    console.log(sessionStorage)
+    // Espere o HTML inteiro ser carregado antes de executar o JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // Agora podemos pegar os elementos com segurança, pois eles já existem
+        var nomeEmpresa = sessionStorage.getItem("nome_ss");
+        var cargo = sessionStorage.getItem("cargo_ss"); // Usando a variável correta
+        
+        var nomeProfissao = document.getElementById("nomeProfissao");
+        
+        // É uma boa prática verificar se o elemento foi encontrado antes de usá-lo
+        if (nomeProfissao) {
+            nomeProfissao.innerHTML += `
+                <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa || 'Usuário'}</p>
+                <p class="mb-4 text-blue-900">Cargo: ${cargo || 'Não definido'}</p> 
+            `;
+        } else {
+            console.error("Elemento com ID 'nomeProfissao' não foi encontrado!");
+        }
 
-    nomeProfissao.innerHTML +=
-        `
-            <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa}</p>
-            <p class="mb-4 text-blue-900">CNPJ: ${cnpj}</p>
-            `
-
+        // Você pode colocar outras funções que precisam do HTML aqui também,
+        // como a chamada para buscarUsuario(), embora ela já funcione.
+    });
 </script>
