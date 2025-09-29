@@ -8,7 +8,7 @@ router.get("/buscar", function (req, res) {
   empresaController.buscarDadosEmpresa(req, res);
 });
 
-router.post("/empresa/cadastrar", function (req, res) {
+router.post("/cadastrar", function (req, res) {
   empresaController.cadastrar_empresa(req, res);
 });
 

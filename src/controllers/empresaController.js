@@ -6,7 +6,7 @@ function buscarDadosEmpresa(req, res) {
   });
 }
 
-async function cadastrar_empresa(req, res) {
+function cadastrar_empresa(req, res) {
   var razaoSocial = req.body.razaoSocialServer;
   var cnpj = req.body.cnpjServer;
   var codigo_ativacao = req.body.codigoServer;
@@ -16,28 +16,28 @@ async function cadastrar_empresa(req, res) {
   var bairro = req.body.bairroServer;
   var rua = req.body.ruaServer;
   var numero = req.body.numeroServer;
+  var pais = "Brasil"
 
-  if (razaoSocial == undefined) {
-    res.status(400).send("Nome empresa está undefined!");
-  } else if (cnpj == undefined) {
-    res.status(400).send("CNPJ está undefined!");
-  } else if (codigo_ativacao == undefined) {
-    res.status(400).send("Codigo está undefined!");
-  } else if (cep == undefined) {
-    res.status(400).send("CEP está undefined!");
-  } else if (estado == undefined) {
-    res.status(400).send("Estado está undefined!");
-  } else if (cidade == undefined) {
-    res.status(400).send("Cidade está undefined!");
-  } else if (bairro == undefined) {
-    res.status(400).send("Bairro está undefined!");
-  } else if (rua == undefined) {
-    res.status(400).send("Rua está undefined!");
-  } else if (numero == undefined) {
-    res.status(400).send("Numero está undefined!");
-  } else {
-    empresaModel
-      .cadastrar_empresa(razaoSocial, cnpj, codigo_ativacao, cep, estado, cidade, bairro, rua, numero)
+  // if (razaoSocial == undefined) {
+  //   res.status(400).send("Nome empresa está undefined!");
+  // } else if (cnpj == undefined) {
+  //   res.status(400).send("CNPJ está undefined!");
+  // } else if (codigo_ativacao == undefined) {
+  //   res.status(400).send("Codigo está undefined!");
+  // } else if (cep == undefined) {
+  //   res.status(400).send("CEP está undefined!");
+  // } else if (estado == undefined) {
+  //   res.status(400).send("Estado está undefined!");
+  // } else if (cidade == undefined) {
+  //   res.status(400).send("Cidade está undefined!");
+  // } else if (bairro == undefined) {
+  //    res.status(400).send("Bairro está undefined!");
+  // } else if (rua == undefined) {
+  //   res.status(400).send("Rua está undefined!");
+  // } else if (numero == undefined) {
+  //   res.status(400).send("Numero está undefined!");
+  // } else {
+    empresaModel.cadastrar_empresa(razaoSocial, cnpj, codigo_ativacao, cep, estado, cidade, bairro, rua, numero,pais)
       .then(function (resultado) {
         res.json(resultado);
       })
@@ -50,7 +50,7 @@ async function cadastrar_empresa(req, res) {
         res.status(500).json(erro.sqlMessage);
       });
   }
-}
+
 
 module.exports = {
   buscarDadosEmpresa,

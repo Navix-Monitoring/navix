@@ -15,7 +15,8 @@ async function cadastrar_empresa(
   cidade,
   bairro,
   rua,
-  numero
+  numero,
+  pais
 ) {
   console.log("ACESSEI O EMPRESA MODEL - Iniciando cadastro...");
 

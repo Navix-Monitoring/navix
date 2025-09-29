@@ -16,7 +16,7 @@
     <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50">
         <div>
             <a href="index.html">
-            <div class="h-22 w-22 bg-slate-300 rounded-full" id="logo"></div>
+                <div class="h-22 w-22 bg-slate-300 rounded-full" id="logo"></div>
             </a>
         </div>
         <div class="w-120 content-center">
@@ -48,7 +48,7 @@
                 <span id="mensagem_status"></span>
             </div>
 
-            <form onsubmit= "event.preventDefault(); cadastrar_empresa();" class="flex flex-col gap-4">
+            <form onsubmit="event.preventDefault(); cadastrar_empresa();" class="flex flex-col gap-4">
 
                 <input id="razaoSocial_input" type="text" placeholder="Razão Social"
                     class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -145,85 +145,99 @@
 
 </html>
 <script>
-console.log("Está abrindo o script")
+    console.log("Está abrindo o script")
 
-//import { sumirMensagem } from '../sessao.js';
+    //import { sumirMensagem } from '../sessao.js';
 
-function mostrarMensagem(tipo, texto) {
-  const card = document.getElementById("cardMensagem");
-  const mensagem = document.getElementById("mensagem_status");
+    function mostrarMensagem(tipo, texto) {
+        const card = document.getElementById("cardMensagem");
+        const mensagem = document.getElementById("mensagem_status");
 
-  mensagem.textContent = texto;
+        mensagem.textContent = texto;
 
-  card.className = "px-4 py-3 rounded mb-4";
+        card.className = "px-4 py-3 rounded mb-4";
 
-  if (tipo === "sucesso") {
-    card.classList.add("bg-green-200", "text-green-800");
-  } else {
-    card.classList.add("bg-red-200", "text-red-800");
-  }
+        if (tipo === "sucesso") {
+            card.classList.add("bg-green-200", "text-green-800");
+        } else {
+            card.classList.add("bg-red-200", "text-red-800");
+        }
 
-  card.classList.remove("hidden");
-  setTimeout(sumirMensagem, 7000);
-}
-
-function mostrarLoading() {
-  document.getElementById('loading').classList.remove('hidden');
-}
-
-function esconderLoading() {
-  document.getElementById('loading').classList.add('hidden');
-}
-
-    async function cadastrar_empresa() {
-  var razaoSocial = razaoSocial_input.value;
-  var cnpj = cnpj_input.value;
-
-  const verificacao = [razaoSocial, cnpj];
-
-  if (verificacao.includes("")) {
-    esconderLoading();
-    return mostrarMensagem("erro", "Campos inválidos! Deve-se preencher todos os campos");
-  } else if (razaoSocial.length < 3) {
-    esconderLoading();
-    return mostrarMensagem("erro", "Razão social inválida! Mínimo 3 caracteres");
-  } else if (!/^\d{14}$/.test(cnpj)) {
-    esconderLoading();
-    return mostrarMensagem("erro", "CNPJ inválido! Deve conter exatamente 14 dígitos numéricos.");
-  }
-
-  try {
-    const resposta = await fetch("/empresa/cadastrar_empresa", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        output_razaoSocial: razaoSocial,
-        output_cnpj: cnpj,
-      }),
-    });
-
-    console.log("resposta: ", resposta.status);
-
-    if (resposta.ok) {
-      mostrarLoading();
-      mostrarMensagem("sucesso", "Cadastro realizado com sucesso!");
-      setTimeout(() => {
-        window.location = "login.html";
-      }, 3000);
-    } else {
-      esconderLoading();
-      if(resposta.status == 500) {
-        console.log(resposta.status)
-      }
-      throw new Error("Erro ao cadastrar: " + resposta.status);
+        card.classList.remove("hidden");
+        // setTimeout(sumirMensagem, 7000);
     }
 
-  } catch (error) {
-    esconderLoading();
-    return mostrarMensagem("erro", error.message || "Erro inesperado ao cadastrar");
-  }
-}
+    // function mostrarLoading() {
+    //     document.getElementById('loading').classList.remove('hidden');
+    // }
 
-window.cadastrar_empresa = cadastrar_empresa;
+    // function esconderLoading() {
+    //     document.getElementById('loading').classList.add('hidden');
+    // }
+
+    async function cadastrar_empresa() {
+        var razaoSocial = razaoSocial_input.value;
+        var cnpj = cnpj_input.value;
+        var numero = numero_input.value;
+        var cep = cep_input.value;
+        var estado = estado_input.value;
+        var cidade = cidade_input.value;
+        var bairro = bairro_input.value;
+        var rua = rua_input.value;
+        var codigoAtivacao = codigo_ativacao_input.value;
+
+        const verificacao = [razaoSocial, cnpj];
+
+        if (verificacao.includes("")) {
+            esconderLoading();
+            return mostrarMensagem("erro", "Campos inválidos! Deve-se preencher todos os campos");
+        } else if (razaoSocial.length < 3) {
+            esconderLoading();
+            return mostrarMensagem("erro", "Razão social inválida! Mínimo 3 caracteres");
+        } else if (!/^\d{14}$/.test(cnpj)) {
+            esconderLoading();
+            return mostrarMensagem("erro", "CNPJ inválido! Deve conter exatamente 14 dígitos numéricos.");
+        }
+
+        try {
+            const resposta = await fetch("empresa/cadastrar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    razaoSocialServer: razaoSocial,
+                    cnpjServer: cnpj,
+                    codigoServer: codigoAtivacao,
+                    cepServer: cep,
+                    estadoServer: estado,
+                    cidadeServer: cidade,
+                    bairroServer: bairro,
+                    ruaServer: rua,
+                    numeroServer: numero
+                }),
+            });
+
+            console.log("resposta: ", resposta.status);
+
+            if (resposta.ok) {
+                // mostrarLoading();
+                mostrarMensagem("sucesso", "Cadastro realizado com sucesso!");
+                setTimeout(() => {
+                    window.location = "login.html";
+                }, 3000);
+            } else {
+                // esconderLoading();
+                if (resposta.status == 500) {
+                    console.log(resposta.status)
+                }
+                throw new Error("Erro ao cadastrar: " + resposta.status);
+            }
+
+        } catch (error) {
+            // esconderLoading();
+            return mostrarMensagem("erro", error.message || "Erro inesperado ao cadastrar");
+        }
+    }
+
+    window.cadastrar_empresa = cadastrar_empresa;
 
 </script>
