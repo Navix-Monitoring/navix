@@ -31,9 +31,11 @@ async function cadastrarUsuario(req, res) {
       }
 
     }
-  } catch (erro) {
-    return res.status(500).send("Erro ao cadastrar usuário")
-  }
+} catch (erro) {
+    console.log("ERRO AO CADASTRAR USUÁRIO:", erro);
+    // CORRIJA PARA ESTA LINHA:
+    return res.status(500).json({ msg: "Falha ao cadastrar usuário.", error: erro });
+}
 }
 
 async function atualizarUsuario(req, res) {

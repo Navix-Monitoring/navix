@@ -64,35 +64,39 @@
             <div class="flex gap-5 w-full">
                 <div class="flex flex-col gap-2 w-full">
                     <p class="text-xl font-semibold text-blue-950">Nome</p>
-                    <input type="text" id="nome" class="bg-slate-300 px-4 py-2 rounded-md">
+                    <input type="text" id="nome" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: Gustavo">
                 </div>
 
                 <div class="flex flex-col gap-2 w-full">
                     <p class="text-xl font-semibold text-blue-950">Sobrenome</p>
-                    <input type="text" id="sobrenome" class="bg-slate-300 px-4 py-2 rounded-md">
+                    <input type="text" id="sobrenome" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: Silva">
                 </div>
             </div>
 
             <div class="flex gap-5 w-full">
                 <div class="flex flex-col gap-2 w-full">
                     <p class="text-xl font-semibold text-blue-950">Telefone</p>
-                    <input type="text" id="telefone" class="bg-slate-300 px-4 py-2 rounded-md">
+                    <input type="text" id="telefone" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: 11987654321">
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <p class="text-xl font-semibold text-blue-950">Cargo</p>
-                    <input type="text" id="cargo" class="bg-slate-300 px-4 py-2 rounded-md">
+                    <select id="cargo" class="bg-slate-300 px-4 py-2 rounded-md w-full">
+                        <option value="" disabled selected>Selecione um cargo</option>
+                        <option value="Funcionario">Funcionário</option>
+                        <option value="Administrador">Administrador</option>
+                    </select>
                 </div>
             </div>
 
             <div class="flex gap-5 w-full pb-6">
                 <div class="flex flex-col gap-2 w-full">
                     <p class="text-xl font-semibold text-blue-950">Email</p>
-                    <input type="email" id="email" class="bg-slate-300 px-4 py-2 rounded-md">
+                    <input type="email" id="email" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: teste@gmail.com">
                 </div>
 
                 <div class="flex flex-col gap-2 w-full">
                     <p class="text-xl font-semibold text-blue-950">Senha</p>
-                    <input type="password" id="senha" class="bg-slate-300 px-4 py-2 rounded-md">
+                    <input type="password" id="senha" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: senha12">
                 </div>
             </div>
             <div class="flex justify-center w-full">
@@ -203,7 +207,8 @@
                 </a>
 
                 <a href="../admin.html"
-                    class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium" id="adm-only">
+                    class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
+                    id="adm-only">
                     Cadastrar Funcionários
                 </a>
 
@@ -256,6 +261,7 @@
     </div>
 
 </body>
+
 </html>
 
 <script>
@@ -482,14 +488,14 @@
         });
     }
     // Espere o HTML inteiro ser carregado antes de executar o JavaScript
-    document.addEventListener('DOMContentLoaded', function() {
-        
+    document.addEventListener('DOMContentLoaded', function () {
+
         // Agora podemos pegar os elementos com segurança, pois eles já existem
         var nomeEmpresa = sessionStorage.getItem("nome_ss");
         var cargo = sessionStorage.getItem("cargo_ss"); // Usando a variável correta
-        
+
         var nomeProfissao = document.getElementById("nomeProfissao");
-        
+
         // É uma boa prática verificar se o elemento foi encontrado antes de usá-lo
         if (nomeProfissao) {
             nomeProfissao.innerHTML += `
