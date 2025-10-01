@@ -38,7 +38,7 @@ Entrar</li>
 <div class="bg-slate-200 flex-grow flex items-center justify-center px-6 py-6 h-screen">
 <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mt-40 p-10">
 
-<h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Cadastro do Usuário</h1>
+<h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Cadastro do Usuário Adm</h1>
 
 <div id="cardMensagem" class="hidden px-4 py-3 rounded mb-4">
 <span id="mensagem_status"></span>
@@ -46,19 +46,22 @@ Entrar</li>
 
 <form onsubmit="event.preventDefault(); cadastrar();" class="flex flex-col gap-4">
 
-<input id="razaoSocial_input" type="text" placeholder="Razão Social"
+<input id="nome_input" type="text" placeholder="Nome"
 class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
-<input id="cnpj_input" type="text" placeholder="CNPJ (somente números)"
+<input id="sobrenome_input" type="text" placeholder="Sobrenome"
 class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
-<input id="email_input" type="email" placeholder="Email corporativo"
+<input id="telefone_input" type="number" placeholder="Telefone"
+class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+<input id="email_input" type="email" placeholder="Email"
 class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
 <input id="senha_input" type="password" placeholder="Senha"
 class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
-<input id="confirmar_senha_input" type="password" placeholder="Confirmar senha"
+<input id="codigo_input" type="text" placeholder="Codigo empresa"
 class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
 <button type="submit" class="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800 transition">

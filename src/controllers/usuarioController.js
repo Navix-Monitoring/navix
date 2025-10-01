@@ -218,24 +218,63 @@ async function mudarSenha(req, res) {
 function carregarInformacoes(req, res) {
   console.log("Entrou no carregarInformacoes");
   var emailUsuario = req.body.emailUsuarioSession;
-  var tipoUsuario = req.body.tipoUsuarioSession;
+  // var tipoUsuario = req.body.tipoUsuarioSession; // Variável 'tipoUsuario' não usada
 
   console.log("Email do usuário: ", emailUsuario);
+  usuarioModel.carregarInformacoesUsuario(emailUsuario)
+    .then(function (resultado) {
+      console.log("Resultado: ", resultado);
+      res.json(resultado);
+    })
+    .catch(function (erro) {
+        console.log("ERRO AO CARREGAR INFORMAÇÕES:", erro);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+  
 
-  /*if (tipoUsuario == 1) {
-    usuarioModel.carregarInformacoesEmpresa(emailUsuario)
-      .then(function (resultado) {
-        console.log("Resultado: ", resultado);
-        res.json(resultado);
-      });
-  } else {*/
-    usuarioModel.carregarInformacoesUsuario(emailUsuario)
-      .then(function (resultado) {
-        console.log("Resultado: ", resultado);
-        res.json(resultado);
-      });
-  //}
+  function cadastrarAdm(req, res) {
+  var nome = req.body.nomeServer;
+  var sobrenome = req.body.sobrenomeServer;
+  var telefone = req.body.telefoneServer;
+  var email = req.body.emailServer;
+  var senha = req.body.senhaServer;
+  var codigoEmpresa = req.body.codigo_empresaServer;
+  var cargo = "Administrador";
 
+  if (nome == undefined) {
+    res.status(400).send("Seu nome está undefined!");
+  } else if (sobrenome == undefined) {
+    res.status(400).send("Seu email está undefined!");
+  } else if (telefone == undefined) {
+    res.status(400).send("Seu telefone está undefined!");
+  } else if (email == undefined) {
+    res.status(400).send("Seu email está undefined!");
+  } else if (senha == undefined) {
+    res.status(400).send("Sua senha está undefined!");
+  } else if (codigoEmpresa == undefined) {
+    res.status(400).send("Empresa não encontrada");
+  } else if (cargo == undefined) {
+    res.status(400).send("Cargo está undefinied!");
+  } else {
+    usuarioModel.cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, cargo)
+      .then(function (resultado) {
+        res.json(resultado);
+      })
+      .catch(function (erro) {
+        console.log(erro);
+
+        if (erro.errno === 1062) {
+          res.status(409).send("Esse email já está cadastrado! Tente outro");
+          return;
+        }
+        console.log(
+          "\nHouve um erro ao realizar o cadastro! Erro: ",
+          erro.sqlMessage
+        );
+        res.status(500).json(erro.sqlMessage);
+      });
+  }
 }
 
 module.exports = {
@@ -248,5 +287,6 @@ module.exports = {
   deletarUsuario,
   cadastrarUsuario,
   atualizarUsuario,
-  listarUsuariosEmpresa
+  listarUsuariosEmpresa,
+  cadastrarAdm,
 }

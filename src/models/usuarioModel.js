@@ -6,7 +6,7 @@ function autenticar(email, senha) {
         FROM funcionario func 
         INNER JOIN empresa emp ON emp.id = func.fkEmpresa
         WHERE func.email = '${email}' AND func.senha = '${senha}'
-    `;  
+    `;
 
     return database.executar(instrucaoSql);
 }
@@ -39,7 +39,7 @@ function atualizarEmailUsuario(novoEmail, emailUsuario) {
     return database.executar(instrucao);
 }
 
-function atualizarSenhaUsuario(novaSenha, emailUsuario){
+function atualizarSenhaUsuario(novaSenha, emailUsuario) {
     console.log("Entrou no usuarioModel");
     var instrucao = `
         UPDATE funcionario SET senha = '${novaSenha}' WHERE email = "${emailUsuario}";
@@ -93,6 +93,34 @@ function atualizarImagemUsuario(nome, sobrenome, email, telefone, cargo, id, nom
     return database.executar(instrucaoSql)
 }
 
+function cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, cargo) {
+    const caminhoPadrao = '../assets/img/foto-usuario.png'
+    console.log(
+        "ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAdm():",
+        nome,
+        sobrenome,
+        telefone,
+        email,
+        senha,
+        cargo
+    );
+    var instrucaoSql = `
+    INSERT INTO funcionario (nome, sobrenome, telefone, email, senha, fkEmpresa, cargo, caminhoImagem) VALUES 
+        (
+            '${nome}',
+            '${sobrenome}',
+            '${telefone}',
+            '${email}',
+            '${senha}',
+            (SELECT id FROM empresa WHERE codigo_ativacao = '${codigoEmpresa}'), 
+            '${cargo}',
+            '${caminhoPadrao}'
+        );
+`;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     autenticar,
@@ -106,5 +134,6 @@ module.exports = {
     adicionarFotoUsuario,
     cadastrarUsuario,
     atualizarImagemUsuario,
-    atualizarUsuario
+    atualizarUsuario,
+    cadastrarAdm,
 };
