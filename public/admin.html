@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./css/index.css">
 </head>
 
-<body class="overflow-x-hidden flex flex-col" onload="carregarFotoUsuario()">
+<body class="overflow-x-hidden flex flex-col" onload="carregarFotoUsuario(), verificarCargo()">
     <!-- <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50 z-50">
         <div>
             <div class="h-18 w-18 bg-slate-300 rounded-full" id="logo"></div>
@@ -260,8 +260,9 @@
         <div class="w-16 h-16 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
     </div>
 
-</body>
 
+</body>
+<script src="./js/usuario/verificadorCargo.js"></script>
 </html>
 
 <script>

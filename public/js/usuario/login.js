@@ -66,7 +66,7 @@ async function entrar() {
         mostrarLoading();
         setTimeout(() => {
             esconderLoading();
-            window.location = "../admin.html";
+            window.location = "../perfil-visualizar.html";
         }, 3000);
 
     } catch (error) {

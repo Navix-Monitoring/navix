@@ -16,7 +16,7 @@
   <!-- Em breve -->
   <div class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
     <!-- Botão Voltar -->
-    <a href="../admin.html" class="absolute top-10 left-10 text-white text-3xl hover:text-gray-400">
+    <a href="../admin.html" class="absolute top-10 left-10 text-white text-3xl hover:text-gray-400" id="adm-only">
       <i class="fas fa-chevron-left"></i>
     </a>
 
@@ -155,7 +155,7 @@
   </div>
 
 </body>
-
+<script src="../js/usuario/verificadorCargo.js"></script>
 </html>
 
 <script>
@@ -171,6 +171,13 @@
   var nomeEmpresa = sessionStorage.nome_ss
   var cnpj = sessionStorage.cnpj
   console.log(sessionStorage)
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var nomeEmpresa = sessionStorage.getItem("nome_ss");
+        var cargo = sessionStorage.getItem("cargo_ss"); 
+        var nomeProfissao = document.getElementById("nomeProfissao");
+    });
 
   nomeProfissao.innerHTML +=
     `
