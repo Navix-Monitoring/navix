@@ -1,31 +1,44 @@
 function validarSessao() {
-    var email = sessionStorage.EMAIL_USUARIO;
+  var email = sessionStorage.EMAIL_USUARIO;
 
-    var b_usuario = document.getElementById("b_usuario");
+  var b_usuario = document.getElementById("b_usuario");
 
-    if (email != null && apelido != null) {
-        b_usuario.innerHTML = apelido;
-    } else {
-        window.location = "../login.html";
-    }
+  if (email != null && apelido != null) {
+    b_usuario.innerHTML = apelido;
+  } else {
+    window.location = "../login.html";
+  }
+}
+
+export function alerta(titulo, texto, icone) {
+  Swal.fire({
+    title: titulo,
+    text: texto,
+    icon: icone,
+    draggable: true,
+    background: "rgb(20, 20, 20)",
+    color: "#f1f1f1",
+    timer: 1500,
+    showConfirmButton: false
+  });
 }
 
 function limparSessao() {
-    sessionStorage.clear();
-    window.location = "../login.html";
+  sessionStorage.clear();
+  window.location = "../login.html";
 }
 
 // carregamento (loading)
 function aguardar() {
-    var divAguardar = document.getElementById("div_aguardar");
-    divAguardar.style.display = "flex";
+  var divAguardar = document.getElementById("div_aguardar");
+  divAguardar.style.display = "flex";
 }
 
 function finalizarAguardar() {
-    var divAguardar = document.getElementById("div_aguardar");
-    divAguardar.style.display = "none";
+  var divAguardar = document.getElementById("div_aguardar");
+  divAguardar.style.display = "none";
 
-    cardErro.style.display = "none";
+  cardErro.style.display = "none";
 }
 
 export function sumirMensagem() {
