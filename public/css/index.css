@@ -36,10 +36,10 @@
     background-position: center;
 }
 
-/*Foto gabi (mudar no assets/img/{nomedafoto})*/
+/*Foto Gui (mudar no assets/img/{nomedafoto})*/
 #foto1
 {
-    background-image: url(../assets/img/gaby.jpg);
+    background-image: url(../assets/img/guilherme.jpeg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -48,50 +48,50 @@
     
 }
 
-/*Foto Gustavo(mudar no assets/img/{nomedafoto})*/
+/*Foto João(mudar no assets/img/{nomedafoto})*/
 #foto2
 {
-    background-image: url(../assets/img/foto-Muniz.jpg);
+    background-image: url(../assets/img/Joao.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;
     width: 200px;
 }
-/*Foto Isaak(mudar no assets/img/{nomedafoto})*/
+/*Foto Celina(mudar no assets/img/{nomedafoto})*/
 #foto3
 {
-    background-image: url(../assets/img/isaak.png);
+    background-image: url(../assets/img/Celina.jpeg);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;
     width: 200px;
 }
-/*Foto Lucas Pereira(mudar no assets/img/{nomedafoto})*/
+/*Foto Ana(mudar no assets/img/{nomedafoto})*/
 #foto4
 {
-    background-image: url(../assets/img/foto-amorim.jpg);
+    background-image: url(../assets/img/ana.jpeg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;
     width: 200px;
 }
-/*Foto Lucas Rocha (mudar no assets/img/{nomedafoto})*/
+/*Foto Keniti (mudar no assets/img/{nomedafoto})*/
 #foto5
 {
-    background-image: url(../assets/img/rocha.jpg);
+    background-image: url(../assets/img/gustavoKeniti.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 200px;
     width: 200px;
 }
-/*Foto Nicolas (mudar no assets/img/{nomedafoto})*/
+/*Foto Adaman (mudar no assets/img/{nomedafoto})*/
 #foto6
 {
-    background-image: url(../assets/img/nicolas.jpeg);
+    background-image: url(../assets/img/adaman.jpg);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
