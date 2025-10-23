@@ -1,84 +1,126 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro - NAVIX</title>
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadastro - NAVIX</title>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
-<link rel="icon" href="./assets/navix-logo.jpg">
-<link rel="stylesheet" href="./css/index.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="./js/usuario/cadastro.js" type="module" defer></script>
-</head>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script
+      src="https://kit.fontawesome.com/6921956092.js"
+      crossorigin="anonymous"
+    ></script>
 
-<body class="bg-slate-100 min-h-screen flex flex-col">
-<header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50">
-<div>
-<a href="index.html">
-<div class="h-22 w-22 bg-slate-300 rounded-full" id="logo"></div>
-</a>
-</div>
-<div class="w-120 content-center">
-<ul class="flex justify-between cabecalho">
-<a href="./index.html" class="content-center">
-<li class="text-slate-100">Home</li>
-</a>
-<a href="./aboutUs.html" class="content-center">
-<li class="text-slate-100">Sobre nós</li>
-</a>
-<a href="./login.html">
-<li
-class="border border-4 border-solid border-slate-100 pb-2 pt-2 pl-7 pr-7 rounded-sm text-slate-100">
-Entrar</li>
-</a>
-</ul>
-</div>
-</header>
-<div class="bg-slate-200 flex-grow flex items-center justify-center px-6 py-6 h-screen">
-<div class="bg-white rounded-lg shadow-xl w-full max-w-lg mt-40 p-10">
+    <link rel="icon" href="./assets/navix-logo.jpg" />
+    <link rel="stylesheet" href="./css/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./js/usuario/cadastro.js" type="module" defer></script>
+  </head>
 
-<h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Cadastro do Usuário Adm</h1>
+  <body class="bg-slate-100 min-h-screen flex flex-col">
+    <!-- Header fixo -->
+    <header
+      class="h-24 w-full px-15 flex items-center justify-between fixed top-0 left-0 bg-slate-900 bg-opacity-50 z-10"
+    >
+      <div>
+        <a href="index.html">
+          <div class="h-22 w-22 bg-slate-300 rounded-full" id="logo"></div>
+        </a>
+      </div>
+      <div class="w-120 content-center">
+        <ul class="flex justify-between cabecalho">
+          <a href="./index.html" class="content-center">
+            <li class="text-slate-100 text-sm md:text-base">Home</li>
+          </a>
+          <a href="./aboutUs.html" class="content-center">
+            <li class="text-slate-100 text-sm md:text-base">Sobre nós</li>
+          </a>
+          <a href="./login.html">
+            <li
+              class="border border-2 border-solid border-slate-100 pb-1 pt-1 pl-5 pr-5 rounded-sm text-slate-100 text-sm md:text-base"
+            >
+              Entrar
+            </li>
+          </a>
+        </ul>
+      </div>
+    </header>
 
-<div id="cardMensagem" class="hidden px-4 py-3 rounded mb-4">
-<span id="mensagem_status"></span>
-</div>
+    <!-- Container principal -->
+    <main
+      class="bg-slate-200 flex items-center justify-center min-h-[calc(100vh-6rem)] px-5 py-6 mt-24"
+    >
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-7">
+        <h1 class="text-2xl font-bold text-blue-900 mb-5 text-center">
+          Cadastro do Usuário Adm
+        </h1>
 
-<form onsubmit="event.preventDefault(); cadastrar();" class="flex flex-col gap-4">
+        <div id="cardMensagem" class="hidden px-4 py-3 rounded mb-3">
+          <span id="mensagem_status" class="text-sm"></span>
+        </div>
 
-<input id="nome_input" type="text" placeholder="Nome"
-class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <form
+          onsubmit="event.preventDefault(); cadastrar();"
+          class="flex flex-col gap-3"
+        >
+          <input
+            id="nome_input"
+            type="text"
+            placeholder="Nome"
+            class="px-3 py-2.5 text-base border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            id="sobrenome_input"
+            type="text"
+            placeholder="Sobrenome"
+            class="px-3 py-2.5 text-base border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            id="telefone_input"
+            type="number"
+            placeholder="Telefone"
+            class="px-3 py-2.5 text-base border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            id="email_input"
+            type="email"
+            placeholder="Email"
+            class="px-3 py-2.5 text-base border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            id="senha_input"
+            type="password"
+            placeholder="Senha"
+            class="px-3 py-2.5 text-base border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            id="codigo_input"
+            type="text"
+            placeholder="Código empresa"
+            class="px-3 py-2.5 text-base border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
 
-<input id="sobrenome_input" type="text" placeholder="Sobrenome"
-class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <button
+            type="submit"
+            class="w-full bg-blue-900 text-white py-2.5 text-base rounded hover:bg-blue-800 transition"
+          >
+            Cadastrar
+          </button>
+        </form>
 
-<input id="telefone_input" type="number" placeholder="Telefone"
-class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-<input id="email_input" type="email" placeholder="Email"
-class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-<input id="senha_input" type="password" placeholder="Senha"
-class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-<input id="codigo_input" type="text" placeholder="Codigo empresa"
-class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-<button type="submit" class="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800 transition">
-Cadastrar
-</button>
-</form>
-
-<p class="mt-4 text-center text-gray-600 text-sm">
-Já tem uma conta? <a href="login.html" class="text-blue-800 font-semibold">Entrar</a>
-</p>
-<p class="mt-4 text-center text-gray-600 text-sm">
-Para cadastrar uma empresa clique em: <a href="cadastro_empresa.html" class="text-blue-800 font-semibold">Cadastrar empresa</a>
-</p>
-</div>
-</div>
-
-</body>
-
+        <p class="mt-3 text-center text-gray-600 text-sm">
+          Já tem uma conta?
+          <a href="login.html" class="text-blue-800 font-semibold">Entrar</a>
+        </p>
+        <p class="mt-2 text-center text-gray-600 text-sm">
+          Para cadastrar uma empresa clique em:
+          <a
+            href="cadastro_empresa.html"
+            class="text-blue-800 font-semibold"
+            >Cadastrar empresa</a
+          >
+        </p>
+      </div>
+    </main>
+  </body>
 </html>

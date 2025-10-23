@@ -13,210 +13,149 @@
 </head>
 
 <body class="bg-slate-100 min-h-screen flex flex-col">
-    <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50">
+    <!-- HEADER -->
+    <header class="w-full px-4 sm:px-8 md:px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50 z-50 h-16 md:h-20">
         <div>
             <a href="index.html">
-                <div class="h-22 w-22 bg-slate-300 rounded-full" id="logo"></div>
+                <div class="h-10 w-10 md:h-14 md:w-14 bg-slate-300 rounded-full" id="logo"></div>
             </a>
         </div>
-        <div class="w-120 content-center">
-            <ul class="flex justify-between cabecalho">
-                <a href="./index.html" class="content-center">
-                    <li class="text-slate-100">Home</li>
-                </a>
-                <a href="./aboutUs.html" class="content-center">
-                    <li class="text-slate-100">Sobre nós</li>
-                </a>
-                <a href="./login.html">
-                    <li
-                        class="border border-4 border-solid border-slate-100 pb-2 pt-2 pl-7 pr-7 rounded-sm text-slate-100">
-                        Entrar</li>
-                </a>
-            </ul>
+        <nav class="hidden md:flex space-x-6">
+            <a href="./index.html" class="text-slate-100 hover:text-blue-400 transition">Home</a>
+            <a href="./aboutUs.html" class="text-slate-100 hover:text-blue-400 transition">Sobre nós</a>
+            <a href="./login.html" class="border border-slate-100 px-4 py-1 rounded text-slate-100 hover:bg-blue-800 transition">
+                Entrar
+            </a>
+        </nav>
+        <div class="md:hidden">
+            <button id="menuBtn" class="text-slate-100 text-2xl">&#9776;</button>
         </div>
     </header>
-    <div class="bg-slate-200 flex-grow flex items-center justify-center px-6 py-6 h-screen">
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mt-40 p-10">
 
-            <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Cadastro da Empresa</h1>
+<main class="flex h-screen items-center justify-center px-4 sm:px-6 pt-16">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl p-8">
+    <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Cadastro da Empresa</h1>
 
-            <div id="cardMensagem" class="hidden px-4 py-3 rounded mb-4">
-                <span id="mensagem_status"></span>
-            </div>
-
-            <form onsubmit="event.preventDefault(); cadastrar_empresa();" class="flex flex-col gap-4">
-
-                <input id="razaoSocial_input" type="text" placeholder="Razão Social"
-                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-                <input id="cnpj_input" type="number" placeholder="CNPJ (somente números)"
-                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-                <input id="codigo_ativacao_input" type="text" placeholder="Código de Ativação"
-                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-                <input id="cep_input" type="number" placeholder="CEP"
-                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-                <input id="estado_input" type="text" placeholder="Estado"
-                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-                <input id="cidade_input" type="text" placeholder="Cidade"
-                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-                <input id="bairro_input" type="text" placeholder="Bairro"
-                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-                <input id="rua_input" type="text" placeholder="Rua"
-                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-                <input id="numero_input" type="number" placeholder="Número"
-                    class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
-
-                <button type="submit"
-                    class="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800 transition hover:cursor-pointer">
-                    Cadastrar
-                </button>
-            </form>
-
-
-            <p class="mt-4 text-center text-gray-600 text-sm">
-                Já tem uma conta? <a href="login.html" class="text-blue-800 font-semibold">Entrar</a>
-            </p>
-        </div>
+    <div id="cardMensagem" class="hidden px-4 py-3 rounded mb-4">
+        <span id="mensagem_status"></span>
     </div>
-</body>
 
-</html>
-<script>
-    console.log("Está abrindo o script")
+    <form onsubmit="event.preventDefault(); cadastrar_empresa();" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-    //import { sumirMensagem } from '../sessao.js';
+        <!-- Coluna esquerda -->
+        <input id="razaoSocial_input" type="text" placeholder="Razão Social"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <input id="cnpj_input" type="number" placeholder="CNPJ (somente números)"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <input id="codigo_ativacao_input" type="text" placeholder="Código de Ativação"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <input id="cep_input" type="number" placeholder="CEP"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
-    function mostrarMensagem(tipo, texto) {
-        const card = document.getElementById("cardMensagem");
-        const mensagem = document.getElementById("mensagem_status");
+        <!-- Coluna direita -->
+        <input id="estado_input" type="text" placeholder="Estado"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <input id="cidade_input" type="text" placeholder="Cidade"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <input id="bairro_input" type="text" placeholder="Bairro"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <input id="rua_input" type="text" placeholder="Rua"
+            class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
-        mensagem.textContent = texto;
+        <!-- Último input ocupa as duas colunas -->
+        <input id="numero_input" type="number" placeholder="Número"
+            class="col-span-1 sm:col-span-2 px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
-        card.className = "px-4 py-3 rounded mb-4";
+        <!-- Botão ocupa as duas colunas -->
+        <button type="submit"
+            class="col-span-1 sm:col-span-2 bg-blue-900 text-white py-3 px-8 rounded hover:bg-blue-800 transition hover:cursor-pointer mt-2 text-lg">
+            Cadastrar
+        </button>
+    </form>
 
-        if (tipo === "sucesso") {
-            card.classList.add("bg-green-200", "text-green-800");
-        } else {
-            card.classList.add("bg-red-200", "text-red-800");
-        }
+    <p class="mt-4 text-center text-gray-600 text-sm">
+        Já tem uma conta? <a href="login.html" class="text-blue-800 font-semibold hover:underline">Entrar</a>
+    </p>
+</div>
 
-        card.classList.remove("hidden");
-        // setTimeout(sumirMensagem, 7000);
-    }
+    </main>
 
-    // function mostrarLoading() {
-    //     document.getElementById('loading').classList.remove('hidden');
-    // }
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        async function cadastrar_empresa() {
+            const razaoSocial = document.getElementById("razaoSocial_input").value;
+            const cnpj = document.getElementById("cnpj_input").value;
+            const codigoAtivacao = document.getElementById("codigo_ativacao_input").value;
+            const cep = document.getElementById("cep_input").value;
+            const estado = document.getElementById("estado_input").value;
+            const cidade = document.getElementById("cidade_input").value;
+            const bairro = document.getElementById("bairro_input").value;
+            const rua = document.getElementById("rua_input").value;
+            const numero = document.getElementById("numero_input").value;
 
-    // function esconderLoading() {
-    //     document.getElementById('loading').classList.add('hidden');
-    // }
+            if (!razaoSocial || !cnpj || !codigoAtivacao || !cep || !estado || !cidade || !bairro || !rua || !numero) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Aviso",
+                    text: "Todos os campos precisam ser preenchidos!",
+                    background: "#0f172b",
+                    color: "#f1f1f1",
+                });
+                return false;
+            }
 
-    async function cadastrar_empresa() {
-        var razaoSocial = razaoSocial_input.value;
-        var cnpj = cnpj_input.value;
-        var codigoAtivacao = codigo_ativacao_input.value;
-        var cep = cep_input.value;
-        var estado = estado_input.value;
-        var cidade = cidade_input.value;
-        var bairro = bairro_input.value;
-        var rua = rua_input.value;
-        var numero = numero_input.value;
+            try {
+                const resposta = await fetch("empresa/cadastrar", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        razaoSocialServer: razaoSocial,
+                        cnpjServer: cnpj,
+                        codigoServer: codigoAtivacao,
+                        cepServer: cep,
+                        estadoServer: estado,
+                        cidadeServer: cidade,
+                        bairroServer: bairro,
+                        ruaServer: rua,
+                        numeroServer: numero
+                    }),
+                });
 
-        const verificacao = [razaoSocial, cnpj];
+                if (resposta.ok) {
+                    Swal.fire({
+                        title: "Empresa cadastrada com sucesso!",
+                        text: "Redirecionando para a tela de Login...",
+                        icon: "success",
+                        timer: 3000,
+                        showConfirmButton: false,
+                        background: "#141414",
+                        color: "#f1f1f1",
+                    });
+                    setTimeout(() => window.location = "login.html", 3000);
+                } else {
+                    const erro = await resposta.json();
+                    Swal.fire({
+                        title: "Erro ao cadastrar!",
+                        text: erro.mensagem || "Houve um erro no servidor. Tente novamente.",
+                        icon: "error",
+                        background: "#141414",
+                        color: "#f1f1f1",
+                    });
+                }
+            } catch (erro) {
+                Swal.fire({
+                    title: "Erro na comunicação!",
+                    text: "Não foi possível se conectar ao servidor. Verifique sua conexão.",
+                    icon: "error",
+                    background: "#141414",
+                    color: "#f1f1f1",
+                });
+            }
 
-        if (
-            razaoSocial == "" ||
-            cnpj == "" ||
-            codigoAtivacao == "" ||
-            cep == "" ||
-            numero == "" ||
-            estado == "" ||
-            cidade == "" ||
-            bairro == "" ||
-            rua == ""
-        ) {
-            Swal.fire({
-                icon: "warning",
-                title: "Aviso",
-                text: "Todos os campos precisam ser preenchidos!",
-                background: "#0f172b",
-                color: "#f1f1f1",
-            });
             return false;
         }
 
-        try {
-            const resposta = await fetch("empresa/cadastrar", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    razaoSocialServer: razaoSocial,
-                    cnpjServer: cnpj,
-                    codigoServer: codigoAtivacao,
-                    cepServer: cep,
-                    estadoServer: estado,
-                    cidadeServer: cidade,
-                    bairroServer: bairro,
-                    ruaServer: rua,
-                    numeroServer: numero
-                }),
-            });
-
-            console.log("resposta: ", resposta.status);
-
-            if (resposta.ok) {
-                Swal.fire({
-                    title: "Empresa cadastrada com sucesso!",
-                    text: "Redirecionando para a tela de Login...",
-                    icon: "success",
-                    draggable: true,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    background: "rgb(20, 20, 20)",
-                    color: "#f1f1f1",
-                });
-                setTimeout(() => {
-                    window.location = "login.html";
-                }, 3000);
-            } else {
-                resposta.json().then((erro) => {
-                    console.error(erro);
-                    Swal.fire({
-                        title: "Erro ao cadastrar!",
-                        text:
-                            erro.mensagem || "Houve um erro no servidor. Tente novamente.",
-                        icon: "error",
-                        draggable: true,
-                        background: "rgb(20, 20, 20)",
-                        color: "#f1f1f1",
-                    });
-                });
-            }
-        } catch (erro) {
-            console.log(`#ERRO: ${erro}`);
-            Swal.fire({
-                title: "Erro na comunicação!",
-                text: "Não foi possível se conectar ao servidor. Verifique sua conexão.",
-                icon: "error",
-                draggable: true,
-                background: "rgb(20, 20, 20)",
-                color: "#f1f1f1",
-            });
-        };
-
-        return false;
-    }
-
-    window.cadastrar_empresa = cadastrar_empresa;
-
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        window.cadastrar_empresa = cadastrar_empresa;
+    </script>
+</body>
+</html>
