@@ -17,14 +17,6 @@ function mostrarMensagem(tipo, texto) {
   setTimeout(sumirMensagem, 7000);
 }
 
-function mostrarLoading() {
-  document.getElementById('loading').classList.remove('hidden');
-}
-
-function esconderLoading() {
-  document.getElementById('loading').classList.add('hidden');
-}
-
 async function cadastrar() {
   const nome = nome_input.value;
   const sobrenome = sobrenome_input.value;
@@ -64,7 +56,7 @@ async function cadastrar() {
   }
 
   try {
-    mostrarLoading();
+    
 
     const resposta = await fetch("/usuarios/register", {
       method: "POST",
@@ -94,7 +86,7 @@ async function cadastrar() {
   } catch (error) {
     return alerta("Erro", "Não foi possível conectar ao servidor", "error");
   } finally {
-    esconderLoading();
+      
   }
 }
 
