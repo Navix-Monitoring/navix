@@ -1,0 +1,67 @@
+.kpis{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+}
+.kpi{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: #172556;
+    color: white;
+    padding: 10px;
+    align-items: center;
+    width: 250px;
+}
+
+.cards-lotes{
+    display: grid;
+    grid-template-columns: 350px 350px 100px 100px;    
+}
+
+.processos{
+    font-size: 10px;
+}
+
+.tituloKPI{
+    font-size: 12px;
+}
+
+.colour-ball{
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: center;
+    width: 70PX ;
+    border-radius: 100%;
+    border: 2px solid;
+}
+.valor{
+font-size: 20px;
+}
+.alerta{
+    display: flex;
+}
+
+.ladinho{
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.card{
+    margin: 10px;
+    border-radius: 10px;
+    padding: 20px;
+    height: fit-content;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.342) 10px 10px 30px;
+}
+.titulo{
+    font-size: 50px;
+}

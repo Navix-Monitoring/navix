@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lote</title>
+    <link rel="icon" href="./assets/navix-logo.jpg">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+  <script src="../js/sessao.js"></script>
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/dist/chartjs-chart-boxplot.min.js"></script>
+
+</head>
+<body>
+
+     <div class="flex flex-row w-full">
+    <!-- nav bar -->
+    <div class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
+      <img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
+      <div id="imagemUsuarioNavbar">
+        <div class="rounded-md w-20 h-20 mb-2"
+          style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
+        </div>
+      </div>
+
+
+      <div id="nomeProfissao" class="text-center mb-6"></div>
+
+      <div class="flex flex-col gap-4 w-[80%]">
+        <a href="../perfil-visualizar.html"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+          Perfil
+        </a>
+
+        <a href="dashboard.html"
+          class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+          Dashboard
+        </a>
+
+        <a href="../admin.html"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+          Cadastrar Funcionários
+        </a>
+
+        <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
+          onclick="limparSessao()">
+          <a href="./login.html" class="no-underline text-white">
+            <h3 class="m-0 p-0">Sair</h3>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col">
+      <!-- Parte de kpis -->
+       <h1 class="titulo">Lote</h1>
+      <main class="card">
+        <div id="KPIS" class="kpis">
+          <div class="kpi cpu">
+            <p class="tituloKPI">Mediana de uso de cpu</p> <br>
+            <div class="ladinho">
+              <div class="colour-ball" style="border-color: red;">
+                <p id="NumeroKPICPU" class="valor">95%</p>
+              </div>
+              <div class="alerta">
+                <p id="tipoRisco">Risco: ALTO</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi cpu">
+            <p class="tituloKPI">Mediana de uso de disco</p> <br>
+            <div class="ladinho">
+              <div class="colour-ball" style="border-color: green;">
+                <p id="NumeroKPICPU" class="valor">70%</p>
+              </div>
+              <div class="alerta">
+                <p id="tipoRisco">Risco: BAIXO</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi cpu">
+            <p class="tituloKPI"> Mediana de uso de temperatura </p> <br>
+            <div class="ladinho">
+              <div class="colour-ball" style="border-color: green;">
+                <p id="NumeroKPICPU" class="valor">70°</p>
+              </div>
+              <div class="alerta">
+                <p id="tipoRisco">Risco: BAIXO</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi cpu">
+            <p class="tituloKPI"> Mediana de uso de tempo de processos </p> <br>
+            <div class="ladinho">
+              <div class="colour-ball" style="border-color: yellow;">
+                <p id="NumeroKPIprocessos" class="valor">300ms</p>
+              </div>
+              <div class="alerta">
+                <p id="tipoRisco">Risco: MÉDIO</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi cpu">
+            <p class="tituloKPI">Mediana de uso de bateria </p> <br>
+            <div class="ladinho">
+              <div class="colour-ball" style="border-color: red;">
+                <p id="NumeroKPICPU" class="valor">95%</p>
+              </div>
+              <div class="alerta">
+                <p id="tipoRisco">Risco: ALTO</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- parte de graficos -->
+      <canvas id="medianas"></canvas>
+      <canvas id="correlacoes"></canvas>
+    
+</body>
+</html>
