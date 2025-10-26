@@ -19,7 +19,7 @@ function buscarLote(id){
         WHERE fkLote = l.id) AS qtd_veiculos
     FROM veiculo v
     INNER JOIN lote l ON v.fkLote = l.id
-    WHERE l.id = 3;`
+    WHERE l.id = ${id};`
     return database.executar(instrucaoSql);
 }
 

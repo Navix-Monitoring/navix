@@ -60,6 +60,7 @@ async function entrar() {
             sessionStorage.email_ss = json.email;
             sessionStorage.nome_ss = json.nome;
             sessionStorage.id_empresa_ss = json.fkEmpresa;
+            sessionStorage.fkCargo = json.fkCargo;
             sessionStorage.cargo_ss = json.cargo;
 
         // Redirecionamento após 3 segundos

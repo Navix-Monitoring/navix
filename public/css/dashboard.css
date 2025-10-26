@@ -1,3 +1,7 @@
+.tituloLote{
+    margin-left: 20px;
+    font-size: 50px;
+}
 .kpis{
     display: flex;
     flex-direction: row;

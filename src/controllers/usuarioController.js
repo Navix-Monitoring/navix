@@ -92,9 +92,9 @@ var email = req.body.output_email;
             email: resultadoAutenticar[0].email,
             nome: resultadoAutenticar[0].nome,
             codigoAtivacao: resultadoAutenticar[0].codigoAtivacao,
-            cargo: resultadoAutenticar[0].cargo,
+            fkcargo: resultadoAutenticar[0].fkCargo,
+            cargo: resultadoAutenticar[0].titulo,
             fkEmpresa: resultadoAutenticar[0].fkEmpresa,
-            cnpj: resultadoAutenticar[0].cnpj
           });
         } else {
           res.status(403).send("Email e/ou senha inválido(s)");

@@ -14,7 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/dist/chartjs-chart-boxplot.min.js"></script>
 
 </head>
-<body>
+<body onload="carregarInformacoes(), simularValores()">
 
      <div class="flex flex-row w-full">
     <!-- nav bar -->
@@ -56,17 +56,21 @@
 
     <div class="flex flex-col">
       <!-- Parte de kpis -->
-       <h1 class="titulo">Lote</h1>
+       <a href="dashboard.html"  onclick="localStorage.clear(); window.location.href='dashboard.html';">
+  <h3>Voltar</h3>
+</a>
+
+       <h1 class="tituloLote" id="tituloLote">Lote</h1>
       <main class="card">
         <div id="KPIS" class="kpis">
           <div class="kpi cpu">
             <p class="tituloKPI">Mediana de uso de cpu</p> <br>
             <div class="ladinho">
-              <div class="colour-ball" style="border-color: red;">
+              <div class="colour-ball" id="cpuColour" style="border-color: red;">
                 <p id="NumeroKPICPU" class="valor">95%</p>
               </div>
               <div class="alerta">
-                <p id="tipoRisco">Risco: ALTO</p>
+                <p id="tipoRiscoCPU">Risco: ALTO</p>
               </div>
             </div>
           </div>
@@ -74,11 +78,11 @@
           <div class="kpi cpu">
             <p class="tituloKPI">Mediana de uso de disco</p> <br>
             <div class="ladinho">
-              <div class="colour-ball" style="border-color: green;">
-                <p id="NumeroKPICPU" class="valor">70%</p>
+              <div class="colour-ball" id="discoColour" style="border-color: green;">
+                <p id="NumeroKPIDISCO" class="valor">70%</p>
               </div>
               <div class="alerta">
-                <p id="tipoRisco">Risco: BAIXO</p>
+                <p id="tipoRiscoDISCO">Risco: BAIXO</p>
               </div>
             </div>
           </div>
@@ -86,11 +90,11 @@
           <div class="kpi cpu">
             <p class="tituloKPI"> Mediana de uso de temperatura </p> <br>
             <div class="ladinho">
-              <div class="colour-ball" style="border-color: green;">
-                <p id="NumeroKPICPU" class="valor">70°</p>
+              <div class="colour-ball" id="temperaturaColour" style="border-color: green;">
+                <p id="NumeroKPITEMPERATURA" class="valor">70°</p>
               </div>
               <div class="alerta">
-                <p id="tipoRisco">Risco: BAIXO</p>
+                <p id="tipoRiscoTEMPERATURA">Risco: BAIXO</p>
               </div>
             </div>
           </div>
@@ -98,11 +102,11 @@
           <div class="kpi cpu">
             <p class="tituloKPI"> Mediana de uso de tempo de processos </p> <br>
             <div class="ladinho">
-              <div class="colour-ball" style="border-color: yellow;">
-                <p id="NumeroKPIprocessos" class="valor">300ms</p>
+              <div class="colour-ball" id="processosColour" style="border-color: yellow;">
+                <p id="NumeroKPIPROCESSOS" class="valor">300ms</p>
               </div>
               <div class="alerta">
-                <p id="tipoRisco">Risco: MÉDIO</p>
+                <p id="tipoRiscoPROCESSOS">Risco: MÉDIO</p>
               </div>
             </div>
           </div>
@@ -110,11 +114,11 @@
           <div class="kpi cpu">
             <p class="tituloKPI">Mediana de uso de bateria </p> <br>
             <div class="ladinho">
-              <div class="colour-ball" style="border-color: red;">
-                <p id="NumeroKPICPU" class="valor">95%</p>
+              <div class="colour-ball" id="bateriaColour" style="border-color: red;">
+                <p id="NumeroKPIBATERIA" class="valor">95%</p>
               </div>
               <div class="alerta">
-                <p id="tipoRisco">Risco: ALTO</p>
+                <p id="tipoRiscoBATERIA">Risco: ALTO</p>
               </div>
             </div>
           </div>
@@ -126,3 +130,4 @@
     
 </body>
 </html>
+<script src="../js/lote.js"></script>

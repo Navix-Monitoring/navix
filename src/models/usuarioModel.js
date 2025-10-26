@@ -2,9 +2,10 @@ var database = require("../database/config")
 
 function autenticar(email, senha) {
     const instrucaoSql = `
-        SELECT func.nome, func.email, func.senha, func.caminhoImagem, func.cargo, emp.codigo_ativacao, func.fkEmpresa, emp.cnpj
+        SELECT func.nome, func.email, func.senha, func.caminhoImagem, func.fkCargo, c.titulo, emp.codigo_ativacao, func.fkEmpresa
         FROM funcionario func 
         INNER JOIN empresa emp ON emp.id = func.fkEmpresa
+        INNER JOIN cargo c ON c.id = func.fkCargo
         WHERE func.email = '${email}' AND func.senha = '${senha}'
     `;
 
