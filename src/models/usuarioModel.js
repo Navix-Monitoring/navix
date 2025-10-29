@@ -122,6 +122,14 @@ function cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, ca
     return database.executar(instrucaoSql);
 }
 
+function atualizarStatusPerfil(novoStatus, emailUsuario) {
+    console.log("Entrou no usuarioModel");
+    var instrucao = `
+        UPDATE funcionario SET statusPerfil = '${novoStatus}' WHERE email = "${emailUsuario}";
+    `;
+    console.log("Executando a query: \n" + instrucao);
+    return database.executar(instrucao);
+}
 
 module.exports = {
     autenticar,
@@ -137,4 +145,5 @@ module.exports = {
     atualizarImagemUsuario,
     atualizarUsuario,
     cadastrarAdm,
+    atualizarStatusPerfil
 };

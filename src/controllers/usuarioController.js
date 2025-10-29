@@ -31,11 +31,11 @@ async function cadastrarUsuario(req, res) {
       }
 
     }
-} catch (erro) {
+  } catch (erro) {
     console.log("ERRO AO CADASTRAR USUÁRIO:", erro);
     // CORRIJA PARA ESTA LINHA:
     return res.status(500).json({ msg: "Falha ao cadastrar usuário.", error: erro });
-}
+  }
 }
 
 async function atualizarUsuario(req, res) {
@@ -76,7 +76,7 @@ async function listarUsuariosEmpresa(req, res) {
 }
 
 async function autenticar(req, res) {
-var email = req.body.output_email;
+  var email = req.body.output_email;
   var senha = req.body.output_senha;
 
   if (email == undefined) {
@@ -120,24 +120,24 @@ function atualizar(req, res) {
       var tipo = req.body.tipo;
 
       console.log("TIPO: ", typeof (tipo))
-     /* if (tipo == 1) {
-        const resultado = usuarioModel.atualizarFotoEmpresa(imagem, email);
+      /* if (tipo == 1) {
+         const resultado = usuarioModel.atualizarFotoEmpresa(imagem, email);
+ 
+         // Reusultado da atualização dos dados no banco
+         if (resultado) {
+           res.status(201).json(resultado);
+         } else {
+           res.status(500).send("Erro ao atualizar dados da conta.");
+         }
+       }*/
+      const resultado = usuarioModel.atualizarFotoUsuario(imagem, email);
 
-        // Reusultado da atualização dos dados no banco
-        if (resultado) {
-          res.status(201).json(resultado);
-        } else {
-          res.status(500).send("Erro ao atualizar dados da conta.");
-        }
-      }*/
-        const resultado = usuarioModel.atualizarFotoUsuario(imagem, email);
-
-        // Reusultado da atualização dos dados no banco
-        if (resultado) {
-          res.status(201).json(resultado);
-        } else {
-          res.status(500).send("Erro ao atualizar dados da conta.");
-        }
+      // Reusultado da atualização dos dados no banco
+      if (resultado) {
+        res.status(201).json(resultado);
+      } else {
+        res.status(500).send("Erro ao atualizar dados da conta.");
+      }
     }
     console.log("CHEGOU AQUI")
     return res.status(201).json({
@@ -157,18 +157,18 @@ function mudarNome(req, res) {
 
   var tipo = req.body.tipoUsuarioServer;
 
-/*  if (tipo == 1) {
-    usuarioModel.atualizarNomeEmpresa(novoNome, emailUsuario)
-      .then(function (resultado) {
-        console.log("Resultado: ", resultado);
-        res.json(resultado);
-      });
-  } else {*/
-    usuarioModel.atualizarNomeUsuario(novoNome, emailUsuario)
-      .then(function (resultado) {
-        console.log("Resultado: ", resultado);
-        res.json(resultado);
-      });
+  /*  if (tipo == 1) {
+      usuarioModel.atualizarNomeEmpresa(novoNome, emailUsuario)
+        .then(function (resultado) {
+          console.log("Resultado: ", resultado);
+          res.json(resultado);
+        });
+    } else {*/
+  usuarioModel.atualizarNomeUsuario(novoNome, emailUsuario)
+    .then(function (resultado) {
+      console.log("Resultado: ", resultado);
+      res.json(resultado);
+    });
 }
 
 function mudarEmail(req, res) {
@@ -185,11 +185,11 @@ function mudarEmail(req, res) {
         res.json(resultado);
       });
   } else {*/
-    usuarioModel.atualizarEmailUsuario(novoEmail, emailUsuario)
-      .then(function (resultado) {
-        console.log("Resultado: ", resultado);
-        res.json(resultado);
-      });
+  usuarioModel.atualizarEmailUsuario(novoEmail, emailUsuario)
+    .then(function (resultado) {
+      console.log("Resultado: ", resultado);
+      res.json(resultado);
+    });
   //}
 
 }
@@ -199,19 +199,19 @@ async function mudarSenha(req, res) {
   var novaSenha = req.body.novaSenhaServer;
   var emailUsuario = req.body.emailUsuarioServer;
 
- /* if (tipo == 1) {
-    usuarioModel.atualizarSenhaEmpresa(senha, emailUsuario)
-      .then(function (resultado) {
-        console.log("Resultado: ", resultado);
-        res.json(resultado);
-      });
-  } else {*/
-    usuarioModel.atualizarEmailUsuario(senha, emailUsuario)
-      .then(function (resultado) {
-        console.log("Resultado: ", resultado);
-        res.json(resultado);
-      });
- // }
+  /* if (tipo == 1) {
+     usuarioModel.atualizarSenhaEmpresa(senha, emailUsuario)
+       .then(function (resultado) {
+         console.log("Resultado: ", resultado);
+         res.json(resultado);
+       });
+   } else {*/
+  usuarioModel.atualizarEmailUsuario(senha, emailUsuario)
+    .then(function (resultado) {
+      console.log("Resultado: ", resultado);
+      res.json(resultado);
+    });
+  // }
 
 }
 
@@ -227,13 +227,13 @@ function carregarInformacoes(req, res) {
       res.json(resultado);
     })
     .catch(function (erro) {
-        console.log("ERRO AO CARREGAR INFORMAÇÕES:", erro);
-        res.status(500).json(erro.sqlMessage);
+      console.log("ERRO AO CARREGAR INFORMAÇÕES:", erro);
+      res.status(500).json(erro.sqlMessage);
     });
 }
-  
 
-  function cadastrarAdm(req, res) {
+
+function cadastrarAdm(req, res) {
   var nome = req.body.nomeServer;
   var sobrenome = req.body.sobrenomeServer;
   var telefone = req.body.telefoneServer;
@@ -277,6 +277,27 @@ function carregarInformacoes(req, res) {
   }
 }
 
+function mudarStatus(req, res) {
+  var novoStatus = req.body.statusServer;
+  var emailUsuario = req.body.emailServer;
+  if (novoStatus == undefined) {
+    res.status(400).send("O novoStatus está undefined!");
+  } else if (emailUsuario == undefined) {
+    res.status(400).send("O emailUsuario está undefined!");
+  } else {
+    usuarioModel.atualizarStatusPerfil(novoStatus, emailUsuario)
+      .then(function (resultado) {
+        console.log("Resultado: ", resultado);
+        res.json(resultado);
+      })
+      .catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao mudar o status do perfil");
+        res.status(500).json(erro.sqlMessage);
+      });
+  }
+}
+
 module.exports = {
   autenticar,
   mudarNome,
@@ -289,4 +310,5 @@ module.exports = {
   atualizarUsuario,
   listarUsuariosEmpresa,
   cadastrarAdm,
+  mudarStatus
 }

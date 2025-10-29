@@ -27,6 +27,10 @@ router.post("/mudarEmail", function(req, res){
     usuarioController.mudarEmail(req, res);
 });
 
+router.post("/mudarStatus", function(req, res){
+    usuarioController.mudarStatus(req, res);
+});
+
 router.post("/mudarSenha", function(req, res){
     console.log("Entrou na rota /mudarSenha");
     usuarioController.mudarSenha(req, res);

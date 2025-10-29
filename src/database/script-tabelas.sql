@@ -37,6 +37,7 @@ CREATE TABLE funcionario (
     telefone VARCHAR(11),
     email VARCHAR(100) NOT NULL,
     senha VARCHAR(250) NOT NULL,
+    statusPerfil ENUM("Ativo", "Inativo") NOT NULL DEFAULT "Ativo",
     fkCargo INT,
 	caminhoImagem VARCHAR(500) NOT NULL DEFAULT '../assets/img/foto-usuario.png',
     CONSTRAINT chk_telefone CHECK (CHAR_LENGTH(telefone) IN (10, 11)),
