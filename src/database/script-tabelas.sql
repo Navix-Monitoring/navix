@@ -107,8 +107,8 @@ CREATE TABLE parametroHardware(
 INSERT INTO cargo (titulo)
 VALUES
 ('Administrador'), -- ID 1
-('Funcionario'),   -- ID 2
-('Analista');      -- ID 3
+('Engenheiro Automotivo'),   -- ID 2
+('Engenheiro de Qualidade');      -- ID 3
 
 
 INSERT INTO empresa (razaoSocial, cnpj, codigo_ativacao)
