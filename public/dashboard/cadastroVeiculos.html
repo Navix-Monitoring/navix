@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cadastro - Dashboard</title>
+    <title>Gerenciar Frota - Dashboard</title>
     <link rel="icon" href="../assets/navix-logo.jpg" />
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -92,25 +92,25 @@
               data-target="form-modelo"
               class="active-tab text-center px-4 py-2 text-sm md:text-base font-medium text-gray-700 rounded-lg transition-all duration-300 ease-in-out whitespace-nowrap hover:bg-gray-300"
             >
-              1. Cadastro Modelo
+              Cadastro Modelo
             </button>
             <button
               data-target="form-parametro"
               class="text-center px-4 py-2 text-sm md:text-base font-medium text-gray-700 rounded-lg transition-all duration-300 ease-in-out whitespace-nowrap hover:bg-gray-300"
             >
-              2. Definir Parâmetros
+              Definir Parâmetros
             </button>
             <button
               data-target="form-lote"
               class="text-center px-4 py-2 text-sm md:text-base font-medium text-gray-700 rounded-lg transition-all duration-300 ease-in-out whitespace-nowrap hover:bg-gray-300"
             >
-              3. Cadastro Lote
+              Cadastro Lote
             </button>
             <button
               data-target="form-veiculo"
               class="text-center px-4 py-2 text-sm md:text-base font-medium text-gray-700 rounded-lg transition-all duration-300 ease-in-out whitespace-nowrap hover:bg-gray-300"
             >
-              4. Cadastro Veículo
+              Cadastro Veículo
             </button>
           </nav>
         </div>
@@ -120,9 +120,7 @@
             id="form-modelo"
             class="tab-content bg-white shadow-md rounded-lg p-6"
           >
-            <h2 class="text-2xl font-semibold mb-4">
-              1. Cadastrar Novo Modelo
-            </h2>
+            <h2 class="text-2xl font-semibold mb-4">Cadastrar Novo Modelo</h2>
             <form id="modeloForm" class="space-y-4">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -185,10 +183,10 @@
             class="tab-content bg-white shadow-md rounded-lg p-6 hidden"
           >
             <h2 class="text-2xl font-semibold mb-4">
-              2. Definir Parâmetros por Modelo
+              Definir Parâmetros por Modelo
             </h2>
             <form id="parametroForm" class="space-y-4">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label
                     for="param-select-modelo"
@@ -223,17 +221,21 @@
                 </div>
                 <div>
                   <label
-                    for="modelo-nome"
+                    for="param-unidade-medida"
                     class="block text-sm font-medium text-gray-700"
                     >Unidade de medida</label
                   >
-                  <input
-                    type="text"
-                    id="modelo-nome"
-                    name="nome"
+                  <select
+                    id="param-unidade-medida"
+                    name="unidadeMedida"
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="ex: Corvus AI v1.0"
-                  />
+                  >
+                    <option value="" selected disabled>
+                      Selecione a unidade...
+                    </option>
+                    <option value="%">Uso (%)</option>
+                    <option value="Cº">Temperatura (Cº)</option>
+                  </select>
                 </div>
               </div>
 
@@ -314,7 +316,7 @@
             id="form-lote"
             class="tab-content bg-white shadow-md rounded-lg p-6 hidden"
           >
-            <h2 class="text-2xl font-semibold mb-4">3. Cadastrar Novo Lote</h2>
+            <h2 class="text-2xl font-semibold mb-4">Cadastrar Novo Lote</h2>
             <form id="loteForm" class="space-y-4">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -376,14 +378,12 @@
             id="form-veiculo"
             class="tab-content bg-white shadow-md rounded-lg p-6 hidden"
           >
-            <h2 class="text-2xl font-semibold mb-4">
-              4. Cadastrar Novo Veículo
-            </h2>
+            <h2 class="text-2xl font-semibold mb-4">Cadastrar Novo Veículo</h2>
             <p class="text-sm text-gray-600 mb-4">
-              Esta ação associa um Lote a um Modelo.
+              Esta ação associa um Lote a um Modelo e define a quantidade.
             </p>
             <form id="veiculoForm" class="space-y-4">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label
                     for="veiculo-lote"
@@ -427,6 +427,24 @@
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
+
+                <div>
+                  <label
+                    for="veiculo-quantidade"
+                    class="block text-sm font-medium text-gray-700"
+                    >Quantidade</label
+                  >
+                  <input
+                    type="number"
+                    id="veiculo-quantidade"
+                    name="quantidade"
+                    min="1"
+                    value="1"
+                    required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="ex: 1"
+                  />
+                </div>
               </div>
               <div>
                 <button
@@ -443,7 +461,7 @@
     </div>
 
     <script src="../js/usuario/verificadorCargo.js"></script>
-
+    <script src="../js/cadastroVeiculos.js"></script>
     <script>
       function carregarFotoUsuario() {
         var imagemUsuarioNavbar = document.getElementById(
@@ -508,6 +526,29 @@
           });
         }
       });
+
+      const selectHardware = document.getElementById("param-select-hardware");
+      const selectUnidade = document.getElementById("param-unidade-medida");
+
+      function atualizarUnidadesSimples() {
+        const hardwareTexto =
+          selectHardware.options[selectHardware.selectedIndex].text;
+
+        let optionsHTML = `
+            <option value="" selected disabled>Selecione a unidade...</option>
+            <option value="%">Uso (%)</option>
+          `;
+
+        if (hardwareTexto === "CPU") {
+          optionsHTML += '<option value="Cº">Temperatura (Cº)</option>';
+        }
+
+        selectUnidade.innerHTML = optionsHTML;
+      }
+
+      selectHardware.addEventListener("change", atualizarUnidadesSimples);
+
+      atualizarUnidadesSimples();
     </script>
   </body>
 </html>
