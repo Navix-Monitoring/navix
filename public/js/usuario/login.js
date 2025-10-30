@@ -8,6 +8,30 @@ function esconderLoading() {
     document.getElementById('loading').classList.add('hidden');
 }
 
+function checarStatus() {
+    const email = email_input.value;
+    const senha = senha_input.value;
+    fetch("usuarios/autenticarStatus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            output_email: email,
+            output_senha: senha
+        })
+    }).then(res => {
+        res.json().then(json => {
+
+            if (json[0].status != "Inativo") {
+                entrar()
+            }
+            else {
+                return mostrarErro("Conta inativa!");
+                
+            }
+        })
+    })
+}
+
 async function entrar() {
     const email = email_input.value;
     const senha = senha_input.value;
@@ -17,16 +41,17 @@ async function entrar() {
     const padrao = /["'!()\/\\|;\-\]\[{}=]/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+
     try {
-        
+
         if (!email || !senha) {
             esconderLoading();
             return mostrarErro("Campos inválidos! Preencha email e senha.");
-        } 
+        }
         if (!emailRegex.test(email)) {
             esconderLoading();
             return mostrarErro("Email inválido!");
-        } 
+        }
         if (verificacao.some(campo => padrao.test(campo))) {
             esconderLoading();
             return mostrarErro("Caracteres especiais são inválidos!");
@@ -57,11 +82,11 @@ async function entrar() {
         }
 
         // Salvando dados no sessionStorage
-            sessionStorage.email_ss = json.email;
-            sessionStorage.nome_ss = json.nome;
-            sessionStorage.id_empresa_ss = json.fkEmpresa;
-            sessionStorage.fkCargo = json.fkCargo;
-            sessionStorage.cargo_ss = json.cargo;
+        sessionStorage.email_ss = json.email;
+        sessionStorage.nome_ss = json.nome;
+        sessionStorage.id_empresa_ss = json.fkEmpresa;
+        sessionStorage.fkCargo = json.fkCargo;
+        sessionStorage.cargo_ss = json.cargo;
 
         // Redirecionamento após 3 segundos
         mostrarLoading();
@@ -76,4 +101,5 @@ async function entrar() {
     }
 }
 
-window.entrar = entrar;
+
+window.checarStatus = checarStatus;

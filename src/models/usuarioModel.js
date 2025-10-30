@@ -1,8 +1,15 @@
 var database = require("../database/config")
 
+function autenticarStatus(email,senha){
+    const instrucaoSql = `
+     SELECT status FROM funcionario WHERE email = '${email}' AND senha = '${senha}'
+    `
+    return database.executar(instrucaoSql);
+}
+
 function autenticar(email, senha) {
     const instrucaoSql = `
-        SELECT func.nome, func.email, func.senha, func.caminhoImagem, func.fkCargo, c.titulo, emp.codigo_ativacao, func.fkEmpresa
+        SELECT func.nome, func.email, func.senha, func.caminhoImagem, func.fkCargo, c.titulo, emp.codigo_ativacao, func.fkEmpresa, func.status
         FROM funcionario func 
         INNER JOIN empresa emp ON emp.id = func.fkEmpresa
         INNER JOIN cargo c ON c.id = func.fkCargo
@@ -132,6 +139,7 @@ function atualizarStatusPerfil(novoStatus, emailUsuario) {
 }
 
 module.exports = {
+    autenticarStatus,
     autenticar,
     atualizarNomeUsuario,
     atualizarFotoUsuario,

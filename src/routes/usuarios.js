@@ -4,10 +4,14 @@ var upload = require('../utils/uploadImagem'); // ARQUIVO COM A CONFIGURAÇÃO D
 
 var usuarioController = require("../controllers/usuarioController");
 
+router.post("/autenticarStatus", function(req,res){
+    usuarioController.autenticarStatus(req,res);
+});
+
 //Recebendo os dados do html e direcionando para a função cadastrar de usuarioController.js
 router.post("/register", function (req, res) {
     usuarioController.cadastrarAdm(req, res);
-})
+});
 
 router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);

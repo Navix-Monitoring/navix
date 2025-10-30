@@ -14,6 +14,24 @@ function deletarUsuario(req, res) {
     });
 }
 
+function autenticarStatus(req,res){
+    var email = req.body.output_email;
+    var senha = req.body.output_senha;
+
+    if (email == undefined) {
+    res.status(400).send("Seu email está undefined!");
+  } else if (senha == undefined) {
+    res.status(400).send("Sua senha está indefinida!");
+  } else {
+    usuarioModel.autenticarStatus(email, senha)
+      .then(function (resposta) {
+        res.status(200).json(resposta);
+      }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage);
+      })
+    }
+}
+
 async function cadastrarUsuario(req, res) {
   try {
     if (!req.body.fkEmpresa || req.body.nome == "" || req.body.sobrenome == "" || req.body.telefone == ""
@@ -299,6 +317,7 @@ function mudarStatus(req, res) {
 }
 
 module.exports = {
+  autenticarStatus,
   autenticar,
   mudarNome,
   mudarEmail,
