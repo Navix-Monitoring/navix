@@ -7,32 +7,109 @@ function listarLotes() {
         method: "GET"
     }).then(res => {
         res.json().then(json => {
+            lotes.innerHTML = ""
             console.log("Entrei na resposta do fetch do listar lotes")
             const listaLotes = json;
             for (let c = 0; json.length > c; c++) {
+                let modelo = listaLotes[c].nomeModelo == null? "N/A": listaLotes[c].nomeModelo
                 console.log("Entrei no listar lotes")
                 if (c % 2 == 0) {
-                    lotes.innerHTML +=
-                        `
-                        <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].id})">
-                        <div class="bg-black p-4 rounded-lg text-white cards-lotes"><p>Lote: ${listaLotes[c].codigo_lote}</p><p> Status: ${listaLotes[c].status}</p> <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button> <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button></div>
-                       <a>
-                        `
+                    lotes.innerHTML += 
+                    `
+                    <div class="bg-black p-4 rounded-lg text-white cards-lotes">
+                        <p>Lote: ${listaLotes[c].codigo_lote}</p>
+                        <p> Modelo: ${modelo}</p>
+                        <p>Status: </p><div class="bolinha"></div>
+                        <p> Temperatura média: </p>
+                        <p>Uso de CPU: </p>
+                        <p>Falha de processos: </p>
+                        <p>Bateria média: </p>
+                    </div>
+                    `
+                    //lotes.innerHTML +=
+                    //    `
+                    //    <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].idLote})">
+                    //    <div class="bg-black p-4 rounded-lg text-white cards-lotes">
+                    //    <p>Lote: ${listaLotes[c].codigo_lote}</p>
+                    //    <p> Situação: ${listaLotes[c].statusLote}</p>
+                    //     <p> Modelo: ${modelo}</p>
+                    //     <p>Status: </p><div class="bolinha"></div>
+                    //    <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button> 
+                    //    <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button>
+                    //    </div>
+                    //   <a>
+                    //    `
                 }
                 else {
-                    lotes.innerHTML +=
-                        `
-                        <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].id})">
+                    lotes.innerHTML += 
+                    `
+                    <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes">
+                        <p>Lote: ${listaLotes[c].codigo_lote}</p>
+                        <p> Modelo: ${modelo}</p>
+                        <p>Status: </p><div class="bolinha"></div>
+                        <p> Temperatura média: </p>
+                        <p>Uso de CPU: </p>
+                        <p>Falha de processos: </p>
+                        <p>Bateria média: </p>
+                    </div>
+                    `
+                    
 
-                            <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes"><p>Lote: ${listaLotes[c].codigo_lote}</p><p> Status: ${listaLotes[c].status}</p> <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button> <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button></div>
-                        </a>
-            `
+                    //lotes.innerHTML +=
+                    //    `
+                    //    <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].idLote})">
+                    //        <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes">
+                    //        <p>Lote: ${listaLotes[c].codigo_lote}</p>
+                    //        <p> Situação: ${listaLotes[c].statusLote}</p>
+                    //        <p> Modelo: ${modelo}</p>
+                    //        <p>Status: </p><div class="bolinha"></div>
+                    //        <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button>
+                    //        <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button>
+                    //        </div>
+                    //    </a>
+                    //    `
                 }
 
             }
 
         })
     })
+    listarModelos();
+
+}
+
+function filtrarModelo(){
+     var filtroModelo = select_modelo.value;
+    if(filtroModelo == "#"){
+        listarLotes();
+    }else{
+
+   
+    fetch(`/dashboard/filtroModelo/${filtroModelo}`,{
+        method: "GET"
+    }).then(res=>{
+        res.json().then(json=>{
+            console.log("Entrei na resposta do fetch do filtrar modelos")
+            listaLotes = json;
+             lotes.innerHTML = ""
+            for(let c = 0; c<listaLotes.length;c++){
+                let modelo = listaLotes[c].nomeModelo == null? "N/A": listaLotes[c].nomeModelo
+                 lotes.innerHTML += 
+                `
+                <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].id})">
+                                <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes">
+                                <p>Lote: ${listaLotes[c].codigo_lote}</p>
+                                <p> Status: ${listaLotes[c].statusLote}</p>
+                                <p> Modelo: ${modelo}</p>
+                                 <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button>
+                                  <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button>
+                                  </div>
+                            </a>
+                `
+            }
+        })
+    })
+    }
 
 }
 
@@ -72,10 +149,27 @@ function buscarLote(idLote) {
 
 }
 
+function listarModelos(){
+    fetch(`/dashboard/listarModelos`,{
+        method: "GET"
+    }).then(res=>{
+        res.json().then(json =>{
+            console.log("Entrei na resposta do fetch do listar modelos")
+
+            modelos = json;
+            select_modelo.innerHTML ="<option value='#'>Selecione</option>"
+            for(let c = 0; c<modelos.length;c++){
+                select_modelo.innerHTML += 
+                `
+                <option value="${c+1}">${modelos[c].nome}</option>
+                `
+            }
+        })
+    })
+
+}
 
 function filtrar() {
-
-
     var filtroStatus = select_Status.value;
     fetch(`/dashboard/listar/${sessionStorage.id_empresa_ss}`, {
         method: "GET"
@@ -89,13 +183,20 @@ function filtrar() {
                     lotes.innerHTML = ""
                     console.log("Entrou no filtrar ativo")
                     for (let c = 0; c < listaLotes.length; c++) {
+                        let modelo = listaLotes[c].nomeModelo == null? "N/A": listaLotes[c].nomeModelo
                         console.log("Entrei no for filtrar ativos")
-                        if (listaLotes[c].status == "ativo") {
+                        if (listaLotes[c].statusLote == "Ativo") {
                             lotes.innerHTML +=
                                 
                             `
                             <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].id})">
-                                <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes"><p>Lote: ${listaLotes[c].codigo_lote}</p><p> Status: ${listaLotes[c].status}</p> <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button> <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button></div>
+                                <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes">
+                                <p> Situação: ${listaLotes[c].statusLote}</p>
+                            <p> Modelo: ${modelo}</p>
+                            <p>Status: </p><div class="bolinha"></div>
+                                 <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button>
+                                  <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button>
+                                  </div>
                             </a>
                                 `
                         }
@@ -105,12 +206,20 @@ function filtrar() {
                     lotes.innerHTML = ""
                     console.log("Entrou no filtrar ativo")
                     for (let c = 0; c < listaLotes.length; c++) {
+                        let modelo = listaLotes[c].nomeModelo == null? "N/A": listaLotes[c].nomeModelo
                         console.log("Entrei no for filtrar ativos")
-                        if (listaLotes[c].status == "manutenção") {
+                        if (listaLotes[c].statusLote == "Manutenção") {
                             lotes.innerHTML +=
                                 `
                             <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].id})">
-                                <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes"><p>Lote: ${listaLotes[c].codigo_lote}</p><p> Status: ${listaLotes[c].status}</p> <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button> <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button></div>
+                                <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes">
+                                    <p>Lote: ${listaLotes[c].codigo_lote}</p>
+                                    <p> Situação: ${listaLotes[c].statusLote}</p>
+                                    <p> Modelo: ${modelo}</p>
+                                    <p>Status: </p><div class="bolinha"></div>
+                                    <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button>
+                                    <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button>
+                                </div>
                             </a>
                                 `
                         }
@@ -120,12 +229,20 @@ function filtrar() {
                     lotes.innerHTML = ""
                     console.log("Entrou no filtrar ativo")
                     for (let c = 0; c < listaLotes.length; c++) {
+                        let modelo = listaLotes[c].nomeModelo == null? "N/A": listaLotes[c].nomeModelo
                         console.log("Entrei no for filtrar ativos")
-                        if (listaLotes[c].status == "inativo") {
+                        if (listaLotes[c].statusLote == "Inativo") {
                             lotes.innerHTML +=
                                 `
                         <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].id})">
-                            <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes"><p>Lote: ${listaLotes[c].codigo_lote}</p><p> Status: ${listaLotes[c].status}</p> <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button> <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button></div>
+                            <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes">
+                                <p>Lote: ${listaLotes[c].codigo_lote}</p>
+                                <p> Situação: ${listaLotes[c].statusLote}</p>
+                                <p> Modelo: ${modelo}</p>
+                                <p>Status: </p><div class="bolinha"></div>
+                                <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button>
+                                <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button>
+                            </div>
                                 </a>
                                 `
                         }
@@ -135,12 +252,20 @@ function filtrar() {
                 lotes.innerHTML = ""
 
                 for (let c = 0; json.length > c; c++) {
+                    let modelo = listaLotes[c].nomeModelo == null? "N/A": listaLotes[c].nomeModelo
                     console.log("Entrei no listar lotes")
                     if (c % 2 == 0) {
                         lotes.innerHTML +=
                             `
                         <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].id})">
-                            <div class="bg-black p-4 rounded-lg text-white cards-lotes"><p>Lote: ${listaLotes[c].codigo_lote}</p><p> Status: ${listaLotes[c].status}</p> <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button> <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button></div>
+                            <div class="bg-black p-4 rounded-lg text-white cards-lotes">
+                                <p>Lote: ${listaLotes[c].codigo_lote}</p>
+                                <p> Situação: ${listaLotes[c].statusLote}</p>
+                                <p> Modelo: ${modelo}</p>
+                                <p>Status: </p><div class="bolinha"></div>
+                                <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button> 
+                                <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button>
+                            </div>
                             </a>
                             `
                     }
@@ -148,7 +273,14 @@ function filtrar() {
                         lotes.innerHTML +=
                             `
                         <a href="lote.html" onclick="localStorage.setItem('lote', ${json[c].id})">
-                            <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes"><p>Lote: ${listaLotes[c].codigo_lote}</p><p> Status: ${listaLotes[c].status}</p> <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button> <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button></div>
+                            <div class="bg-blue-900 p-4 rounded-lg text-white cards-lotes">
+                            <p>Lote: ${listaLotes[c].codigo_lote}</p>
+                            <p> Situação: ${listaLotes[c].statusLote}</p>
+                            <p> Modelo: ${modelo}</p>
+                            <p>Status: </p><div class="bolinha"></div>
+                            <button onclick="buscarLote(${c + 1})" class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Editar</button>
+                            <button class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Remover</button>
+                            </div>
                                 </a>
                             `
                     }

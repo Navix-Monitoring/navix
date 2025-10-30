@@ -63,7 +63,7 @@
 
     <div class="flex flex-col">
       <!-- Parte de kpis -->
-       <a href="dashboard.html"  onclick="localStorage.clear(); window.location.href='dashboard.html';">
+       <a  onclick="localStorage.clear(); redirecionar();">
   <h3>Voltar</h3>
 </a>
 
@@ -130,9 +130,79 @@
             </div>
           </div>
         </div>
-
       </main>
+
+      <div style="background:#1e1e1e; border-radius:12px; padding:20px; width:500px; height:300px; box-shadow:0 0 10px rgba(0,0,0,0.3);">
+  <canvas id="alertasChart"></canvas>
+</div>
     
 </body>
 </html>
 <script src="../js/lote.js"></script>
+<script src="../js/redirecionar.js"></script>
+<script>
+   const ctx = document.getElementById('alertasChart');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+        datasets: [
+          {
+            label: 'Temperatura',
+            data: [12, 19, 8, 15, 10, 6, 9],
+            backgroundColor: 'rgba(255, 99, 132, 0.8)', // vermelho
+            borderRadius: 6
+          },
+          {
+            label: 'CPU',
+            data: [5, 7, 9, 6, 8, 4, 5],
+            backgroundColor: 'rgba(54, 162, 235, 0.8)', // azul
+            borderRadius: 6
+          },
+          {
+            label: 'Bateria',
+            data: [3, 5, 2, 4, 6, 3, 4],
+            backgroundColor: 'rgba(255, 205, 86, 0.8)', // amarelo
+            borderRadius: 6
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              color: '#fff'
+            }
+          },
+          title: {
+            display: true,
+            text: 'Alertas Gerados nos Últimos 7 Dias',
+            color: '#fff',
+            font: { size: 18, weight: 'bold' }
+          }
+        },
+        scales: {
+          x: {
+            stacked: true,
+            ticks: { color: '#fff' },
+            grid: { color: 'rgba(255,255,255,0.1)' }
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            ticks: { color: '#fff' },
+            grid: { color: 'rgba(255,255,255,0.1)' },
+            title: {
+              display: true,
+              text: 'Quantidade de Alertas',
+              color: '#fff'
+            }
+          }
+        }
+      }
+    });
+</script>

@@ -11,6 +11,16 @@ function listar(req, res) {
     })
 }
 
+function listarModelos(req,res){
+    console.log("Acessei o controller listar modelos...")
+
+    dashboardModel.listarModelos().then(function(resposta){
+        res.status(200).json(resposta);
+    }).catch(function(erro){
+        res.status(500).json(erro.sqlMessage);
+    })
+}
+
 function buscarLote(req, res) {
     console.log("Acessei o controller buscar lote...")
     var id = req.params.idLote;
@@ -21,7 +31,18 @@ function buscarLote(req, res) {
     })
 }
 
+function filtroModelo(req,res){
+var id = req.params.idModelo;
+dashboardModel.filtroModelo(id).then(function(resposta){
+    res.status(200).json(resposta);
+}).catch(function(erro){
+    res.status(500).json(erro.sqlMessage);
+})
+}
+
 module.exports = {
     listar,
-    buscarLote
+    listarModelos,
+    buscarLote,
+    filtroModelo
 }

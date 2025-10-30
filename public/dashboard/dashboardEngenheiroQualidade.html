@@ -96,7 +96,7 @@
         <aside class="ml-[250px] p-6 h-[120px] border-b">
           <ul class="flex flex-wrap gap-15 w-full justify-center">
             <li>
-              <p class="font-bold mb-1">Modelo ou id do automovel:</p>
+              <p class="font-bold mb-1">Modelo ou codigo do lote:</p>
               <div class="relative w-64">
                 <input
                   type="text"
@@ -111,7 +111,7 @@
             </li>
 
             <li>
-              <p class="font-bold mb-2">Status de atividade:</p>
+              <p class="font-bold mb-2">Status do lote:</p>
               <div class="flex gap-6">
                 <select
                   id="select_Status"
@@ -136,6 +136,14 @@
                 <option value="#">Selecione</option>
                 <option value="asc">Crescente</option>
                 <option value="desc">Decrescente</option>
+              </select>
+            </li>
+            <li>
+              <p class="font-bold mb-1">Modelo</p>
+              <select id="select_modelo"
+               class="border rounded-md pl-1 pr-1 py-2"
+               onclick="filtrarModelo()">
+                <option value="#">Selecione</option>
               </select>
             </li>
 
