@@ -165,7 +165,6 @@ function carregarInformacoes() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             emailUsuarioSession: emailUsuarioSession,
-            tipoUsuarioSession: tipoUsuario
         })
     })
         .then(resposta => {
@@ -176,15 +175,12 @@ function carregarInformacoes() {
             console.log("Dados do usuário:", dados);
             // preenche inputs
 
-            if (dados[0].razaoSocial) {
-                sessionStorage.nome_ss = dados[0].razaoSocial;
                 sessionStorage.email_ss = dados[0].emailCorporativo;
                 sessionStorage.imagem = dados[0].caminhoImagem;
-            } else {
                 sessionStorage.nome_ss = dados[0].nome;
                 sessionStorage.email_ss = dados[0].email;
                 sessionStorage.imagem = dados[0].caminhoImagem;
-            }
+            
 
 
             if (dados[0].caminhoImagem != "../assets/img/foto-usuario.png") {

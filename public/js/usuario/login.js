@@ -20,9 +20,16 @@ function checarStatus() {
         })
     }).then(res => {
         res.json().then(json => {
-
+            console.log("entrei no checarStatus")
             if (json[0].status != "Inativo") {
-                entrar()
+                console.log("entrei no if checarStatus != inativo")
+
+                // Redirecionamento após 3 segundos
+                mostrarLoading();
+                setTimeout(() => {
+                    esconderLoading();
+                    window.location = "../perfil-visualizar.html";
+                }, 3000);
             }
             else {
                 return mostrarErro("Conta inativa!");
@@ -72,7 +79,6 @@ async function entrar() {
         } catch (e) {
             json = null;
         }
-        console.log(json)
 
         if (!resposta.ok) {
             esconderLoading();
@@ -80,21 +86,13 @@ async function entrar() {
             console.error("Erro do servidor:", textoErro);
             return mostrarErro("Email e/ou senha inválido(s)");
         }
-        
-        // Salvando dados no sessionStorage
-        sessionStorage.email_ss = json.email;
-        sessionStorage.nome_ss = json.nome;
-        sessionStorage.id_empresa_ss = json.fkEmpresa;
-        sessionStorage.fkCargo = json.fkcargo;
-        sessionStorage.cargo_ss = json.cargo;
-
-        // Redirecionamento após 3 segundos
-        mostrarLoading();
-        setTimeout(() => {
-            esconderLoading();
-            window.location = "../perfil-visualizar.html";
-        }, 3000);
-
+         // Salvando dados no sessionStorage
+                sessionStorage.email_ss = json.email;
+                sessionStorage.nome_ss = json.nome;
+                sessionStorage.id_empresa_ss = json.fkEmpresa;
+                sessionStorage.fkCargo = json.fkcargo;
+                sessionStorage.cargo_ss = json.cargo;
+        checarStatus();
     } catch (error) {
         esconderLoading();
         return mostrarErro("Não foi possível conectar ao servidor.");
@@ -102,4 +100,4 @@ async function entrar() {
 }
 
 
-window.checarStatus = checarStatus;
+window.entrar = entrar;
