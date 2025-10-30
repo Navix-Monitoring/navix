@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro - Dashboard</title>
+    <link rel="icon" href="../assets/navix-logo.jpg" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/6921956092.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/sessao.js"></script>
+    <link rel="stylesheet" href="../css/perfil-visualizar.css" />
+    <style>
+      .active-tab {
+        background-color: white;
+        color: #1e3a8a;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+      .active-tab:hover {
+        background-color: white;
+        color: #1e3a8a;
+      }
+    </style>
+  </head>
+
+  <body class="bg-slate-300">
+    <div class="flex flex-row w-full min-h-screen">
+      <div
+        class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600"
+      >
+        <img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10" />
+        <div id="imagemUsuarioNavbar">
+          <div
+            class="rounded-md w-20 h-20 mb-2"
+            style="
+              background-image: url(../assets/img/foto-usuario.png);
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center;
+            "
+          ></div>
+        </div>
+        <div id="nomeProfissao" class="text-center mb-6"></div>
+        <div class="flex flex-col gap-4 w-[80%]">
+          <a
+            href="../perfil-visualizar.html"
+            class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
+            >Perfil</a
+          >
+          <a
+            href="dashboard.html"
+            class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
+            >Dashboard</a
+          >
+          <a
+            href="../admin.html"
+            id="adm-only"
+            class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
+            >Cadastrar Funcionários</a
+          >
+          <a
+            href="./cadastroVeiculos.html"
+            class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
+            >Gerenciar Frota</a
+          >
+          <div
+            class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
+            onclick="limparSessao()"
+          >
+            <a href="../login.html" class="no-underline text-white"
+              ><h3 class="m-0 p-0">Sair</h3></a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 p-4 md:p-8 overflow-auto h-screen">
+        <h1 class="text-3xl font-bold mb-8 text-gray-800">
+          Gerenciamento da Frota
+        </h1>
+
+        <div class="mb-6 overflow-x-auto">
+          <nav
+            class="flex space-x-2 bg-gray-200 p-1.5 rounded-xl"
+            id="tabs-nav"
+          >
+            <button
+              data-target="form-modelo"
+              class="active-tab text-center px-4 py-2 text-sm md:text-base font-medium text-gray-700 rounded-lg transition-all duration-300 ease-in-out whitespace-nowrap hover:bg-gray-300"
+            >
+              1. Cadastro Modelo
+            </button>
+            <button
+              data-target="form-parametro"
+              class="text-center px-4 py-2 text-sm md:text-base font-medium text-gray-700 rounded-lg transition-all duration-300 ease-in-out whitespace-nowrap hover:bg-gray-300"
+            >
+              2. Definir Parâmetros
+            </button>
+            <button
+              data-target="form-lote"
+              class="text-center px-4 py-2 text-sm md:text-base font-medium text-gray-700 rounded-lg transition-all duration-300 ease-in-out whitespace-nowrap hover:bg-gray-300"
+            >
+              3. Cadastro Lote
+            </button>
+            <button
+              data-target="form-veiculo"
+              class="text-center px-4 py-2 text-sm md:text-base font-medium text-gray-700 rounded-lg transition-all duration-300 ease-in-out whitespace-nowrap hover:bg-gray-300"
+            >
+              4. Cadastro Veículo
+            </button>
+          </nav>
+        </div>
+
+        <div id="tabs-content">
+          <div
+            id="form-modelo"
+            class="tab-content bg-white shadow-md rounded-lg p-6"
+          >
+            <h2 class="text-2xl font-semibold mb-4">
+              1. Cadastrar Novo Modelo
+            </h2>
+            <form id="modeloForm" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label
+                    for="modelo-nome"
+                    class="block text-sm font-medium text-gray-700"
+                    >Nome do Modelo</label
+                  >
+                  <input
+                    type="text"
+                    id="modelo-nome"
+                    name="nome"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="ex: Corvus AI v1.0"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="modelo-versao-piloto"
+                    class="block text-sm font-medium text-gray-700"
+                    >Versão Piloto Automático</label
+                  >
+                  <input
+                    type="text"
+                    id="modelo-versao-piloto"
+                    name="versaoPilotoAutomatico"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="ex: 4.1.2-beta"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="modelo-status"
+                    class="block text-sm font-medium text-gray-700"
+                    >Status</label
+                  >
+                  <select
+                    id="modelo-status"
+                    name="status"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="ativo">Ativo</option>
+                    <option value="descontinuado">Descontinuado</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  class="w-full md:w-auto px-6 py-2 bg-blue-900 text-white font-semibold rounded-md shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-colors"
+                >
+                  Salvar Modelo
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div
+            id="form-parametro"
+            class="tab-content bg-white shadow-md rounded-lg p-6 hidden"
+          >
+            <h2 class="text-2xl font-semibold mb-4">
+              2. Definir Parâmetros por Modelo
+            </h2>
+            <form id="parametroForm" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    for="param-select-modelo"
+                    class="block text-sm font-medium text-gray-700"
+                    >Selecione o Modelo</label
+                  >
+                  <select
+                    id="param-select-modelo"
+                    name="fkModelo"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Selecione um modelo...</option>
+                    <option value="1">Corvus AI v1.0 (Mock)</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    for="param-select-hardware"
+                    class="block text-sm font-medium text-gray-700"
+                    >Tipo de Hardware</label
+                  >
+                  <select
+                    id="param-select-hardware"
+                    name="fkHardware"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Selecione o hardware...</option>
+                    <option value="1">CPU</option>
+                    <option value="2">RAM</option>
+                    <option value="3">DISCO</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    for="modelo-nome"
+                    class="block text-sm font-medium text-gray-700"
+                    >Unidade de medida</label
+                  >
+                  <input
+                    type="text"
+                    id="modelo-nome"
+                    name="nome"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="ex: Corvus AI v1.0"
+                  />
+                </div>
+              </div>
+
+              <h3 class="text-lg font-medium text-gray-900 pt-4">
+                Definir Limites de Alerta
+              </h3>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div>
+                  <label
+                    for="param-limite-minimo"
+                    class="block text-sm font-medium text-gray-700"
+                    >Mínimo (Verde)</label
+                  >
+                  <input
+                    type="number"
+                    id="param-limite-minimo"
+                    name="parametroMinimo"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="ex: 0"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="param-limite-neutro"
+                    class="block text-sm font-medium text-gray-700"
+                    >Neutro (Amarelo)</label
+                  >
+                  <input
+                    type="number"
+                    id="param-limite-neutro"
+                    name="parametroNeutro"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="ex: 30"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="param-limite-atencao"
+                    class="block text-sm font-medium text-gray-700"
+                    >Atenção (Laranja)</label
+                  >
+                  <input
+                    type="number"
+                    id="param-limite-atencao"
+                    name="parametroAtencao"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="ex: 70"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="param-limite-critico"
+                    class="block text-sm font-medium text-gray-700"
+                    >Crítico (Vermelho)</label
+                  >
+                  <input
+                    type="number"
+                    id="param-limite-critico"
+                    name="parametroCritico"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="ex: 90"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  class="w-full md:w-auto px-6 py-2 bg-blue-900 text-white font-semibold rounded-md shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-colors"
+                >
+                  Salvar Parâmetro para este Modelo
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div
+            id="form-lote"
+            class="tab-content bg-white shadow-md rounded-lg p-6 hidden"
+          >
+            <h2 class="text-2xl font-semibold mb-4">3. Cadastrar Novo Lote</h2>
+            <form id="loteForm" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label
+                    for="lote-codigo"
+                    class="block text-sm font-medium text-gray-700"
+                    >Código do Lote</label
+                  >
+                  <input
+                    type="text"
+                    id="lote-codigo"
+                    name="codigo_lote"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="ex: LOTE-SP-2025-01A"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="lote-data-fabricacao"
+                    class="block text-sm font-medium text-gray-700"
+                    >Data de Fabricação</label
+                  >
+                  <input
+                    type="date"
+                    id="lote-data-fabricacao"
+                    name="data_fabricacao"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label
+                    for="lote-status"
+                    class="block text-sm font-medium text-gray-700"
+                    >Status</label
+                  >
+                  <select
+                    id="lote-status"
+                    name="status"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="ativo">Ativo</option>
+                    <option value="manutencao">Manutenção</option>
+                    <option value="inativo">Inativo</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  class="w-full md:w-auto px-6 py-2 bg-blue-900 text-white font-semibold rounded-md shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-colors"
+                >
+                  Salvar Lote
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div
+            id="form-veiculo"
+            class="tab-content bg-white shadow-md rounded-lg p-6 hidden"
+          >
+            <h2 class="text-2xl font-semibold mb-4">
+              4. Cadastrar Novo Veículo
+            </h2>
+            <p class="text-sm text-gray-600 mb-4">
+              Esta ação associa um Lote a um Modelo.
+            </p>
+            <form id="veiculoForm" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label
+                    for="veiculo-lote"
+                    class="block text-sm font-medium text-gray-700"
+                    >Lote de Fabricação</label
+                  >
+                  <select
+                    id="veiculo-lote"
+                    name="fkLote"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Selecione o Lote</option>
+                    <option value="1">LOTE-SP-2025-01A (Mock)</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    for="veiculo-modelo"
+                    class="block text-sm font-medium text-gray-700"
+                    >Modelo do Veículo</label
+                  >
+                  <select
+                    id="veiculo-modelo"
+                    name="fkModelo"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  >
+                    <option value="">Selecione o Modelo</option>
+                    <option value="1">Corvus AI v1.0 (Mock)</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    for="veiculo-data-ativacao"
+                    class="block text-sm font-medium text-gray-700"
+                    >Data de Ativação</label
+                  >
+                  <input
+                    type="date"
+                    id="veiculo-data-ativacao"
+                    name="data_ativacao"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  class="w-full md:w-auto px-6 py-2 bg-blue-900 text-white font-semibold rounded-md shadow-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition-colors"
+                >
+                  Salvar Veículo
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/usuario/verificadorCargo.js"></script>
+
+    <script>
+      function carregarFotoUsuario() {
+        var imagemUsuarioNavbar = document.getElementById(
+          "imagemUsuarioNavbar"
+        );
+        if (imagemUsuarioNavbar && sessionStorage.imagem) {
+          imagemUsuarioNavbar.innerHTML = `
+        <div class="rounded-md w-20 h-20 mb-2"
+          style="background-image: url(${sessionStorage.imagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+        </div>
+      `;
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        verificarCargo();
+
+        if (typeof carregarFotoUsuario === "function") {
+          carregarFotoUsuario();
+        }
+        if (typeof carregarInformacoes === "function") {
+          carregarInformacoes();
+        }
+
+        var nomeEmpresa = sessionStorage.getItem("nome_ss");
+        var cargo = sessionStorage.getItem("cargo_ss");
+
+        var nomeProfissaoEl = document.getElementById("nomeProfissao");
+        if (nomeProfissaoEl) {
+          nomeProfissaoEl.innerHTML = `
+        <p class="font-bold text-blue-900">${nomeEmpresa || ""}</p> 
+        <p class="mb-4 text-blue-900">Cargo: ${cargo || ""}</p> 
+      `;
+        }
+
+        const tabsNav = document.getElementById("tabs-nav");
+
+        if (tabsNav) {
+          const tabButtons = tabsNav.querySelectorAll("button");
+          const tabContents = document
+            .getElementById("tabs-content")
+            .querySelectorAll(".tab-content");
+
+          tabsNav.addEventListener("click", (event) => {
+            const clickedButton = event.target.closest("button");
+            if (!clickedButton) return;
+
+            const targetId = clickedButton.dataset.target;
+
+            tabButtons.forEach((btn) => {
+              btn.classList.remove("active-tab");
+            });
+            clickedButton.classList.add("active-tab");
+
+            tabContents.forEach((content) => {
+              if (content.id === targetId) {
+                content.classList.remove("hidden");
+              } else {
+                content.classList.add("hidden");
+              }
+            });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
