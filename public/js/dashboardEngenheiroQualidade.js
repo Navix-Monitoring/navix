@@ -1,6 +1,3 @@
-// window.addEventListener("load", () => {
-//     localStorage.removeItem("lote");
-// });
 
 var listaLotes;
 function listarLotes() {

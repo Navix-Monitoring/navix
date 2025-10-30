@@ -80,12 +80,12 @@ async function entrar() {
             console.error("Erro do servidor:", textoErro);
             return mostrarErro("Email e/ou senha inválido(s)");
         }
-
+        
         // Salvando dados no sessionStorage
         sessionStorage.email_ss = json.email;
         sessionStorage.nome_ss = json.nome;
         sessionStorage.id_empresa_ss = json.fkEmpresa;
-        sessionStorage.fkCargo = json.fkCargo;
+        sessionStorage.fkCargo = json.fkcargo;
         sessionStorage.cargo_ss = json.cargo;
 
         // Redirecionamento após 3 segundos

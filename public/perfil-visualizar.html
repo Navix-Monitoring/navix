@@ -138,7 +138,7 @@
         </a>
 
         <a
-          href="dashboard/dashboard.html"
+          onclick="redirecionar()"
           class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
         >
           Dashboard
@@ -209,7 +209,7 @@
   </body>
   <script src="./js/usuario/verificadorCargo.js"></script>
 </html>
-
+<script src="../js/redirecionar.js"></script>
 <script>
   var nomeEmpresa = sessionStorage.getItem("nome_ss");
   var cargo = sessionStorage.getItem("cargo_ss");
