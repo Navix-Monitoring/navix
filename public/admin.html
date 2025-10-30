@@ -611,13 +611,13 @@
       row.style.gap = "1rem";
       row.className = "py-3";
 
-            if (u.statusPerfil == "Inativo") {
+            if (u.status == "Inativo") {
                 row.innerHTML = `
                     <div class="w-14 h-14 rounded-md" style="background-image:url(${u.caminhoImagem}); background-size:cover; background-repeat:no-repeat; background-position:center"></div>
                     <div class="font-semibold text-slate-600 truncate" title="${(u.nome || '') + ' ' + (u.sobrenome || '')}">${u.nome || ''} ${u.sobrenome || ''}</div>
                     <div class="font-semibold text-slate-600">${u.telefone || ''}</div>
                     <div class="font-semibold text-slate-600 truncate" title="${u.email || ''}">${u.email || ''}</div>
-                    <div style="justify-self:center"><button onclick="mudarStatusUsuario('${u.email}', '${u.statusPerfil}')" class="inline-flex items-center justify-center rounded-full bg-red-400 text-red-900 px-4 py-1 text-sm font-semibold w-24 cursor-pointer">${u.statusPerfil}</button></div>
+                    <div style="justify-self:center"><button onclick="mudarStatusUsuario('${u.email}', '${u.status}')" class="inline-flex items-center justify-center rounded-full bg-red-400 text-red-900 px-4 py-1 text-sm font-semibold w-24 cursor-pointer">${u.status}</button></div>
                     <div class="font-semibold text-slate-600 truncate" title="${u.cargo || ''}">${u.cargo || ''}</div>
                     <div style="display:flex; align-items:center; justify-content:center; gap:0.75rem">
                     <button title="Editar" onclick="abrirTelaUpdate(${i})"><i class="fa-solid fa-pen text-xl text-slate-800 cursor-pointer"></i></button>
@@ -631,7 +631,7 @@
                     <div class="font-semibold text-slate-600 truncate" title="${(u.nome || '') + ' ' + (u.sobrenome || '')}">${u.nome || ''} ${u.sobrenome || ''}</div>
                     <div class="font-semibold text-slate-600">${u.telefone || ''}</div>
                     <div class="font-semibold text-slate-600 truncate" title="${u.email || ''}">${u.email || ''}</div>
-                    <div style="justify-self:center"><button onclick="mudarStatusUsuario('${u.email}', '${u.statusPerfil}')" class="inline-flex items-center justify-center rounded-full bg-green-400 text-green-900 px-4 py-1 text-sm font-semibold w-24 cursor-pointer">${u.statusPerfil}</button></div>
+                    <div style="justify-self:center"><button onclick="mudarStatusUsuario('${u.email}', '${u.status}')" class="inline-flex items-center justify-center rounded-full bg-green-400 text-green-900 px-4 py-1 text-sm font-semibold w-24 cursor-pointer">${u.status}</button></div>
                     <div class="font-semibold text-slate-600 truncate" title="${u.cargo || ''}">${u.cargo || ''}</div>
                     <div style="display:flex; align-items:center; justify-content:center; gap:0.75rem">
                     <button title="Editar" onclick="abrirTelaUpdate(${i})"><i class="fa-solid fa-pen text-xl text-slate-800 cursor-pointer"></i></button>

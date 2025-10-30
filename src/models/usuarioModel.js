@@ -125,7 +125,7 @@ function cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, ca
 function atualizarStatusPerfil(novoStatus, emailUsuario) {
     console.log("Entrou no usuarioModel");
     var instrucao = `
-        UPDATE funcionario SET statusPerfil = '${novoStatus}' WHERE email = "${emailUsuario}";
+        UPDATE funcionario SET status = '${novoStatus}' WHERE email = "${emailUsuario}";
     `;
     console.log("Executando a query: \n" + instrucao);
     return database.executar(instrucao);
