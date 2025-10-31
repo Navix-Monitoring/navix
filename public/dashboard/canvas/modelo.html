@@ -24,8 +24,16 @@
             <h1 id="titulo" class="titulo">CPU</h1>
             <button id="Btnproximo" class="carrossel-btn">&#9654;</button>
         </div>
-        <div class="chart-container2">
+        <div class="chart-container">
             <canvas id="relacao"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="relacao2"></canvas>
+        </div>
+        <div class="carrossel">
+            <button id="Btnvoltar2" class="carrossel-btn">&#9664;</button>
+            <h1 id="titulo2" class="titulo">CPU</h1>
+            <button id="Btnproximo2" class="carrossel-btn">&#9654;</button>
         </div>
     </div>
 </body>
@@ -37,7 +45,7 @@
             posicao: 1,
             modeloELote: 'Tesla T3 - Lote 201',
             componente: 'CPU',
-            totalAlerta: 32 
+            totalAlerta: 32
         },
         {
             posicao: 2,
@@ -51,7 +59,7 @@
             componente: 'RAM',
             totalAlerta: 15
         }];
-        
+
         ranking.forEach(({ posicao, modeloELote, componente, totalAlerta }) => {
             grafico.innerHTML += `
                 <div class="ranking-item">
@@ -179,38 +187,95 @@
             }
         });
 
-        const Btnvoltar = document.getElementById('Btnvoltar');
-        const Btnproximo = document.getElementById('Btnproximo');
-        const titleElement = document.getElementById('titulo');
+        const ctx4 = document.getElementById('relacao2').getContext('2d');
+        const relacao2 = new Chart(ctx4, {
+            type: 'line',
 
-        const cpuContainer = document.getElementById('cpu').parentElement;
-        const ramContainer = document.getElementById('ram').parentElement;
+            data: {
+                labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                datasets: [{
+                    label: 'TEMPERATURA',
+                    data: [10, 16, 3, 5, 1, 20, 14],
+                    backgroundColor: '#192A6B',
+                    borderColor: '#192A6B',
+                    borderWidth: 3
+                },
+                {
+                    label: 'BATERIA',
+                    data: [3, 4, 15, 10, 20, 8, 5],
+                    backgroundColor: 'pink',
+                    borderColor: 'pink',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'TEMPERATURA x BATERIA',
+                        font: {
+                            size: 18
+                        },
+                        padding: {
+                            bottom: 20
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 
-        const containers = [cpuContainer, ramContainer];
-        const titulos = ['CPU', 'RAM'];
-        var index = 0;
+        function criarCarrossel(btnVoltar, btnProximo, titulo, containers, titulos) {
+            let index = 0;
 
-        function mostrar(novoIndex) {
-            containers.forEach((container) => {
-                container.style.display = 'none';
+            function mostrar(novoIndex) {
+                containers.forEach(container => container.style.display = 'none');
+                containers[novoIndex].style.display = 'block';
+                titulo.innerHTML = titulos[novoIndex];
+                index = novoIndex;
+            }
+
+            btnProximo.addEventListener('click', () => {
+                const proximoIndex = (index + 1) % containers.length;
+                mostrar(proximoIndex);
             });
 
-            containers[novoIndex].style.display = 'block';
-            titleElement.innerHTML = titulos[novoIndex];
-            index = novoIndex;
+            btnVoltar.addEventListener('click', () => {
+                const indexAntigo = (index - 1 + containers.length) % containers.length;
+                mostrar(indexAntigo);
+            });
+
+            mostrar(0);
         }
 
-        Btnproximo.addEventListener('click', () => {
-            var proximoIndex = (index + 1) % containers.length;
-            mostrar(proximoIndex);
-        });
+        criarCarrossel(
+            document.getElementById('Btnvoltar'),
+            document.getElementById('Btnproximo'),
+            document.getElementById('titulo'),
+            [
+                document.getElementById('cpu').parentElement,
+                document.getElementById('ram').parentElement
+            ],
+            ['CPU', 'RAM']
+        );
 
-        Btnvoltar.addEventListener('click', () => {
-            var indexAntigo = (index - 1 + containers.length) % containers.length;
-            mostrar(indexAntigo);
-        });
-        mostrar(0);
-
+        criarCarrossel(
+            document.getElementById('Btnvoltar2'),
+            document.getElementById('Btnproximo2'),
+            document.getElementById('titulo2'),
+            [
+                document.getElementById('relacao').parentElement,
+                document.getElementById('relacao2').parentElement
+            ],
+            ['TEMPERATURA x CPU', 'TEMPERATURA x BATERIA']
+        );
 
     });
 
