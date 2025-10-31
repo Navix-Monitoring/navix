@@ -60,7 +60,8 @@ CREATE TABLE lote(
     data_fabricacao DATE,
     fkEmpresa INT,
     status ENUM('Ativo','Manutenção','Inativo'),
-    CONSTRAINT fkEmpresaLote FOREIGN KEY(fkEmpresa) REFERENCES empresa(id)
+    CONSTRAINT fkEmpresaLote FOREIGN KEY(fkEmpresa) REFERENCES empresa(id),
+    UNIQUE KEY uk_lote_empresa (codigo_lote, fkEmpresa)
 );
 
 -- Tabela: modelo
@@ -70,7 +71,8 @@ CREATE TABLE modelo(
     status ENUM('Ativo','Descontinuado'),
     versaoPilotoAutomatico VARCHAR(45),
     fkEmpresa int,
-    CONSTRAINT fkEmpresaModelo FOREIGN KEY(fkEmpresa) REFERENCES empresa(id)
+    CONSTRAINT fkEmpresaModelo FOREIGN KEY(fkEmpresa) REFERENCES empresa(id),
+    UNIQUE KEY uk_modelo_empresa (nome, versaoPilotoAutomatico, fkEmpresa)
 );
 
 -- Tabela: veiculo

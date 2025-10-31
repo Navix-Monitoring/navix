@@ -10,7 +10,9 @@ function cadastrarModelo(nome, status, versaoPiloto, idEmpresa) {
   );
 
   var instrucaoSql = `
-        INSERT INTO modelo (nome, versaoPilotoAutomatico, status, fkEmpresa) VALUES (?, ?, ?, ?);
+        INSERT INTO modelo (nome, versaoPilotoAutomatico, status, fkEmpresa) VALUES (?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+        status = VALUES(status);
     `;
 
   console.log("Executando a instrução SQL: \n" + instrucaoSql);
@@ -63,8 +65,38 @@ function cadastrarParametro(
   ]);
 }
 
+function cadastrarLote(codigo_lote, data_fabricacao, status, idEmpresa) {
+  console.log(
+    "Acessando o MODEL para cadastrar modelo: ",
+    codigo_lote,
+    data_fabricacao,
+    idEmpresa,
+    status
+  );
+
+  var instrucaoSql = `
+        INSERT INTO lote 
+            (codigo_lote, data_fabricacao, status, fkEmpresa) 
+        VALUES 
+            (?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            data_fabricacao = VALUES(data_fabricacao),
+            status = VALUES(status);
+    `;
+
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
+  return database.executar(instrucaoSql, [
+    codigo_lote,
+    data_fabricacao,
+    status,
+    idEmpresa,
+  ]);
+}
+
 module.exports = {
   cadastrarModelo,
   listarModelosPorEmpresa,
   cadastrarParametro,
+  cadastrarLote,
 };

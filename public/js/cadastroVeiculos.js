@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   configurarFormularioModelo();
   carregarModelosDropdown();
   configurarFormularioParametro();
+  configurarFormularioLote();
 });
 
 function configurarFormularioModelo() {
@@ -140,6 +141,53 @@ function configurarFormularioParametro() {
     } catch (error) {
       console.error("Erro ao salvar parâmetro:", error);
       alert("Falha ao salvar parâmetro: " + error.message);
+    }
+  });
+}
+
+function configurarFormularioLote() {
+  const formLote = document.getElementById("loteForm");
+
+  formLote.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const codigoLote = document.getElementById("lote-codigo").value;
+    const dataFabricacao = document.getElementById(
+      "lote-data-fabricacao"
+    ).value;
+    const statusLote = document.getElementById("lote-status").value;
+
+    const idEmpresa = sessionStorage.getItem("id_empresa_ss");
+
+    if (!codigoLote || !dataFabricacao || !statusLote) {
+      alert("Erro: Todos os campos do lote são obrigatórios!");
+      return;
+    }
+
+    try {
+      const resposta = await fetch("/cadastroVeiculos/cadastrarLote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          codigo_lote: codigoLote,
+          data_fabricacao: dataFabricacao,
+          status: statusLote,
+          idEmpresa: idEmpresa,
+        }),
+      });
+
+      if (resposta.ok) {
+        alert("Lote cadastrado com sucesso!");
+        formLote.reset();
+      } else {
+        const erroMsg = await resposta.text();
+        throw new Error("Erro da API: " + erroMsg);
+      }
+    } catch (error) {
+      console.error("Erro ao cadastrar lote:", error);
+      alert("Falha ao cadastrar lote: " + error.message);
     }
   });
 }

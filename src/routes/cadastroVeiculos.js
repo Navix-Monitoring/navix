@@ -15,4 +15,8 @@ router.post("/cadastrarParametro", function (req, res) {
   cadastroVeiculosController.cadastrarParametro(req, res);
 });
 
+router.post("/cadastrarLote", function (req, res) {
+  cadastroVeiculosController.cadastrarLote(req, res);
+});
+
 module.exports = router;

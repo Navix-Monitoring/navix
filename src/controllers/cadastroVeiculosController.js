@@ -91,8 +91,31 @@ function cadastrarParametro(req, res) {
     });
 }
 
+function cadastrarLote(req, res) {
+  var codigo_lote = req.body.codigo_lote;
+  var data_fabricacao = req.body.data_fabricacao;
+  var status = req.body.status;
+  var idEmpresa = req.body.idEmpresa;
+
+  if (!codigo_lote || !data_fabricacao || !status) {
+    return res.status(400).send("Codigo, Data e Status são obrigatórios!");
+  }
+
+  cadastroVeiculosModel
+    .cadastrarLote(codigo_lote, data_fabricacao, status, idEmpresa)
+    .then(function (resultado) {
+      res.status(201).json(resultado);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log("\nHouve um erro ao salvar o lote! Erro: ", erro.sqlMessage);
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
   cadastrarModelo,
   listarModelosPorEmpresa,
   cadastrarParametro,
+  cadastrarLote,
 };
