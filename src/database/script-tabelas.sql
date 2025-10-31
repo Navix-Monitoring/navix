@@ -68,7 +68,9 @@ CREATE TABLE modelo(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
     status ENUM('Ativo','Descontinuado'),
-    versaoPilotoAutomatico VARCHAR(45)
+    versaoPilotoAutomatico VARCHAR(45),
+    fkEmpresa int,
+    CONSTRAINT fkEmpresaModelo FOREIGN KEY(fkEmpresa) REFERENCES empresa(id)
 );
 
 -- Tabela: veiculo
@@ -91,17 +93,15 @@ CREATE TABLE hardware(
 CREATE TABLE parametroHardware(
     fkHardware INT,
     fkModelo INT,
-    unidadeMedida VARCHAR(10),
+    unidadeMedida VARCHAR(15),
     parametroMinimo INT,
     parametroNeutro INT,
     parametroAtencao INT,
     parametroCritico INT,
     CONSTRAINT fkHardwareParametro FOREIGN KEY(fkHardware) REFERENCES hardware(id),
     CONSTRAINT fkModeloParametro FOREIGN KEY(fkModelo) REFERENCES modelo(id),
-    PRIMARY KEY(fkHardware, fkModelo)
+    PRIMARY KEY(fkHardware, fkModelo, unidadeMedida)
 );
-
-
 
 -- 1. Inserir Cargos (Regras de Negócio: Administrador, Funcionario, Analista)
 INSERT INTO cargo (titulo)
@@ -109,7 +109,6 @@ VALUES
 ('Administrador'), -- ID 1
 ('Funcionario'),   -- ID 2
 ('Analista');      -- ID 3
-
 
 INSERT INTO empresa (razaoSocial, cnpj, codigo_ativacao)
 VALUES 
@@ -121,23 +120,11 @@ VALUES
 ('Rua das Flores', 123, '12345678', 'Centro', 'São Paulo', 'SP', 'Brasil',1),
 ('Av. Paulista', 1000, '87654321', 'Bela Vista', 'São Paulo', 'SP', 'Brasil',2);
 
-
-
 INSERT INTO funcionario (fkEmpresa, nome, sobrenome, telefone, email, senha, fkCargo)
 VALUES 
 (1, 'Carlos', 'Silva', '11987654321', 'carlos.silva@tech.com', 'senha123', 1), -- ID 1: Administrador
 (2, 'Ana', 'Oliveira', '11987654322', 'ana.oliveira@auto.com', 'senha456', 2), -- ID 2: Funcionario
 (1, 'Gabriel', 'Santos', '11982654321', 'gabriel.santos@tech.com', 'senha143', 3); -- ID 3: Analista
-
-INSERT INTO lote (codigo_lote, data_fabricacao, fkEmpresa, status)
-VALUES 
-('LOTE-A001', '2024-05-10', 1, 'Ativo'),
-('LOTE-B002', '2024-08-20', 2, 'Manutenção');
-
-INSERT INTO modelo (nome, status, versaoPilotoAutomatico)
-VALUES 
-('NAV-M100', 'Ativo', '1.2.5'),
-('NAV-M200', 'Descontinuado', '2.0.1');
 
 INSERT INTO hardware (tipo)
 VALUES 
@@ -145,15 +132,8 @@ VALUES
 ('RAM'), -- ID 2
 ('DISCO'); -- ID 3
 
--- 8. Inserir Veículos (Dois dados - Usando as FKs criadas)
-INSERT INTO veiculo (fkModelo, fkLote, data_ativacao)
-VALUES 
-(1, 1, '2025-01-01'), -- Veículo 1: Modelo M100 do LOTE-A001
-(2, 2, '2025-02-15'); -- Veículo 2: Modelo M200 do LOTE-B002
 
--- 9. Inserir parametroHardware (Dois dados - N:N)
-INSERT INTO parametroHardware (fkHardware, fkModelo, unidadeMedida, parametroMinimo, parametroNeutro, parametroAtencao, parametroCritico)
-VALUES 
-(1, 1, 'GHz', 2, 3, 4, 5), -- CPU (ID 1) no Modelo M100 (ID 1)
-(2, 1, 'GB', 8, 16, 24, 32), -- RAM (ID 2) no Modelo M100 (ID 1)
-(3,1,'GB',10,20,30,40);
+select * from funcionario;
+select * from modelo;
+select * from parametroHardware;
+select * from lote;

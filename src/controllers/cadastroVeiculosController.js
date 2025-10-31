@@ -4,6 +4,7 @@ function cadastrarModelo(req, res) {
   var nome = req.body.nome;
   var status = req.body.status;
   var versaoPiloto = req.body.versaoPilotoAutomatico;
+  var idEmpresa = req.body.idEmpresa;
 
   if (!nome) {
     return res.status(400).send("O nome do modelo é obrigatório!");
@@ -16,7 +17,7 @@ function cadastrarModelo(req, res) {
   }
 
   cadastroVeiculosModel
-    .cadastrarModelo(nome, status, versaoPiloto)
+    .cadastrarModelo(nome, status, versaoPiloto, idEmpresa)
     .then(function (resultado) {
       res.status(201).json(resultado);
     })
@@ -30,6 +31,68 @@ function cadastrarModelo(req, res) {
     });
 }
 
+function listarModelosPorEmpresa(req, res) {
+  var fkEmpresa = req.params.fkEmpresa;
+
+  if (!fkEmpresa) {
+    return res.status(400).send("O fkEmpresa está indefinido!");
+  }
+
+  cadastroVeiculosModel
+    .listarModelosPorEmpresa(fkEmpresa)
+    .then(function (resultado) {
+      res.json(resultado);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log(
+        "\nHouve um erro ao listar os modelos! Erro: ",
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function cadastrarParametro(req, res) {
+  var fkModelo = req.body.fkModelo;
+  var fkHardware = req.body.fkHardware;
+  var unidadeMedida = req.body.unidadeMedida;
+  var minimo = req.body.minimo;
+  var neutro = req.body.neutro;
+  var atencao = req.body.atencao;
+  var critico = req.body.critico;
+
+  if (!fkModelo || !fkHardware || !unidadeMedida) {
+    return res
+      .status(400)
+      .send("Modelo, Hardware e Unidade de Medida são obrigatórios!");
+  }
+
+  cadastroVeiculosModel
+    .cadastrarParametro(
+      fkModelo,
+      fkHardware,
+      unidadeMedida,
+      minimo,
+      neutro,
+      atencao,
+      critico
+    )
+    .then(function (resultado) {
+      res.status(201).json(resultado);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log(
+        "\nHouve um erro ao salvar o parâmetro! Erro: ",
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
   cadastrarModelo,
+  listarModelosPorEmpresa,
+  cadastrarParametro,
 };

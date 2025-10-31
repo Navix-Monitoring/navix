@@ -199,7 +199,6 @@
                     class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Selecione um modelo...</option>
-                    <option value="1">Corvus AI v1.0 (Mock)</option>
                   </select>
                 </div>
                 <div>
@@ -233,8 +232,8 @@
                     <option value="" selected disabled>
                       Selecione a unidade...
                     </option>
-                    <option value="%">Uso (%)</option>
-                    <option value="Cº">Temperatura (Cº)</option>
+                    <option value="uso">Uso (%)</option>
+                    <option value="temperatura">Temperatura (Cº)</option>
                   </select>
                 </div>
               </div>
@@ -536,11 +535,12 @@
 
         let optionsHTML = `
             <option value="" selected disabled>Selecione a unidade...</option>
-            <option value="%">Uso (%)</option>
+            <option value="uso">Uso (%)</option>
           `;
 
         if (hardwareTexto === "CPU") {
-          optionsHTML += '<option value="Cº">Temperatura (Cº)</option>';
+          optionsHTML +=
+            '<option value="temperatura">Temperatura (Cº)</option>';
         }
 
         selectUnidade.innerHTML = optionsHTML;
