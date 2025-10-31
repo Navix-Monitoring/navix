@@ -1,32 +1,35 @@
-body{
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.tituloLote{
+.tituloLote {
     margin-left: 20px;
     font-size: 50px;
 }
-.btnVoltar{
+
+.btnVoltar {
     width: fit-content;
     display: flex;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.btnVoltar:hover{
+.btnVoltar:hover {
     transform: scale(1.01);
 }
-.kpis{
+
+.kpis {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     gap: 20px;
 }
-.kpi{
+
+.kpi {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,45 +40,57 @@ body{
     align-items: center;
     width: 250px;
 }
-
-.cards-lotes{
+.cabecalho{
     display: grid;
-    grid-template-columns: 150px 200px 250px 60px 200px 100px 100px;    
+    grid-template-columns: 170px 80px 100px 100px 100px 250px 100px;
 }
 
-.processos{
+.cards-lotes {
+    display: grid;
+    grid-template-columns: 150px 200px 150px 30px 200px 100px 100px;
+}
+
+.cards-modelos {
+    display: grid;
+    grid-template-columns: 150px 200px 170px 100px 200px 100px 100px;
+}
+
+.processos {
     font-size: 10px;
 }
 
-.tituloKPI{
+.tituloKPI {
     font-size: 12px;
 }
 
-.colour-ball{
+.colour-ball {
     height: 70px;
     display: flex;
     align-items: center;
     padding: 10px;
     justify-content: center;
-    width: 70PX ;
+    width: 70PX;
     border-radius: 100%;
     border: 3px solid;
 }
-.valor{
-font-size: 20px;
+
+.valor {
+    font-size: 20px;
 }
-.alerta{
+
+.alerta {
     display: flex;
 }
 
-.ladinho{
+.ladinho {
     margin: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
 }
-.card{
+
+.card {
     align-self: center;
     margin: 10px;
     border-radius: 10px;
@@ -84,36 +99,42 @@ font-size: 20px;
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.342) 10px 10px 30px;
 }
-.titulo{
+
+.titulo {
     font-size: 50px;
 }
-.bolinha{
+
+.bolinha {
     background-color: red;
     border-radius: 100%;
     width: 35px;
     height: 35px;
 
 }
-.chart{
+
+.chart {
     width: 100px;
     height: 100px;
 }
-canvas{
+
+canvas {
     width: 50px;
 }
-.graficos{
+
+.graficos {
     border-radius: 10px;
-background:whitesmoke;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
+    background: whitesmoke;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.container-graficos{
+.container-graficos {
     display: grid;
     grid-template-columns: 50% 50%;
     gap: 70%;
     margin: 30px 50px;
-    border-radius:12px; padding:20px;
+    border-radius: 12px;
+    padding: 20px;
     width: 30vw;
-    height:500px;
-    
+    height: 500px;
+
 }
