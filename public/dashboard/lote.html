@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lote</title>
-    <link rel="icon" href="./assets/navix-logo.jpg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lote</title>
+  <link rel="icon" href="./assets/navix-logo.jpg">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
   <script src="../js/sessao.js"></script>
   <link rel="stylesheet" href="../css/dashboard.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/dist/chartjs-chart-boxplot.min.js"></script>
+  <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/dist/chartjs-chart-boxplot.min.js"></script>
 
 </head>
+
 <body onload="carregarInformacoes(), simularValores()">
 
-     <div class="flex flex-row w-full">
+  <div class="flex flex-row w-full">
     <!-- nav bar -->
     <div class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
       <img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
@@ -45,10 +49,8 @@
           Cadastrar Funcionários
         </a>
 
-        <a
-          href="./cadastroVeiculos.html"
-          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
-        >
+        <a href="./cadastroVeiculos.html"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
           Gerenciar Frota
         </a>
 
@@ -63,11 +65,14 @@
 
     <div class="flex flex-col">
       <!-- Parte de kpis -->
-       <a  onclick="localStorage.clear(); redirecionar();">
-  <h3>Voltar</h3>
-</a>
+      <a class="btnVoltar" onclick="localStorage.clear(); redirecionar();">
+        <div style="margin: 20px 30px 0px 30px; display: flex; align-items: center; font-size: 30px;">
+          <i class='bx  bx-arrow-left-stroke'></i>
+          <h3>Voltar</h3>
+        </div>
+      </a>
 
-       <h1 class="tituloLote" id="tituloLote">Lote</h1>
+      <h1 class="tituloLote" id="tituloLote">Lote</h1>
       <main class="card">
         <div id="KPIS" class="kpis">
           <div class="kpi cpu">
@@ -130,77 +135,214 @@
             </div>
           </div>
         </div>
+        <div class="graficos">
+          <div class="container-graficos">
+          <canvas id="alertasSemana" style="width: 50px;"></canvas>
+          <canvas id="alertasMes" style="width: 50px;"></canvas>
+        </div>
+        <div>
+          <canvas id="correlacaoChart"></canvas>
+
+        </div>
+        </div>
+        
       </main>
 
-      <div style="background:#1e1e1e; border-radius:12px; padding:20px; width:500px; height:300px; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-  <canvas id="alertasChart"></canvas>
-</div>
-    
+
+
 </body>
+
 </html>
 <script src="../js/lote.js"></script>
 <script src="../js/redirecionar.js"></script>
 <script>
-   const ctx = document.getElementById('alertasChart');
+  const ctx = document.getElementById('alertasMes');
+  const ctx2 = document.getElementById('alertasSemana');
+  const ctx3 = document.getElementById("correlacaoChart");
 
-    new Chart(ctx, {
-      type: 'bar',
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
+      datasets: [
+        {
+          label: 'Temperatura',
+          data: [12, 19, 8, 15, 10, 6, 9],
+          backgroundColor: 'rgba(255, 99, 132, 0.8)', // vermelho
+          borderRadius: 6
+        },
+        {
+          label: 'CPU',
+          data: [5, 7, 9, 6, 8, 4, 5],
+          backgroundColor: 'rgba(54, 162, 235, 0.8)', // azul
+          borderRadius: 6
+        },
+        {
+          label: 'Bateria',
+          data: [3, 5, 2, 4, 6, 3, 4],
+          backgroundColor: 'rgba(255, 205, 86, 0.8)', // amarelo
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: 'black'
+          }
+        },
+        title: {
+          display: true,
+          text: 'Alertas Gerados nos Últimos Meses',
+          color: 'black',
+          font: { size: 18, weight: 'bold' }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          ticks: { color: 'black' },
+          grid: { color: 'rgba(255,255,255,0.1)' }
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          ticks: { color: 'black' },
+          grid: { color: 'black' },
+          title: {
+            display: true,
+            text: 'Quantidade de Alertas',
+            color: 'black'
+          }
+        }
+      }
+    }
+  });
+
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+      datasets: [
+        {
+          label: 'Temperatura',
+          data: [12, 19, 8, 15, 10, 6, 9],
+          backgroundColor: 'rgba(255, 99, 132, 0.8)', // vermelho
+          borderRadius: 6
+        },
+        {
+          label: 'CPU',
+          data: [5, 7, 9, 6, 8, 4, 5],
+          backgroundColor: 'rgba(54, 162, 235, 0.8)', // azul
+          borderRadius: 6
+        },
+        {
+          label: 'Bateria',
+          data: [3, 5, 2, 4, 6, 3, 4],
+          backgroundColor: 'rgba(255, 205, 86, 0.8)', // amarelo
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: 'black'
+          }
+        },
+        title: {
+          display: true,
+          text: 'Alertas Gerados nos Últimos 7 Dias',
+          color: 'black',
+          font: { size: 18, weight: 'bold' }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          ticks: { color: 'black' },
+          grid: { color: 'rgba(255,255,255,0.1)' }
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          ticks: { color: 'black' },
+          grid: { color: 'black' },
+          title: {
+            display: true,
+            text: 'Quantidade de Alertas',
+            color: 'black'
+          }
+        }
+      }
+    }
+  });
+
+  new Chart(ctx3, {
+      type: "scatter",
       data: {
-        labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
         datasets: [
+          // Pontos de dispersão
           {
-            label: 'Temperatura',
-            data: [12, 19, 8, 15, 10, 6, 9],
-            backgroundColor: 'rgba(255, 99, 132, 0.8)', // vermelho
-            borderRadius: 6
+            label: "Temperatura vs Falhas",
+            data: [
+              { x: 45, y: 2 },
+              { x: 50, y: 3 },
+              { x: 55, y: 5 },
+              { x: 60, y: 7 },
+              { x: 65, y: 9 },
+              { x: 70, y: 12 },
+              { x: 75, y: 14 }
+            ],
+            backgroundColor: "red",
+            pointRadius: 6
           },
+          // Linha de correlação (reta de tendência)
           {
-            label: 'CPU',
-            data: [5, 7, 9, 6, 8, 4, 5],
-            backgroundColor: 'rgba(54, 162, 235, 0.8)', // azul
-            borderRadius: 6
-          },
-          {
-            label: 'Bateria',
-            data: [3, 5, 2, 4, 6, 3, 4],
-            backgroundColor: 'rgba(255, 205, 86, 0.8)', // amarelo
-            borderRadius: 6
+            type: "line",
+            label: "Linha de Correlação",
+            data: [
+              { x: 45, y: 1.5 },
+              { x: 75, y: 14.5 }
+            ],
+            borderColor: "black",
+            borderWidth: 3,
+            tension: 0, 
+            fill: false,
+            pointRadius: 0
           }
         ]
       },
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
         plugins: {
-          legend: {
-            position: 'top',
-            labels: {
-              color: '#fff'
-            }
-          },
           title: {
             display: true,
-            text: 'Alertas Gerados nos Últimos 7 Dias',
-            color: '#fff',
-            font: { size: 18, weight: 'bold' }
+            text: "Correlação entre Temperatura e Número de Falhas",
+            color: "black",
+            font: { size: 18 }
+          },
+          legend: {
+            labels: { color: "black" }
           }
         },
         scales: {
           x: {
-            stacked: true,
-            ticks: { color: '#fff' },
-            grid: { color: 'rgba(255,255,255,0.1)' }
+            title: { display: true, text: "Temperatura (°C)", color: "black" },
+            ticks: { color: "black" },
+            grid: { color: "rgba(255,255,255,0.1)" }
           },
           y: {
-            stacked: true,
-            beginAtZero: true,
-            ticks: { color: '#fff' },
-            grid: { color: 'rgba(255,255,255,0.1)' },
-            title: {
-              display: true,
-              text: 'Quantidade de Alertas',
-              color: '#fff'
-            }
+            title: { display: true, text: "Número de Falhas", color: "black" },
+            ticks: { color: "black" },
+            grid: { color: "rgba(255,255,255,0.1)" }
           }
         }
       }
