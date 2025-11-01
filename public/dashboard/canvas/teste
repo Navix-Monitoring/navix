@@ -1,0 +1,188 @@
+const ctx = document.getElementById('alertasMes');
+  const ctx2 = document.getElementById('alertasSemana');
+  const ctx3 = document.getElementById("correlacaoChart");
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
+      datasets: [
+        {
+          label: 'Temperatura',
+          data: [12, 19, 8, 15, 10, 6, 9],
+          backgroundColor: 'rgba(255, 99, 132, 0.8)', // vermelho
+          borderRadius: 6
+        },
+        {
+          label: 'CPU',
+          data: [5, 7, 9, 6, 8, 4, 5],
+          backgroundColor: 'rgba(54, 162, 235, 0.8)', // azul
+          borderRadius: 6
+        },
+        {
+          label: 'Bateria',
+          data: [3, 5, 2, 4, 6, 3, 4],
+          backgroundColor: 'rgba(255, 205, 86, 0.8)', // amarelo
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: 'black'
+          }
+        },
+        title: {
+          display: true,
+          text: 'Alertas Gerados nos Últimos Meses',
+          color: 'black',
+          font: { size: 18, weight: 'bold' }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          ticks: { color: 'black' },
+          grid: { color: 'rgba(255,255,255,0.1)' }
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          ticks: { color: 'black' },
+          grid: { color: 'black' },
+          title: {
+            display: true,
+            text: 'Quantidade de Alertas',
+            color: 'black'
+          }
+        }
+      }
+    }
+  });
+
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+      datasets: [
+        {
+          label: 'Temperatura',
+          data: [12, 19, 8, 15, 10, 6, 9],
+          backgroundColor: 'rgba(255, 99, 132, 0.8)',
+        },
+        {
+          label: 'CPU',
+          data: [5, 7, 9, 6, 8, 4, 5],
+          backgroundColor: 'rgba(54, 162, 235, 0.8)',
+        },
+        {
+          label: 'Bateria',
+          data: [3, 5, 2, 4, 6, 3, 4],
+          backgroundColor: 'rgba(255, 205, 86, 0.8)',
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: 'black'
+          }
+        },
+        title: {
+          display: true,
+          text: 'Alertas Gerados nos Últimos 7 Dias',
+          color: 'black',
+          font: { size: 18, weight: 'bold' }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          ticks: { color: 'black' },
+          grid: { color: 'rgba(255,255,255,0.1)' }
+        },
+        y: {
+          stacked: true,
+          beginAtZero: true,
+          ticks: { color: 'black' },
+          grid: { color: 'black' },
+          title: {
+            display: true,
+            text: 'Quantidade de Alertas',
+            color: 'black'
+          }
+        }
+      }
+    }
+  });
+
+  new Chart(ctx3, {
+      type: "scatter",
+      data: {
+        datasets: [
+          // Pontos de dispersão
+          {
+            label: "Temperatura vs Falhas",
+            data: [
+              { x: 45, y: 2 },
+              { x: 50, y: 3 },
+              { x: 55, y: 5 },
+              { x: 60, y: 7 },
+              { x: 65, y: 9 },
+              { x: 70, y: 12 },
+              { x: 75, y: 14 }
+            ],
+            backgroundColor: "red",
+            pointRadius: 6
+          },
+          // Linha de correlação (reta de tendência)
+          {
+            type: "line",
+            label: "Linha de Correlação",
+            data: [
+              { x: 45, y: 1.5 },
+              { x: 75, y: 14.5 }
+            ],
+            borderColor: "black",
+            borderWidth: 3,
+            tension: 0, 
+            fill: false,
+            pointRadius: 0
+          }
+        ]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: "Correlação entre Temperatura e Número de Falhas",
+            color: "black",
+            font: { size: 18 }
+          },
+          legend: {
+            labels: { color: "black" }
+          }
+        },
+        scales: {
+          x: {
+            title: { display: true, text: "Temperatura (°C)", color: "black" },
+            ticks: { color: "black" },
+            grid: { color: "rgba(255,255,255,0.1)" }
+          },
+          y: {
+            title: { display: true, text: "Número de Falhas", color: "black" },
+            ticks: { color: "black" },
+            grid: { color: "rgba(255,255,255,0.1)" }
+          }
+        }
+      }
+    });
