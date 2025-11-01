@@ -83,6 +83,7 @@ CREATE TABLE veiculo(
     fkLote INT NOT NULL,
     data_ativacao DATE,
     quantidade_modelo INT,
+    quantidade_modelo INT,
     CONSTRAINT fkModeloVeiculo FOREIGN KEY(fkModelo) REFERENCES modelo(id),
     CONSTRAINT fkLoteVeiculo FOREIGN KEY(fkLote) REFERENCES lote(id)
 );

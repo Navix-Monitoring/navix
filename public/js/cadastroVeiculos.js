@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarModelosDropdown();
   configurarFormularioParametro();
   configurarFormularioLote();
+  carregarLotesDropdown();
+  configurarFormularioVeiculo();
 });
 
 function configurarFormularioModelo() {
@@ -188,6 +190,84 @@ function configurarFormularioLote() {
     } catch (error) {
       console.error("Erro ao cadastrar lote:", error);
       alert("Falha ao cadastrar lote: " + error.message);
+    }
+    window.location.reload();
+  });
+}
+
+async function carregarLotesDropdown() {
+  const fkEmpresa = sessionStorage.getItem("id_empresa_ss");
+
+  try {
+    const resposta = await fetch(
+      `/cadastroVeiculos/listarLotesPorEmpresa/${fkEmpresa}`
+    );
+
+    if (resposta.ok) {
+      const lotes = await resposta.json();
+
+      const selectVeiculoLote = document.getElementById("veiculo-lote");
+
+      selectVeiculoLote.innerHTML =
+        '<option value="">Selecione o Lote</option>';
+
+      lotes.forEach((lote) => {
+        const option = document.createElement("option");
+        option.value = lote.id;
+        option.textContent = lote.codigo_lote;
+        selectVeiculoLote.appendChild(option);
+      });
+    } else {
+      const erroMsg = await resposta.text();
+      throw new Error("Erro da API ao listar lotes: " + erroMsg);
+    }
+  } catch (error) {
+    console.error("Erro ao carregar lotes:", error);
+  }
+}
+
+function configurarFormularioVeiculo() {
+  const formVeiculo = document.getElementById("veiculoForm");
+
+  formVeiculo.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const dadosFormulario = {
+      fkLote: document.getElementById("veiculo-lote").value,
+      fkModelo: document.getElementById("veiculo-modelo").value,
+      data_ativacao: document.getElementById("veiculo-data-ativacao").value,
+      quantidade: document.getElementById("veiculo-quantidade").value,
+    };
+
+    if (
+      !dadosFormulario.fkLote ||
+      !dadosFormulario.fkModelo ||
+      !dadosFormulario.data_ativacao ||
+      !dadosFormulario.quantidade
+    ) {
+      alert("Erro: Todos os campos são obrigatórios!");
+      return;
+    }
+
+    try {
+      const resposta = await fetch("/cadastroVeiculos/cadastrarVeiculo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dadosFormulario),
+      });
+
+      if (resposta.ok) {
+        alert("Veículo(s) cadastrado(s) com sucesso!");
+        formVeiculo.reset();
+      } else {
+        const erroMsg = await resposta.text();
+        throw new Error("Erro da API: " + erroMsg);
+      }
+    } catch (error) {
+      console.error("Erro ao cadastrar veículo:", error);
+      alert("Falha ao cadastrar veículo: " + error.message);
     }
   });
 }

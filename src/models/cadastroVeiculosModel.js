@@ -94,9 +94,45 @@ function cadastrarLote(codigo_lote, data_fabricacao, status, idEmpresa) {
   ]);
 }
 
+function listarLotesPorEmpresa(fkEmpresa) {
+  var instrucaoSql = `
+      SELECT id, codigo_lote FROM lote WHERE fkEmpresa = ? AND status = 'ativo';
+  `;
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+  return database.executar(instrucaoSql, [fkEmpresa]);
+}
+
+function cadastrarVeiculo(fkModelo, fkLote, dataAtivacao, quantidade) {
+  console.log(
+    "Acessando o MODEL para cadastrar veículo: ",
+    fkModelo,
+    fkLote,
+    dataAtivacao,
+    quantidade
+  );
+
+  var instrucaoSql = `
+      INSERT INTO veiculo 
+          (fkModelo, fkLote, data_ativacao, quantidade_modelo) 
+      VALUES 
+          (?, ?, ?, ?);
+  `;
+
+  console.log("Executando a instrução SQL: \n" + instrucaoSql);
+
+  return database.executar(instrucaoSql, [
+    fkModelo,
+    fkLote,
+    dataAtivacao,
+    quantidade,
+  ]);
+}
+
 module.exports = {
   cadastrarModelo,
   listarModelosPorEmpresa,
   cadastrarParametro,
   cadastrarLote,
+  listarLotesPorEmpresa,
+  cadastrarVeiculo,
 };
