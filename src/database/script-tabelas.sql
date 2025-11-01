@@ -46,9 +46,9 @@ CREATE TABLE funcionario(
     telefone VARCHAR(11),
     email VARCHAR(100),
     senha VARCHAR(250),
+    statusPerfil ENUM("Inativo", "Ativo") NOT NULL,
     fkCargo INT NOT NULL,
     caminhoImagem VARCHAR(500),
-    status ENUM('Ativo','Inativo'),
     CONSTRAINT fkEmpresaFuncionario FOREIGN KEY(fkEmpresa) REFERENCES empresa(id),
     CONSTRAINT fkCargoFuncionario FOREIGN KEY(fkCargo) REFERENCES cargo(id)
 );
@@ -82,6 +82,7 @@ CREATE TABLE veiculo(
     fkModelo INT NOT NULL,
     fkLote INT NOT NULL,
     data_ativacao DATE,
+    quantidade_modelo INT,
     CONSTRAINT fkModeloVeiculo FOREIGN KEY(fkModelo) REFERENCES modelo(id),
     CONSTRAINT fkLoteVeiculo FOREIGN KEY(fkLote) REFERENCES lote(id)
 );
@@ -106,92 +107,54 @@ CREATE TABLE parametroHardware(
     PRIMARY KEY(fkHardware, fkModelo, unidadeMedida)
 );
 
--- 1. Inserir Cargos (Regras de Negócio: Administrador, Funcionario, Analista)
-INSERT INTO cargo (titulo)
-VALUES
-('Administrador'), -- ID 1
-('Engenheiro Automotivo'), -- ID 2
-('Engenheiro de Qualidade'); -- ID 3  
+-- Inserir cargos
+INSERT INTO cargo (titulo) VALUES
+('Administrador'), 
+('Funcionario'),   
+('Analista');
 
-INSERT INTO empresa (razaoSocial, cnpj, codigo_ativacao)
-VALUES 
+-- Inserir empresas
+INSERT INTO empresa (razaoSocial, cnpj, codigo_ativacao) VALUES
 ('Tech Solutions LTDA', '12345678000195', 'ABC123'),
 ('Auto Veículos S.A.', '98765432000189', 'XYZ987');
 
-INSERT INTO endereco (rua, numero, cep, bairro, cidade, estado, pais,fkEmpresa)
-VALUES 
+-- Inserir endereços
+INSERT INTO endereco (rua, numero, cep, bairro, cidade, estado, pais,fkEmpresa) VALUES 
 ('Rua das Flores', 123, '12345678', 'Centro', 'São Paulo', 'SP', 'Brasil',1),
 ('Av. Paulista', 1000, '87654321', 'Bela Vista', 'São Paulo', 'SP', 'Brasil',2);
 
-<<<<<<< HEAD
-INSERT INTO funcionario (fkEmpresa, nome, sobrenome, telefone, email, senha, fkCargo, status)
-=======
-INSERT INTO funcionario (fkEmpresa, nome, sobrenome, telefone, email, senha, fkCargo)
->>>>>>> d05c32097e55ac0bd898bcbd28444d9b0695a434
-VALUES 
-(1, 'Carlos', 'Silva', '11987654321', 'carlos.silva@tech.com', 'senha123', 1, 'ativo'), -- ID 1: Administrador
-(1, 'Célia', 'Taniwaki', '11982654321', 'celia.taniwaki@tech.com', 'senha456', 2, 'ativo'), -- ID 2: Engenheiro Automotivo
-(1, 'Gabriel', 'Santos', '11982654321', 'gabriel.santos@tech.com', 'senha789', 3, 'inativo'), -- ID 3: Engenheiro de Qualidade
+-- Inserir funcionários
+INSERT INTO funcionario (fkEmpresa, nome, sobrenome, telefone, email, senha, fkCargo) VALUES 
+(1, 'Carlos', 'Silva', '11987654321', 'carlos.silva@tech.com', 'senha123', 1),
+(2, 'Ana', 'Oliveira', '11987654322', 'ana.oliveira@auto.com', 'senha456', 2),
+(1, 'Gabriel', 'Santos', '11982654321', 'gabriel.santos@tech.com', 'senha143', 3);
 
-(2, 'Jhonas', 'da Silva', '11987654322', 'jhonas.silva@auto.com', 'senha456', 2, 'ativo'), -- ID 1: Administrador
-(2, 'Ana', 'Oliveira', '11987654322', 'ana.oliveira@auto.com', 'senha678', 2, 'inativo'), -- ID 2: Engenheiro Automotivo
-(2, 'Maria', 'Clara', '1193227855', 'maria.clara02@auto.com', 'senha890', 3, 'inativo'); -- ID 3: Engenheiro de Qualidade
+-- Inserir lotes
+INSERT INTO lote (codigo_lote, data_fabricacao, fkEmpresa, status) VALUES 
+('LOTE-A001', '2024-05-10', 1, 'Ativo'),
+('LOTE-B002', '2024-08-20', 2, 'Manutenção');
 
-<<<<<<< HEAD
-INSERT INTO lote (codigo_lote, data_fabricacao, fkEmpresa, status)
-VALUES 
--- Empresa 1
-('LT-A93F', '2025-02-11', 1, 'ativo'),
-('LT-B72K', '2024-12-28', 1, 'inativo'),
-('LT-C19P', '2025-03-23', 1, 'ativo'),
-('LT-D58X', '2025-05-09', 1, 'manutenção'),
-('LT-E07L', '2025-07-02', 1, 'ativo'),
-('LT-F34T', '2025-06-14', 1, 'ativo'),
-('LT-G91R', '2025-09-26', 1, 'ativo'),
-('LT-H56N', '2025-01-30', 1, 'manutenção'),
-('LT-J83M', '2025-10-08', 1, 'ativo'),
-('LT-K62Z', '2025-04-17', 1, 'inativo'),
+-- Inserir modelos
+INSERT INTO modelo (nome, status, versaoPilotoAutomatico, fkEmpresa) VALUES 
+('NAV-M100', 'Ativo', '1.2.5', 1),
+('NAV-M200', 'Descontinuado', '2.0.1', 2);
 
--- Empresa 2
-('ENG-A93F', '2025-02-11', 2, 'ativo'),
-('CAR-B72K', '2024-12-28', 2, 'ativo'),
-('TRN-C19P', '2025-03-23', 2, 'manutenção'),
-('BRK-D58X', '2025-05-09', 2, 'ativo'),
-('SUS-E07L', '2025-07-02', 2, 'ativo'),
-('ELE-F34T', '2025-06-14', 2, 'ativo'),
-('INT-G91R', '2025-09-26', 2, 'inativo'),
-('EXT-H56N', '2025-01-30', 2, 'manutenção'),
-('TIR-J83M', '2025-10-08', 2, 'ativo'),
-('OIL-K62Z', '2025-04-17', 2, 'ativo');
+-- Inserir veículos
+INSERT INTO veiculo (fkModelo, fkLote, data_ativacao) VALUES 
+(1, 1, '2025-01-01'),
+(2, 2, '2025-02-15');
 
-INSERT INTO modelo (nome, status, versaoPilotoAutomatico)
-VALUES
-('E-Drive Alpha L3', 'ativo', '1.2.5'),
-('NeoMotion LX3', 'descontinuado', '5.2.5'),
-('Voltura Urban 300', 'ativo', '3.3.4'),
-('Autovance E3', 'descontinuado', '2.2'),
-('TerraEV Vision L3', 'ativo', '1.8'),
+-- Inserir hardware
+INSERT INTO hardware (tipo) VALUES 
+('CPU'),
+('RAM'),
+('DISCO');
 
--- Modelos 100% Elétricos - Nível 4
-
-('E-Drive Alpha L4', 'ativo', '1.2'),
-('NeoMotion LX4', 'ativo', '1.43'),
-('Voltura Urban 400', 'descontinuado', '6.4.1'),
-('Autovance E4', 'ativo', '2.8.7'),
-('TerraEV Vision L4', 'descontinuado', '9.2.8'),
-('SkyRide Autonomous', 'ativo', '1.9.3'),
-('ElectraOne L4+', 'descontinuado', '1.7.7');
-
-=======
->>>>>>> d05c32097e55ac0bd898bcbd28444d9b0695a434
-INSERT INTO hardware (tipo)
-VALUES 
-('CPU'), -- ID 1
-('RAM'), -- ID 2
-('DISCO'); -- ID 3
-
+-- Inserir parametros hardware (CPU uso, CPU temperatura, RAM, Disco)
+INSERT INTO parametroHardware (fkHardware, fkModelo, unidadeMedida, parametroMinimo, parametroNeutro, parametroAtencao, parametroCritico) VALUES 
+(1, 1, 'USO', 20, 50, 75, 90),        -- CPU uso
+(1, 1, 'TEMPERATURA', 40, 60, 75, 90), -- CPU temperatura
+(2, 1, 'GB', 15, 25, 60, 80),          -- RAM
+(3, 1, 'GB', 10, 20, 60, 80);          -- Disco
 
 select * from funcionario;
-select * from modelo;
-select * from parametroHardware;
-select * from lote;

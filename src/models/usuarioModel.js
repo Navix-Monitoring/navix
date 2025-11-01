@@ -9,7 +9,7 @@ function autenticarStatus(email,senha){
 
 function autenticar(email, senha) {
     const instrucaoSql = `
-        SELECT func.nome, func.email, func.senha, func.caminhoImagem, func.fkCargo, c.titulo, emp.codigo_ativacao, func.fkEmpresa, func.status
+        SELECT func.nome, func.email, func.senha, func.caminhoImagem, func.fkCargo, c.titulo, emp.codigo_ativacao, func.fkEmpresa, func.statusPerfil
         FROM funcionario func 
         INNER JOIN empresa emp ON emp.id = func.fkEmpresa
         INNER JOIN cargo c ON c.id = func.fkCargo
@@ -132,7 +132,7 @@ function cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, ca
 function atualizarStatusPerfil(novoStatus, emailUsuario) {
     console.log("Entrou no usuarioModel");
     var instrucao = `
-        UPDATE funcionario SET status = '${novoStatus}' WHERE email = "${emailUsuario}";
+        UPDATE funcionario SET statusPerfil = '${novoStatus}' WHERE email = "${emailUsuario}";
     `;
     console.log("Executando a query: \n" + instrucao);
     return database.executar(instrucao);
