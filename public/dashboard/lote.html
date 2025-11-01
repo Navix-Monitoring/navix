@@ -50,7 +50,7 @@
         </a>
         <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
           onclick="limparSessao()">
-          <a href="./login.html" class="no-underline text-white">
+          <a href="../index.html" class="no-underline text-white">
             <h3 class="m-0 p-0">Sair</h3>
           </a>
         </div>
@@ -65,7 +65,15 @@
         </div>
       </a>
 
-      <h1 class="tituloLote" id="tituloLote">Lote: undefined</h1>
+      <div class="topoTitulo">
+        <h1 class="tituloLote" id="tituloLote">Lote: undefined - 10 carros</h1>
+        <select class="selectData">
+          <option value="#">Selecione a data</option>
+          <option value="#">Semana</option>
+          <option value="#">Mês</option>
+          <option value="#">Ano</option>
+        </select>
+      </div>
 
       <main class="card">
         <div id="KPIS" class="kpis">
@@ -76,7 +84,7 @@
                 <p id="NumeroKPICPU" class="valor">95%</p>
               </div>
               <div class="alerta">
-                <p id="tipoRiscoCPU">Risco: ALTO</p>
+                <p class="nvlRisco" id="tipoRiscoCPU">Risco: ALTO</p>
               </div>
             </div>
           </div>
@@ -87,54 +95,119 @@
                 <p id="NumeroKPIDISCO" class="valor">70%</p>
               </div>
               <div class="alerta">
-                <p id="tipoRiscoDISCO">Risco: BAIXO</p>
+                <p class="nvlRisco" id="tipoRiscoDISCO">Risco: BAIXO</p>
               </div>
             </div>
           </div>
           <div class="kpi cpu">
-            <p class="tituloKPI"> Mediana de uso de temperatura </p> <br>
+            <p class="tituloKPI"> Mediana de temperatura </p> <br>
             <div class="ladinho">
               <div class="colour-ball" id="temperaturaColour" style="border-color: green;">
                 <p id="NumeroKPITEMPERATURA" class="valor">70°</p>
               </div>
               <div class="alerta">
-                <p id="tipoRiscoTEMPERATURA">Risco: BAIXO</p>
+                <p class="nvlRisco" id="tipoRiscoTEMPERATURA">Risco: BAIXO</p>
               </div>
             </div>
           </div>
           <div class="kpi cpu">
-            <p class="tituloKPI"> Mediana de uso de tempo de processos </p> <br>
+            <p class="tituloKPI"> Mediana de alerta </p> <br>
             <div class="ladinho">
               <div class="colour-ball" id="processosColour" style="border-color: yellow;">
                 <p id="NumeroKPIPROCESSOS" class="valor">300ms</p>
               </div>
               <div class="alerta">
-                <p id="tipoRiscoPROCESSOS">Risco: MÉDIO</p>
+                <p class="nvlRisco" id="tipoRiscoPROCESSOS">Risco: MÉDIO</p>
               </div>
             </div>
           </div>
           <div class="kpi cpu">
-            <p class="tituloKPI">Mediana de uso de bateria </p> <br>
+            <p class="tituloKPI">Quantidade de processo </p> <br>
             <div class="ladinho">
               <div class="colour-ball" id="bateriaColour" style="border-color: red;">
                 <p id="NumeroKPIBATERIA" class="valor">95%</p>
               </div>
               <div class="alerta">
-                <p id="tipoRiscoBATERIA">Risco: ALTO</p>
+                <p class="nvlRisco" id="tipoRiscoBATERIA">Risco: ALTO</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="graficos">
-          <div class="container-grafico">
-            <canvas id="alertasSemana"></canvas>
+        <div class="container">
+          <div class="container-filho">
+            <div class="chart-container-alert">
+              <canvas id="alertasSemana"></canvas>
+            </div>
           </div>
-          <div class="container-grafico">
-            <canvas id="alertasMes"></canvas>
+          <div class="container-filho">
+            <div class="chart-container-alert p-4 h-full flex flex-col">
+              <h3 class="text-lg font-bold text-center mb-4 text-black" style="font-size: 18px;">
+                RANKING DE ALERTAS (7 DIAS)
+              </h3>
+              <ol class="list-none space-y-2 flex-grow">
+
+                <li class="flex justify-between items-center w-full p-3 rounded bg-slate-200 shadow-sm">
+                  <span class="font-bold text-base text-blue-900">1. Disco</span>
+                  <span class="font-bold text-base text-blue-900">79 alertas</span>
+                </li>
+
+                <li class="flex justify-between items-center w-full p-3 border-b border-gray-200">
+                  <span class="font-medium text-gray-800">2. Ram</span>
+                  <span class="font-medium text-gray-800">61 alertas</span>
+                </li>
+
+                <li class="flex justify-between items-center w-full p-3 border-b border-gray-200">
+                  <span class="font-medium text-gray-800">3. Temperatura</span>
+                  <span class="font-medium text-gray-800">44 alertas</span>
+                </li>
+
+                <li class="flex justify-between items-center w-full p-3">
+                  <span class="font-medium text-gray-800">4. CPU</span>
+                  <span class="font-medium text-gray-800">27 alertas</span>
+                </li>
+
+              </ol>
+            </div>
           </div>
+
         </div>
-        <div>
-          <canvas id="correlacaoChart"></canvas>
+
+        <div class="container">
+          <div class="container-filho">
+            <div class="chart-container">
+              <canvas id="cpu"></canvas>
+            </div>
+            <div class="chart-container">
+              <canvas id="ram"></canvas>
+            </div>
+            <div class="chart-container">
+              <canvas id="disco"></canvas>
+            </div>
+            <div class="chart-container">
+              <canvas id="temperatura"></canvas>
+            </div>
+            <div class="carrossel">
+              <button id="Btnvoltar" class="carrossel-btn">&#9664;</button>
+              <h1 id="titulo" class="titulo">CPU</h1>
+              <button id="Btnproximo" class="carrossel-btn">&#9654;</button>
+            </div>
+          </div>
+          <div class="container-filho">
+            <div class="chart-container">
+              <canvas id="relacao"></canvas>
+            </div>
+            <div class="chart-container">
+              <canvas id="relacao2"></canvas>
+            </div>
+            <div class="chart-container">
+              <canvas id="relacao3"></canvas>
+            </div>
+            <div class="carrossel">
+              <button id="Btnvoltar2" class="carrossel-btn">&#9664;</button>
+              <h1 id="titulo2" class="titulo">CPU</h1>
+              <button id="Btnproximo2" class="carrossel-btn">&#9654;</button>
+            </div>
+          </div>
         </div>
       </main>
     </div>
@@ -145,127 +218,432 @@
 <script src="../js/lote.js"></script>
 <script src="../js/redirecionar.js"></script>
 <script>
-  const ctx = document.getElementById('alertasMes');
-  const ctx2 = document.getElementById('alertasSemana');
-  const ctx3 = document.getElementById("correlacaoChart");
+  document.addEventListener('DOMContentLoaded', () => {
+    const ctx6 = document.getElementById('alertasSemana');
 
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
-      datasets: [
-        {
-          label: 'Temperatura',
-          data: [12, 19, 8, 15, 10, 6, 9],
-          backgroundColor: 'rgba(239, 68, 68, 1)', 
-        },
-        {
-          label: 'CPU',
-          data: [5, 7, 9, 6, 8, 4, 5],
-          backgroundColor: 'rgba(59, 130, 246, 1)', 
-        },
-        {
-          label: 'Bateria',
-          data: [3, 5, 2, 4, 6, 3, 4],
-          backgroundColor: 'rgba(245, 158, 11, 1)',
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: {
-            color: 'black'
+    new Chart(ctx6, {
+      type: 'bar',
+      data: {
+        labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+        datasets: [
+          {
+            label: 'Temperatura',
+            data: [5, 7, 9, 6, 8, 4, 5],
+            backgroundColor: '#4052D6',
+          },
+          {
+            label: 'CPU',
+            data: [3, 5, 2, 4, 6, 3, 4],
+            backgroundColor: '#0000FF',
+          },
+          {
+            label: 'Disco',
+            data: [12, 19, 8, 15, 10, 6, 9],
+            backgroundColor: '#1591EA'
+          },
+          {
+            label: 'Ram',
+            data: [20, 12, 3, 9, 13, 1, 3],
+            backgroundColor: '#00008A'
           }
-        },
-        title: {
-          display: true,
-          text: 'Alertas Gerados nos Últimos Meses',
-          color: 'black',
-          font: { size: 18, weight: 'bold' }
-        }
+        ]
       },
-      scales: {
-        x: {
-          stacked: true,
-          ticks: { color: 'black' },
-          grid: { color: 'rgba(255,255,255,0.1)' }
-        },
-        y: {
-          stacked: true,
-          beginAtZero: true,
-          ticks: { color: 'black' },
-          grid: { color: 'black' },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              color: 'black'
+            }
+          },
           title: {
             display: true,
-            text: 'Quantidade de Alertas',
-            color: 'black'
+            text: 'ALERTAS GERADOS NOS ÚLTIMOS 7 DIAS',
+            color: 'black',
+            font: { size: 18, weight: 'bold' }
+          }
+        },
+        scales: {
+          x: {
+            stacked: true,
+            ticks: { color: 'black' },
+            grid: { color: 'rgba(255,255,255,0.1)' }
+          },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+            ticks: { color: 'black' },
+            grid: { color: 'black' },
+            title: {
+              display: true,
+              text: 'Quantidade de Alertas',
+              color: 'black',
+              font: { size: 14, }
+            }
           }
         }
       }
-    }
-  });
+    });
 
-  new Chart(ctx2, {
-    type: 'bar',
-    data: {
-      labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
-      datasets: [
-        {
-          label: 'Temperatura',
-          data: [5, 7, 9, 6, 8, 4, 5],
-          backgroundColor: 'rgba(239, 68, 68, 1)',
-        },
-        {
+    const ctx = document.getElementById('cpu').getContext('2d');
+    const cpu = new Chart(ctx, {
+      type: 'line',
+
+      data: {
+        labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+        datasets: [{
           label: 'CPU',
-          data: [3, 5, 2, 4, 6, 3, 4],
-          backgroundColor: 'rgba(59, 130, 246, 1)', 
-        },
-        {
-          label: 'Bateria',
-          data: [12, 19, 8, 15, 10, 6, 9],
-          backgroundColor: 'rgba(245, 158, 11, 1)'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: {
-            color: 'black'
-          }
-        },
-        title: {
-          display: true,
-          text: 'Alertas Gerados nos Últimos 7 Dias',
-          color: 'black',
-          font: { size: 18, weight: 'bold' }
-        }
+          data: [10, 16, 3, 5, 1, 20, 14],
+          backgroundColor: '#192A6B',
+          borderColor: '#192A6B',
+          borderWidth: 3
+        }]
       },
-      scales: {
-        x: {
-          stacked: true,
-          ticks: { color: 'black' },
-          grid: { color: 'rgba(255,255,255,0.1)' }
-        },
-        y: {
-          stacked: true,
-          beginAtZero: true,
-          ticks: { color: 'black' },
-          grid: { color: 'black' },
+      options: {
+        plugins: {
           title: {
             display: true,
-            text: 'Quantidade de Alertas',
-            color: 'black'
+            text: 'MEDIANA DO USO DE HARDWARE',
+            font: {
+              size: 18
+            },
+            padding: {
+              bottom: 20
+            }
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Frequência',
+              color: 'black',
+              font: { size: 14, }
+            }
           }
         }
       }
+    });
+
+    const ctx10 = document.getElementById('temperatura').getContext('2d');
+    const temp = new Chart(ctx10, {
+      type: 'line',
+
+      data: {
+        labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+        datasets: [{
+          label: 'TEMPERATURA CPU',
+          data: [20, 19, 1, 3, 19, 6, 12],
+          backgroundColor: '#192A6B',
+          borderColor: '#192A6B',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'MEDIANA DO USO DE HARDWARE',
+            font: {
+              size: 18
+            },
+            padding: {
+              bottom: 20
+            }
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Frequência',
+              color: 'black',
+              font: { size: 14, }
+            }
+          }
+        }
+      }
+    });
+
+    const ctx9 = document.getElementById('disco').getContext('2d');
+    const disco = new Chart(ctx9, {
+      type: 'line',
+
+      data: {
+        labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+        datasets: [{
+          label: 'DISCO',
+          data: [14, 17, 3, 2, 1, 18, 11],
+          backgroundColor: '#7587B3',
+          borderColor: '#7587B3',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'MEDIANA DO USO DE HARDWARE',
+            font: {
+              size: 18
+            },
+            padding: {
+              bottom: 20
+            }
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Frequência',
+              color: 'black',
+              font: { size: 14, }
+            }
+          }
+        }
+      }
+    });
+
+    const ctx2 = document.getElementById('ram').getContext('2d');
+    const ram = new Chart(ctx2, {
+      type: 'line',
+
+      data: {
+        labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+        datasets: [{
+          label: 'RAM',
+          data: [3, 10, 12, 20, 16, 1, 5],
+          backgroundColor: '#7587B3',
+          borderColor: '#7587B3',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'MEDIANA DO USO DE HARDWARE',
+            font: {
+              size: 18
+            },
+            padding: {
+              bottom: 20
+            }
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Frequência',
+              color: 'black',
+              font: { size: 14, }
+            }
+          }
+        }
+      }
+    });
+
+    const ctx3 = document.getElementById('relacao').getContext('2d');
+    const relacao = new Chart(ctx3, {
+      type: 'line',
+
+      data: {
+        labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+        datasets: [{
+          label: 'TEMPERATURA',
+          data: [10, 16, 3, 5, 1, 20, 14],
+          backgroundColor: '#192A6B',
+          borderColor: '#192A6B',
+          borderWidth: 3
+        },
+        {
+          label: 'CPU',
+          data: [3, 4, 15, 10, 20, 8, 5],
+          backgroundColor: '#DAA520',
+          borderColor: '#DAA520',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'TEMPERATURA x CPU',
+            font: {
+              size: 18
+            },
+            padding: {
+              bottom: 20
+            }
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    const ctx11 = document.getElementById('relacao3').getContext('2d');
+    const relacao3 = new Chart(ctx11, {
+      type: 'line',
+
+      data: {
+        labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+        datasets: [{
+          label: 'PROCESSOS',
+          data: [10, 16, 3, 5, 1, 20, 14],
+          backgroundColor: '#DAA520',
+          borderColor: '#DAA520',
+          borderWidth: 3
+        },
+        {
+          label: 'CPU',
+          data: [3, 4, 15, 10, 20, 8, 5],
+          backgroundColor: 'pink',
+          borderColor: 'pink',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'PROCESSOS x CPU',
+            font: {
+              size: 18
+            },
+            padding: {
+              bottom: 20
+            }
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    const ctx4 = document.getElementById('relacao2').getContext('2d');
+    const relacao2 = new Chart(ctx4, {
+      type: 'line',
+
+      data: {
+        labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+        datasets: [{
+          label: 'TEMPERATURA',
+          data: [10, 16, 3, 5, 1, 20, 14],
+          backgroundColor: '#192A6B',
+          borderColor: '#192A6B',
+          borderWidth: 3
+        },
+        {
+          label: 'PROCESSOS',
+          data: [3, 4, 15, 10, 20, 8, 5],
+          backgroundColor: 'pink',
+          borderColor: 'pink',
+          borderWidth: 3
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'TEMPERATURA x PROCESSOS',
+            font: {
+              size: 18
+            },
+            padding: {
+              bottom: 20
+            }
+          },
+          legend: {
+            position: 'top',
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    function criarCarrossel(btnVoltar, btnProximo, titulo, containers, titulos) {
+      let index = 0;
+
+      function mostrar(novoIndex) {
+        containers.forEach(container => container.style.display = 'none');
+        containers[novoIndex].style.display = 'block';
+        titulo.innerHTML = titulos[novoIndex];
+        index = novoIndex;
+      }
+
+      btnProximo.addEventListener('click', () => {
+        const proximoIndex = (index + 1) % containers.length;
+        mostrar(proximoIndex);
+      });
+
+      btnVoltar.addEventListener('click', () => {
+        const indexAntigo = (index - 1 + containers.length) % containers.length;
+        mostrar(indexAntigo);
+      });
+
+      mostrar(0);
     }
+
+    criarCarrossel(
+      document.getElementById('Btnvoltar'),
+      document.getElementById('Btnproximo'),
+      document.getElementById('titulo'),
+      [
+        document.getElementById('cpu').parentElement,
+        document.getElementById('ram').parentElement,
+        document.getElementById('temperatura').parentElement,
+        document.getElementById('disco').parentElement
+      ],
+      ['CPU', 'RAM', 'TEMPERATURA CPU', 'DISCO']
+    );
+
+    criarCarrossel(
+      document.getElementById('Btnvoltar2'),
+      document.getElementById('Btnproximo2'),
+      document.getElementById('titulo2'),
+      [
+        document.getElementById('relacao').parentElement,
+        document.getElementById('relacao2').parentElement,
+        document.getElementById('relacao3').parentElement
+      ],
+      ['TEMPERATURA x CPU', 'TEMPERATURA x PROCESSOS', 'PROCESSOS x CPU']
+    );
   });
 </script>

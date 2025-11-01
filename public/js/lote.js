@@ -11,7 +11,7 @@ function carregarInformacoes() {
             console.log(json[0].fkLote)
             console.log(json[0].codigo_lote)
 
-            tituloLote.innerHTML = `Lote: ${json[0].codigo_lote}`
+            tituloLote.innerHTML = `Lote: ${json[0].codigo_lote} - 10 carros`
         })
     })
 }
@@ -32,8 +32,8 @@ function simularValores() {
     NumeroKPICPU.innerHTML = simulacaoCPU + "%";
     NumeroKPIDISCO.innerHTML = simulacaoDISCO + "%";
     NumeroKPITEMPERATURA.innerHTML = simulacaoTemperatura + "°";
-    NumeroKPIPROCESSOS.innerHTML = simulacaoProcessos + "ms";
-    NumeroKPIBATERIA.innerHTML = simulacaoBateria + "%";
+    NumeroKPIPROCESSOS.innerHTML = simulacaoProcessos + "";
+    NumeroKPIBATERIA.innerHTML = simulacaoBateria + "";
 
     if (simulacaoCPU != null || simulacaoCPU > 0) {
         if (simulacaoCPU>0 && simulacaoCPU <= 65) {
