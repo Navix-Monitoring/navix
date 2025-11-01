@@ -81,6 +81,7 @@ CREATE TABLE veiculo(
     fkModelo INT NOT NULL,
     fkLote INT NOT NULL,
     data_ativacao DATE,
+    quantidade_modelo INT,
     CONSTRAINT fkModeloVeiculo FOREIGN KEY(fkModelo) REFERENCES modelo(id),
     CONSTRAINT fkLoteVeiculo FOREIGN KEY(fkLote) REFERENCES lote(id)
 );
@@ -139,3 +140,50 @@ select * from funcionario;
 select * from modelo;
 select * from parametroHardware;
 select * from lote;
+select * from veiculo;
+
+-- Mdelos de uma empresa
+SELECT 
+    m.id, 
+    m.nome AS Modelo, 
+    m.status, 
+    e.razaoSocial AS Empresa
+FROM 
+    modelo m
+JOIN 
+    empresa e ON m.fkEmpresa = e.id
+WHERE 
+    e.id = 1;
+
+-- Lotes de uma empresa
+SELECT 
+    l.id, 
+    l.codigo_lote, 
+    l.status, 
+    e.razaoSocial AS Empresa
+FROM 
+    lote l
+JOIN 
+    empresa e ON l.fkEmpresa = e.id
+WHERE 
+    e.id = 1; 
+
+-- Veiculos de uma empresa
+SELECT 
+    v.id AS idVeiculo,
+    v.data_ativacao,
+    v.quantidade_modelo,
+    m.nome AS Modelo,         
+    l.codigo_lote AS Lote,  
+    e.razaoSocial AS Empresa  
+FROM 
+    veiculo v
+JOIN 
+    modelo m ON v.fkModelo = m.id   
+JOIN 
+    empresa e ON m.fkEmpresa = e.id  
+JOIN
+    lote l ON v.fkLote = l.id       
+WHERE 
+    e.id = 2;
+-- AND l.codigo_lote = 'empresalote';    

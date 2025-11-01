@@ -113,9 +113,58 @@ function cadastrarLote(req, res) {
     });
 }
 
+function listarLotesPorEmpresa(req, res) {
+  var fkEmpresa = req.params.fkEmpresa;
+
+  if (!fkEmpresa) {
+    return res.status(400).send("O fkEmpresa está indefinido!");
+  }
+
+  cadastroVeiculosModel
+    .listarLotesPorEmpresa(fkEmpresa)
+    .then(function (resultado) {
+      res.json(resultado);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log(
+        "\nHouve um erro ao listar os lotes! Erro: ",
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function cadastrarVeiculo(req, res) {
+  var fkModelo = req.body.fkModelo;
+  var fkLote = req.body.fkLote;
+  var data_ativacao = req.body.data_ativacao;
+  var quantidade = req.body.quantidade;
+
+  if (!fkModelo || !fkLote || !data_ativacao || !quantidade) {
+    return res.status(400).send("Todos os campos do veículo são obrigatórios!");
+  }
+
+  cadastroVeiculosModel
+    .cadastrarVeiculo(fkModelo, fkLote, data_ativacao, quantidade)
+    .then(function (resultado) {
+      res.status(201).json(resultado);
+    })
+    .catch(function (erro) {
+      console.log(erro);
+      console.log(
+        "\nHouve um erro ao cadastrar o veículo! Erro: ",
+        erro.sqlMessage
+      );
+      res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
   cadastrarModelo,
   listarModelosPorEmpresa,
   cadastrarParametro,
   cadastrarLote,
+  listarLotesPorEmpresa,
+  cadastrarVeiculo,
 };

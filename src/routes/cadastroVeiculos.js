@@ -19,4 +19,12 @@ router.post("/cadastrarLote", function (req, res) {
   cadastroVeiculosController.cadastrarLote(req, res);
 });
 
+router.get("/listarLotesPorEmpresa/:fkEmpresa", function (req, res) {
+  cadastroVeiculosController.listarLotesPorEmpresa(req, res);
+});
+
+router.post("/cadastrarVeiculo", function (req, res) {
+  cadastroVeiculosController.cadastrarVeiculo(req, res);
+});
+
 module.exports = router;
