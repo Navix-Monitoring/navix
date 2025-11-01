@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="modelo.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>RANKING ALERTAS</h2>
+        <div class="grafico" id="grafico"></div>
+        <div class="chart-container">
+            <canvas id="cpu"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="ram"></canvas>
+        </div>
+        <div class="carrossel">
+            <button id="Btnvoltar" class="carrossel-btn">&#9664;</button>
+            <h1 id="titulo" class="titulo">CPU</h1>
+            <button id="Btnproximo" class="carrossel-btn">&#9654;</button>
+        </div>
+        <div class="chart-container">
+            <canvas id="relacao"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="relacao2"></canvas>
+        </div>
+        <div class="carrossel">
+            <button id="Btnvoltar2" class="carrossel-btn">&#9664;</button>
+            <h1 id="titulo2" class="titulo">CPU</h1>
+            <button id="Btnproximo2" class="carrossel-btn">&#9654;</button>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        ranking = [{
+            posicao: 1,
+            modeloELote: 'Tesla T3 - Lote 201',
+            componente: 'CPU',
+            totalAlerta: 32
+        },
+        {
+            posicao: 2,
+            modeloELote: 'Tesla T4 - Lote 202',
+            componente: 'Temperatura',
+            totalAlerta: 23
+        },
+        {
+            posicao: 3,
+            modeloELote: 'BYD - Lote 301',
+            componente: 'RAM',
+            totalAlerta: 15
+        }];
+
+        ranking.forEach(({ posicao, modeloELote, componente, totalAlerta }) => {
+            grafico.innerHTML += `
+                <div class="ranking-item">
+                    <p>${posicao}º Lugar: ${modeloELote} Componente: ${componente} | Total: ${totalAlerta} alertas</p>
+                </div>
+        `
+        });
+
+        const ctx = document.getElementById('cpu').getContext('2d');
+        const cpu = new Chart(ctx, {
+            type: 'bar',
+
+            data: {
+                labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                datasets: [{
+                    label: 'CPU',
+                    data: [10, 16, 3, 5, 1, 20, 14],
+                    backgroundColor: '#192A6B',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'TEMPERATURA DE HARDWARE',
+                        font: {
+                            size: 18
+                        },
+                        padding: {
+                            bottom: 20
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('ram').getContext('2d');
+        const ram = new Chart(ctx2, {
+            type: 'bar',
+
+            data: {
+                labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                datasets: [{
+                    label: 'RAM',
+                    data: [3, 10, 12, 20, 16, 1, 5],
+                    backgroundColor: '#7587B3',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'TEMPERATURA DE HARDWARE',
+                        font: {
+                            size: 18
+                        },
+                        padding: {
+                            bottom: 20
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx3 = document.getElementById('relacao').getContext('2d');
+        const relacao = new Chart(ctx3, {
+            type: 'line',
+
+            data: {
+                labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                datasets: [{
+                    label: 'TEMPERATURA',
+                    data: [10, 16, 3, 5, 1, 20, 14],
+                    backgroundColor: '#192A6B',
+                    borderColor: '#192A6B',
+                    borderWidth: 3
+                },
+                {
+                    label: 'CPU',
+                    data: [3, 4, 15, 10, 20, 8, 5],
+                    backgroundColor: '#DAA520',
+                    borderColor: '#DAA520',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'TEMPERATURA x CPU',
+                        font: {
+                            size: 18
+                        },
+                        padding: {
+                            bottom: 20
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx4 = document.getElementById('relacao2').getContext('2d');
+        const relacao2 = new Chart(ctx4, {
+            type: 'line',
+
+            data: {
+                labels: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                datasets: [{
+                    label: 'TEMPERATURA',
+                    data: [10, 16, 3, 5, 1, 20, 14],
+                    backgroundColor: '#192A6B',
+                    borderColor: '#192A6B',
+                    borderWidth: 3
+                },
+                {
+                    label: 'BATERIA',
+                    data: [3, 4, 15, 10, 20, 8, 5],
+                    backgroundColor: 'pink',
+                    borderColor: 'pink',
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'TEMPERATURA x BATERIA',
+                        font: {
+                            size: 18
+                        },
+                        padding: {
+                            bottom: 20
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        function criarCarrossel(btnVoltar, btnProximo, titulo, containers, titulos) {
+            let index = 0;
+
+            function mostrar(novoIndex) {
+                containers.forEach(container => container.style.display = 'none');
+                containers[novoIndex].style.display = 'block';
+                titulo.innerHTML = titulos[novoIndex];
+                index = novoIndex;
+            }
+
+            btnProximo.addEventListener('click', () => {
+                const proximoIndex = (index + 1) % containers.length;
+                mostrar(proximoIndex);
+            });
+
+            btnVoltar.addEventListener('click', () => {
+                const indexAntigo = (index - 1 + containers.length) % containers.length;
+                mostrar(indexAntigo);
+            });
+
+            mostrar(0);
+        }
+
+        criarCarrossel(
+            document.getElementById('Btnvoltar'),
+            document.getElementById('Btnproximo'),
+            document.getElementById('titulo'),
+            [
+                document.getElementById('cpu').parentElement,
+                document.getElementById('ram').parentElement
+            ],
+            ['CPU', 'RAM']
+        );
+
+        criarCarrossel(
+            document.getElementById('Btnvoltar2'),
+            document.getElementById('Btnproximo2'),
+            document.getElementById('titulo2'),
+            [
+                document.getElementById('relacao').parentElement,
+                document.getElementById('relacao2').parentElement
+            ],
+            ['TEMPERATURA x CPU', 'TEMPERATURA x BATERIA']
+        );
+
+    });
+
+</script>
