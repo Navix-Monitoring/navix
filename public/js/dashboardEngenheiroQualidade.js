@@ -1,4 +1,4 @@
-
+const ordemCores = ["vermelho", "laranja", "amarelo", "verde"];
 var listaLotes;
 function listarLotes() {
     console.log("Estou na função listarLotes...");
@@ -10,19 +10,24 @@ function listarLotes() {
             lotes.innerHTML = "";
             console.log("Entrei na resposta do fetch listar lotes");
 
-            const listaLotes = json;
+            // Gera a cor de cada lote
+            let listaLotes = json.map((lote, index) => ({
+                ...lote,
+                corStatus: gerarCorBolinha(index)
+            }));
 
+            // Ordena do mais crítico (vermelho) para menos crítico (verde)
+            listaLotes.sort((a, b) => ordemCores.indexOf(a.corStatus) - ordemCores.indexOf(b.corStatus));
+
+            // Renderiza os lotes
             for (let c = 0; c < listaLotes.length; c++) {
                 const lote = listaLotes[c];
                 const idLote = lote.idLote;
 
-                // ✅ Se o id já foi adicionado, pula o loop
-                if (idsRegistrados.includes(idLote)) continue;
-
+                if (idsRegistrados === idLote) continue;
                 idsRegistrados.push(idLote);
 
                 let modelo = lote.nomeModelo == null ? "N/A" : lote.nomeModelo;
-
                 const corFundo = c % 2 === 0 ? "bg-black" : "bg-blue-900";
 
                 lotes.innerHTML += `
@@ -33,7 +38,7 @@ function listarLotes() {
                         <p>Situação: ${lote.statusLote}</p>
                         <p>Modelo: ${modelo}</p>
                         <p>Status:</p>
-                        <div class="bolinha"></div>
+                        <div class="bolinha ${lote.corStatus}"></div>
 
                         <div class="botoes">
                             <button onclick="event.stopPropagation(); buscarLote(${c + 1})"
@@ -53,6 +58,12 @@ function listarLotes() {
             listarModelos();
         })
         .catch(err => console.error("Erro ao listar lotes:", err));
+}
+
+
+function gerarCorBolinha(index) {
+  const cores = ["vermelho", "laranja", "amarelo", "verde"];
+  return cores[index % cores.length];
 }
 
 function abrirLote(idLote) {
@@ -163,44 +174,51 @@ function listarModelos() {
 
 function filtrar() {
     const filtroStatus = select_Status.value;
-    const idsRegistrados = [];
+    const filtroOrdem = document.getElementById("ordem").value;
+    const ordemCores = ["vermelho", "laranja", "amarelo", "verde"];
 
     fetch(`/dashboard/listar/${sessionStorage.id_empresa_ss}`, { method: "GET" })
         .then(res => res.json())
         .then(json => {
-            const listaLotes = json;
+            let listaLotes = json;
             lotes.innerHTML = "";
+            const idsRegistrados = [];
 
-            if (filtroStatus === "#") {
-                listarLotes();
-                return;
+            // Gera a cor de cada lote usando a função já existente
+            listaLotes = listaLotes.map((lote, index) => ({
+                ...lote,
+                corStatus: gerarCorBolinha(index)
+            }));
+
+            // Ordena pelo critério de cores
+            if (filtroOrdem === "asc") {
+                listaLotes.sort((a, b) => ordemCores.indexOf(b.corStatus) - ordemCores.indexOf(a.corStatus));
+            } else if (filtroOrdem === "desc") {
+                listaLotes.sort((a, b) => ordemCores.indexOf(a.corStatus) - ordemCores.indexOf(b.corStatus));
             }
 
-            let statusDesejado = "";
-            if (filtroStatus === "ati") statusDesejado = "Ativo";
-            else if (filtroStatus === "man") statusDesejado = "Manutenção";
-            else if (filtroStatus === "ina") statusDesejado = "Inativo";
-
+            // Renderiza os lotes
             for (let c = 0; c < listaLotes.length; c++) {
                 const lote = listaLotes[c];
                 const idLote = lote.idLote;
 
-                // Evita duplicados
-                if (idsRegistrados.includes(idLote)) continue;
+                if (idsRegistrados === idLote) continue;
                 idsRegistrados.push(idLote);
 
-                if (lote.statusLote === statusDesejado) {
-                    const modelo = lote.nomeModelo == null ? "N/A" : lote.nomeModelo;
-                    const corFundo =  "bg-blue-900";
+                const modelo = lote.nomeModelo ?? "N/A";
+                const corFundo = c % 2 === 0 ? "bg-black" : "bg-blue-900";
 
+                // Filtra pelo status se houver seleção
+                if (filtroStatus === "#" || lote.statusLote === traduzirStatus(filtroStatus)) {
                     lotes.innerHTML += `
                         <div class="${corFundo} p-4 rounded-lg text-white cards-lotes" 
-                            onclick="abrirLote(${idLote})" style="cursor: pointer;">
+                             onclick="abrirLote(${idLote})" 
+                             style="cursor: pointer;">
                             <p>Lote: ${lote.codigo_lote}</p>
                             <p>Situação: ${lote.statusLote}</p>
                             <p>Modelo: ${modelo}</p>
                             <p>Status:</p>
-                            <div class="bolinha"></div>
+                            <div class="bolinha ${lote.corStatus}"></div>
 
                             <div class="botoes">
                                 <button onclick="event.stopPropagation(); buscarLote(${c + 1})"
@@ -217,8 +235,7 @@ function filtrar() {
                     `;
                 }
             }
-        })
-        .catch(err => console.error("Erro no filtro:", err));
+        });
 }
 
 
@@ -242,7 +259,7 @@ function pesquisar() {
                 const idLote = lote.idLote;
 
                 // Evita duplicados
-                if (idsRegistrados.includes(idLote)) continue;
+                if (idsRegistrados === idLote) continue;
                 idsRegistrados.push(idLote);
 
                 const modelo = lote.nomeModelo == null ? "N/A" : lote.nomeModelo;
@@ -305,7 +322,7 @@ function filtrarPorData() {
                 const idLote = lote.idLote;
 
                 // Evita duplicados
-                if (idsRegistrados.includes(idLote)) continue;
+                if (idsRegistrados === idLote) continue;
                 idsRegistrados.push(idLote);
 
                 // Normaliza a data do lote
@@ -317,12 +334,11 @@ function filtrarPorData() {
                     const corFundo = c % 2 === 0 ? "bg-black" : "bg-blue-900";
 
                     lotes.innerHTML += `
-                        <div class="${corFundo} p-4 rounded-lg text-white cards-lotes"
+                         <div class="${corFundo} p-4 rounded-lg text-white cards-lotes" 
                             onclick="abrirLote(${idLote})" style="cursor: pointer;">
                             <p>Lote: ${lote.codigo_lote}</p>
                             <p>Situação: ${lote.statusLote}</p>
                             <p>Modelo: ${modelo}</p>
-                            <p>Data de fabricação: ${dataLote}</p>
                             <p>Status:</p>
                             <div class="bolinha"></div>
 
@@ -349,3 +365,5 @@ function filtrarPorData() {
         })
         .catch(err => console.error("Erro ao filtrar por data:", err));
 }
+
+

@@ -2,14 +2,14 @@ let listaModelos;
 
 function listarModelos() {
     modelos.innerHTML = `
-     <div class="cabecalho">
-     <p>Modelo</p>
-     <p>Status</p>
-     </p>Falhas detectadas</p>
-     <p style="text-align: center;">Componentes <br>monitorados</p>
-     <p>Taxa de falha</p>
-     </div>
-     `
+    <div class="cabecalho">
+        <p>Modelo</p>
+        <p>Status</p>
+        <p>Falhas</p>
+        <p>Componentes</p>
+        <p>Taxa de falhas</p>
+        <p></p> </div>
+    `;
 
     fetch(`/dashboard/listarModelos`, {
         method: "GET"
@@ -22,22 +22,18 @@ function listarModelos() {
                 modelos.innerHTML += `
                     <a href="../dashboard/loteQualidade.html" class="no-underline">
                         <div class="bg-blue-900 p-4 rounded-lg text-white cards-modelos hover:bg-blue-800 cursor-pointer">
-                                 <p>Modelo: ${listaModelos[c].nome}</p>
-                                <p>Status: ${listaModelos[c].status}</p>
-                                <p>Falhas detectadas:</p>
-                                 <p>Componentes Monitorados:</p>
-                                 <p>Taxa de Falha:</p>
-                            <button onclick="event.stopPropagation(); buscarLote(${c + 1})"
-                            class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-                                Editar
-                            </button>
+                            <p>${listaModelos[c].nome}</p>
+                            <p>${listaModelos[c].status}</p>
+                            <p>50</p>
+                            <p>3</p>
+                            <p>30%</p>
                             <button onclick="event.stopPropagation();"
                             class="cursor-pointer w-30px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                                 Remover
                             </button>
                         </div>
                     </a>
-`;
+                `;
             }
         })
     })

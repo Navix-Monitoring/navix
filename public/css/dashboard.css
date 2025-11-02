@@ -122,11 +122,17 @@
 }
 
 .bolinha {
-  background-color: red;
-  border-radius: 100%;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-top: 5px;
+  transition: background-color 0.3s ease;
 }
+
+.bolinha.vermelho { background-color: #e63946; box-shadow: 0 0 10px #e63946; }
+.bolinha.laranja { background-color: #f77f00; box-shadow: 0 0 10px #f77f00; }
+.bolinha.amarelo { background-color: #ffcf33; box-shadow: 0 0 10px #ffcf33; }
+.bolinha.verde { background-color: #06d6a0; box-shadow: 0 0 10px #06d6a0; }
 
 .chart {
   width: 100px;

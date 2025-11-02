@@ -1,163 +1,128 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Engenheiro Qualidade</title>
-    <link rel="icon" href="../assets/navix-logo.jpg" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script
-      src="https://kit.fontawesome.com/6921956092.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="../js/sessao.js"></script>
-    <link rel="stylesheet" href="../css/dashboard.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engenheiro Qualidade</title>
+  <link rel="icon" href="../assets/navix-logo.jpg" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+  <script src="../js/sessao.js"></script>
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <body class="bg-gray-100">
+</head>
 
-    <div class="flex flex-row w-full">
-      <!-- nav bar -->
-      <div
-        class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600 **fixed top-0 left-0**">
-        <img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10" />
-        <div id="imagemUsuarioNavbar">
-          <div
-            class="rounded-md w-20 h-20 mb-2"
-            style="
+<body class="bg-gray-100">
+
+  <div class="flex flex-row w-full">
+    <!-- nav bar -->
+    <div
+      class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600 **fixed top-0 left-0**">
+      <img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10" />
+      <div id="imagemUsuarioNavbar">
+        <div class="rounded-md w-20 h-20 mb-2" style="
               background-image: url(../assets/img/foto-usuario.png);
               background-size: cover;
               background-repeat: no-repeat;
               background-position: center;
-            "
-          ></div>
-        </div>
-
-        <div id="nomeProfissao" class="text-center mb-6"></div>
-
-        <div class="flex flex-col gap-4 w-[80%]">
-          <a
-            href="../perfil-visualizar.html"
-            class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
-          >
-            Perfil
-          </a>
-
-          <a
-            onclick="redirecionar()"
-            class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium" style="cursor: pointer;"
-          >
-            Dashboard
-          </a>
-
-          <a
-            href="../admin.html"
-            id="adm-only"
-            class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
-          >
-            Cadastrar Funcionários
-          </a>
-
-          <a
-            href="./cadastroVeiculos.html"
-            class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
-          >
-            Gerenciar Frota
-          </a>
-
-          <div
-            class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
-            onclick="limparSessao()"
-          >
-            <a href="../index.html" class="no-underline text-white">
-              <h3 class="m-0 p-0">Sair</h3>
-            </a>
-          </div>
-        </div>
+            "></div>
       </div>
 
-      <div class="flex flex-col">
-        <!-- section de graficos -->
+      <div id="nomeProfissao" class="text-center mb-6"></div>
 
-        <!-- nav de atalhos de busca -->
-        <aside class="ml-[250px] p-6 h-[120px] border-b">
-          <ul class="flex flex-wrap gap-15 w-full justify-center">
-            <li>
-              <p class="font-bold mb-1">Modelo ou codigo do lote:</p>
-              <div class="relative w-64">
-                <input
-                id="ipt_pesquisa"
-                oninput="pesquisar()"
-                  type="text"
-                  placeholder="Pesquisar..."
-                  class="border rounded-md pl-10 pr-4 py-2 w-full"
-                />
-                <img
-                  src="../assets/imagensIndex/icons8-pesquisar-24.png"
-                  class="absolute left-2 top-1/2 -translate-y-1/2 w-5 h-5 opacity-70"
-                />
-              </div>
-            </li>
+      <div class="flex flex-col gap-4 w-[80%]">
+        <a href="../perfil-visualizar.html"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+          Perfil
+        </a>
 
-            <li>
-              <p class="font-bold mb-2">Status do lote:</p>
-              <div class="flex gap-6">
-                <select
-                  id="select_Status"
-                  class="border rounded-md pl-10 pr-2 py-2"
-                  onchange="filtrar()"
-                >
-                  <option value="#">Selecione</option>
-                  <option value="ati">Ativo</option>
-                  <option value="man">Manutenção</option>
-                  <option value="ina">Inativo</option>
-                </select>
-              </div>
-            </li>
+        <a onclick="redirecionar()"
+          class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
+          style="cursor: pointer;">
+          Dashboard
+        </a>
 
-            <li>
-              <p class="font-bold mb-1">Ver em ordem:</p>
-              <select
-                id="ordem"
-                class="border rounded-md pl-10 pr-2 py-2"
-                onclick="filtrar()"
-              >
+        <a href="../admin.html" id="adm-only"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+          Cadastrar Funcionários
+        </a>
+
+        <a href="./cadastroVeiculos.html"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+          Gerenciar Frota
+        </a>
+
+        <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
+          onclick="limparSessao()">
+          <a href="../index.html" class="no-underline text-white">
+            <h3 class="m-0 p-0">Sair</h3>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col">
+      <!-- section de graficos -->
+
+      <!-- nav de atalhos de busca -->
+      <aside class="ml-[250px] p-6 h-[120px] border-b">
+        <ul class="flex flex-wrap gap-15 w-full justify-center">
+          <li>
+            <p class="font-bold mb-1">Modelo ou codigo do lote:</p>
+            <div class="relative w-64">
+              <input id="ipt_pesquisa" oninput="pesquisar()" type="text" placeholder="Pesquisar..."
+                class="border rounded-md pl-10 pr-4 py-2 w-full" />
+              <img src="../assets/imagensIndex/icons8-pesquisar-24.png"
+                class="absolute left-2 top-1/2 -translate-y-1/2 w-5 h-5 opacity-70" />
+            </div>
+          </li>
+
+          <li>
+            <p class="font-bold mb-2">Status do lote:</p>
+            <div class="flex gap-6">
+              <select id="select_Status" class="border rounded-md pl-10 pr-2 py-2" onchange="filtrar()">
                 <option value="#">Selecione</option>
-                <option value="asc">Crescente</option>
-                <option value="desc">Decrescente</option>
+                <option value="ati">Ativo</option>
+                <option value="man">Manutenção</option>
+                <option value="ina">Inativo</option>
               </select>
-            </li>
-            <li>
-              <p class="font-bold mb-1">Modelo</p>
-              <select id="select_modelo"
-               class="border rounded-md pl-1 pr-1 py-2"
-               onclick="filtrarModelo()">
-                <option value="#">Selecione</option>
-              </select>
-            </li>
+            </div>
+          </li>
 
-            <li>
-              <p class="font-bold mb-1">Data de fabricação:</p>
-              <div>
-                <input
-                  type="date"
-                  id="data"
-                  class="border rounded-md pl-10 pr-2 py-2"
-                />
-              </div>
-            </li>
-          </ul>
-        </aside>
+          <li>
+            <p class="font-bold mb-1">Ver em ordem:</p>
+            <select id="ordem" class="border rounded-md pl-10 pr-2 py-2" onclick="filtrar()">
+              <option value="#">Selecione</option>
+              <option value="asc">Crescente</option>
+              <option value="desc" selected>Decrescente</option>
+            </select>
+          </li>
+          <li>
+            <p class="font-bold mb-1">Modelo</p>
+            <select id="select_modelo" class="border rounded-md pl-1 pr-1 py-2" onclick="filtrarModelo()">
+              <option value="#">Selecione</option>
+            </select>
+          </li>
 
-        <!-- Exemplos de cards -->
-        <section
-          class="ml-[250px] h-[850px] overflow-y-auto rounded-md p-4 bg-white"
-        >
-          <div class="grid grid-cols-1 gap-4" id="lotes">
-            <!-- <div class="bg-blue-800 p-4 rounded-lg text-white">Lote 1</div>
+          <li>
+            <p class="font-bold mb-1">Data de fabricação:</p>
+            <div>
+              <input type="date" 
+              id="data" 
+              class="border rounded-md pl-10 pr-2 py-2" 
+              onchange="filtrarPorData()" />
+            </div>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Exemplos de cards -->
+      <section class="ml-[250px] h-[850px] overflow-y-auto rounded-md p-4 bg-white">
+        <div class="grid grid-cols-1 gap-4" id="lotes">
+          <!-- <div class="bg-blue-800 p-4 rounded-lg text-white">Lote 1</div>
           <div class="bg-black p-4 rounded-lg text-white">Lote 2</div>
           <div class="bg-blue-800 p-4 rounded-lg text-white">Lote 3</div>
           <div class="bg-black p-4 rounded-lg text-white">Lote 4</div>
@@ -165,54 +130,55 @@
           <div class="bg-black p-4 rounded-lg text-white">Lote 6</div>
           <div class="bg-blue-800 p-4 rounded-lg text-white">Lote 7</div>
           <div class="bg-black p-4 rounded-lg text-white">Lote 8</div> -->
-          </div>
-        </section>
-      </div>
-      <div id="criarEditar"></div>
+        </div>
+      </section>
     </div>
-  </body>
+    <div id="criarEditar"></div>
+  </div>
+</body>
 
-  <script src="../js/dashboardEngenheiroQualidade.js"></script>
-  <script src="../js/usuario/verificadorCargo.js"></script>
+<script src="../js/dashboardEngenheiroQualidade.js"></script>
+<script src="../js/usuario/verificadorCargo.js"></script>
 
-  <script>
-    // Esta função agora será chamada pelo listener abaixo
-    function carregarFotoUsuario() {
-      var imagemUsuarioNavbar = document.getElementById("imagemUsuarioNavbar");
-      if (imagemUsuarioNavbar) {
-        imagemUsuarioNavbar.innerHTML = `
+<script>
+  // Esta função agora será chamada pelo listener abaixo
+  function carregarFotoUsuario() {
+    var imagemUsuarioNavbar = document.getElementById("imagemUsuarioNavbar");
+    if (imagemUsuarioNavbar) {
+      imagemUsuarioNavbar.innerHTML = `
         <div class="rounded-md w-20 h-20 mb-2"
           style="background-image: url(${sessionStorage.imagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
         </div>
       `;
-      }
+    }
+  }
+
+  // Espera o HTML carregar antes de executar qualquer script
+  document.addEventListener("DOMContentLoaded", function () {
+    // --- CHAMA AS FUNÇÕES DE INICIALIZAÇÃO ---
+    verificarCargo(); // SUA FUNÇÃO PARA ESCONDER O LINK!
+    carregarFotoUsuario(); // Função do seu script inline
+
+    // Chama a função que estava no 'onload'
+    if (typeof listarLotes === "function") {
+      listarLotes();
     }
 
-    // Espera o HTML carregar antes de executar qualquer script
-    document.addEventListener("DOMContentLoaded", function () {
-      // --- CHAMA AS FUNÇÕES DE INICIALIZAÇÃO ---
-      verificarCargo(); // SUA FUNÇÃO PARA ESCONDER O LINK!
-      carregarFotoUsuario(); // Função do seu script inline
+    // --- PREENCHE OS DADOS DO USUÁRIO ---
+    // (Este código estava quebrado, pois rodava antes do 'nomeProfissao' existir)
+    var nomeEmpresa = sessionStorage.getItem("nome_ss");
+    var cargo = sessionStorage.getItem("cargo_ss");
+    var nomeProfissao = document.getElementById("nomeProfissao");
 
-      // Chama a função que estava no 'onload'
-      if (typeof listarLotes === "function") {
-        listarLotes();
-      }
-
-      // --- PREENCHE OS DADOS DO USUÁRIO ---
-      // (Este código estava quebrado, pois rodava antes do 'nomeProfissao' existir)
-      var nomeEmpresa = sessionStorage.getItem("nome_ss");
-      var cargo = sessionStorage.getItem("cargo_ss");
-      var nomeProfissao = document.getElementById("nomeProfissao");
-
-      if (nomeProfissao) {
-        // Verifica se o elemento foi encontrado
-        nomeProfissao.innerHTML = `
+    if (nomeProfissao) {
+      // Verifica se o elemento foi encontrado
+      nomeProfissao.innerHTML = `
         <p class="font-bold text-blue-900">${nomeEmpresa}</p>
         <p class="mb-4 text-blue-900">Cargo: ${cargo}</p>
       `;
-      }
-    });
-  </script>
-  <script src="../js/redirecionar.js"></script>
+    }
+  });
+</script>
+<script src="../js/redirecionar.js"></script>
+
 </html>
