@@ -394,5 +394,11 @@ function filtrarPorData() {
         })
         .catch(err => console.error("Erro ao filtrar por data:", err));
 }
+function traduzirStatus(filtroStatus) {
+    if (filtroStatus === "ati") return "Ativo";
+    if (filtroStatus === "man") return "Manutenção";
+    if (filtroStatus === "ina") return "Inativo";
+    return null;
+}
 
 
