@@ -107,6 +107,10 @@
   align-items: center;
   gap: 15px;
 }
+.editarLote{
+  justify-self: center;
+  align-self: center;
+}
 
 .card {
   margin: 10px;

@@ -21,6 +21,19 @@ function listarModelos(req,res){
     })
 }
 
+function buscarLoteparaEditar(req, res) {
+    console.log("Acessei o controller buscar lote para editar...")
+    var id = req.params.idLote;
+    dashboardModel.buscarLoteparaEditar(id).then(function (resposta) {
+        res.status(200).json(resposta);
+    }).catch(function (erro) {
+        res.status(500).json(erro.sqlMessage);
+    })
+}
+function editarLote(req,res){
+    console.log("Acessei o controller editar lote...")
+    var codigo_lote = req.body.
+}
 function buscarLote(req, res) {
     console.log("Acessei o controller buscar lote...")
     var id = req.params.idLote;
@@ -44,5 +57,7 @@ module.exports = {
     listar,
     listarModelos,
     buscarLote,
-    filtroModelo
+    filtroModelo,
+    buscarLoteparaEditar,
+    editarLote
 }

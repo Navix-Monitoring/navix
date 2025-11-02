@@ -28,6 +28,17 @@ function listarModelos(){
     return database.executar(instrucaoSql);
 }
 
+function buscarLoteparaEditar(id){
+console.log("Acessei o dashboard model - buscando o lote para poder editar...")
+
+const instrucaoSql = 
+`
+SELECT * FROM lote WHERE id = ${id};
+`
+return database.executar(instrucaoSql)
+
+}
+
 function buscarLote(id){
     console.log("Acessei o  dashboard model - buscando o lote...")
 
@@ -75,5 +86,6 @@ module.exports = {
 listar,
 listarModelos,
 buscarLote,
-filtroModelo
+filtroModelo,
+buscarLoteparaEditar
 }

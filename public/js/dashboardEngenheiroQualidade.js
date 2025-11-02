@@ -41,7 +41,7 @@ function listarLotes() {
                         <div class="bolinha ${lote.corStatus}"></div>
 
                         <div class="botoes">
-                            <button onclick="event.stopPropagation(); buscarLote(${c + 1})"
+                            <button onclick="event.stopPropagation(); buscarLote(${idLote})"
                                 class="cursor-pointer w-150px bg-white border-2 border-blue-900 text-black rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
                                 Editar
                             </button>
@@ -118,39 +118,70 @@ function filtrarModelo() {
 
 function buscarLote(idLote) {
 
-    fetch(`/dashboard/buscarLote/${idLote}`, {
+    fetch(`/dashboard/buscarLoteparaEditar/${idLote}`, {
         method: "GET"
-    }).then(res => {
-        res.json().then(json => {
-            console.log("Entrei na resposta do fetch do buscar lote")
-            const dataFabricacao = new Date(json[0].data_fabricacao);
+    }).then(res => res.json())
+      .then(json => {
+        console.log("Entrei na resposta do fetch do buscar lote para editar...");
 
-            // Formata no padrão dd/mm/yyyy
-            const dia = String(dataFabricacao.getDate()).padStart(2, '0');
-            const mes = String(dataFabricacao.getMonth() + 1).padStart(2, '0'); // meses começam do 0
-            const ano = dataFabricacao.getFullYear();
-            const dataFormatada = `${dia}/${mes}/${ano}`;
-            criarEditar.innerHTML =
-                `
-                <dialog id="lote${idLote}" >
-                <h1>Lote: ${json[0].codigo_lote}</h1>
-                <h3>Data de fabricação: ${dataFormatada}<h3>
-                <h3>Quantidade de veiculos: ${json[0].qtd_veiculos}</h3>
-                </dialog>
-                `
+        const lote = json[0];
+        const dataFabricacao = new Date(lote.data_fabricacao);
 
-            const dialog = document.getElementById(`lote${idLote}`);
-            if (dialog) {
-                dialog.showModal();
-            } else {
-                console.error("Dialog não encontrado!");
-            }
-        })
-    })
+        // Formata no padrão yyyy-mm-dd para input[type=date]
+        const dataFormatadaInput = `${dataFabricacao.getFullYear()}-${String(dataFabricacao.getMonth() + 1).padStart(2, '0')}-${String(dataFabricacao.getDate()).padStart(2, '0')}`;
 
-        .catch(erro => console.error("Erro ao buscar lote:", erro));
+        criarEditar.innerHTML = `
+            <dialog id="lote${idLote}" class="editarLote rounded-md w-1/3 p-6">
+                <h2 class="text-xl font-bold mb-4">Editar Lote: ${lote.codigo_lote}</h2>
 
+                <label class="block mb-2 font-semibold">Código do Lote:</label>
+                <input type="text" id="codigoLote${idLote}" value="${lote.codigo_lote}" class="w-full border rounded-md p-2 mb-4">
+
+                <label class="block mb-2 font-semibold">Data de fabricação:</label>
+                <input type="date" id="dataFabricacao${idLote}" value="${dataFormatadaInput}" class="w-full border rounded-md p-2 mb-4">
+
+                <label class="block mb-2 font-semibold">Quantidade de veículos:</label>
+                <input type="number" id="qtdVeiculos${idLote}" value="${lote.qtd_veiculos}" class="w-full border rounded-md p-2 mb-4">
+
+                <div class="flex justify-end gap-2 mt-4">
+                    <button onclick="fecharDialog(${idLote})" class="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400">Cancelar</button>
+                    <button onclick="salvarLote(${idLote})" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Salvar</button>
+                </div>
+            </dialog>
+        `;
+
+        const dialog = document.getElementById(`lote${idLote}`);
+        if (dialog) dialog.showModal();
+        else console.error("Dialog não encontrado!");
+      })
+      .catch(erro => console.error("Erro ao buscar lote:", erro));
 }
+
+function fecharDialog(idLote) {
+    const dialog = document.getElementById(`lote${idLote}`);
+    if (dialog) dialog.close();
+}
+
+function salvarLote(idLote){
+    const codigoLote = document.getElementById(`codigoLote${idLote}`).value;
+    const dataFabricacao = document.getElementById(`dataFabricacao${idLote}`).value;
+    const qtdVeiculos = document.getElementById(`qtdVeiculos${idLote}`).value;
+
+    fetch(`/dashboard/editarLote/${idLote}`,{
+        method: "PUT",
+        headers: {"Content-Type": "application/json" },
+        body: JSON.stringify({
+            codigo_lote: codigoLote,
+            data_fabricacao: dataFabricacao,
+            qtd_veiculos: qtdVeiculos
+        })
+    }).then(res=>res.json())
+    .then(json=> {
+        console.log("Entrei na resposta do fetch de editar lote...")
+        
+    })
+}
+
 
 function listarModelos() {
     fetch(`/dashboard/listarModelos`, {
