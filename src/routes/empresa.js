@@ -8,6 +8,10 @@ router.get("/buscar", function (req, res) {
   empresaController.buscarDadosEmpresa(req, res);
 });
 
+router.get("/listarCargos", function(req,res){
+  empresaController.listarCargos(req,res);
+});
+
 router.post("/cadastrar", function (req, res) {
   empresaController.cadastrar_empresa(req, res);
 });

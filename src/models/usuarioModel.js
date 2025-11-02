@@ -66,7 +66,7 @@ function carregarInformacoesUsuario(email) {
 function adicionarFotoUsuario(fkEmpresa, nome, sobrenome, telefone, email, senha, cargo, nome_imagem) {
     console.log("Entrou na model de criação de usuário")
     var caminhoImagem = "../assets/img/imagens-perfil/" + nome_imagem
-    var instrucaoSql = `INSERT INTO funcionario(fkEmpresa,nome,sobrenome,telefone,email,senha,cargo,caminhoImagem)
+    var instrucaoSql = `INSERT INTO funcionario(fkEmpresa,nome,sobrenome,telefone,email,senha,fkCargo,caminhoImagem)
      VALUES(${fkEmpresa},"${nome}","${sobrenome}","${telefone}","${email}","${senha}","${cargo}", "${caminhoImagem}");`
     return database.executar(instrucaoSql)
 
@@ -80,7 +80,9 @@ function cadastrarUsuario(fkEmpresa, nome, sobrenome, telefone, email, senha, fk
 }
 
 function listarUsuariosEmpresa(idEmpresa) {
-    const instrucaoSql = `SELECT * FROM funcionario WHERE fkEmpresa = ${idEmpresa}`
+    const instrucaoSql = `select * from funcionario f
+                        inner join cargo c ON c.id = f.fkCargo
+                        WHERE fkEmpresa = ${idEmpresa}`
     return database.executar(instrucaoSql)
 }
 
@@ -90,14 +92,14 @@ function deletarUsuario(id) {
 }
 
 function atualizarUsuario(nome, sobrenome, email, telefone, cargo, id) {
-    const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}", telefone = "${telefone}", email = "${email}", cargo = "${cargo}" where id = ${id}`
+    const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}", telefone = "${telefone}", email = "${email}", fkCargo = "${cargo}" where id = ${id}`
     return database.executar(instrucaoSql)
 }
 
 function atualizarImagemUsuario(nome, sobrenome, email, telefone, cargo, id, nome_imagem) {
     var caminhoImagem = "../assets/img/imagens-perfil/" + nome_imagem
     const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}",
-     telefone = "${telefone}", email = "${email}", cargo = "${cargo}", caminhoImagem = "${caminhoImagem}" where id = ${id}`
+     telefone = "${telefone}", email = "${email}", fkCargo = "${cargo}", caminhoImagem = "${caminhoImagem}" where id = ${id}`
     return database.executar(instrucaoSql)
 }
 

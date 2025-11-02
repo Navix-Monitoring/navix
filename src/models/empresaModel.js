@@ -36,7 +36,18 @@ async function cadastrar_empresa(
     });
 }
 
+function listarCargos() {
+  console.log("ACESSEI O EMPRESA MODEL - listando cargos...");
+  const instrucaoSql =
+    `
+      SELECT * FROM cargo;
+    `
+  console.log("Executando SQL para Empresa: \n" + instrucaoSql);
+  return database.executar(instrucaoSql);
+}
+
 module.exports = {
   buscarDadosEmpresa,
   cadastrar_empresa,
+  listarCargos
 };

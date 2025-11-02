@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body class="overflow-x-hidden flex flex-col" onload="carregarFotoUsuario(), verificarCargo()">
+<body class="overflow-x-hidden flex flex-col" onload="carregarFotoUsuario(), verificarCargo(),listarCargos()">
   <!-- <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50 z-50">
         <div>
             <div class="h-18 w-18 bg-slate-300 rounded-full" id="logo"></div>
@@ -156,7 +156,9 @@
       </div>
       <div class="flex flex-col gap-2 w-full">
         <p class="text-xl font-semibold text-blue-950">Cargo</p>
-        <input type="text" id="cargoUpdate" class="bg-slate-300 px-4 py-2 rounded-md" />
+        <select id="cargoUpdate" class="border rounded-md pl-10 pr-2 py-2">
+          <option value='#'>Selecione o cargo</option>
+        </select>
       </div>
       <div class="flex gap-5 w-full pb-6">
         <div class="flex flex-col gap-2 w-full">
@@ -277,6 +279,24 @@
 <script>
   var users = [];
 
+  function listarCargos(){
+
+    fetch(`/empresa/listarCargos`,{
+      method: "GET"
+    }).then(res=>{
+      res.json().then(json=>{
+        console.log("Entrei na resposta de listar cargos")
+        for(let c = 0; c<json.length;c++){
+          cargoUpdate.innerHTML += 
+        `
+        <option value="${json[c].id}">${json[c].titulo}</option>
+        `
+        }
+
+      })
+    })
+  }
+
   function carregarFotoUsuario() {
     document.getElementById("imagemUsuarioNavbar").innerHTML = `
              <div class="rounded-md w-20 h-20 mb-2"
@@ -349,7 +369,7 @@
       formData.append("fkEmpresa", idEmpresa);
       formData.append("nome", nome.value);
       formData.append("email", email.value);
-      formData.append("cargo", cargo.value);
+      formData.append("cargo", fkCargo.value);
       formData.append("senha", senha.value);
       formData.append("telefone", telefone.value);
       formData.append("sobrenome", sobrenome.value);
@@ -453,7 +473,7 @@
   function abrirTelaUpdate(i) {
     (nomeUpdate.value = users[i].nome),
       (emailUpdate.value = users[i].email),
-      (cargoUpdate.value = users[i].cargo),
+      (cargoUpdate.value = users[i].titulo),
       (telefoneUpdate.value = users[i].telefone),
       (sobrenomeUpdate.value = users[i].sobrenome);
     document.getElementById("imagemFuncionarioPerfilAtualizar").innerHTML = `
@@ -533,7 +553,7 @@
                     <div class="font-semibold text-slate-600">${u.telefone || ''}</div>
                     <div class="font-semibold text-slate-600 truncate" title="${u.email || ''}">${u.email || ''}</div>
                     <div style="justify-self:center"><button onclick="mudarStatusUsuario('${u.email}', '${u.statusPerfil}')" class="inline-flex items-center justify-center rounded-full bg-red-400 text-red-900 px-4 py-1 text-sm font-semibold w-24 cursor-pointer">${u.statusPerfil}</button></div>
-                    <div class="font-semibold text-slate-600 truncate" title="${u.cargo || ''}">${u.cargo || ''}</div>
+                    <div class="font-semibold text-slate-600 truncate" title="${u.titulo || ''}">${u.titulo || ''}</div>
                     <div style="display:flex; align-items:center; justify-content:center; gap:0.75rem">
                     <button title="Editar" onclick="abrirTelaUpdate(${i})"><i class="fa-solid fa-pen text-xl text-slate-800 cursor-pointer"></i></button>
                     <button title="Excluir" onclick="telaDel(${u.id})"><i class="fa-solid fa-trash text-xl text-slate-800 cursor-pointer"></i></button>
@@ -547,7 +567,7 @@
                     <div class="font-semibold text-slate-600">${u.telefone || ''}</div>
                     <div class="font-semibold text-slate-600 truncate" title="${u.email || ''}">${u.email || ''}</div>
                     <div style="justify-self:center"><button onclick="mudarStatusUsuario('${u.email}', '${u.statusPerfil}')" class="inline-flex items-center justify-center rounded-full bg-green-400 text-green-900 px-4 py-1 text-sm font-semibold w-24 cursor-pointer">${u.statusPerfil}</button></div>
-                    <div class="font-semibold text-slate-600 truncate" title="${u.cargo || ''}">${u.cargo || ''}</div>
+                    <div class="font-semibold text-slate-600 truncate" title="${u.titulo || ''}">${u.titulo || ''}</div>
                     <div style="display:flex; align-items:center; justify-content:center; gap:0.75rem">
                     <button title="Editar" onclick="abrirTelaUpdate(${i})"><i class="fa-solid fa-pen text-xl text-slate-800 cursor-pointer"></i></button>
                     <button title="Excluir" onclick="telaDel(${u.id

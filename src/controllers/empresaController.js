@@ -51,8 +51,17 @@ function cadastrar_empresa(req, res) {
       });
   }
 
+function listarCargos(req,res){
+  console.log("Acessei o controller listar cargos...")
+  empresaModel.listarCargos().then(function(resposta){
+    res.status(200).json(resposta);
+  }).catch(function(erro){
+    res.status(500).json(erro.sqlMessage);
+  })
+}
 
 module.exports = {
+  listarCargos,
   buscarDadosEmpresa,
   cadastrar_empresa,
 };
