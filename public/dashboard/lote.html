@@ -5,19 +5,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lote</title>
-  <link rel="icon" href="./assets/navix-logo.jpg">
+  <link rel="icon" href="../assets/navix-logo.jpg">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
   <script src="../js/sessao.js"></script>
   <link rel="stylesheet" href="../css/dashboard.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../js/sessao.js"></script>
   <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
   <script
     src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/dist/chartjs-chart-boxplot.min.js"></script>
 </head>
 
-<body onload="carregarInformacoes(), simularValores()">
+<body onload="carregarInformacoes(), simularValores(),verificarCargo()">
 
   <div class="flex flex-row w-full">
     <div
@@ -210,6 +211,7 @@
 
 </html>
 <script src="../js/lote.js"></script>
+<script src="../js/usuario/verificadorCargo.js"></script>
 <script src="../js/redirecionar.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -865,4 +867,40 @@
       ['TEMPERATURA x CPU', 'TEMPERATURA x PROCESSOS', 'PROCESSOS x CPU']
     );
   });
+  function carregarFotoUsuario() {
+      var imagemUsuarioNavbar = document.getElementById("imagemUsuarioNavbar");
+      if (imagemUsuarioNavbar) {
+        imagemUsuarioNavbar.innerHTML = `
+        <div class="rounded-md w-20 h-20 mb-2"
+          style="background-image: url(${sessionStorage.imagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+        </div>
+      `;
+      }
+    }
+
+    // Espera o HTML carregar antes de executar qualquer script
+    document.addEventListener("DOMContentLoaded", function () {
+      // --- CHAMA AS FUNÇÕES DE INICIALIZAÇÃO ---
+      verificarCargo(); // SUA FUNÇÃO PARA ESCONDER O LINK!
+      carregarFotoUsuario(); // Função do seu script inline
+
+      // Chama a função que estava no 'onload'
+      if (typeof listarLotes === "function") {
+        listarLotes();
+      }
+
+      // --- PREENCHE OS DADOS DO USUÁRIO ---
+      // (Este código estava quebrado, pois rodava antes do 'nomeProfissao' existir)
+      var nomeEmpresa = sessionStorage.getItem("nome_ss");
+      var cargo = sessionStorage.getItem("cargo_ss");
+      var nomeProfissao = document.getElementById("nomeProfissao");
+
+      if (nomeProfissao) {
+        // Verifica se o elemento foi encontrado
+        nomeProfissao.innerHTML = `
+        <p class="font-bold text-blue-900">${nomeEmpresa}</p>
+        <p class="mb-4 text-blue-900">Cargo: ${cargo}</p>
+      `;
+      }
+    });
 </script>
