@@ -224,7 +224,7 @@ async function mudarSenha(req, res) {
          res.json(resultado);
        });
    } else {*/
-  usuarioModel.atualizarEmailUsuario(senha, emailUsuario)
+  usuarioModel.atualizarSenhaUsuario(novaSenha, emailUsuario)
     .then(function (resultado) {
       console.log("Resultado: ", resultado);
       res.json(resultado);
