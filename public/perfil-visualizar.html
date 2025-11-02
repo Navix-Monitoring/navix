@@ -1,213 +1,199 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atualizar Perfil</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script
-      src="https://kit.fontawesome.com/6921956092.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="icon" href="./assets/navix-logo.jpg" />
-    <script src="js/usuario/perfil.js"></script>
-    <script src="../js/sessao.js"></script>
-  </head>
 
-  <body
-    class="bg-gray-100 flex"
-    onload="carregarInformacoes(), verificarCargo()"
-  >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atualizar Perfil</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/perfil-visualizar.css">
+  <link rel="icon" href="./assets/navix-logo.jpg" />
+  <script src="js/usuario/perfil.js"></script>
+  <script src="../js/sessao.js"></script>
+</head>
+
+<body class="bg-gray-100 flex" onload="carregarInformacoes(), verificarCargo()">
+  <div class="w-full min-h-screen fixed inset-0 z-10 flex flex-col justify-center items-center bg-black/50"
+    style="display: none" id="telaAtualizar">
     <div
-      class="w-full min-h-screen fixed inset-0 z-10 flex flex-col justify-center items-center bg-black/50"
-      style="display: none"
-      id="telaAtualizar"
-    >
-      <div
-        class="relative bg-slate-100 border-blue-900 shadow-2xl p-16 flex flex-col z-20 justify-center items-center w-1/2 h-9/10 rounded-xl"
-      >
-        <button
-          onclick="fecharTela()"
-          class="absolute top-6 right-10 text-2xl text-gray-500 hover:text-red-600"
-        >
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+      class="relative bg-slate-100 border-blue-900 shadow-2xl p-16 flex flex-col z-20 justify-center items-center w-1/2 h-9/10 rounded-xl">
+      <button onclick="fecharTela()" class="absolute top-6 right-10 text-2xl text-gray-500 hover:text-red-600">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
-        <p class="text-4xl font-semibold text-blue-900">Atualizar Dados</p>
+      <p class="text-4xl font-semibold text-blue-900">Atualizar Dados</p>
 
-        <div class="flex gap-5 w-full flex flex-col">
-          <div class="flex items-center justify-start gap-4">
-            <div id="imagemUsuarioPerfil">
-              <div
-                class="bg-[#002B50] rounded-full w-26 h-26 flex justify-center items-center text-white text-4xl"
-              ></div>
-            </div>
-            <input type="file" id="foto" name="foto" hidden />
-            <div class="flex flex-col">
-              <label
-                for="foto"
-                class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 rounded-md border-3 border-slate-600 hover:opacity-90"
-              >
-                Alterar foto de perfil
-              </label>
-              <p id="mensagemImagemUsuario"></p>
-            </div>
+      <div class="flex gap-5 w-full flex flex-col">
+        <div class="flex items-center justify-start gap-4">
+          <div id="imagemUsuarioPerfil">
+            <div class="bg-[#002B50] rounded-full w-26 h-26 flex justify-center items-center text-white text-4xl"></div>
           </div>
+          <input type="file" id="foto" name="foto" hidden />
+          <div class="flex flex-col">
+            <label for="foto"
+              class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 rounded-md border-3 border-slate-600 hover:opacity-90">
+              Alterar foto de perfil
+            </label>
+            <p id="mensagemImagemUsuario"></p>
+          </div>
+        </div>
 
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Razão Social</p>
+          <input type="text" id="nome_input" class="bg-slate-300 px-4 py-2 rounded-md" />
+        </div>
+
+        <div class="flex gap-5 w-full pb-6">
           <div class="flex flex-col gap-2 w-full">
-            <p class="text-xl font-semibold text-blue-950">Razão Social</p>
-            <input
-              type="text"
-              id="nome_input"
-              class="bg-slate-300 px-4 py-2 rounded-md"
-            />
+            <p class="text-xl font-semibold text-blue-950">Email</p>
+            <input type="email" id="email_input" class="bg-slate-300 px-4 py-2 rounded-md" />
+          </div>
+        </div>
+
+        <div class="flex gap-5 w-full pb-6">
+          <div class="flex flex-col gap-2 w-full">
+            <p class="text-xl font-semibold text-blue-950">Senha</p>
+            <input type="password" id="senha_input" class="bg-slate-300 px-4 py-2 rounded-md" />
+          </div>
+        </div>
+
+        <div class="flex flex-row gap-5">
+          <div class="flex justify-center w-full">
+            <a onclick="atualizar()"
+              class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl rounded-md cursor-pointer hover:opacity-90">
+              Atualizar Dados
+            </a>
           </div>
 
-          <div class="flex gap-5 w-full pb-6">
-            <div class="flex flex-col gap-2 w-full">
-              <p class="text-xl font-semibold text-blue-950">Email</p>
-              <input
-                type="email"
-                id="email_input"
-                class="bg-slate-300 px-4 py-2 rounded-md"
-              />
-            </div>
-          </div>
-
-          <div class="flex gap-5 w-full pb-6">
-            <div class="flex flex-col gap-2 w-full">
-              <p class="text-xl font-semibold text-blue-950">Senha</p>
-              <input
-                type="password"
-                id="senha_input"
-                class="bg-slate-300 px-4 py-2 rounded-md"
-              />
-            </div>
-          </div>
-
-          <div class="flex flex-row gap-5">
-            <div class="flex justify-center w-full">
-              <a
-                onclick="atualizar()"
-                class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl rounded-md cursor-pointer hover:opacity-90"
-              >
-                Atualizar Dados
-              </a>
-            </div>
-
-            <div class="flex justify-center w-full">
-              <a
-                onclick="deletar()"
-                class="flex w-full justify-center bg-red-900 py-4 text-slate-100 text-2xl rounded-md cursor-pointer hover:opacity-90"
-              >
-                Deletar Conta
-              </a>
-            </div>
+          <div class="flex justify-center w-full">
+            <a onclick="deletar()"
+              class="flex w-full justify-center bg-red-900 py-4 text-slate-100 text-2xl rounded-md cursor-pointer hover:opacity-90">
+              Deletar Conta
+            </a>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- nav bar -->
-    <div
-      class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600"
-    >
-      <a href="index.html"
-        ><img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10"
-      /></a>
-      <div id="imagemUsuarioNavbar">
-        <div
-          class="rounded-md w-20 h-20 mb-2"
-          style="
+  <!-- nav bar -->
+  <div class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
+    <a href="index.html"><img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10" /></a>
+    <div id="imagemUsuarioNavbar">
+      <div class="rounded-md w-20 h-20 mb-2" style="
             background-image: url(../assets/img/foto-usuario.png);
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-          "
-        ></div>
+          "></div>
+    </div>
+
+    <div id="nomeProfissao" class="text-center mb-6"></div>
+
+    <div class="flex flex-col gap-4 w-[80%]">
+      <a href="../perfil-visualizar.html"
+        class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Perfil
+      </a>
+
+      <a onclick="redirecionar()"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium func-only"
+        style="cursor: pointer;">
+        Dashboard
+      </a>
+
+      <a href="../admin.html" id="adm-only"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+        Cadastrar Funcionários
+      </a>
+
+      <a href="./dashboard/cadastroVeiculos.html"
+        class=" func-only w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium ">
+        Gerenciar Frota
+      </a>
+
+      <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
+        onclick="limparSessao()">
+        <a href="./login.html" class="no-underline text-white">
+          <h3 class="m-0 p-0">Sair</h3>
+        </a>
       </div>
+    </div>
+  </div>
 
-      <div id="nomeProfissao" class="text-center mb-6"></div>
+  <div class="flex-1 px-8 py-6 bg-slate-300">
+    <div id="textoInicio"></div>
 
-      <div class="flex flex-col gap-4 w-[80%]">
-        <a
-          href="../perfil-visualizar.html"
-          class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
-        >
-          Perfil
-        </a>
+    <div class="bg-slate-100 p-8 flex items-center gap-10 rounded-md relative shadow-md">
+      <button class="absolute top-4 right-4 text-blue-950 text-xl hover:text-blue-800">
+        <i class="fas fa-edit text-2xl" onclick="abrirTela()"></i>
+      </button>
 
-        <a 
-          onclick="redirecionar()"
-          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium func-only" style="cursor: pointer;"
-        >
-          Dashboard
-        </a>
-
-        <a
-          href="../admin.html"
-          id="adm-only"
-          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
-        >
-          Cadastrar Funcionários
-        </a>
-
-        <a
-          href="./dashboard/cadastroVeiculos.html"
-          class=" func-only w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium "
-        >
-          Gerenciar Frota
-        </a>
-
-        <div
-          class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
-          onclick="limparSessao()"
-        >
-          <a href="./login.html" class="no-underline text-white">
-            <h3 class="m-0 p-0">Sair</h3>
-          </a>
+      <div id="imagemUsuario"></div>
+      <div class="flex flex-col">
+        <p class="text-2xl font-semibold mb-2">Informações da conta</p>
+        <div class="flex gap-3">
+          <p class="text-slate-500 font-semibold">Nome:</p>
+          <div id="nomeEmpresaa"></div>
+        </div>
+        <div class="flex gap-3">
+          <p class="text-slate-500 font-semibold">Email:</p>
+          <div id="emailEmpresa"></div>
         </div>
       </div>
     </div>
 
-    <div class="flex-1 px-8 py-6 bg-slate-300">
-      <div id="textoInicio"></div>
-
-      <div
-        class="bg-slate-100 p-8 flex items-center gap-10 rounded-md relative shadow-md"
-      >
-        <button
-          class="absolute top-4 right-4 text-blue-950 text-xl hover:text-blue-800"
-        >
-          <i class="fas fa-edit text-2xl" onclick="abrirTela()"></i>
-        </button>
-
-        <div id="imagemUsuario"></div>
-        <div class="flex flex-col">
-          <p class="text-2xl font-semibold mb-2">Informações da conta</p>
-          <div class="flex gap-3">
-            <p class="text-slate-500 font-semibold">Nome:</p>
-            <div id="nomeEmpresaa"></div>
-          </div>
-          <div class="flex gap-3">
-            <p class="text-slate-500 font-semibold">Email:</p>
-            <div id="emailEmpresa"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-slate-100 rounded-md p-8 mt-8 shadow-md">
-        <div class="flex gap-4 items-center mb-6">
-          <p class="text-blue-950 font-semibold text-3xl">Alertas</p>
-          <i class="fa-solid fa-bell text-2xl text-blue-950"></i>
-        </div>
-        <div class="flex justify-center items-center py-20">
-          <p class="text-blue-950 text-3xl">EM BREVE!!</p>
-        </div>
-      </div>
+    <div class="bg-slate-100 rounded-xl p-8 mt-8 shadow-lg">
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-3">
+      <i class="fa-solid fa-bell text-3xl text-blue-900 animate-pulse"></i>
+      <p class="text-blue-950 font-bold text-3xl tracking-wide">Alertas</p>
     </div>
-  </body>
-  <script src="./js/usuario/verificadorCargo.js"></script>
+    <span class="text-sm text-blue-800 bg-blue-200 px-3 py-1 rounded-full font-semibold">
+      5 alertas ativos
+    </span>
+  </div>
+
+  <div id="alertas" class="flex flex-col gap-4">
+    <div class="flex justify-between items-center bg-red-100 border-l-4 border-red-600 p-4 rounded-lg shadow-sm">
+      <div>
+        <p class="text-red-800 font-semibold text-lg">Lote LT-B72K</p>
+        <p class="text-red-700">Alerta crítico: mediana CPU fora do padrão</p>
+      </div>
+      <i class="fa-solid fa-triangle-exclamation text-red-600 text-2xl"></i>
+    </div>
+
+    <div class="flex justify-between items-center bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg shadow-sm">
+      <div>
+        <p class="text-yellow-800 font-semibold text-lg">Lote LT-C19P</p>
+        <p class="text-yellow-700">Atenção: Mediana de CPU merece atenção</p>
+      </div>
+      <i class="fa-solid fa-circle-exclamation text-yellow-600 text-2xl"></i>
+    </div>
+
+    <div class="flex justify-between items-center bg-orange-100 border-l-4 border-orange-500 p-4 rounded-lg shadow-sm">
+      <div>
+        <p class="text-orange-800 font-semibold text-lg">Lote LT-D58X</p>
+        <p class="text-orange-700">Aviso: Mediana de temperatura da CPU alta</p>
+      </div>
+      <i class="fa-solid fa-exclamation text-orange-600 text-2xl"></i>
+    </div>
+
+    <div class="flex justify-between items-center bg-orange-100 border-l-4 border-orange-500 p-4 rounded-lg shadow-sm">
+      <div>
+        <p class="text-orange-800 font-semibold text-lg">Lote LT-H56N</p>
+        <p class="text-orange-700">Aviso: Mediana de CPU alta</p>
+      </div>
+      <i class="fa-solid fa-exclamation text-orange-600 text-2xl"></i>
+    </div>
+  </div>
+</div>
+
+  </div>
+</body>
+<script src="./js/usuario/verificadorCargo.js"></script>
+
 </html>
 <script src="../js/redirecionar.js"></script>
 <script>
