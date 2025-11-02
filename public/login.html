@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Navix</title>
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="./css/index.css">
   <link rel="icon" href="./assets/navix-logo.jpg">
@@ -62,7 +63,7 @@
         Ainda não tem uma conta?<a href="cadastro.html" class="text-blue-800 font-semibold"> Cadastre-se</a>
       </p>
       <p class="mt-4 text-center text-gray-600 text-2xl">
-        <a href="cadastro_empresa.html" class="text-blue-800 font-semibold">Cadastro de empresa</a>
+        <a onclick="pedirSenha()" class="text-blue-800 font-semibold">Cadastro de empresa</a>
       </p>
     </div>
   </div>
@@ -75,4 +76,72 @@
 </body>
 
 </html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <script type="module" src="js/usuario/login.js"></script>
+ <script>
+
+async function pedirSenha(){
+   const senhaCorreta = "navixAdmin";
+
+    const { value: senhaDigitada } = await Swal.fire({
+      title: "Acesso Restrito",
+      input: "password",
+      inputLabel:
+        "Para cadastrar uma nova empresa, por favor, insira a senha de administrador.",
+      inputPlaceholder: "Digite a senha",
+      showCancelButton: true,
+      confirmButtonText: "Confirmar",
+      heightAuto: false,
+      cancelButtonText: "Cancelar",
+      background: "rgb(0,0,0,0.9)",
+      color: "#f1f1f1",
+      customClass: {
+        popup: "alerta-custom",
+        title: "alerta-titulo",
+        input: "alerta-input",
+        confirmButton: "alerta-confirm-button",
+        cancelButton: "alerta-cancel-button",
+      },
+      inputValidator: (value) => {
+        if (!value) {
+          return "Você precisa digitar uma senha!";
+        }
+      },
+    });
+
+    if (senhaDigitada) {
+      if (senhaDigitada === senhaCorreta) {
+        Swal.fire({
+          icon: "success",
+          title: "Acesso Permitido!",
+          text: "Redirecionando para a página de cadastro...",
+          timer: 2000,
+          showConfirmButton: false,
+          background: "rgb(0,0,0,0.9)",
+          color: "#f1f1f1",
+          customClass: {
+            popup: "alerta-custom",
+            title: "alerta-titulo",
+          },
+        });
+
+        setTimeout(() => {
+          window.location.href = "cadastro_empresa.html";
+        }, 2000);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Senha Incorreta!",
+          text: "A senha inserida não é válida. Tente novamente.",
+          background: "rgb(0,0,0,0.9)",
+          color: "#f1f1f1",
+          customClass: {
+            popup: "alerta-custom",
+            title: "alerta-titulo",
+          },
+        });
+      }
+    }
+}
+
+ </script>

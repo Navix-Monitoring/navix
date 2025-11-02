@@ -115,7 +115,7 @@
         <p class="mt-2 text-center text-gray-600 text-sm">
           Para cadastrar uma empresa clique em:
           <a
-            href="cadastro_empresa.html"
+            onclick="pedirSenha()"
             class="text-blue-800 font-semibold"
             >Cadastrar empresa</a
           >
@@ -124,3 +124,68 @@
     </main>
   </body>
 </html>
+<script>
+  async function pedirSenha(){
+   const senhaCorreta = "navixAdmin";
+
+    const { value: senhaDigitada } = await Swal.fire({
+      title: "Acesso Restrito",
+      input: "password",
+      inputLabel:
+        "Para cadastrar uma nova empresa, por favor, insira a senha de administrador.",
+      inputPlaceholder: "Digite a senha",
+      showCancelButton: true,
+      confirmButtonText: "Confirmar",
+      heightAuto: false,
+      cancelButtonText: "Cancelar",
+      background: "rgb(0,0,0,0.9)",
+      color: "#f1f1f1",
+      customClass: {
+        popup: "alerta-custom",
+        title: "alerta-titulo",
+        input: "alerta-input",
+        confirmButton: "alerta-confirm-button",
+        cancelButton: "alerta-cancel-button",
+      },
+      inputValidator: (value) => {
+        if (!value) {
+          return "Você precisa digitar uma senha!";
+        }
+      },
+    });
+
+    if (senhaDigitada) {
+      if (senhaDigitada === senhaCorreta) {
+        Swal.fire({
+          icon: "success",
+          title: "Acesso Permitido!",
+          text: "Redirecionando para a página de cadastro...",
+          timer: 2000,
+          showConfirmButton: false,
+          background: "rgb(0,0,0,0.9)",
+          color: "#f1f1f1",
+          customClass: {
+            popup: "alerta-custom",
+            title: "alerta-titulo",
+          },
+        });
+
+        setTimeout(() => {
+          window.location.href = "cadastro_empresa.html";
+        }, 2000);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Senha Incorreta!",
+          text: "A senha inserida não é válida. Tente novamente.",
+          background: "rgb(0,0,0,0.9)",
+          color: "#f1f1f1",
+          customClass: {
+            popup: "alerta-custom",
+            title: "alerta-titulo",
+          },
+        });
+      }
+    }
+}
+</script>

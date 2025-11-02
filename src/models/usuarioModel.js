@@ -92,7 +92,7 @@ function deletarUsuario(id) {
 }
 
 function atualizarUsuario(nome, sobrenome, email, telefone, cargo, id) {
-    const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}", telefone = "${telefone}", email = "${email}", fkCargo = "${cargo}" where id = ${id}`
+    const instrucaoSql = `UPDATE funcionario SET nome = "${nome}", sobrenome = "${sobrenome}", telefone = "${telefone}", email = "${email}", fkCargo = ${cargo} where id = ${id}`
     return database.executar(instrucaoSql)
 }
 

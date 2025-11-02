@@ -87,8 +87,6 @@
           <p class="text-xl font-semibold text-blue-950">Cargo</p>
           <select id="cargo" class="bg-slate-300 px-4 py-2 rounded-md w-full">
             <option value="" disabled selected>Selecione um cargo</option>
-            <option value="2">Funcionário</option>
-            <option value="1">Administrador</option>
           </select>
         </div>
       </div>
@@ -287,6 +285,10 @@
       res.json().then(json=>{
         console.log("Entrei na resposta de listar cargos")
         for(let c = 0; c<json.length;c++){
+          cargo.innerHTML += 
+          `
+            <option value="${json[c].id}">${json[c].titulo}</option>          
+          `
           cargoUpdate.innerHTML += 
         `
         <option value="${json[c].id}">${json[c].titulo}</option>
@@ -369,7 +371,7 @@
       formData.append("fkEmpresa", idEmpresa);
       formData.append("nome", nome.value);
       formData.append("email", email.value);
-      formData.append("cargo", fkCargo.value);
+      formData.append("cargo", cargo.value);
       formData.append("senha", senha.value);
       formData.append("telefone", telefone.value);
       formData.append("sobrenome", sobrenome.value);
