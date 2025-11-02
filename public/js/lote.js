@@ -8,10 +8,12 @@ function carregarInformacoes() {
     }).then(res => {
         res.json().then(json => {
             console.log("Carregando as informações do lote...")
+            console.log(json)
             console.log(json[0].fkLote)
-            console.log(json[0].codigo_lote)
+            console.log(json[0].total_veiculos)
+            qtdCarros = json[0].total_veiculos == null? 0 : json[0].total_veiculos
 
-            tituloLote.innerHTML = `Lote: ${json[0].codigo_lote} - ${json[0].quantidade_modelo} carros`
+            tituloLote.innerHTML = `Lote: ${json[0].codigo_lote} - ${qtdCarros} carros`
         })
     })
 }

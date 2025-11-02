@@ -32,11 +32,23 @@ function buscarLote(id){
     console.log("Acessei o  dashboard model - buscando o lote...")
 
     const instrucaoSql=`
-    SELECT v.*, l.*
-    FROM veiculo v
-    INNER JOIN lote l ON v.fkLote = l.id
-    WHERE l.id = ${id};`
+    SELECT 
+    l.id AS idLote,
+    l.codigo_lote,
+    l.data_fabricacao,
+    l.fkEmpresa,
+    l.status AS statusLote,
+    SUM(v.quantidade_modelo) AS total_veiculos,
+    GROUP_CONCAT(DISTINCT m.id) AS modelos_ids,
+    GROUP_CONCAT(DISTINCT m.versaoPilotoAutomatico) AS versoes
+    FROM lote l
+    INNER JOIN veiculo v ON v.fkLote = l.id
+    INNER JOIN modelo m ON v.fkModelo = m.id
+    WHERE l.id = ${id}
+    GROUP BY l.id, l.codigo_lote, l.data_fabricacao, l.fkEmpresa, l.status;
+`
     return database.executar(instrucaoSql);
+    
 }
 
 function filtroModelo(id){
