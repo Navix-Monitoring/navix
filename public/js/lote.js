@@ -11,7 +11,7 @@ function carregarInformacoes() {
             console.log(json[0].fkLote)
             console.log(json[0].codigo_lote)
 
-            tituloLote.innerHTML = `Lote: ${json[0].codigo_lote} - 10 carros`
+            tituloLote.innerHTML = `Lote: ${json[0].codigo_lote} - ${json[0].quantidade_modelo} carros`
         })
     })
 }

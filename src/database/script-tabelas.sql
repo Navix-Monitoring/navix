@@ -46,9 +46,9 @@ CREATE TABLE funcionario(
     telefone VARCHAR(11),
     email VARCHAR(100),
     senha VARCHAR(250),
-    statusPerfil ENUM("Inativo", "Ativo") NOT NULL,
+    statusPerfil ENUM("Inativo", "Ativo") NOT NULL DEFAULT("Ativo"),
     fkCargo INT NOT NULL,
-    caminhoImagem VARCHAR(500),
+    caminhoImagem VARCHAR(500) DEFAULT("../assets/img/foto-usuario.png"),
     CONSTRAINT fkEmpresaFuncionario FOREIGN KEY(fkEmpresa) REFERENCES empresa(id),
     CONSTRAINT fkCargoFuncionario FOREIGN KEY(fkCargo) REFERENCES cargo(id)
 );
@@ -82,7 +82,6 @@ CREATE TABLE veiculo(
     fkModelo INT NOT NULL,
     fkLote INT NOT NULL,
     data_ativacao DATE,
-    quantidade_modelo INT,
     quantidade_modelo INT,
     CONSTRAINT fkModeloVeiculo FOREIGN KEY(fkModelo) REFERENCES modelo(id),
     CONSTRAINT fkLoteVeiculo FOREIGN KEY(fkLote) REFERENCES lote(id)
@@ -159,3 +158,6 @@ INSERT INTO parametroHardware (fkHardware, fkModelo, unidadeMedida, parametroMin
 (3, 1, 'GB', 10, 20, 60, 80);          -- Disco
 
 select * from funcionario;
+
+SELECT * FROM veiculo;
+

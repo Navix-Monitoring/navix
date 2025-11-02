@@ -9,7 +9,7 @@ async function deletar() {
     }
 
     try {
-        const resposta = await fetch("/usuarios/remove_register", {
+        const resposta = await fetch("/usuarios/deletarUsuario", {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

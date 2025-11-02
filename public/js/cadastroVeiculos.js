@@ -19,16 +19,18 @@ function configurarFormularioModelo() {
     const id_empresa = sessionStorage.getItem("id_empresa_ss");
 
     if (!nomeModelo || !statusModelo || !versaoPiloto) {
-      alert("Erro: Todos os campos do modelo são obrigatórios!");
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: 'Todos os campos do modelo são obrigatórios!'
+      });
       return;
     }
 
     try {
       const resposta = await fetch("/cadastroVeiculos/cadastrarModelo", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           nome: nomeModelo,
           versaoPilotoAutomatico: versaoPiloto,
@@ -38,60 +40,59 @@ function configurarFormularioModelo() {
       });
 
       if (resposta.ok) {
-        alert("Modelo cadastrado com sucesso!");
-        formModelo.reset();
+        Swal.fire({
+          icon: 'success',
+          title: 'Modelo cadastrado!',
+          text: 'O modelo foi cadastrado com sucesso.'
+        }).then(() => {
+          formModelo.reset();
+          window.location.reload();
+        });
       } else {
         const erroMsg = await resposta.text();
-        throw new Error("Erro da API: " + erroMsg);
+        throw new Error(erroMsg);
       }
     } catch (error) {
       console.error("Erro no cadastro do modelo:", error);
-      alert("Falha ao cadastrar: " + error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Falha ao cadastrar',
+        text: error.message
+      });
     }
-    window.location.reload();
   });
 }
 
 async function carregarModelosDropdown() {
   const fkEmpresa = sessionStorage.getItem("id_empresa_ss");
-
-  if (!fkEmpresa) {
-    console.error(
-      "Não foi possível carregar modelos: fkEmpresa não encontrado na sessão."
-    );
-    return;
-  }
+  if (!fkEmpresa) return console.error("fkEmpresa não encontrado na sessão.");
 
   try {
-    const resposta = await fetch(
-      `/cadastroVeiculos/listarModelosPorEmpresa/${fkEmpresa}`
-    );
+    const resposta = await fetch(`/cadastroVeiculos/listarModelosPorEmpresa/${fkEmpresa}`);
+    if (!resposta.ok) throw new Error(await resposta.text());
 
-    if (resposta.ok) {
-      const modelos = await resposta.json();
+    const modelos = await resposta.json();
+    const selectParamModelo = document.getElementById("param-select-modelo");
+    const selectVeiculoModelo = document.getElementById("veiculo-modelo");
 
-      const selectParamModelo = document.getElementById("param-select-modelo");
-      const selectVeiculoModelo = document.getElementById("veiculo-modelo");
+    selectParamModelo.innerHTML = '<option value="">Selecione um modelo...</option>';
+    selectVeiculoModelo.innerHTML = '<option value="">Selecione o Modelo</option>';
 
-      selectParamModelo.innerHTML =
-        '<option value="">Selecione um modelo...</option>';
-      selectVeiculoModelo.innerHTML =
-        '<option value="">Selecione o Modelo</option>';
+    modelos.forEach((modelo) => {
+      const option = document.createElement("option");
+      option.value = modelo.id;
+      option.textContent = modelo.nome;
 
-      modelos.forEach((modelo) => {
-        const option = document.createElement("option");
-        option.value = modelo.id;
-        option.textContent = modelo.nome;
-
-        selectParamModelo.appendChild(option.cloneNode(true));
-        selectVeiculoModelo.appendChild(option);
-      });
-    } else {
-      const erroMsg = await resposta.text();
-      throw new Error("Erro da API ao listar modelos: " + erroMsg);
-    }
+      selectParamModelo.appendChild(option.cloneNode(true));
+      selectVeiculoModelo.appendChild(option);
+    });
   } catch (error) {
     console.error("Erro ao carregar modelos:", error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Falha ao carregar modelos',
+      text: error.message
+    });
   }
 }
 
@@ -111,38 +112,42 @@ function configurarFormularioParametro() {
       critico: document.getElementById("param-limite-critico").value,
     };
 
-    if (
-      !dadosFormulario.fkModelo ||
-      !dadosFormulario.fkHardware ||
-      !dadosFormulario.unidadeMedida
-    ) {
-      alert(
-        "Erro: Modelo, Hardware e Unidade de Medida devem ser preenchidos!"
-      );
+    if (!dadosFormulario.fkModelo || !dadosFormulario.fkHardware || !dadosFormulario.unidadeMedida) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: 'Modelo, Hardware e Unidade de Medida devem ser preenchidos!'
+      });
       return;
     }
 
     try {
       const resposta = await fetch("/cadastroVeiculos/cadastrarParametro", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosFormulario),
       });
 
       if (resposta.ok) {
-        alert("Parâmetro salvo com sucesso!");
-        formParametro.reset();
-
-        atualizarUnidadesSimples();
+        Swal.fire({
+          icon: 'success',
+          title: 'Parâmetro salvo!',
+          text: 'O parâmetro foi salvo com sucesso.'
+        }).then(() => {
+          formParametro.reset();
+          atualizarUnidadesSimples();
+        });
       } else {
         const erroMsg = await resposta.text();
-        throw new Error("Erro da API: " + erroMsg);
+        throw new Error(erroMsg);
       }
     } catch (error) {
       console.error("Erro ao salvar parâmetro:", error);
-      alert("Falha ao salvar parâmetro: " + error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Falha ao salvar',
+        text: error.message
+      });
     }
   });
 }
@@ -154,24 +159,23 @@ function configurarFormularioLote() {
     event.preventDefault();
 
     const codigoLote = document.getElementById("lote-codigo").value;
-    const dataFabricacao = document.getElementById(
-      "lote-data-fabricacao"
-    ).value;
+    const dataFabricacao = document.getElementById("lote-data-fabricacao").value;
     const statusLote = document.getElementById("lote-status").value;
-
     const idEmpresa = sessionStorage.getItem("id_empresa_ss");
 
     if (!codigoLote || !dataFabricacao || !statusLote) {
-      alert("Erro: Todos os campos do lote são obrigatórios!");
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: 'Todos os campos do lote são obrigatórios!'
+      });
       return;
     }
 
     try {
       const resposta = await fetch("/cadastroVeiculos/cadastrarLote", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           codigo_lote: codigoLote,
           data_fabricacao: dataFabricacao,
@@ -181,17 +185,26 @@ function configurarFormularioLote() {
       });
 
       if (resposta.ok) {
-        alert("Lote cadastrado com sucesso!");
-        formLote.reset();
+        Swal.fire({
+          icon: 'success',
+          title: 'Lote cadastrado!',
+          text: 'O lote foi cadastrado com sucesso.'
+        }).then(() => {
+          formLote.reset();
+          window.location.reload();
+        });
       } else {
         const erroMsg = await resposta.text();
-        throw new Error("Erro da API: " + erroMsg);
+        throw new Error(erroMsg);
       }
     } catch (error) {
       console.error("Erro ao cadastrar lote:", error);
-      alert("Falha ao cadastrar lote: " + error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Falha ao cadastrar',
+        text: error.message
+      });
     }
-    window.location.reload();
   });
 }
 
@@ -199,30 +212,26 @@ async function carregarLotesDropdown() {
   const fkEmpresa = sessionStorage.getItem("id_empresa_ss");
 
   try {
-    const resposta = await fetch(
-      `/cadastroVeiculos/listarLotesPorEmpresa/${fkEmpresa}`
-    );
+    const resposta = await fetch(`/cadastroVeiculos/listarLotesPorEmpresa/${fkEmpresa}`);
+    if (!resposta.ok) throw new Error(await resposta.text());
 
-    if (resposta.ok) {
-      const lotes = await resposta.json();
+    const lotes = await resposta.json();
+    const selectVeiculoLote = document.getElementById("veiculo-lote");
+    selectVeiculoLote.innerHTML = '<option value="">Selecione o Lote</option>';
 
-      const selectVeiculoLote = document.getElementById("veiculo-lote");
-
-      selectVeiculoLote.innerHTML =
-        '<option value="">Selecione o Lote</option>';
-
-      lotes.forEach((lote) => {
-        const option = document.createElement("option");
-        option.value = lote.id;
-        option.textContent = lote.codigo_lote;
-        selectVeiculoLote.appendChild(option);
-      });
-    } else {
-      const erroMsg = await resposta.text();
-      throw new Error("Erro da API ao listar lotes: " + erroMsg);
-    }
+    lotes.forEach((lote) => {
+      const option = document.createElement("option");
+      option.value = lote.id;
+      option.textContent = lote.codigo_lote;
+      selectVeiculoLote.appendChild(option);
+    });
   } catch (error) {
     console.error("Erro ao carregar lotes:", error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Falha ao carregar lotes',
+      text: error.message
+    });
   }
 }
 
@@ -239,35 +248,41 @@ function configurarFormularioVeiculo() {
       quantidade: document.getElementById("veiculo-quantidade").value,
     };
 
-    if (
-      !dadosFormulario.fkLote ||
-      !dadosFormulario.fkModelo ||
-      !dadosFormulario.data_ativacao ||
-      !dadosFormulario.quantidade
-    ) {
-      alert("Erro: Todos os campos são obrigatórios!");
+    if (!dadosFormulario.fkLote || !dadosFormulario.fkModelo || !dadosFormulario.data_ativacao || !dadosFormulario.quantidade) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: 'Todos os campos são obrigatórios!'
+      });
       return;
     }
 
     try {
       const resposta = await fetch("/cadastroVeiculos/cadastrarVeiculo", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dadosFormulario),
       });
 
       if (resposta.ok) {
-        alert("Veículo(s) cadastrado(s) com sucesso!");
-        formVeiculo.reset();
+        Swal.fire({
+          icon: 'success',
+          title: 'Veículo(s) cadastrado(s)!',
+          text: 'Os veículos foram cadastrados com sucesso.'
+        }).then(() => {
+          formVeiculo.reset();
+        });
       } else {
         const erroMsg = await resposta.text();
-        throw new Error("Erro da API: " + erroMsg);
+        throw new Error(erroMsg);
       }
     } catch (error) {
       console.error("Erro ao cadastrar veículo:", error);
-      alert("Falha ao cadastrar veículo: " + error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Falha ao cadastrar',
+        text: error.message
+      });
     }
   });
 }

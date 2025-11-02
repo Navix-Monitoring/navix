@@ -32,10 +32,7 @@ function buscarLote(id){
     console.log("Acessei o  dashboard model - buscando o lote...")
 
     const instrucaoSql=`
-    SELECT v.*, l.*, 
-       (SELECT COUNT(*) 
-        FROM veiculo 
-        WHERE fkLote = l.id) AS qtd_veiculos
+    SELECT v.*, l.*
     FROM veiculo v
     INNER JOIN lote l ON v.fkLote = l.id
     WHERE l.id = ${id};`

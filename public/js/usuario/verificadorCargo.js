@@ -1,8 +1,12 @@
 function verificarCargo() {
     var cargo = sessionStorage.cargo_ss;
-    if (cargo == "Funcionario") {
+    if (cargo == "Funcionario" || cargo == "Analista") {
         document.getElementById("adm-only").style.display = "none"
     }
+
+    if(cargo == "Administrador"){
+  const funcLinks = document.querySelectorAll(".func-only");
+        funcLinks.forEach(link => link.style.display = "none");    }
 }
 document.addEventListener("DOMContentLoaded", function () {
   const paginaAtual = window.location.pathname.split("/").pop();
