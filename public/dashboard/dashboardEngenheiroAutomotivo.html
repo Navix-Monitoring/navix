@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,9 +10,10 @@
     <script src="../js/sessao.js"></script>
     <link rel="stylesheet" href="../css/dashboard.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/usuario/verificadorCargo.js"></script>
 
 </head>
-<body class="bg-gray-100" onload="listarModelos()">
+<body class="bg-gray-100" onload="listarModelos(); verificarCargo();">
      <div class="flex flex-row w-full">
       <!-- nav bar -->
       <div
@@ -44,7 +44,7 @@
 
           <a
             onclick="redirecionar()"
-            class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
+            class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium" style="cursor: pointer;"
           >
             Dashboard
           </a>
@@ -68,7 +68,7 @@
             class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
             onclick="limparSessao()"
           >
-            <a href="./login.html" class="no-underline text-white">
+            <a href="../login.html" class="no-underline text-white">
               <h3 class="m-0 p-0">Sair</h3>
             </a>
           </div>
@@ -147,3 +147,29 @@
 </html>
 <script src="../js/dashboardEngenheiroAutomotivo.js"></script>
 <script src="../js/redirecionar.js"></script>
+<script>
+    // Espere o HTML inteiro ser carregado antes de executar o JavaScript
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // Agora podemos pegar os elementos com segurança, pois eles já existem
+    var nomeEmpresa = sessionStorage.getItem("nome_ss");
+    var cargo = sessionStorage.getItem("cargo_ss"); // Usando a variável correta
+
+    var nomeProfissao = document.getElementById("nomeProfissao");
+
+    // É uma boa prática verificar se o elemento foi encontrado antes de usá-lo
+    if (nomeProfissao) {
+      nomeProfissao.innerHTML += `
+                <p class="font-bold text-blue-900">${nomeEmpresa || "Usuário"
+        }</p>
+                <p class="mb-4 text-blue-900">Cargo: ${cargo || "Não definido"
+        }</p> 
+            `;
+    } else {
+      console.error("Elemento com ID 'nomeProfissao' não foi encontrado!");
+    }
+
+    // Você pode colocar outras funções que precisam do HTML aqui também,
+    // como a chamada para buscarUsuario(), embora ela já funcione.
+  })
+</script>

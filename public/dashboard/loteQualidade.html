@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lote</title>
+    <link rel="icon" href="./assets/navix-logo.jpg">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+    <script src="../js/sessao.js"></script>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot"></script>
+    <script src="../js/usuario/verificadorCargo.js"></script>
+</head>
+
+<body onload="carregarInformacoes(), simularValores(), verificadorCargo();">
+
+    <div class="flex flex-row w-full">
+        <div
+            class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600 fixed top-0 left-0">
+            <img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
+            <div id="imagemUsuarioNavbar">
+                <div class="rounded-md w-20 h-20 mb-2"
+                    style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                </div>
+            </div>
+
+            <div id="nomeProfissao" class="text-center mb-6"></div>
+
+            <div class="flex flex-col gap-4 w-[80%]">
+                <a href="../perfil-visualizar.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Perfil</a>
+                <a 
+                    class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Dashboard</a>
+                <a href="./cadastroVeiculos.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">Gerenciar
+                    Frota</a>
+                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
+                    onclick="limparSessao()">
+                    <a href="../index.html" class="no-underline text-white">
+                        <h3 class="m-0 p-0">Sair</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col ml-[250px] w-full p-8">
+            <a class="btnVoltar" onclick="localStorage.clear(); redirecionar();">
+                <div style="margin-bottom: 20px; display: flex; align-items: center; font-size: 30px;">
+                    <i class='bx bx-arrow-left-stroke'></i>
+                    <h3>Voltar</h3>
+                </div>
+            </a>
+
+            <div adlass="topoTitulo">
+                <h1 class="tituloLote" id="tituloLote">Lote: Teste - 10 carros</h1>
+                <select class="selectData" id="selectPeriodo">
+                    <option value="semana" selected>Semana</option>
+                    <option value="mes">Mês</option>
+                    <option value="ano">Ano</option>
+                </select>
+            </div>
+
+            <main class="card">
+                <div class="kpis">
+                    <div class="kpi">
+                        <p class="tituloKPI">Taxa de Aprovação do Lote</p><br>
+                        <div class="ladinho">
+                            <div class="colour-ball" style="border-color: green;">
+                                <p class="valor">92%</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco">Risco: BAIXO</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi">
+                        <p class="tituloKPI">Taxa de Reprovação / Retrabalho</p><br>
+                        <div class="ladinho">
+                            <div class="colour-ball" style="border-color: yellow;">
+                                <p class="valor">8%</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco">Risco: MÉDIO</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi">
+                        <p class="tituloKPI">Alertas Críticos no Lote</p><br>
+                        <div class="ladinho">
+                            <div class="colour-ball" style="border-color: red;">
+                                <p class="valor">5</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco">Risco: ALTO</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi">
+                        <p class="tituloKPI">Tempo Médio de Inspeção</p><br>
+                        <div class="ladinho">
+                            <div class="colour-ball" style="border-color: yellow;">
+                                <p class="valor">4h</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco">Risco: MÉDIO</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi">
+                        <p class="tituloKPI">Confiabilidade dos Dados</p><br>
+                        <div class="ladinho">
+                            <div class="colour-ball" style="border-color: green;">
+                                <p class="valor">96%</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco">Risco: BAIXO</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- GRÁFICO BARRAS -->
+                    <div class="container-filho">
+                        <div class="chart-container-alert p-4 h-full flex flex-col">
+                            <canvas id="alertasSemana" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- RANKING LOTES -->
+                    <div class="container-filho">
+                        <div class="chart-container-alert p-4 h-full flex flex-col">
+                            <h3 class="text-lg font-bold text-center mb-4 text-black" style="font-size: 18px;">
+                                RANKING DE LOTES (7 DIAS)
+                            </h3>
+                            <ol class="list-none space-y-2 flex-grow" id="rankingLista">
+                                <li class="flex justify-between items-center w-full p-3 rounded bg-slate-200 shadow-sm">
+                                    <span class="font-bold text-base text-blue-900">1. LOTE A001</span>
+                                    <span class="font-bold text-base text-blue-900">79 alertas</span>
+                                </li>
+                                <li class="flex justify-between items-center w-full p-3 border-b border-gray-200">
+                                    <span class="font-medium text-gray-800">2. LOTE A002</span>
+                                    <span class="font-medium text-gray-800">61 alertas</span>
+                                </li>
+                                <li class="flex justify-between items-center w-full p-3 border-b border-gray-200">
+                                    <span class="font-medium text-gray-800">3. LOTE A003</span>
+                                    <span class="font-medium text-gray-800">44 alertas</span>
+                                </li>
+                                <li class="flex justify-between items-center w-full p-3">
+                                    <span class="font-medium text-gray-800">4. LOTE A004</span>
+                                    <span class="font-medium text-gray-800">27 alertas</span>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- GRÁFICO BOXPLOT -->
+                    <div class="container-filho">
+                        <div class="chart-container-alert p-4 h-full flex flex-col">
+                            <h3 class="text-lg font-bold text-center mb-2 text-black text-[18px]">
+                                Distribuição de Alertas Por Lote
+                            </h3>
+                            <div class="flex-1">
+                                <canvas id="boxplotLote" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GRÁFICO LINHA -->
+                    <div class="container-filho">
+                        <div class="chart-container-alert p-4 h-full flex flex-col">
+                            <h3 class="text-lg font-bold text-center mb-2 text-black text-[18px]">
+                                Evolução de Alertas
+                            </h3>
+                            <div class="flex-1">
+                                <canvas id="tempAlertChart" class="w-full h-full"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="../js/redirecionar.js"></script>
+
+    <!-- GRÁFICO BARRAS -->
+    <script>
+        const ctx = document.getElementById('alertasSemana');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                datasets: [
+                    { label: 'Lote A001', data: [5, 7, 9, 6, 8, 4, 5], backgroundColor: '#001D3D' },
+                    { label: 'Lote A002', data: [3, 5, 2, 4, 6, 3, 4], backgroundColor: '#003566' },
+                    { label: 'Lote A003', data: [12, 19, 8, 15, 10, 6, 9], backgroundColor: 'darkblue' },
+                    { label: 'Lote A004', data: [20, 12, 3, 9, 13, 1, 3], backgroundColor: 'royalblue' }
+                ]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'ALERTAS GERADOS (7 DIAS)' } }, scales: { x: { stacked: true }, y: { stacked: true } } }
+        });
+    </script>
+
+    <!-- BOXPLOT -->
+    <script>
+        const ctxBox = document.getElementById("boxplotLote");
+        new Chart(ctxBox, {
+            type: 'boxplot',
+            data: {
+                labels: ['Lote A001', 'Lote A002', 'Lote A003', 'Lote A004'],
+                datasets: [{
+                    label: 'Distribuição de alertas',
+                    data: [
+                        { min: 2, q1: 5, median: 8, q3: 12, max: 15 },
+                        { min: 1, q1: 3, median: 5, q3: 8, max: 11 },
+                        { min: 4, q1: 8, median: 12, q3: 18, max: 21 },
+                        { min: 0, q1: 2, median: 4, q3: 6, max: 10 }
+                    ],
+                    borderColor: 'darkblue',
+                    backgroundColor: 'royalblue'
+                }]
+            },
+            options: { responsive: true }
+        });
+    </script>
+
+    <!-- GRÁFICO LINHA -->
+    <script>
+        const ctxTempAlert = document.getElementById('tempAlertChart').getContext('2d');
+        new Chart(ctxTempAlert, {
+            type: 'line',
+            data: {
+                labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                datasets: [
+                    { label: 'Temperatura Média De Componentes (°C)', data: [27, 31, 34, 36, 38, 33, 29], borderColor: 'red', tension: 0.3, yAxisID: 'y' },
+                    { label: 'Alertas Gerados', data: [4, 6, 11, 15, 19, 10, 5], borderColor: 'blue', tension: 0.3, yAxisID: 'y1' }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: { mode: 'index', intersect: false },
+                stacked: false,
+                plugins: { title: { display: true, text: 'Temperatura vs Quantidade de Alertas' } },
+                scales: {
+                    y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Temperatura (°C)' } },
+                    y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Alertas' }, grid: { drawOnChartArea: false } }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var nomeEmpresa = sessionStorage.getItem("nome_ss");
+        var cargo = sessionStorage.getItem("cargo_ss");
+
+        var nomeProfissao = document.getElementById("nomeProfissao");
+
+        if (nomeProfissao) {
+            nomeProfissao.innerHTML = `
+            <p class="font-bold text-blue-900">${nomeEmpresa || "Usuário"}</p>
+            <p class="mb-4 text-blue-900">Cargo: ${cargo || "Não definido"}</p>
+        `;
+        }
+    });
+</script>

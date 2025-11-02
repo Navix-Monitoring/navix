@@ -44,11 +44,11 @@ CREATE TABLE funcionario(
     nome VARCHAR(50),
     sobrenome VARCHAR(50),
     telefone VARCHAR(11),
-    email VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
     senha VARCHAR(250),
-    statusPerfil ENUM("Inativo", "Ativo") NOT NULL,
+    statusPerfil ENUM("Inativo", "Ativo") NOT NULL DEFAULT("Ativo"),
     fkCargo INT NOT NULL,
-    caminhoImagem VARCHAR(500),
+    caminhoImagem VARCHAR(500) DEFAULT("../assets/img/foto-usuario.png"),
     CONSTRAINT fkEmpresaFuncionario FOREIGN KEY(fkEmpresa) REFERENCES empresa(id),
     CONSTRAINT fkCargoFuncionario FOREIGN KEY(fkCargo) REFERENCES cargo(id)
 );
@@ -57,7 +57,7 @@ CREATE TABLE funcionario(
 -- Tabela: lote
 CREATE TABLE lote(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    codigo_lote VARCHAR(50),
+    codigo_lote VARCHAR(50) UNIQUE,
     data_fabricacao DATE,
     fkEmpresa INT,
     status ENUM('Ativo','Manutenção','Inativo'),

@@ -1,6 +1,6 @@
 function verificarCargo() {
     var cargo = sessionStorage.cargo_ss;
-    if (cargo == "Funcionario" || cargo == "Analista") {
+    if (cargo != "Administrador") {
         document.getElementById("adm-only").style.display = "none"
     }
 
