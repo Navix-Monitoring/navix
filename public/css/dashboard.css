@@ -234,3 +234,229 @@
     padding: 0.4vh;
     border-radius: 10px;
 }
+
+/* CSS LOTES ENG AUTOMOTIVO */
+
+.tituloLote {
+  margin-left: 20px;
+  font-size: 50px;
+  width: 120vh;
+}
+
+.topoTitulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.selectData {
+  padding: 1vh;
+  border: #172556 solid;
+  color: #172556;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.btnVoltar {
+  width: fit-content;
+  display: flex;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btnVoltar:hover {
+  transform: scale(1.01);
+}
+
+.kpis {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #172556;
+  border-radius: 25px;
+  color: white;
+  padding: 10px;
+  align-items: center;
+  width: 280px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.589);
+  height: 170px;
+}
+.cabecalho {
+  display: grid;
+  grid-template-columns: 150px 200px 130px 150px 200px 100px;
+  align-items: center;
+}
+
+.cards-modelos {
+  display: grid;
+  grid-template-columns: 150px 200px 170px 100px 200px 100px; 
+}
+
+.cards-lotes {
+  display: grid;
+  grid-template-columns: 150px 200px 150px 50px 320px 100px 100px;
+  align-items: center;
+}
+
+.processos {
+  font-size: 10px;
+}
+
+.tituloKPI {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.colour-ball {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  justify-content: center;
+  width: 75px;
+  border-radius: 100%;
+  border: 4.5px solid;
+}
+
+.valor {
+  font-size: 20px;
+}
+
+.alerta {
+  display: flex;
+}
+
+.ladinho {
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.card {
+  margin: 10px;
+  border-radius: 10px;
+  padding: 20px;
+  height: fit-content;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.342) 10px 10px 30px;
+}
+
+.titulo {
+  font-size: 50px;
+}
+
+.bolinha {
+  background-color: red;
+  border-radius: 100%;
+  margin-top: 2.5px;
+  width: 12px;
+  height: 12px;
+}
+
+.chart {
+  width: 100px;
+  height: 100px;
+}
+
+.graficos {
+  display: flex;
+  margin-top: 5vh;
+  height: fit-content;
+  gap: 7vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-grafico {
+    width: 70vh;
+    height: 40vh;
+    padding: 2vh;
+    background-color: #F7F8FC;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.589);
+    margin-bottom: 1vh;
+    margin-top: 2vh;
+    border-radius: 10px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: fit-content;
+    margin-top: 2vh;  
+    gap: 7vh;
+}
+
+.container-filho {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.valor {
+  font-weight: bold;
+}
+
+.nvlRisco {
+  font-weight: bold;
+}
+
+.chart-container {
+    width: 70vh;
+    height: 40vh;
+    padding: 2vh;
+    background-color: #F7F8FC;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.589);
+    display: none;
+    margin-bottom: 1vh;
+    margin-top: 2vh;
+    border-radius: 10px;
+}
+
+.chart-container-alert {
+    width: 70vh;
+    height: 40vh;
+    padding: 2vh;
+    background-color: #F7F8FC;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.589);
+    margin-bottom: 1vh;
+    margin-top: 2vh;
+    border-radius: 10px;
+}
+
+.carrossel {
+    display: flex;
+    gap: 0.5vh;
+    align-items: center;
+}
+
+.carrossel-btn {
+    font-size: 3vh;
+    cursor: pointer;
+    border: none;
+    background-color: none;
+    color: black;
+}
+
+.titulo {
+    border: 1.5px black solid;
+    background-color: white;
+    width: fit-content;
+    font-size: 2vh;
+    font-weight: 700;
+    padding: 0.4vh;
+    border-radius: 10px;
+}
