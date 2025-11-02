@@ -2,7 +2,7 @@ var database = require("../database/config")
 
 function autenticarStatus(email,senha){
     const instrucaoSql = `
-     SELECT status FROM funcionario WHERE email = '${email}' AND senha = '${senha}'
+     SELECT statusPerfil FROM funcionario WHERE email = '${email}' AND senha = '${senha}'
     `
     return database.executar(instrucaoSql);
 }

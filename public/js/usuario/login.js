@@ -21,7 +21,12 @@ function checarStatus() {
     }).then(res => {
         res.json().then(json => {
             console.log("entrei no checarStatus")
-            if (json[0].status != "Inativo") {
+            console.log(json[0].statusPerfil)
+            if (json[0].statusPerfil == "Inativo") {
+                return mostrarErro("Conta inativa!");
+                
+            }
+            else {
                 console.log("entrei no if checarStatus != inativo")
 
                 // Redirecionamento após 3 segundos
@@ -30,9 +35,6 @@ function checarStatus() {
                     esconderLoading();
                     window.location = "../perfil-visualizar.html";
                 }, 3000);
-            }
-            else {
-                return mostrarErro("Conta inativa!");
                 
             }
         })
