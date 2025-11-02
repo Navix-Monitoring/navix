@@ -39,6 +39,20 @@ return database.executar(instrucaoSql)
 
 }
 
+function editarLote(codigolote,datafabricacao,qtd_veiculos, idLote){
+    console.log("Acessei o dashboard model - editando lote...")
+
+    const instrucaoSql = 
+    `
+     UPDATE lote 
+        SET codigo_lote = '${codigolote}',
+        data_fabricacao = '${datafabricacao}'
+        WHERE id = ${idLote};
+    `
+    console.log("Executando a instrução SQL:\n"+ instrucaoSql)
+    return database.executar(instrucaoSql)  
+}
+
 function buscarLote(id){
     console.log("Acessei o  dashboard model - buscando o lote...")
 
@@ -87,5 +101,6 @@ listar,
 listarModelos,
 buscarLote,
 filtroModelo,
-buscarLoteparaEditar
+buscarLoteparaEditar,
+editarLote
 }

@@ -60,7 +60,6 @@ function listarLotes() {
         .catch(err => console.error("Erro ao listar lotes:", err));
 }
 
-
 function gerarCorBolinha(index) {
   const cores = ["vermelho", "laranja", "amarelo", "verde"];
   return cores[index % cores.length];
@@ -140,15 +139,14 @@ function buscarLote(idLote) {
                 <label class="block mb-2 font-semibold">Data de fabricação:</label>
                 <input type="date" id="dataFabricacao${idLote}" value="${dataFormatadaInput}" class="w-full border rounded-md p-2 mb-4">
 
-                <label class="block mb-2 font-semibold">Quantidade de veículos:</label>
-                <input type="number" id="qtdVeiculos${idLote}" value="${lote.qtd_veiculos}" class="w-full border rounded-md p-2 mb-4">
-
                 <div class="flex justify-end gap-2 mt-4">
                     <button onclick="fecharDialog(${idLote})" class="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400">Cancelar</button>
                     <button onclick="salvarLote(${idLote})" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Salvar</button>
                 </div>
             </dialog>
         `;
+        // <label class="block mb-2 font-semibold">Quantidade de veículos:</label>
+        // <input type="number" id="qtdVeiculos${idLote}" value="${lote.qtd_veiculos}" class="w-full border rounded-md p-2 mb-4"></input>
 
         const dialog = document.getElementById(`lote${idLote}`);
         if (dialog) dialog.showModal();
@@ -165,15 +163,15 @@ function fecharDialog(idLote) {
 function salvarLote(idLote){
     const codigoLote = document.getElementById(`codigoLote${idLote}`).value;
     const dataFabricacao = document.getElementById(`dataFabricacao${idLote}`).value;
-    const qtdVeiculos = document.getElementById(`qtdVeiculos${idLote}`).value;
-
+    //const qtdVeiculos = document.getElementById(`qtdVeiculos${idLote}`).value;
+    console.log(codigoLote)
     fetch(`/dashboard/editarLote/${idLote}`,{
         method: "PUT",
         headers: {"Content-Type": "application/json" },
         body: JSON.stringify({
             codigo_lote: codigoLote,
-            data_fabricacao: dataFabricacao,
-            qtd_veiculos: qtdVeiculos
+            data_fabricacao: dataFabricacao
+           // qtd_veiculos: qtdVeiculos
         })
     }).then(res=>res.json())
     .then(json=> {
