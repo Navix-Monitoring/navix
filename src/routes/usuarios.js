@@ -4,10 +4,14 @@ var upload = require('../utils/uploadImagem'); // ARQUIVO COM A CONFIGURAÇÃO D
 
 var usuarioController = require("../controllers/usuarioController");
 
+router.post("/autenticarStatus", function(req,res){
+    usuarioController.autenticarStatus(req,res);
+});
+
 //Recebendo os dados do html e direcionando para a função cadastrar de usuarioController.js
 router.post("/register", function (req, res) {
     usuarioController.cadastrarAdm(req, res);
-})
+});
 
 router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
@@ -25,6 +29,10 @@ router.post("/mudarNome", function(req, res){
 router.post("/mudarEmail", function(req, res){
     console.log("Entrou na rota /mudarEmail");
     usuarioController.mudarEmail(req, res);
+});
+
+router.post("/mudarStatus", function(req, res){
+    usuarioController.mudarStatus(req, res);
 });
 
 router.post("/mudarSenha", function(req, res){

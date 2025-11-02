@@ -2,17 +2,18 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./assets/navix-logo.jpg">
-    <title>Administração de usuário</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./css/index.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./assets/navix-logo.jpg" />
+  <title>Administração de usuário</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./css/index.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="overflow-x-hidden flex flex-col" onload="carregarFotoUsuario(), verificarCargo()">
-    <!-- <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50 z-50">
+  <!-- <header class="h-30 w-full px-15 flex items-center justify-between fixed bg-slate-900 bg-opacity-50 z-50">
         <div>
             <div class="h-18 w-18 bg-slate-300 rounded-full" id="logo"></div>
         </div>
@@ -35,425 +36,478 @@
         </div>
     </header> -->
 
-    <div class="w-full min-h-screen fixed inset-0 z-10 flex justify-center items-center bg-black/50"
-        style="display: none;" id="telaAdicionarUser">
-        <div
-            class="relative bg-slate-100 border-blue-900 shadow-2xl p-8 md:p-16 gap-8 flex flex-col z-20 justify-center items-center w-11/12 md:w-1/2 max-h-[90vh] overflow-y-auto rounded-xl">
+  <div class="w-full min-h-screen fixed inset-0 z-10 flex justify-center items-center bg-black/50" style="display: none"
+    id="telaAdicionarUser">
+    <div
+      class="relative bg-slate-100 border-blue-900 shadow-2xl p-8 md:p-16 gap-8 flex flex-col z-20 justify-center items-center w-11/12 md:w-1/2 max-h-[90vh] overflow-y-auto rounded-xl">
+      <button onclick="fecharTela('telaAdicionarUser')"
+        class="absolute top-6 right-10 text-2xl text-gray-500 hover:text-red-600">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
-            <button onclick="fecharTela('telaAdicionarUser')"
-                class="absolute top-6 right-10 text-2xl text-gray-500 hover:text-red-600">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+      <p class="text-3xl font-semibold text-blue-900 pb-10">
+        Adicionar Usuário
+      </p>
+      <div id="imagemFuncionarioPerfil">
+        <div class="rounded-md w-20 h-20 mb-2" style="
+              background-image: url(../assets/img/foto-usuario.png);
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center;
+            "></div>
+      </div>
 
-            <p class="text-3xl font-semibold text-blue-900 pb-10">Adicionar Usuário</p>
-            <div id="imagemFuncionarioPerfil">
-                <div class="rounded-md w-20 h-20 mb-2"
-                    style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                </div>
-            </div>
+      <input type="file" id="foto" name="foto" hidden />
+      <div class="flex flex-col">
+        <label for="foto"
+          class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 rounded-md border-3 border-slate-600 cursor-pointer hover:opacity-90">
+          Adicionar foto do funcionário
+        </label>
+      </div>
+      <p id="mensagemImagemUsuario"></p>
 
-            <input type="file" id="foto" name="foto" hidden>
-            <div class="flex flex-col">
-                <label for="foto" class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 
-                    rounded-md border-3 border-slate-600 cursor-pointer hover:opacity-90">
-                    Adicionar foto do funcionário
-                </label>
-            </div>
-            <p id="mensagemImagemUsuario"></p>
-
-            <div class="flex gap-5 w-full">
-                <div class="flex flex-col gap-2 w-full">
-                    <p class="text-xl font-semibold text-blue-950">Nome</p>
-                    <input type="text" id="nome" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: Gustavo">
-                </div>
-
-                <div class="flex flex-col gap-2 w-full">
-                    <p class="text-xl font-semibold text-blue-950">Sobrenome</p>
-                    <input type="text" id="sobrenome" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: Silva">
-                </div>
-            </div>
-
-            <div class="flex gap-5 w-full">
-                <div class="flex flex-col gap-2 w-full">
-                    <p class="text-xl font-semibold text-blue-950">Telefone</p>
-                    <input type="text" id="telefone" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: 11987654321">
-                </div>
-                <div class="flex flex-col gap-2 w-full">
-                    <p class="text-xl font-semibold text-blue-950">Cargo</p>
-                    <select id="cargo" class="bg-slate-300 px-4 py-2 rounded-md w-full">
-                        <option value="" disabled selected>Selecione um cargo</option>
-                        <option value="Funcionario">Funcionário</option>
-                        <option value="Administrador">Administrador</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="flex gap-5 w-full pb-6">
-                <div class="flex flex-col gap-2 w-full">
-                    <p class="text-xl font-semibold text-blue-950">Email</p>
-                    <input type="email" id="email" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: teste@gmail.com">
-                </div>
-
-                <div class="flex flex-col gap-2 w-full">
-                    <p class="text-xl font-semibold text-blue-950">Senha</p>
-                    <input type="password" id="senha" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: senha12">
-                </div>
-            </div>
-            <div class="flex justify-center w-full">
-                <a onclick="salvar()"
-                    class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl font-semibold rounded-md cursor-pointer hover:opacity-90">Salvar
-                    Dados</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="w-full min-h-screen fixed inset-0 z-10 flex justify-center items-center bg-black/50"
-        style="display: none;" id="telaAtualizar">
-        <div
-            class="relative bg-slate-100 border-blue-900 shadow-2xl p-16 gap-8 flex flex-col z-20 justify-center items-center w-1/2 h-9/10 rounded-xl">
-
-            <button onclick="fecharTela('telaAtualizar')"
-                class="absolute top-6 right-10 text-2xl text-gray-500 hover:text-red-600">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <p class="text-3xl font-semibold text-blue-900">Atualizar Dados</p>
-            <div id="imagemFuncionarioPerfilAtualizar">
-                <div class="rounded-md w-20 h-20 mb-2"
-                    style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                </div>
-            </div>
-            <input type="file" id="fotoAtualizar" name="fotoAtualizar" hidden>
-            <div class="flex flex-col">
-                <label for="fotoAtualizar" class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2
-                     rounded-md border-3 border-slate-600 cursor-pointer hover:opacity-90">
-                    Atualizar foto do funcionário
-                </label>
-            </div>
-            <p id="mensagemImagemUsuarioAtualizar"></p>
-            <div class="flex gap-5 w-full">
-                <div class="flex flex-col gap-2 w-full">
-                    <p class="text-xl font-semibold text-blue-950">Nome</p>
-                    <input type="text" id="nomeUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
-                </div>
-
-                <div class="flex flex-col gap-2 w-full">
-                    <p class="text-xl font-semibold text-blue-950">Sobrenome</p>
-                    <input type="text" id="sobrenomeUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
-                </div>
-            </div>
-
-
-            <div class="flex flex-col gap-2 w-full">
-                <p class="text-xl font-semibold text-blue-950">Telefone</p>
-                <input type="text" id="telefoneUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
-            </div>
-            <div class="flex flex-col gap-2 w-full">
-                <p class="text-xl font-semibold text-blue-950">Cargo</p>
-                <input type="text" id="cargoUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
-            </div>
-            <div class="flex gap-5 w-full pb-6">
-                <div class="flex flex-col gap-2 w-full">
-                    <p class="text-xl font-semibold text-blue-950">Email</p>
-                    <input type="email" id="emailUpdate" class="bg-slate-300 px-4 py-2 rounded-md">
-                </div>
-            </div>
-            <div class="flex justify-center w-full">
-                <a onclick="atualizar()" class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl font-semibold rounded-md 
-                    cursor-pointer hover:opacity-90">Atualizar
-                    Dados</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="w-full min-h-screen fixed inset-0 z-10 flex justify-center items-center bg-black/50"
-        style="display: none;" id="telaDeletar">
-        <div
-            class="relative bg-slate-100 border-blue-900 shadow-2xl p-16 gap-8 flex flex-col z-20 justify-center items-center w-1/3 h-1/2 rounded-xl">
-            <p class="text-3xl font-bold text-blue-950">Deseja apagar usuário?</p>
-            <div class="flex justify-center w-full gap-4 ">
-                <a onclick="excluir()"
-                    class="text-xl font-semibold text-slate-100 px-8 py-3 bg-red-900 rounded-md cursor-pointer hover:opacity-90">Deletar</a>
-                <a onclick="fecharTela('telaDeletar')"
-                    class="text-xl font-semibold text-slate-100 px-8 py-3 bg-slate-800 rounded-md cursor-pointer hover:opacity-90">Não</a>
-            </div>
-        </div>
-    </div>
-
-
-
-
-    <div class="flex flex-row w-full ">
-        <!-- nav bar -->
-        <div class="min-h-screen w-[300px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
-            <a href="index.html"><img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10"></a>
-            <div id="imagemUsuarioNavbar">
-                <div class="rounded-md w-20 h-20 mb-2"
-                    style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
-                </div>
-            </div>
-
-            <div id="nomeProfissao" class="text-center mb-6"></div>
-
-            <div class="flex flex-col gap-4 w-[80%]" id="teste">
-                <a href="../perfil-visualizar.html"
-                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-                    Perfil
-                </a>
-
-                <a href="dashboard/dashboard.html"
-                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
-                    Dashboard
-                </a>
-
-                <a href="../admin.html"
-                    class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
-                    id="adm-only">
-                    Cadastrar Funcionários
-                </a>
-
-                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
-                    onclick="limparSessao()">
-                    <a href="./login.html" class="no-underline text-white">
-                        <h3 class="m-0 p-0">Sair</h3>
-                    </a>
-                </div>
-            </div>
+      <div class="flex gap-5 w-full">
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Nome</p>
+          <input type="text" id="nome" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: Gustavo" />
         </div>
 
-        <div class="px-15 w-full bg-slate-300 pb-20">
-            <div class="flex pt-12 justify-between">
-                <div class="flex gap-8 bg-slate-100 items-center px-10 py-6 rounded-md">
-                    <a href="" class="font-semibold border-b-4 border-slate-700">Membros</a>
-                </div>
-                <div class="flex flex-col">
-                    <div class="flex gap-2">
-                        <p class="text-slate-500">Membros totais: </p>
-                        <p class="font-semibold" id="membrosTotais"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-between pt-12 items-center">
-                <div class="flex gap-10 items-center">
-                    <p class="text-3xl font-semibold">Membros</p>
-                    <a onclick="abrirTela('telaAdicionarUser')"
-                        class="px-8 py-4 bg-blue-950 text-slate-100 font-semibold text-lg rounded-md cursor-pointer">Adicionar</a>
-                    <div class="relative">
-                        <input type="text" class="bg-slate-100 py-4 pl-12 pr-4 rounded-md w-72"
-                            placeholder="Pesquisar..." oninput="search()" id="inputPesquisar" />
-                        <i
-                            class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pl-1"></i>
-                    </div>
-                </div>
-                <div>
-                    <a href="" class="px-8 py-4 bg-blue-950 text-slate-100 rounded-md cursor-pointer"><i
-                            class="fa-solid fa-chevron-left pr-2"></i>Filtro</a>
-                </div>
-            </div>
-
-            <div class="bg-slate-100 p-8 flex flex-col justify-between mt-4" id="usuarios">
-            </div>
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Sobrenome</p>
+          <input type="text" id="sobrenome" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: Silva" />
         </div>
+      </div>
+
+      <div class="flex gap-5 w-full">
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Telefone</p>
+          <input type="text" id="telefone" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: 11987654321" />
+        </div>
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Cargo</p>
+          <select id="cargo" class="bg-slate-300 px-4 py-2 rounded-md w-full">
+            <option value="" disabled selected>Selecione um cargo</option>
+            <option value="2">Funcionário</option>
+            <option value="1">Administrador</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex gap-5 w-full pb-6">
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Email</p>
+          <input type="email" id="email" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: teste@gmail.com" />
+        </div>
+
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Senha</p>
+          <input type="password" id="senha" class="bg-slate-300 px-4 py-2 rounded-md" placeholder="Ex: senha12" />
+        </div>
+      </div>
+      <div class="flex justify-center w-full">
+        <a onclick="salvar()"
+          class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl font-semibold rounded-md cursor-pointer hover:opacity-90">Salvar
+          Dados</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full min-h-screen fixed inset-0 z-10 flex justify-center items-center bg-black/50" style="display: none"
+    id="telaAtualizar">
+    <div
+      class="relative bg-slate-100 border-blue-900 shadow-2xl p-16 gap-8 flex flex-col z-20 justify-center items-center w-1/2 h-9/10 rounded-xl">
+      <button onclick="fecharTela('telaAtualizar')"
+        class="absolute top-6 right-10 text-2xl text-gray-500 hover:text-red-600">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <p class="text-3xl font-semibold text-blue-900">Atualizar Dados</p>
+      <div id="imagemFuncionarioPerfilAtualizar">
+        <div class="rounded-md w-20 h-20 mb-2" style="
+              background-image: url(../assets/img/foto-usuario.png);
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center;
+            "></div>
+      </div>
+      <input type="file" id="fotoAtualizar" name="fotoAtualizar" hidden />
+      <div class="flex flex-col">
+        <label for="fotoAtualizar"
+          class="upload w-[100%] text-blue-950 font-semibold mt-4 text-xl cursor-pointer bg-slate-300 px-6 py-2 rounded-md border-3 border-slate-600 cursor-pointer hover:opacity-90">
+          Atualizar foto do funcionário
+        </label>
+      </div>
+      <p id="mensagemImagemUsuarioAtualizar"></p>
+      <div class="flex gap-5 w-full">
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Nome</p>
+          <input type="text" id="nomeUpdate" class="bg-slate-300 px-4 py-2 rounded-md" />
+        </div>
+
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Sobrenome</p>
+          <input type="text" id="sobrenomeUpdate" class="bg-slate-300 px-4 py-2 rounded-md" />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2 w-full">
+        <p class="text-xl font-semibold text-blue-950">Telefone</p>
+        <input type="text" id="telefoneUpdate" class="bg-slate-300 px-4 py-2 rounded-md" />
+      </div>
+      <div class="flex flex-col gap-2 w-full">
+        <p class="text-xl font-semibold text-blue-950">Cargo</p>
+        <input type="text" id="cargoUpdate" class="bg-slate-300 px-4 py-2 rounded-md" />
+      </div>
+      <div class="flex gap-5 w-full pb-6">
+        <div class="flex flex-col gap-2 w-full">
+          <p class="text-xl font-semibold text-blue-950">Email</p>
+          <input type="email" id="emailUpdate" class="bg-slate-300 px-4 py-2 rounded-md" />
+        </div>
+      </div>
+      <div class="flex justify-center w-full">
+        <a onclick="atualizar()"
+          class="flex w-full justify-center bg-blue-950 py-4 text-slate-100 text-2xl font-semibold rounded-md cursor-pointer hover:opacity-90">Atualizar
+          Dados</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full min-h-screen fixed inset-0 z-10 flex justify-center items-center bg-black/50" style="display: none"
+    id="telaDeletar">
+    <div
+      class="relative bg-slate-100 border-blue-900 shadow-2xl p-16 gap-8 flex flex-col z-20 justify-center items-center w-1/3 h-1/2 rounded-xl">
+      <p class="text-3xl font-bold text-blue-950">Deseja apagar usuário?</p>
+      <div class="flex justify-center w-full gap-4">
+        <a onclick="excluir()"
+          class="text-xl font-semibold text-slate-100 px-8 py-3 bg-red-900 rounded-md cursor-pointer hover:opacity-90">Deletar</a>
+        <a onclick="fecharTela('telaDeletar')"
+          class="text-xl font-semibold text-slate-100 px-8 py-3 bg-slate-800 rounded-md cursor-pointer hover:opacity-90">Não</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-row w-full">
+    <!-- nav bar -->
+    <div class="min-h-screen w-[300px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600">
+      <a href="index.html"><img src="./assets/img/Logo.png" class="w-[120px] h-[60px] mb-10" /></a>
+      <div id="imagemUsuarioNavbar">
+        <div class="rounded-md w-20 h-20 mb-2" style="
+              background-image: url(../assets/img/foto-usuario.png);
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-position: center;
+            "></div>
+      </div>
+
+      <div id="nomeProfissao" class="text-center mb-6"></div>
+
+      <div class="flex flex-col gap-4 w-[80%]" id="teste">
+        <a href="../perfil-visualizar.html"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+          Perfil
+        </a>
+
+        <a class="func-only" onclick="redirecionar()"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+          Dashboard
+        </a>
+
+        <a href="../admin.html"
+          class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium"
+          id="adm-only">
+          Cadastrar Funcionários
+        </a>
+
+        <a class="func-only" href="./dashboard/cadastroVeiculos.html"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+          Gerenciar Frota
+        </a>
+
+        <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
+          onclick="limparSessao()">
+          <a href="./login.html" class="no-underline text-white">
+            <h3 class="m-0 p-0">Sair</h3>
+          </a>
+        </div>
+      </div>
     </div>
 
-    <div id="loading" class="hidden fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-white/30">
-        <div class="w-16 h-16 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
+    <div class="px-15 w-full bg-slate-300 pb-20">
+      <div class="flex pt-12 justify-between">
+        <div class="flex gap-8 bg-slate-100 items-center px-10 py-6 rounded-md">
+          <a href="" class="font-semibold border-b-4 border-slate-700">Membros</a>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex gap-2">
+            <p class="text-slate-500">Membros totais:</p>
+            <p class="font-semibold" id="membrosTotais"></p>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-between pt-12 items-center">
+        <div class="flex gap-10 items-center">
+          <p class="text-3xl font-semibold">Membros</p>
+          <a onclick="abrirTela('telaAdicionarUser')"
+            class="px-8 py-4 bg-blue-950 text-slate-100 font-semibold text-lg rounded-md cursor-pointer">Adicionar</a>
+          <div class="relative">
+            <input type="text" class="bg-slate-100 py-4 pl-12 pr-4 rounded-md w-72" placeholder="Pesquisar..."
+              oninput="search()" id="inputPesquisar" />
+            <i
+              class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pl-1"></i>
+          </div>
+        </div>
+        <div>
+          <a href="" class="px-8 py-4 bg-blue-950 text-slate-100 rounded-md cursor-pointer"><i
+              class="fa-solid fa-chevron-left pr-2"></i>Filtro</a>
+        </div>
+      </div>
+
+      <div class="bg-slate-100 p-8 flex flex-col justify-between mt-4" id="usuarios"></div>
     </div>
+  </div>
 
-
+  <div id="loading" class="hidden fixed inset-0 flex items-center justify-center z-50 backdrop-blur-sm bg-white/30">
+    <div class="w-16 h-16 border-4 border-blue-900 border-t-transparent rounded-full animate-spin"></div>
+  </div>
 </body>
 <script src="./js/usuario/verificadorCargo.js"></script>
+
 </html>
 
 <script>
-    var users = []
+  var users = [];
 
-    function carregarFotoUsuario() {
-        document.getElementById("imagemUsuarioNavbar").innerHTML = `
+  function carregarFotoUsuario() {
+    document.getElementById("imagemUsuarioNavbar").innerHTML = `
              <div class="rounded-md w-20 h-20 mb-2"
                 style="background-image: url(${sessionStorage.imagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
             </div>
-        `
-    }
+        `;
+  }
 
-    var inputFoto = document.getElementById("foto");
-    var mensagemImagemUsuario = document.getElementById("mensagemImagemUsuario");
-    console.log("Mensagem imagem usuario: " + mensagemImagemUsuario)
-    inputFoto.addEventListener('change', function () {
-        if (inputFoto.files.length > 0) {
-            var nomeArquivo = inputFoto.files[0].name;
-            mensagemImagemUsuario.innerHTML = `Imagem selecionada: "${nomeArquivo}".`;
-        } else {
-            mensagemImagemUsuario.innerHTML = '';
+  var inputFoto = document.getElementById("foto");
+  var mensagemImagemUsuario = document.getElementById("mensagemImagemUsuario");
+  console.log("Mensagem imagem usuario: " + mensagemImagemUsuario);
+  inputFoto.addEventListener("change", function () {
+    if (inputFoto.files.length > 0) {
+      var nomeArquivo = inputFoto.files[0].name;
+      mensagemImagemUsuario.innerHTML = `Imagem selecionada: "${nomeArquivo}".`;
+    } else {
+      mensagemImagemUsuario.innerHTML = "";
+    }
+  });
+
+  var inputFotoAtualizar = document.getElementById("fotoAtualizar");
+  var mensagemImagemUsuarioAtualizar = document.getElementById(
+    "mensagemImagemUsuarioAtualizar"
+  );
+
+  inputFotoAtualizar.addEventListener("change", function () {
+    if (inputFotoAtualizar.files.length > 0) {
+      var nomeArquivo = inputFotoAtualizar.files[0].name;
+      mensagemImagemUsuarioAtualizar.innerHTML = `Imagem selecionada: "${nomeArquivo}".`;
+    } else {
+      mensagemImagemUsuarioAtualizar.innerHTML = "";
+    }
+  });
+
+  async function buscarUsuario() {
+    try {
+      console.log(sessionStorage);
+      const idEmpresa = sessionStorage.getItem("id_empresa_ss");
+
+      const data = await fetch(
+        `http://localhost:3333/usuarios/listarUsuariosEmpresa/${idEmpresa}`,
+        { method: "GET" }
+      );
+      const getUsers = await data.json();
+      membrosTotais.innerHTML = getUsers.length;
+
+      listarUsuarios(getUsers);
+
+      users = getUsers;
+    } catch (erro) {
+      console.log("Falha ao buscar usuario");
+      console.log(erro);
+    }
+  }
+  buscarUsuario();
+
+  function fecharTela(tela) {
+    document.getElementById(tela).style.display = "none";
+  }
+
+  function cadastrarUsuario() {
+    telaAdicionarUser.style.display = "flex";
+  }
+
+  async function salvar() {
+    try {
+      var idEmpresa = sessionStorage.id_empresa_ss;
+      var formData = new FormData();
+      formData.append("foto", foto.files[0]);
+      formData.append("fkEmpresa", idEmpresa);
+      formData.append("nome", nome.value);
+      formData.append("email", email.value);
+      formData.append("cargo", cargo.value);
+      formData.append("senha", senha.value);
+      formData.append("telefone", telefone.value);
+      formData.append("sobrenome", sobrenome.value);
+
+      console.log(idEmpresa, sessionStorage);
+      const users = await fetch(
+        `http://localhost:3333/usuarios/cadastrarUsuario`,
+        {
+          method: "POST",
+          body: formData,
         }
-    })
+      );
 
-    var inputFotoAtualizar = document.getElementById("fotoAtualizar");
-    var mensagemImagemUsuarioAtualizar = document.getElementById("mensagemImagemUsuarioAtualizar");
-
-    inputFotoAtualizar.addEventListener('change', function () {
-        if (inputFotoAtualizar.files.length > 0) {
-            var nomeArquivo = inputFotoAtualizar.files[0].name;
-            mensagemImagemUsuarioAtualizar.innerHTML = `Imagem selecionada: "${nomeArquivo}".`;
-        } else {
-            mensagemImagemUsuarioAtualizar.innerHTML = '';
-        }
-    })
-
-    async function buscarUsuario() {
-        try {
-            console.log(sessionStorage)
-            const idEmpresa = sessionStorage.getItem('id_empresa_ss');
-
-            const data = await fetch(`http://localhost:3333/usuarios/listarUsuariosEmpresa/${idEmpresa}`, { method: "GET" })
-            const getUsers = await data.json()
-            membrosTotais.innerHTML = getUsers.length
-
-            listarUsuarios(getUsers)
-
-            users = getUsers
-        } catch (erro) {
-            console.log("Falha ao buscar usuario")
-            console.log(erro)
-        }
+      if (users.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Cadastro realizado!',
+          text: 'O usuário foi cadastrado com sucesso.'
+        });
+        fecharTela("telaAdicionarUser");
+        buscarUsuario();
+      } else {
+        const erroTexto = await response.text();
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao cadastrar',
+          text: erroTexto
+        });
+      }
+    } catch (erro) {
+      console.log("Erro no salvar usuário:", erro);
     }
-    buscarUsuario()
+    fecharTela("telaAdicionarUser");
+    buscarUsuario();
+  }
 
-    function fecharTela(tela) {
-        document.getElementById(tela).style.display = "none";
+  function mostrarLoading() {
+    document.getElementById("loading").classList.remove("hidden");
+  }
+
+  function esconderLoading() {
+    document.getElementById("loading").classList.add("hidden");
+  }
+
+  async function excluir() {
+    try {
+      mostrarLoading();
+
+      const users = await fetch(
+        `http://localhost:3333/usuarios/deletarUsuario/${idUsuario}`,
+        { method: "DELETE" }
+      );
+
+      fecharTela("telaDeletar");
+
+      if (users.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuário deletado!',
+          text: 'O usuário foi removido com sucesso.',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      } else {
+        const erroTexto = await users.text();
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao deletar',
+          text: erroTexto
+        });
+      }
+
+      setTimeout(() => {
+        esconderLoading();
+        window.location.reload();
+      }, 1500);
+
+    } catch (erro) {
+      console.log(erro);
+      esconderLoading();
+      Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: 'Não foi possível deletar o usuário.'
+      });
     }
-
-    function cadastrarUsuario() {
-        telaAdicionarUser.style.display = "flex"
-    }
-
-    async function salvar() {
-        try {
-            var idEmpresa = sessionStorage.id_empresa_ss
-            var formData = new FormData();
-            formData.append('foto', foto.files[0])
-            formData.append('fkEmpresa', idEmpresa)
-            formData.append('nome', nome.value)
-            formData.append('email', email.value)
-            formData.append('cargo', cargo.value)
-            formData.append('senha', senha.value)
-            formData.append('telefone', telefone.value)
-            formData.append('sobrenome', sobrenome.value)
+  }
 
 
-            console.log(idEmpresa, sessionStorage)
-            const users = await fetch(`http://localhost:3333/usuarios/cadastrarUsuario`,
-                {
-                    method: "POST",
-                    body: formData
-                })
+  var idUsuario;
 
+  function telaDel(id) {
+    telaDeletar.style.display = "flex";
+    idUsuario = id;
+  }
 
-        } catch (erro) {
-            console.log(erro)
-        }
-        fecharTela('telaAdicionarUser')
-        buscarUsuario()
-    }
+  function abrirTela(tela) {
+    document.getElementById(tela).style.display = "flex";
+  }
 
-    function mostrarLoading() {
-        document.getElementById('loading').classList.remove('hidden');
-    }
-
-    function esconderLoading() {
-        document.getElementById('loading').classList.add('hidden');
-    }
-
-    async function excluir() {
-        try {
-            mostrarLoading();
-
-            const users = await fetch(`http://localhost:3333/usuarios/deletarUsuario/${idUsuario}`, {
-                method: "DELETE"
-            })
-            fecharTela('telaDeletar');
-
-            setTimeout(() => {
-                esconderLoading();
-                window.location.reload();
-            }, 1500);
-
-        } catch (erro) {
-            console.log(erro);
-            esconderLoading();
-        }
-    }
-
-    var idUsuario
-
-    function telaDel(id) {
-        telaDeletar.style.display = "flex"
-        idUsuario = id
-
-    }
-
-    function abrirTela(tela) {
-        document.getElementById(tela).style.display = "flex";
-    }
-
-    function abrirTelaUpdate(i) {
-        nomeUpdate.value = users[i].nome,
-            emailUpdate.value = users[i].email,
-            cargoUpdate.value = users[i].cargo,
-            telefoneUpdate.value = users[i].telefone,
-            sobrenomeUpdate.value = users[i].sobrenome
-        document.getElementById("imagemFuncionarioPerfilAtualizar").innerHTML = `
+  function abrirTelaUpdate(i) {
+    (nomeUpdate.value = users[i].nome),
+      (emailUpdate.value = users[i].email),
+      (cargoUpdate.value = users[i].cargo),
+      (telefoneUpdate.value = users[i].telefone),
+      (sobrenomeUpdate.value = users[i].sobrenome);
+    document.getElementById("imagemFuncionarioPerfilAtualizar").innerHTML = `
             <div class="rounded-md w-20 h-20 mb-2"
                 style="background-image: url(${users[i].caminhoImagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
             </div>
-        `
+        `;
 
-        abrirTela('telaAtualizar')
-        idUsuario = users[i].id
+    abrirTela("telaAtualizar");
+    idUsuario = users[i].id;
+  }
+
+  async function atualizar() {
+    try {
+      var idEmpresa = sessionStorage.id_empresa_ss;
+      var formData = new FormData();
+      formData.append("fotoAtualizar", fotoAtualizar.files[0]);
+      formData.append("nome", nomeUpdate.value);
+      formData.append("email", emailUpdate.value);
+      formData.append("cargo", cargoUpdate.value);
+      formData.append("telefone", telefoneUpdate.value);
+      formData.append("sobrenome", sobrenomeUpdate.value);
+      formData.append("id", idUsuario);
+      await fetch(`http://localhost:3333/usuarios/atualizarUsuario`, {
+        method: "POST",
+        body: formData,
+      });
+      await buscarUsuario();
+      fecharTela("telaAtualizar");
+    } catch (erro) {
+      console.log(erro);
+    }
+  }
+
+  function search() {
+    const search = inputPesquisar.value;
+    if (!search) {
+      return listarUsuarios(users);
     }
 
-    async function atualizar() {
-        try {
-            var idEmpresa = sessionStorage.id_empresa_ss
-            var formData = new FormData();
-            formData.append('fotoAtualizar', fotoAtualizar.files[0])
-            formData.append('nome', nomeUpdate.value)
-            formData.append('email', emailUpdate.value)
-            formData.append('cargo', cargoUpdate.value)
-            formData.append('telefone', telefoneUpdate.value)
-            formData.append('sobrenome', sobrenomeUpdate.value)
-            formData.append('id', idUsuario)
-            await fetch(`http://localhost:3333/usuarios/atualizarUsuario`,
-                {
-                    method: "POST",
-                    body: formData
-                })
-            await buscarUsuario()
-            fecharTela("telaAtualizar")
+    const lista = users
+      .map((u) => {
+        if (u.nome.toUpperCase().includes(search.toUpperCase())) {
+          console.log(u);
+          return u;
         }
-        catch (erro) {
-            console.log(erro)
-        }
-    }
+      })
+      .filter((u) => u);
 
-    function search() {
-        const search = inputPesquisar.value
-        if (!search) {
-            return listarUsuarios(users)
-        }
+    listarUsuarios(lista);
+  }
 
-        const lista = users.map(u => {
-            if (u.nome.toUpperCase().includes(search.toUpperCase())) {
-                console.log(u)
-                return u
-            }
-        }).filter(u => u)
-
-        listarUsuarios(lista)
-    }
-
-    function listarUsuarios(users) {
-        usuarios.innerHTML = `
+  function listarUsuarios(users) {
+    usuarios.innerHTML = `
             <div style="display:grid; grid-template-columns:56px 2fr 1.2fr 2fr 120px 1.2fr 90px; gap:1rem; align-items:center" class="text-slate-500 font-semibold pb-2 border-b">
                 <div>Foto</div>
                 <div>Nome</div>
@@ -462,52 +516,95 @@
                 <div style="text-align:center">Status</div>
                 <div>Cargo</div>
                 <div style="text-align:center">Operação</div>
-            </div>`
+            </div>`;
 
+    users.forEach((u, i) => {
+      const row = document.createElement("div");
+      row.style.display = "grid";
+      row.style.gridTemplateColumns = "56px 2fr 1.2fr 2fr 120px 1.2fr 90px";
+      row.style.alignItems = "center";
+      row.style.gap = "1rem";
+      row.className = "py-3";
 
-        users.forEach((u, i) => {
-            const row = document.createElement('div');
-            row.style.display = 'grid';
-            row.style.gridTemplateColumns = '56px 2fr 1.2fr 2fr 120px 1.2fr 90px';
-            row.style.alignItems = 'center';
-            row.style.gap = '1rem';
-            row.className = 'py-3';
-
-            row.innerHTML = `
+      if (u.statusPerfil == "Inativo") {
+        row.innerHTML = `
                     <div class="w-14 h-14 rounded-md" style="background-image:url(${u.caminhoImagem}); background-size:cover; background-repeat:no-repeat; background-position:center"></div>
                     <div class="font-semibold text-slate-600 truncate" title="${(u.nome || '') + ' ' + (u.sobrenome || '')}">${u.nome || ''} ${u.sobrenome || ''}</div>
                     <div class="font-semibold text-slate-600">${u.telefone || ''}</div>
                     <div class="font-semibold text-slate-600 truncate" title="${u.email || ''}">${u.email || ''}</div>
-                    <div style="justify-self:center"><span class="inline-flex items-center justify-center rounded-full bg-green-400 text-green-900 px-4 py-1 text-sm font-semibold w-24">Ativo</span></div>
+                    <div style="justify-self:center"><button onclick="mudarStatusUsuario('${u.email}', '${u.statusPerfil}')" class="inline-flex items-center justify-center rounded-full bg-red-400 text-red-900 px-4 py-1 text-sm font-semibold w-24 cursor-pointer">${u.statusPerfil}</button></div>
                     <div class="font-semibold text-slate-600 truncate" title="${u.cargo || ''}">${u.cargo || ''}</div>
                     <div style="display:flex; align-items:center; justify-content:center; gap:0.75rem">
                     <button title="Editar" onclick="abrirTelaUpdate(${i})"><i class="fa-solid fa-pen text-xl text-slate-800 cursor-pointer"></i></button>
                     <button title="Excluir" onclick="telaDel(${u.id})"><i class="fa-solid fa-trash text-xl text-slate-800 cursor-pointer"></i></button>
                     </div>
                 `;
-            usuarios.appendChild(row);
-        });
-    }
-    // Espere o HTML inteiro ser carregado antes de executar o JavaScript
-    document.addEventListener('DOMContentLoaded', function () {
-
-        // Agora podemos pegar os elementos com segurança, pois eles já existem
-        var nomeEmpresa = sessionStorage.getItem("nome_ss");
-        var cargo = sessionStorage.getItem("cargo_ss"); // Usando a variável correta
-
-        var nomeProfissao = document.getElementById("nomeProfissao");
-
-        // É uma boa prática verificar se o elemento foi encontrado antes de usá-lo
-        if (nomeProfissao) {
-            nomeProfissao.innerHTML += `
-                <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa || 'Usuário'}</p>
-                <p class="mb-4 text-blue-900">Cargo: ${cargo || 'Não definido'}</p> 
-            `;
-        } else {
-            console.error("Elemento com ID 'nomeProfissao' não foi encontrado!");
-        }
-
-        // Você pode colocar outras funções que precisam do HTML aqui também,
-        // como a chamada para buscarUsuario(), embora ela já funcione.
+        usuarios.appendChild(row);
+      } else {
+        row.innerHTML = `
+                    <div class="w-14 h-14 rounded-md" style="background-image:url(${u.caminhoImagem}); background-size:cover; background-repeat:no-repeat; background-position:center"></div>
+                    <div class="font-semibold text-slate-600 truncate" title="${(u.nome || '') + ' ' + (u.sobrenome || '')}">${u.nome || ''} ${u.sobrenome || ''}</div>
+                    <div class="font-semibold text-slate-600">${u.telefone || ''}</div>
+                    <div class="font-semibold text-slate-600 truncate" title="${u.email || ''}">${u.email || ''}</div>
+                    <div style="justify-self:center"><button onclick="mudarStatusUsuario('${u.email}', '${u.statusPerfil}')" class="inline-flex items-center justify-center rounded-full bg-green-400 text-green-900 px-4 py-1 text-sm font-semibold w-24 cursor-pointer">${u.statusPerfil}</button></div>
+                    <div class="font-semibold text-slate-600 truncate" title="${u.cargo || ''}">${u.cargo || ''}</div>
+                    <div style="display:flex; align-items:center; justify-content:center; gap:0.75rem">
+                    <button title="Editar" onclick="abrirTelaUpdate(${i})"><i class="fa-solid fa-pen text-xl text-slate-800 cursor-pointer"></i></button>
+                    <button title="Excluir" onclick="telaDel(${u.id
+          })"><i class="fa-solid fa-trash text-xl text-slate-800 cursor-pointer"></i></button>
+                    </div>
+                `;
+        usuarios.appendChild(row);
+      }
     });
+  }
+
+  function mudarStatusUsuario(emailUsuario, statusAtual) {
+    const novoStatus = statusAtual === "Ativo" ? "Inativo" : "Ativo";
+
+    fetch("/usuarios/mudarStatus", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        statusServer: novoStatus,
+        emailServer: emailUsuario
+      }),
+    }).then(function (resposta) {
+      if (resposta.ok) {
+        console.log("Status atualizado com sucesso!");
+        location.reload();
+
+      } else {
+        console.error("Falha ao atualizar o status.");
+      }
+    }).catch(function (erro) {
+      console.error("Erro na requisição: ", erro);
+    });
+  }
+
+  // Espere o HTML inteiro ser carregado antes de executar o JavaScript
+  document.addEventListener('DOMContentLoaded', function () {
+
+    // Agora podemos pegar os elementos com segurança, pois eles já existem
+    var nomeEmpresa = sessionStorage.getItem("nome_ss");
+    var cargo = sessionStorage.getItem("cargo_ss"); // Usando a variável correta
+
+    var nomeProfissao = document.getElementById("nomeProfissao");
+
+    // É uma boa prática verificar se o elemento foi encontrado antes de usá-lo
+    if (nomeProfissao) {
+      nomeProfissao.innerHTML += `
+                <p class="font-bold text-blue-900 flex align-self-center justify-self-center">${nomeEmpresa || "Usuário"
+        }</p>
+                <p class="mb-4 text-blue-900">Cargo: ${cargo || "Não definido"
+        }</p> 
+            `;
+    } else {
+      console.error("Elemento com ID 'nomeProfissao' não foi encontrado!");
+    }
+
+    // Você pode colocar outras funções que precisam do HTML aqui também,
+    // como a chamada para buscarUsuario(), embora ela já funcione.
+  });
 </script>
+<script src="js/redirecionar.js"></script>

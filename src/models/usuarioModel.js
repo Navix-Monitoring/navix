@@ -1,10 +1,18 @@
 var database = require("../database/config")
 
+function autenticarStatus(email,senha){
+    const instrucaoSql = `
+     SELECT status FROM funcionario WHERE email = '${email}' AND senha = '${senha}'
+    `
+    return database.executar(instrucaoSql);
+}
+
 function autenticar(email, senha) {
     const instrucaoSql = `
-        SELECT func.nome, func.email, func.senha, func.caminhoImagem, func.cargo, emp.codigo_ativacao, func.fkEmpresa, emp.cnpj
+        SELECT func.nome, func.email, func.senha, func.caminhoImagem, func.fkCargo, c.titulo, emp.codigo_ativacao, func.fkEmpresa, func.statusPerfil
         FROM funcionario func 
         INNER JOIN empresa emp ON emp.id = func.fkEmpresa
+        INNER JOIN cargo c ON c.id = func.fkCargo
         WHERE func.email = '${email}' AND func.senha = '${senha}'
     `;
 
@@ -64,9 +72,9 @@ function adicionarFotoUsuario(fkEmpresa, nome, sobrenome, telefone, email, senha
 
 }
 
-function cadastrarUsuario(fkEmpresa, nome, sobrenome, telefone, email, senha, cargo) {
+function cadastrarUsuario(fkEmpresa, nome, sobrenome, telefone, email, senha, fkCargo) {
     console.log("Entrou na model de criação de usuário")
-    var instrucaoSql = `INSERT INTO funcionario(fkEmpresa,nome,sobrenome,telefone,email,senha,cargo) VALUES(${fkEmpresa},"${nome}","${sobrenome}","${telefone}","${email}","${senha}","${cargo}");`
+    var instrucaoSql = `INSERT INTO funcionario(fkEmpresa,nome,sobrenome,telefone,email,senha,fkCargo) VALUES(${fkEmpresa},"${nome}","${sobrenome}","${telefone}","${email}","${senha}","${fkCargo}");`
     return database.executar(instrucaoSql)
 
 }
@@ -93,7 +101,7 @@ function atualizarImagemUsuario(nome, sobrenome, email, telefone, cargo, id, nom
     return database.executar(instrucaoSql)
 }
 
-function cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, cargo) {
+function cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, ) {
     const caminhoPadrao = '../assets/img/foto-usuario.png'
     console.log(
         "ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarAdm():",
@@ -101,11 +109,10 @@ function cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, ca
         sobrenome,
         telefone,
         email,
-        senha,
-        cargo
+        senha
     );
     var instrucaoSql = `
-    INSERT INTO funcionario (nome, sobrenome, telefone, email, senha, fkEmpresa, cargo, caminhoImagem) VALUES 
+    INSERT INTO funcionario (nome, sobrenome, telefone, email, senha, fkEmpresa, fkCargo, caminhoImagem) VALUES 
         (
             '${nome}',
             '${sobrenome}',
@@ -113,7 +120,7 @@ function cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, ca
             '${email}',
             '${senha}',
             (SELECT id FROM empresa WHERE codigo_ativacao = '${codigoEmpresa}'), 
-            '${cargo}',
+            1,
             '${caminhoPadrao}'
         );
 `;
@@ -121,8 +128,17 @@ function cadastrarAdm(nome, sobrenome, telefone, email, senha, codigoEmpresa, ca
     return database.executar(instrucaoSql);
 }
 
+function atualizarStatusPerfil(novoStatus, emailUsuario) {
+    console.log("Entrou no usuarioModel");
+    var instrucao = `
+        UPDATE funcionario SET statusPerfil = '${novoStatus}' WHERE email = "${emailUsuario}";
+    `;
+    console.log("Executando a query: \n" + instrucao);
+    return database.executar(instrucao);
+}
 
 module.exports = {
+    autenticarStatus,
     autenticar,
     atualizarNomeUsuario,
     atualizarFotoUsuario,
@@ -136,4 +152,5 @@ module.exports = {
     atualizarImagemUsuario,
     atualizarUsuario,
     cadastrarAdm,
+    atualizarStatusPerfil
 };

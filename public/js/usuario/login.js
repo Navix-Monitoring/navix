@@ -8,6 +8,37 @@ function esconderLoading() {
     document.getElementById('loading').classList.add('hidden');
 }
 
+function checarStatus() {
+    const email = email_input.value;
+    const senha = senha_input.value;
+    fetch("usuarios/autenticarStatus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            output_email: email,
+            output_senha: senha
+        })
+    }).then(res => {
+        res.json().then(json => {
+            console.log("entrei no checarStatus")
+            if (json[0].status != "Inativo") {
+                console.log("entrei no if checarStatus != inativo")
+
+                // Redirecionamento após 3 segundos
+                mostrarLoading();
+                setTimeout(() => {
+                    esconderLoading();
+                    window.location = "../perfil-visualizar.html";
+                }, 3000);
+            }
+            else {
+                return mostrarErro("Conta inativa!");
+                
+            }
+        })
+    })
+}
+
 async function entrar() {
     const email = email_input.value;
     const senha = senha_input.value;
@@ -17,16 +48,17 @@ async function entrar() {
     const padrao = /["'!()\/\\|;\-\]\[{}=]/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+
     try {
-        
+
         if (!email || !senha) {
             esconderLoading();
             return mostrarErro("Campos inválidos! Preencha email e senha.");
-        } 
+        }
         if (!emailRegex.test(email)) {
             esconderLoading();
             return mostrarErro("Email inválido!");
-        } 
+        }
         if (verificacao.some(campo => padrao.test(campo))) {
             esconderLoading();
             return mostrarErro("Caracteres especiais são inválidos!");
@@ -47,7 +79,6 @@ async function entrar() {
         } catch (e) {
             json = null;
         }
-        console.log(json)
 
         if (!resposta.ok) {
             esconderLoading();
@@ -55,24 +86,18 @@ async function entrar() {
             console.error("Erro do servidor:", textoErro);
             return mostrarErro("Email e/ou senha inválido(s)");
         }
-
-        // Salvando dados no sessionStorage
-            sessionStorage.email_ss = json.email;
-            sessionStorage.nome_ss = json.nome;
-            sessionStorage.id_empresa_ss = json.fkEmpresa;
-            sessionStorage.cargo_ss = json.cargo;
-
-        // Redirecionamento após 3 segundos
-        mostrarLoading();
-        setTimeout(() => {
-            esconderLoading();
-            window.location = "../perfil-visualizar.html";
-        }, 3000);
-
+         // Salvando dados no sessionStorage
+                sessionStorage.email_ss = json.email;
+                sessionStorage.nome_ss = json.nome;
+                sessionStorage.id_empresa_ss = json.fkEmpresa;
+                sessionStorage.fkCargo = json.fkcargo;
+                sessionStorage.cargo_ss = json.cargo;
+        checarStatus();
     } catch (error) {
         esconderLoading();
         return mostrarErro("Não foi possível conectar ao servidor.");
     }
 }
+
 
 window.entrar = entrar;
