@@ -57,7 +57,7 @@
             </a>
 
             <div class="topoTitulo">
-                <h1 class="tituloLote" id="tituloLote">Lote: Teste - 10 carros</h1>
+                <h1 class="tituloLote" id="tituloLote">Modelo Keniti - 50 lotes</h1>
                 <select class="selectData" id="selectPeriodo">
                     <option value="semana" selected>Semana</option>
                     <option value="mes">Mês</option>
@@ -68,57 +68,63 @@
             <main class="card">
                 <div class="kpis">
                     <div class="kpi">
-                        <p class="tituloKPI">Taxa de Aprovação do Lote</p><br>
+                        <p class="tituloKPI">Lotes em Baixo</p><br>
                         <div class="ladinho">
                             <div class="colour-ball" style="border-color: green;">
-                                <p class="valor">92%</p>
+                                <p class="valor">20%</p>
                             </div>
                             <div class="alerta">
-                                <p class="nvlRisco">Risco: BAIXO</p>
+                                <p class="nvlRisco">10 lotes</p>
                             </div>
                         </div>
                     </div>
                     <div class="kpi">
-                        <p class="tituloKPI">Taxa de Reprovação / Retrabalho</p><br>
+                        <p class="tituloKPI">Lotes em Neutro</p><br>
                         <div class="ladinho">
                             <div class="colour-ball" style="border-color: yellow;">
-                                <p class="valor">8%</p>
+                                <p class="valor">30%</p>
                             </div>
                             <div class="alerta">
-                                <p class="nvlRisco">Risco: MÉDIO</p>
+                                <p class="nvlRisco">20 lotes</p>
                             </div>
                         </div>
                     </div>
                     <div class="kpi">
-                        <p class="tituloKPI">Alertas Críticos no Lote</p><br>
+                        <p class="tituloKPI">Lotes em alerta</p><br>
                         <div class="ladinho">
                             <div class="colour-ball" style="border-color: red;">
-                                <p class="valor">5</p>
+                                <p class="valor">40%</p>
                             </div>
                             <div class="alerta">
-                                <p class="nvlRisco">Risco: ALTO</p>
+                                <p class="nvlRisco">10 lotes</p>
                             </div>
                         </div>
                     </div>
                     <div class="kpi">
-                        <p class="tituloKPI">Tempo Médio de Inspeção</p><br>
+                        <p class="tituloKPI">Lotes em crítico</p><br>
                         <div class="ladinho">
                             <div class="colour-ball" style="border-color: yellow;">
-                                <p class="valor">4h</p>
+                                <p class="valor">10%</p>
                             </div>
                             <div class="alerta">
-                                <p class="nvlRisco">Risco: MÉDIO</p>
+                                <p class="nvlRisco">10 lotes</p>
                             </div>
                         </div>
                     </div>
                     <div class="kpi">
-                        <p class="tituloKPI">Confiabilidade dos Dados</p><br>
+                        <p class="tituloKPI">Componentes problemáticos</p><br>
                         <div class="ladinho">
-                            <div class="colour-ball" style="border-color: green;">
-                                <p class="valor">96%</p>
+                            <div class="alerta">
+                                <p class="nvlRisco">RAM 50%</p>
                             </div>
                             <div class="alerta">
-                                <p class="nvlRisco">Risco: BAIXO</p>
+                                <p class="nvlRisco">CPU 20%</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco">DISCO 10%</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco">TEMP 20%</p>
                             </div>
                         </div>
                     </div>
@@ -159,11 +165,11 @@
                         </div>
                     </div>
 
-                    <!-- GRÁFICO BOXPLOT -->
+                    <!-- GRÁFICO DE COMPARACAO HARDWARE -->
                     <div class="container-filho">
                         <div class="chart-container-alert p-4 h-full flex flex-col">
                             <h3 class="text-lg font-bold text-center mb-2 text-black text-[18px]">
-                                Distribuição de Alertas Por Lote
+                                Comparativo - Mediana de alerta por Hardware
                             </h3>
                             <div class="flex-1">
                                 <canvas id="boxplotLote" class="w-full h-full"></canvas>
@@ -171,11 +177,11 @@
                         </div>
                     </div>
 
-                    <!-- GRÁFICO LINHA -->
+                    <!-- GRÁFICO COMPARACAO TOTALALERTAS -->
                     <div class="container-filho">
                         <div class="chart-container-alert p-4 h-full flex flex-col">
                             <h3 class="text-lg font-bold text-center mb-2 text-black text-[18px]">
-                                Evolução de Alertas
+                                Comparativo - Alertas Totais
                             </h3>
                             <div class="flex-1">
                                 <canvas id="tempAlertChart" class="w-full h-full"></canvas>
@@ -210,8 +216,6 @@
                 let novosLabels;
                 // Dados Bar Chart
                 let d_bar_lote1, d_bar_lote2, d_bar_lote3, d_bar_lote4;
-                // Dados Boxplot
-                let d_box_lote1, d_box_lote2, d_box_lote3, d_box_lote4;
                 // Dados Line Chart
                 let d_line_temp, d_line_alertas;
                 // Dados Ranking
@@ -346,9 +350,15 @@
                 alertasChart.update();
 
                 // 5. Atualizar o Boxplot (boxplotLote)
-                boxplotChart.data.labels = labelsBoxplot; // Labels são sempre os lotes
-                boxplotChart.data.datasets[0].data = [d_box_lote1, d_box_lote2, d_box_lote3, d_box_lote4];
+                let cpu_ultimos7 = [45, 50, 55, 60, 52, 48, 46];
+                let cpu_semanaAtual = [40, 44, 58, 63, 57, 50, 47];
+
+                boxplotChart.data.labels = novosLabels; // dias ou semanas
+                boxplotChart.data.datasets[0].data = cpu_ultimos7;
+                boxplotChart.data.datasets[1].data = cpu_semanaAtual;
                 boxplotChart.update();
+
+
 
                 // 6. Atualizar o Gráfico de Linha (tempAlertChart)
                 tempAlertChart.data.labels = novosLabels;
@@ -375,41 +385,89 @@
                 },
                 options: { responsive: true, plugins: { title: { display: true, text: '' } }, scales: { x: { stacked: true }, y: { stacked: true } } }
             });
-
             boxplotChart = new Chart(ctxBox, {
-                type: 'boxplot',
-                data: {
-                    labels: [], // Inicia vazio
-                    datasets: [{
-                        label: 'Distribuição de alertas',
-                        data: [], // Inicia vazio
-                        borderColor: 'darkblue',
-                        backgroundColor: 'royalblue'
-                    }]
-                },
-                options: { responsive: true }
-            });
-
-            tempAlertChart = new Chart(ctxTempAlert, {
                 type: 'line',
                 data: {
-                    labels: [], // Inicia vazio
+                    labels: [], // Dias da semana serão colocados depois
                     datasets: [
-                        { label: 'Temperatura Média De Componentes (°C)', data: [], borderColor: 'red', tension: 0.3, yAxisID: 'y' },
-                        { label: 'Alertas Gerados', data: [], borderColor: 'blue', tension: 0.3, yAxisID: 'y1' }
+                        {
+                            label: 'Últimos 7 dias (CPU)',
+                            data: [],
+                            borderColor: 'red',
+                            backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Semana Atual (CPU)',
+                            data: [],
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                            tension: 0.3,
+                            fill: true
+                        }
                     ]
                 },
                 options: {
                     responsive: true,
                     interaction: { mode: 'index', intersect: false },
                     stacked: false,
-                    plugins: { title: { display: true, text: 'Temperatura vs Quantidade de Alertas' } },
+                    plugins: {
+                        title: { display: true, text: 'Comparativo de Uso de CPU (%)' },
+                        legend: { position: 'bottom' }
+                    },
                     scales: {
-                        y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Temperatura (°C)' } },
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Uso da CPU (%)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Dias' }
+                        }
+                    }
+                }
+            });
+
+
+
+            tempAlertChart = new Chart(ctxTempAlert, {
+                type: 'line',  // Mantém 'line'
+                data: {
+                    labels: [], // Inicia vazio
+                    datasets: [
+                        {
+                            label: 'Ultima Semana',
+                            data: [],
+                            borderColor: 'red',
+                            backgroundColor: 'rgba(255, 0, 0, 0.2)', // Cor de fundo da área (vermelho claro)
+                            tension: 0.3,
+                            yAxisID: 'y',
+                            fill: true  // Preenche a área sob a linha
+                        },
+                        {
+                            label: 'Semana Atual',
+                            data: [],
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(0, 0, 255, 0.2)', // Cor de fundo da área (azul claro)
+                            tension: 0.3,
+                            yAxisID: 'y1',
+                            fill: true  // Preenche a área sob a linha
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    interaction: { mode: 'index', intersect: false },
+                    stacked: false,
+                    plugins: { title: { display: true, text: 'Últimos 7 dias' } },
+                    scales: {
+                        y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Totais de alertas' } },
                         y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Alertas' }, grid: { drawOnChartArea: false } }
                     }
                 }
             });
+
 
             // 9. Adicionar o Event Listener
             selectPeriodo.addEventListener('change', (e) => {
