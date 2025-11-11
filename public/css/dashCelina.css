@@ -1,0 +1,14 @@
+.graficos{
+    margin: 50px;
+    padding: 50px;
+}
+
+.graficoTendencia{
+    margin: 0;
+    padding: 0;
+    width: 50vw;
+}
+.graficos{
+    display: flex;
+    flex-direction: column;
+}
