@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lote</title>
+    <link rel="icon" href="../assets/navix-logo.jpg">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/dashKeniti.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    <script src="../js/sessao.js"></script>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/dist/chartjs-chart-boxplot.min.js"></script>
+</head>
+
+<body>
+
+    <div class="flex flex-row w-full">
+        <div
+            class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600 fixed top-0 left-0">
+            <img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
+            <div id="imagemUsuarioNavbar">
+                <div class="rounded-md w-20 h-20 mb-2"
+                    style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                </div>
+            </div>
+            <div id="nomeProfissao" class="text-center mb-6"></div>
+            <div class="flex flex-col gap-4 w-[80%]">
+                <a href="../perfil-visualizar.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Perfil
+                </a>
+                <a
+                    class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Dashboard
+                </a>
+                <a href="../admin.html" id="adm-only"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Cadastrar Funcionários
+                </a>
+                <a href="./cadastroVeiculos.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Gerenciar Frota
+                </a>
+                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
+                    onclick="limparSessao()">
+                    <a href="../index.html" class="no-underline text-white">
+                        <h3 class="m-0 p-0">Sair</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col ml-[250px] w-full p-8">
+            <a class="btnVoltar" onclick="localStorage.clear(); redirecionar();">
+                <div style="margin-bottom: 20px; display: flex; align-items: center; font-size: 30px;">
+                    <i class='bx bx-arrow-left-stroke'></i>
+                    <h3>Voltar</h3>
+                </div>
+            </a>
+
+            <div class="topoTitulo">
+                <h1 class="tituloLote" id="tituloLote">Análise de Desempenho - Modelo Keniti</h1>
+                <select class="selectData" id="selectPeriodo">
+                    <option value="semana" selected>Semana</option>
+                    <option value="mes">Mês</option>
+                </select>
+            </div>
+
+            <main class="card">
+
+                <div class="kpis">
+                    <div class="kpi">
+                        <span class="kpi-title">PIOR LOTE (CPU)</span>
+                        <h2 class="kpi-value">Lote A048</h2>
+                        <span class="kpi-subtext">Média de 88% de uso</span>
+                    </div>
+                    <div class="kpi">
+                        <span class="kpi-title">PIOR LOTE (PROCESSOS)</span>
+                        <h2 class="kpi-value">Lote A012</h2>
+                        <span class="kpi-subtext">Média de 920 processos</span>
+                    </div>
+                    <div class="kpi">
+                        <span class="kpi-title">PIOR LOTE (USO DE DISCO)</span>
+                        <h2 class="kpi-value">Lote A012</h2>
+                        <span class="kpi-subtext">Uso: 98%</span>
+                    </div>
+                    <div class="kpi">
+                        <span class="kpi-title">PIOR LOTE (TEMP)</span>
+                        <h2 class="kpi-value">Lote A048</h2>
+                        <span class="kpi-subtext">Média de 75°C</span>
+                    </div>
+                </div>
+
+                <section class="dashboard-card">
+                    <div class="dashboard-card-header"
+                        style="display: flex; justify-content: space-between; align-items: center;">
+                        <h2>Análise Top 5 Lotes</h2>
+                        <select id="escolhaVisu" class="escolhaVisu">
+                            <option value="cpu">CPU</option>
+                            <option value="temp">Temp</option>
+                            <option value="ram">RAM</option>
+                            <option value="disco">Disco</option>
+                            <option value="processo">Processo</option>
+                        </select>
+                    </div>
+                    <table class="heatmap-table">
+                        <thead>
+                            <tr>
+                                <th>Lote</th>
+                                <th>Média CPU (Uso)</th>
+                                <th>Média Temp. (°C)</th>
+                                <th>Média RAM (Uso)</th>
+                                <th>Uso Disco (%)</th>
+                                <th>Qtd. Média de Processos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Lote A048</strong></td>
+                                <td class="hot">88%</td>
+                                <td class="hot">75°</td>
+                                <td class="medium">70%</td>
+                                <td class="medium">50%</td>
+                                <td class="cold">120</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lote A012</strong></td>
+                                <td class="hot">85%</td>
+                                <td class="medium">68°</td>
+                                <td class="medium">72%</td>
+                                <td class="hot">98%</td>
+                                <td class="hot">300</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lote A031</strong></td>
+                                <td class="hot">82%</td>
+                                <td class="hot">72°</td>
+                                <td class="medium">65%</td>
+                                <td class="hot">95%</td>
+                                <td class="hot">300</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lote A009</strong></td>
+                                <td class="hot">81%</td>
+                                <td class="medium">65°</td>
+                                <td class="cold">40%</td>
+                                <td class="cold">30%</td>
+                                <td class="medium">230</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lote A055</strong></td>
+                                <td class="hot">79%</td>
+                                <td class="medium">66°</td>
+                                <td class="cold">38%</td>
+                                <td class="cold">25%</td>
+                                <td class="hot">300</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <div class="container-filho">
+                    <div class="chart-container" style="display: block;">
+                        <canvas id="evolucao"></canvas>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="container-filho">
+                        <div class="chart-container-alert">
+                            <canvas id="relacao"></canvas>
+                        </div>
+                    </div>
+                    <div class="container-filho">
+                        <div class="chart-container-alert">
+                            <canvas id="carga"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="../js/redirecionar.js"></script>
+<script>
+
+    function carregarUsuarioSessao() {
+        var imagemUsuarioNavbar = document.getElementById("imagemUsuarioNavbar");
+        var fotoUrl = sessionStorage.getItem("imagem");
+        if (imagemUsuarioNavbar && fotoUrl) {
+            imagemUsuarioNavbar.innerHTML = `
+            <div class="rounded-md w-20 h-20 mb-2"
+                style="background-image: url(${fotoUrl}); background-size: cover; background-repeat: no-repeat; background-position: center;">
+            </div>
+            `;
+        }
+
+        var nomeEmpresa = sessionStorage.getItem("nome_ss");
+        var cargo = sessionStorage.getItem("cargo_ss");
+        var nomeProfissao = document.getElementById("nomeProfissao");
+
+        if (nomeProfissao) {
+            nomeProfissao.innerHTML = `
+                <p class="font-bold text-blue-900">${nomeEmpresa || "Usuário"}</p>
+                <p class="mb-4 text-blue-900">Cargo: ${cargo || "Não definido"}</p>
+            `;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // 1. DADOS MOCADOS PARA OS GRÁFICOS
+        const DADOS_RELACAO = {
+            semana: {
+                labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                titulo: 'Uso CPU x Temp. CPU (Semana)',
+                cpu: [3, 5, 2, 4, 6, 3, 4],
+                temp: [5, 7, 9, 6, 8, 4, 5]
+            },
+            mes: {
+                labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                titulo: 'Uso CPU x Temp. CPU (Mês)',
+                cpu: [4, 3, 5, 6],
+                temp: [7, 6, 8, 7]
+            }
+        };
+
+        const DADOS_EVOLUCAO = {
+            cpu: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Evolução Uso CPU (Top 5)',
+                    eixoY: 'Uso CPU (%)',
+                    lotes: [
+                        { label: 'Lote A048', data: [88, 85, 87, 82, 90, 88, 86], borderColor: 'red' },
+                        { label: 'Lote A012', data: [85, 82, 83, 80, 85, 84, 83], borderColor: 'blue' },
+                        { label: 'Lote A031', data: [82, 80, 81, 79, 83, 82, 81], borderColor: 'green' },
+                        { label: 'Lote A009', data: [81, 79, 80, 78, 82, 80, 79], borderColor: 'purple' },
+                        { label: 'Lote A055', data: [79, 78, 77, 76, 80, 79, 78], borderColor: 'pink' }
+                    ]
+                },
+                mes: {
+                    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                    titulo: 'Evolução Uso CPU (Top 5)',
+                    eixoY: 'Uso CPU (%)',
+                    lotes: [
+                        { label: 'Lote A048', data: [87, 86, 90, 88], borderColor: 'red' },
+                        { label: 'Lote A012', data: [83, 85, 82, 84], borderColor: 'blue' },
+                        { label: 'Lote A031', data: [81, 79, 83, 82], borderColor: 'green' },
+                        { label: 'Lote A009', data: [80, 78, 82, 80], borderColor: 'purple' },
+                        { label: 'Lote A055', data: [79, 76, 80, 78], borderColor: 'pink' }
+                    ]
+                }
+            },
+            temp: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Evolução Temperatura (Top 5)',
+                    eixoY: 'Temp. (°C)',
+                    lotes: [
+                        { label: 'Lote A048', data: [75, 72, 77, 73, 75, 78, 76], borderColor: 'red' },
+                        { label: 'Lote A012', data: [68, 70, 69, 71, 68, 67, 70], borderColor: 'blue' },
+                        { label: 'Lote A031', data: [72, 73, 71, 70, 74, 72, 73], borderColor: 'green' },
+                        { label: 'Lote A009', data: [65, 66, 64, 67, 68, 65, 66], borderColor: 'purple' },
+                        { label: 'Lote A055', data: [66, 68, 67, 65, 69, 67, 68], borderColor: 'pink' }
+                    ]
+                },
+                mes: {
+                    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                    titulo: 'Evolução Temperatura (Top 5)',
+                    eixoY: 'Temp. (°C)',
+                    lotes: [
+                        { label: 'Lote A048', data: [75, 77, 74, 76], borderColor: 'red' },
+                        { label: 'Lote A012', data: [69, 71, 68, 70], borderColor: 'blue' },
+                        { label: 'Lote A031', data: [72, 71, 74, 73], borderColor: 'green' },
+                        { label: 'Lote A009', data: [66, 67, 65, 66], borderColor: 'purple' },
+                        { label: 'Lote A055', data: [67, 65, 69, 68], borderColor: 'pink' }
+                    ]
+                }
+            },
+            ram: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Evolução RAM (Top 5)',
+                    eixoY: 'Uso RAM (%)',
+                    lotes: [
+                        { label: 'Lote A012', data: [72, 70, 71, 73, 75, 74, 72], borderColor: 'blue' },
+                        { label: 'Lote A048', data: [70, 68, 69, 71, 72, 70, 71], borderColor: 'red' },
+                        { label: 'Lote A031', data: [65, 66, 64, 67, 68, 65, 66], borderColor: 'green' },
+                        { label: 'Lote A009', data: [40, 42, 41, 39, 43, 40, 41], borderColor: 'purple' },
+                        { label: 'Lote A055', data: [38, 39, 37, 40, 41, 38, 39], borderColor: 'pink' }
+                    ]
+                },
+                mes: {
+                    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                    titulo: 'Evolução RAM (Top 5)',
+                    eixoY: 'Uso RAM (%)',
+                    lotes: [
+                        { label: 'Lote A012', data: [72, 73, 70, 71], borderColor: 'blue' },
+                        { label: 'Lote A048', data: [70, 69, 72, 71], borderColor: 'red' },
+                        { label: 'Lote A031', data: [65, 67, 66, 68], borderColor: 'green' },
+                        { label: 'Lote A009', data: [40, 41, 39, 42], borderColor: 'purple' },
+                        { label: 'Lote A055', data: [38, 40, 39, 37], borderColor: 'pink' }
+                    ]
+                }
+            },
+            disco: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Evolução Uso de Disco (Top 5)',
+                    eixoY: 'Uso Disco (%)',
+                    lotes: [
+                        { label: 'Lote A012', data: [98, 97, 98, 99, 98, 97, 98], borderColor: 'blue' },
+                        { label: 'Lote A031', data: [95, 96, 94, 95, 96, 95, 94], borderColor: 'green' },
+                        { label: 'Lote A048', data: [50, 51, 49, 52, 50, 51, 50], borderColor: 'red' },
+                        { label: 'Lote A009', data: [30, 31, 29, 32, 30, 31, 30], borderColor: 'purple' },
+                        { label: 'Lote A055', data: [25, 26, 24, 27, 25, 26, 25], borderColor: 'pink' }
+                    ]
+                },
+                mes: {
+                    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                    titulo: 'Evolução Uso de Disco (Top 5)',
+                    eixoY: 'Uso Disco (%)',
+                    lotes: [
+                        { label: 'Lote A012', data: [98, 97, 99, 98], borderColor: 'blue' },
+                        { label: 'Lote A031', data: [95, 94, 96, 95], borderColor: 'green' },
+                        { label: 'Lote A048', data: [50, 52, 51, 49], borderColor: 'red' },
+                        { label: 'Lote A009', data: [30, 29, 31, 32], borderColor: 'purple' },
+                        { label: 'Lote A055', data: [25, 27, 26, 24], borderColor: 'pink' }
+                    ]
+                }
+            },
+            processo: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Evolução Média de Processos (Top 5)',
+                    eixoY: 'Qtd. Processos',
+                    lotes: [
+                        { label: 'Lote A012', data: [300, 310, 290, 305, 295, 300, 310], borderColor: 'blue' },
+                        { label: 'Lote A031', data: [300, 290, 310, 300, 305, 295, 300], borderColor: 'green' },
+                        { label: 'Lote A055', data: [300, 305, 295, 310, 290, 300, 305], borderColor: 'pink' },
+                        { label: 'Lote A009', data: [230, 235, 225, 240, 230, 235, 225], borderColor: 'purple' },
+                        { label: 'Lote A048', data: [120, 125, 115, 130, 120, 125, 115], borderColor: 'red' }
+                    ]
+                },
+                mes: {
+                    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
+                    titulo: 'Evolução Média de Processos (Top 5)',
+                    eixoY: 'Qtd. Processos',
+                    lotes: [
+                        { label: 'Lote A012', data: [300, 290, 310, 305], borderColor: 'blue' },
+                        { label: 'Lote A031', data: [300, 310, 290, 300], borderColor: 'green' },
+                        { label: 'Lote A055', data: [300, 295, 305, 310], borderColor: 'pink' },
+                        { label: 'Lote A009', data: [230, 225, 240, 235], borderColor: 'purple' },
+                        { label: 'Lote A048', data: [120, 130, 115, 125], borderColor: 'red' }
+                    ]
+                }
+            }
+        };
+
+        function atualizarGraficos() {
+            const periodo = document.getElementById('selectPeriodo').value;
+            const metrica = document.getElementById('escolhaVisu').value;
+
+            // Atualizando gráfico relacao
+            if (graficoRelacao) {
+                const dados = DADOS_RELACAO[periodo];
+                graficoRelacao.data.labels = dados.labels;
+                graficoRelacao.data.datasets[0].data = dados.cpu;
+                graficoRelacao.data.datasets[1].data = dados.temp;
+                graficoRelacao.options.plugins.title.text = dados.titulo;
+                graficoRelacao.update();
+            }
+
+            // Atualizando gráfico Top 5
+            if (graficoEvolucao) {
+                if (DADOS_EVOLUCAO[metrica] && DADOS_EVOLUCAO[metrica][periodo]) {
+                    const dados = DADOS_EVOLUCAO[metrica][periodo];
+                    
+                    var novosDatasets = [];
+                    for (var i = 0; i < dados.lotes.length; i++) {
+                        var loteOriginal = dados.lotes[i]; 
+
+                        var novoLote = {
+                            label: loteOriginal.label,
+                            data: loteOriginal.data,
+                            borderColor: loteOriginal.borderColor,
+
+                            backgroundColor: loteOriginal.borderColor, 
+                            fill: false 
+                        };
+
+                        novosDatasets.push(novoLote);
+                    }
+                    
+                    graficoEvolucao.data.datasets = novosDatasets;
+
+                    graficoEvolucao.data.labels = dados.labels;
+                    graficoEvolucao.options.plugins.title.text = dados.titulo;
+                    graficoEvolucao.options.scales.y.title.text = dados.eixoY;
+                    graficoEvolucao.update();
+                } else {
+                    console.warn(`Dados não encontrados para: ${metrica}/${periodo}. O gráfico não será atualizado.`);
+                }
+            }
+        }
+
+        const selectPeriodo = document.getElementById('selectPeriodo');
+        const selectEvolucao = document.getElementById('escolhaVisu');
+
+        const ctxRelacao = document.getElementById('relacao');
+        const ctxCarga = document.getElementById('carga');
+        const ctxEvolucao = document.getElementById('evolucao');
+
+        let graficoRelacao;
+        let graficoCarga;
+        let graficoEvolucao;
+
+        carregarUsuarioSessao();
+
+        if (typeof verificarCargo === "function") {
+            verificarCargo();
+        }
+        if (typeof listarLotes === "function") {
+            listarLotes();
+        }
+
+        // Relação CPU x Temp
+        if (ctxRelacao) {
+            const dadosIniciais = DADOS_RELACAO.semana;
+            graficoRelacao = new Chart(ctxRelacao, {
+                type: 'line',
+                data: {
+                    labels: dadosIniciais.labels,
+                    datasets: [
+                        { label: 'CPU', data: dadosIniciais.cpu, backgroundColor: 'red', borderColor: 'red', fill: false },
+                        { label: 'Temperatura', data: dadosIniciais.temp, backgroundColor: 'blue', borderColor: 'blue', fill: false }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { color: 'black' } },
+                        title: { display: true, text: dadosIniciais.titulo, color: 'black', font: { size: 18, weight: 'bold' } }
+                    },
+                    scales: {
+                        x: { stacked: true, ticks: { color: 'black' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        y: {
+                            stacked: true, beginAtZero: true, ticks: { color: 'black' }, grid: { color: 'black' },
+                            title: { display: true, text: 'Valor', color: 'black', font: { size: 14 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Evolução Top 5 
+        if (ctxEvolucao) {
+            const dadosIniciais = DADOS_EVOLUCAO.cpu.semana;
+
+            var datasetsIniciais = [];
+            for (var i = 0; i < dadosIniciais.lotes.length; i++) {
+                var loteOriginal = dadosIniciais.lotes[i];
+                
+                var novoLote = {
+                    label: loteOriginal.label,
+                    data: loteOriginal.data,
+                    borderColor: loteOriginal.borderColor,
+                    backgroundColor: loteOriginal.borderColor, 
+                    fill: false 
+                };
+                
+                datasetsIniciais.push(novoLote);
+            }
+
+            graficoEvolucao = new Chart(ctxEvolucao, {
+                type: 'line',
+                data: {
+                    labels: dadosIniciais.labels,
+                    datasets: datasetsIniciais 
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { color: 'black' } },
+                        title: { display: true, text: dadosIniciais.titulo, color: 'black', font: { size: 18, weight: 'bold' } }
+                    },
+                    scales: {
+                        x: { stacked: true, ticks: { color: 'black' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        y: {
+                            stacked: true, beginAtZero: true, ticks: { color: 'black' }, grid: { color: 'black' },
+                            title: { display: true, text: dadosIniciais.eixoY, color: 'black', font: { size: 14 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        if (ctxCarga) {
+            graficoCarga = new Chart(ctxCarga, {
+                type: 'bar',
+                data: {
+                    labels: ['CPU', 'RAM', 'Disco'],
+                    datasets: [{
+                        label: 'CPU',
+                        data: [10, 16, 3, 5, 1, 20, 14],
+                        backgroundColor: 'blue'
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    plugins: {
+                        title: { display: true, text: 'Carga Média do Modelo', font: { size: 18 }, padding: { bottom: 20 } },
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Frequência',
+                                color: 'black',
+                                font: { size: 14 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        selectPeriodo.addEventListener('change', atualizarGraficos);
+        selectEvolucao.addEventListener('change', atualizarGraficos);
+    });
+</script>
