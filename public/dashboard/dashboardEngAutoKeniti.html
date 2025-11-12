@@ -383,23 +383,23 @@
             if (graficoEvolucao) {
                 if (DADOS_EVOLUCAO[metrica] && DADOS_EVOLUCAO[metrica][periodo]) {
                     const dados = DADOS_EVOLUCAO[metrica][periodo];
-                    
+
                     var novosDatasets = [];
                     for (var i = 0; i < dados.lotes.length; i++) {
-                        var loteOriginal = dados.lotes[i]; 
+                        var loteOriginal = dados.lotes[i];
 
                         var novoLote = {
                             label: loteOriginal.label,
                             data: loteOriginal.data,
                             borderColor: loteOriginal.borderColor,
 
-                            backgroundColor: loteOriginal.borderColor, 
-                            fill: false 
+                            backgroundColor: loteOriginal.borderColor,
+                            fill: false
                         };
 
                         novosDatasets.push(novoLote);
                     }
-                    
+
                     graficoEvolucao.data.datasets = novosDatasets;
 
                     graficoEvolucao.data.labels = dados.labels;
@@ -407,7 +407,7 @@
                     graficoEvolucao.options.scales.y.title.text = dados.eixoY;
                     graficoEvolucao.update();
                 } else {
-                    console.warn(`Dados não encontrados para: ${metrica}/${periodo}. O gráfico não será atualizado.`);
+                    console.warn(`Dados não encontrados.`);
                 }
             }
         }
@@ -469,15 +469,15 @@
             var datasetsIniciais = [];
             for (var i = 0; i < dadosIniciais.lotes.length; i++) {
                 var loteOriginal = dadosIniciais.lotes[i];
-                
+
                 var novoLote = {
                     label: loteOriginal.label,
                     data: loteOriginal.data,
                     borderColor: loteOriginal.borderColor,
-                    backgroundColor: loteOriginal.borderColor, 
-                    fill: false 
+                    backgroundColor: loteOriginal.borderColor,
+                    fill: false
                 };
-                
+
                 datasetsIniciais.push(novoLote);
             }
 
@@ -485,7 +485,7 @@
                 type: 'line',
                 data: {
                     labels: dadosIniciais.labels,
-                    datasets: datasetsIniciais 
+                    datasets: datasetsIniciais
                 },
                 options: {
                     responsive: true,
@@ -511,15 +511,20 @@
                 data: {
                     labels: ['CPU', 'RAM', 'Disco'],
                     datasets: [{
-                        label: 'CPU',
-                        data: [10, 16, 3, 5, 1, 20, 14],
-                        backgroundColor: 'blue'
+                        label: 'Média',
+                        data: [10, 8, 3],
+                        backgroundColor: ['blue']
+                    },
+                    {
+                        label: 'Mediana',
+                        data: [9, 6, 1],
+                        backgroundColor: ['purple']
                     }]
                 },
                 options: {
                     indexAxis: 'y',
                     plugins: {
-                        title: { display: true, text: 'Carga Média do Modelo', font: { size: 18 }, padding: { bottom: 20 } },
+                        title: { display: true, text: 'Carga Média x Mediana do Modelo', font: { size: 18 }, padding: { bottom: 20 } },
                         legend: { position: 'top' }
                     },
                     scales: {
