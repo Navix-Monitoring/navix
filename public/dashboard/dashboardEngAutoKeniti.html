@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="../css/dashKeniti.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
     <script src="../js/sessao.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot"></script>
     <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
     <script
-        src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/dist/chartjs-chart-boxplot.min.js"></script>
+        src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.2.3/dist/chartjs-chart-boxplot.min.js"></script>
 </head>
 
 <body>
@@ -507,28 +508,28 @@
 
         if (ctxCarga) {
             graficoCarga = new Chart(ctxCarga, {
-                type: 'bar',
+                type: 'boxplot',
                 data: {
                     labels: ['CPU', 'RAM', 'Disco'],
                     datasets: [{
                         label: 'Média',
-                        data: [10, 8, 3],
-                        backgroundColor: ['blue']
-                    },
-                    {
-                        label: 'Mediana',
-                        data: [9, 6, 1],
-                        backgroundColor: ['purple']
+                        data: [
+                            [10, 8, 3],
+                            [9, 3, 7],
+                            [12, 1, 6]
+                        ],
+                        backgroundColor: ['blue'],
+                        borderColor: ['black']
                     }]
                 },
                 options: {
-                    indexAxis: 'y',
+                    indexAxis: 'x',
                     plugins: {
-                        title: { display: true, text: 'Carga Média x Mediana do Modelo', color: 'black', font: { size: 18, weight: 'bold' }, padding: { bottom: 20 } },
+                        title: { display: true, text: 'Carga do Modelo', color: 'black', font: { size: 18, weight: 'bold' }, padding: { bottom: 20 } },
                         legend: { position: 'top', labels: { color: 'black' } }
                     },
                     scales: {
-                        x: {
+                        y: {
                             beginAtZero: true,
                             title: {
                                 display: true,
