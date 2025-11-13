@@ -71,6 +71,9 @@
 .kpi-subtext {
     font-size: 22px;
     color: #575757;
+}
+
+.kpi-valor {
     font-weight: bold;
 }
 
