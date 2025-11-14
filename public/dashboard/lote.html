@@ -14,6 +14,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../js/sessao.js"></script>
   <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+  <link href='https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css' rel='stylesheet'>
+  <link href='https://cdn.boxicons.com/3.0.3/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
+
   <script
     src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/dist/chartjs-chart-boxplot.min.js"></script>
 </head>
@@ -48,6 +51,12 @@
         <a href="./cadastroVeiculos.html"
           class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
           Gerenciar Frota
+        </a>
+        <a href="https://navixsuporte.atlassian.net/jira/software/form/9d7593db-d676-44b4-a1f4-43762dea870c"
+          target="_blank"
+          class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium ">
+          Suporte
+          <i class='bx  bx-message-dots-2'></i>
         </a>
         <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
           onclick="limparSessao()">
@@ -314,7 +323,7 @@
           novoTituloGrafico = 'ALERTAS GERADOS (ÚLTIMO MÊS)';
           novoTituloRanking = 'RANKING DE ALERTAS (ÚLTIMO MÊS)';
           novosLabels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
-          
+
           // Dados Alertas (Mês)
           novaDataTemp = [20, 30, 25, 40];
           novaDataCpu = [15, 25, 10, 30];
@@ -357,7 +366,7 @@
           novoTituloGrafico = 'ALERTAS GERADOS (ÚLTIMO ANO)';
           novoTituloRanking = 'RANKING DE ALERTAS (ÚLTIMO ANO)';
           novosLabels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-          
+
           // Dados Alertas (Ano)
           novaDataTemp = [110, 130, 120, 140, 150, 160, 140, 130, 120, 150, 160, 170];
           novaDataCpu = [80, 100, 90, 110, 120, 130, 110, 100, 90, 120, 130, 140];
@@ -401,7 +410,7 @@
           novoTituloGrafico = 'ALERTAS GERADOS (7 DIAS)';
           novoTituloRanking = 'RANKING DE ALERTAS (7 DIAS)';
           novosLabels = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
-          
+
           // Dados Alertas (Semana)
           novaDataTemp = [5, 7, 9, 6, 8, 4, 5];
           novaDataCpu = [3, 5, 2, 4, 6, 3, 4];
@@ -868,54 +877,54 @@
     );
   });
   function carregarFotoUsuario() {
-      var imagemUsuarioNavbar = document.getElementById("imagemUsuarioNavbar");
-      if (imagemUsuarioNavbar) {
-        imagemUsuarioNavbar.innerHTML = `
+    var imagemUsuarioNavbar = document.getElementById("imagemUsuarioNavbar");
+    if (imagemUsuarioNavbar) {
+      imagemUsuarioNavbar.innerHTML = `
         <div class="rounded-md w-20 h-20 mb-2"
           style="background-image: url(${sessionStorage.imagem}); background-size: cover; background-repeat: no-repeat; background-position: center;">
         </div>
       `;
-      }
+    }
+  }
+
+  // Espera o HTML carregar antes de executar qualquer script
+  document.addEventListener("DOMContentLoaded", function () {
+    // --- CHAMA AS FUNÇÕES DE INICIALIZAÇÃO ---
+    verificarCargo(); // SUA FUNÇÃO PARA ESCONDER O LINK!
+    carregarFotoUsuario(); // Função do seu script inline
+
+    // Chama a função que estava no 'onload'
+    if (typeof listarLotes === "function") {
+      listarLotes();
     }
 
-    // Espera o HTML carregar antes de executar qualquer script
-    document.addEventListener("DOMContentLoaded", function () {
-      // --- CHAMA AS FUNÇÕES DE INICIALIZAÇÃO ---
-      verificarCargo(); // SUA FUNÇÃO PARA ESCONDER O LINK!
-      carregarFotoUsuario(); // Função do seu script inline
+    // --- PREENCHE OS DADOS DO USUÁRIO ---
+    // (Este código estava quebrado, pois rodava antes do 'nomeProfissao' existir)
+    var nomeEmpresa = sessionStorage.getItem("nome_ss");
+    var cargo = sessionStorage.getItem("cargo_ss");
+    var nomeProfissao = document.getElementById("nomeProfissao");
 
-      // Chama a função que estava no 'onload'
-      if (typeof listarLotes === "function") {
-        listarLotes();
-      }
-
-      // --- PREENCHE OS DADOS DO USUÁRIO ---
-      // (Este código estava quebrado, pois rodava antes do 'nomeProfissao' existir)
-      var nomeEmpresa = sessionStorage.getItem("nome_ss");
-      var cargo = sessionStorage.getItem("cargo_ss");
-      var nomeProfissao = document.getElementById("nomeProfissao");
-
-      if (nomeProfissao) {
-        // Verifica se o elemento foi encontrado
-        nomeProfissao.innerHTML = `
+    if (nomeProfissao) {
+      // Verifica se o elemento foi encontrado
+      nomeProfissao.innerHTML = `
         <p class="font-bold text-blue-900">${nomeEmpresa}</p>
         <p class="mb-4 text-blue-900">Cargo: ${cargo}</p>
       `;
-      }
-    });
+    }
+  });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     var nomeEmpresa = sessionStorage.getItem("nome_ss");
     var cargo = sessionStorage.getItem("cargo_ss");
 
     var nomeProfissao = document.getElementById("nomeProfissao");
 
     if (nomeProfissao) {
-        nomeProfissao.innerHTML = `
+      nomeProfissao.innerHTML = `
             <p class="font-bold text-blue-900">${nomeEmpresa || "Usuário"}</p>
             <p class="mb-4 text-blue-900">Cargo: ${cargo || "Não definido"}</p>
         `;
     }
-});
+  });
 </script>

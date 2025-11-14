@@ -11,6 +11,8 @@
   <link rel="icon" href="./assets/navix-logo.jpg" />
   <script src="js/usuario/perfil.js"></script>
   <script src="../js/sessao.js"></script>
+  <link href='https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css' rel='stylesheet'>
+  <link href='https://cdn.boxicons.com/3.0.3/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
 </head>
 
 <body class="bg-gray-100 flex" onload="carregarInformacoes(), verificarCargo()">
@@ -112,7 +114,11 @@
         class=" func-only w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium ">
         Gerenciar Frota
       </a>
-
+      <a href="https://navixsuporte.atlassian.net/jira/software/form/9d7593db-d676-44b4-a1f4-43762dea870c" target="_blank"
+        class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium ">
+        Suporte
+        <i class='bx  bx-message-dots-2'></i> 
+      </a>
       <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
         onclick="limparSessao()">
         <a href="./login.html" class="no-underline text-white">
@@ -145,50 +151,53 @@
     </div>
 
     <div class="bg-slate-100 rounded-xl p-8 mt-8 shadow-lg">
-  <div class="flex items-center justify-between mb-6">
-    <div class="flex items-center gap-3">
-      <i class="fa-solid fa-bell text-3xl text-blue-900 animate-pulse"></i>
-      <p class="text-blue-950 font-bold text-3xl tracking-wide">Alertas</p>
-    </div>
-    <span class="text-sm text-blue-800 bg-blue-200 px-3 py-1 rounded-full font-semibold">
-      5 alertas ativos
-    </span>
-  </div>
-
-  <div id="alertas" class="flex flex-col gap-4">
-    <div class="flex justify-between items-center bg-red-100 border-l-4 border-red-600 p-4 rounded-lg shadow-sm">
-      <div>
-        <p class="text-red-800 font-semibold text-lg">Lote LT-B72K</p>
-        <p class="text-red-700">Alerta crítico: mediana CPU fora do padrão</p>
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-bell text-3xl text-blue-900 animate-pulse"></i>
+          <p class="text-blue-950 font-bold text-3xl tracking-wide">Alertas</p>
+        </div>
+        <span class="text-sm text-blue-800 bg-blue-200 px-3 py-1 rounded-full font-semibold">
+          5 alertas ativos
+        </span>
       </div>
-      <i class="fa-solid fa-triangle-exclamation text-red-600 text-2xl"></i>
-    </div>
 
-    <div class="flex justify-between items-center bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg shadow-sm">
-      <div>
-        <p class="text-yellow-800 font-semibold text-lg">Lote LT-C19P</p>
-        <p class="text-yellow-700">Atenção: Mediana de CPU merece atenção</p>
-      </div>
-      <i class="fa-solid fa-circle-exclamation text-yellow-600 text-2xl"></i>
-    </div>
+      <div id="alertas" class="flex flex-col gap-4">
+        <div class="flex justify-between items-center bg-red-100 border-l-4 border-red-600 p-4 rounded-lg shadow-sm">
+          <div>
+            <p class="text-red-800 font-semibold text-lg">Lote LT-B72K</p>
+            <p class="text-red-700">Alerta crítico: mediana CPU fora do padrão</p>
+          </div>
+          <i class="fa-solid fa-triangle-exclamation text-red-600 text-2xl"></i>
+        </div>
 
-    <div class="flex justify-between items-center bg-orange-100 border-l-4 border-orange-500 p-4 rounded-lg shadow-sm">
-      <div>
-        <p class="text-orange-800 font-semibold text-lg">Lote LT-D58X</p>
-        <p class="text-orange-700">Aviso: Mediana de temperatura da CPU alta</p>
-      </div>
-      <i class="fa-solid fa-exclamation text-orange-600 text-2xl"></i>
-    </div>
+        <div
+          class="flex justify-between items-center bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg shadow-sm">
+          <div>
+            <p class="text-yellow-800 font-semibold text-lg">Lote LT-C19P</p>
+            <p class="text-yellow-700">Atenção: Mediana de CPU merece atenção</p>
+          </div>
+          <i class="fa-solid fa-circle-exclamation text-yellow-600 text-2xl"></i>
+        </div>
 
-    <div class="flex justify-between items-center bg-orange-100 border-l-4 border-orange-500 p-4 rounded-lg shadow-sm">
-      <div>
-        <p class="text-orange-800 font-semibold text-lg">Lote LT-H56N</p>
-        <p class="text-orange-700">Aviso: Mediana de CPU alta</p>
+        <div
+          class="flex justify-between items-center bg-orange-100 border-l-4 border-orange-500 p-4 rounded-lg shadow-sm">
+          <div>
+            <p class="text-orange-800 font-semibold text-lg">Lote LT-D58X</p>
+            <p class="text-orange-700">Aviso: Mediana de temperatura da CPU alta</p>
+          </div>
+          <i class="fa-solid fa-exclamation text-orange-600 text-2xl"></i>
+        </div>
+
+        <div
+          class="flex justify-between items-center bg-orange-100 border-l-4 border-orange-500 p-4 rounded-lg shadow-sm">
+          <div>
+            <p class="text-orange-800 font-semibold text-lg">Lote LT-H56N</p>
+            <p class="text-orange-700">Aviso: Mediana de CPU alta</p>
+          </div>
+          <i class="fa-solid fa-exclamation text-orange-600 text-2xl"></i>
+        </div>
       </div>
-      <i class="fa-solid fa-exclamation text-orange-600 text-2xl"></i>
     </div>
-  </div>
-</div>
 
   </div>
 </body>
