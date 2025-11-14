@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboar Bateria</title>
+    <link rel="icon" href="../assets/navix-logo.jpg">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://kit.fontawesome.com/6921956092.js" crossorigin="anonymous"></script>
+    <script src="../js/sessao.js"></script>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/sessao.js"></script>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-chart-box-and-violin-plot@4.3.0/dist/chartjs-chart-boxplot.min.js"></script>
+</head>
+
+<body onload="carregarInformacoes(), simularValores(),verificarCargo()">
+    <!-- SIDEBAR -->
+    <div class="flex flex-row w-full">
+        <div
+            class="min-h-screen w-[250px] flex flex-col items-center bg-slate-100 py-6 shadow-2xl shadow-slate-600 fixed top-0 left-0">
+            <img src="../assets/img/Logo.png" class="w-[120px] h-[60px] mb-10">
+            <div id="imagemUsuarioNavbar">
+                <div class="rounded-md w-20 h-20 mb-2"
+                    style="background-image: url(../assets/img/foto-usuario.png); background-size: cover; background-repeat: no-repeat; background-position: center;">
+                </div>
+            </div>
+
+            <div id="nomeProfissao" class="text-center mb-6"></div>
+
+            <div class="flex flex-col gap-4 w-[80%]">
+                <a href="../perfil-visualizar.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Perfil
+                </a>
+                <a
+                    class="w-full bg-white border-4 border-amber-500 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Dashboard
+                </a>
+                <a href="../admin.html" id="adm-only"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Cadastrar Funcionários
+                </a>
+                <a href="./cadastroVeiculos.html"
+                    class="w-full bg-white border-2 border-blue-900 rounded-md text-center py-2 hover:text-blue-900 hover:font-medium">
+                    Gerenciar Frota
+                </a>
+                <div class="w-full bg-blue-950 text-white rounded-md text-center px-4 py-2 mt-auto cursor-pointer"
+                    onclick="limparSessao()">
+                    <a href="../index.html" class="no-underline text-white">
+                        <h3 class="m-0 p-0">Sair</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CABEÇALHO -->
+        <div class="flex flex-col ml-[250px] w-full p-8">
+            <a class="btnVoltar" onclick="localStorage.clear(); redirecionar();">
+                <div style="margin-bottom: 20px; display: flex; align-items: center; font-size: 30px;">
+                    <i class='bx bx-arrow-left-stroke'></i>
+                    <h3>Voltar</h3>
+                </div>
+            </a>
+
+            <div class="topoTitulo">
+                <h1 class="tituloLote" id="tituloLote">Lote: undefined - 10 carros</h1>
+                <select class="selectData" id="selectPeriodo">
+                    <option value="semana" selected>Semana</option>
+                    <option value="mes">Mês</option>
+                    <option value="ano">Ano</option>
+                </select>
+            </div>
+
+            <!-- KPIS -->
+            <main class="card">
+                <div id="KPIS" class="kpis">
+                    <div class="kpi">
+                        <p class="tituloKPI">Estado de Saúde da Bateria</p> <br>
+                        <div class="ladinho">
+                            <div class="colour-ball" id="cpuColour" style="border-color: red;">
+                                <p id="NumeroKPICPU" class="valor">95%</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco" id="tipoRiscoCPU">Risco: ALTO</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi">
+                        <p class="tituloKPI">Capacidade de Carga Total (kWh)</p> <br>
+                        <div class="ladinho">
+                            <div class="colour-ball" id="discoColour" style="border-color: green;">
+                                <p id="NumeroKPIDISCO" class="valor">70%</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco" id="tipoRiscoDISCO">Risco: BAIXO</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi">
+                        <p class="tituloKPI">Temperatura da Bateria (°C):</p> <br>
+                        <div class="ladinho">
+                            <div class="colour-ball" id="temperaturaColour" style="border-color: green;">
+                                <p id="NumeroKPITEMPERATURA" class="valor">70°</p>
+                            </div>
+                            <div class="alerta">
+                                <p class="nvlRisco" id="tipoRiscoTEMPERATURA">Risco: BAIXO</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GRÁFICOS -->
+                <div class="container">
+                    <div class="container-filho">
+                        <div class="chart-container-alert">
+                            <canvas id="velocidadeConsumo"></canvas>
+                        </div>
+                    </div>
+                    <div class="container-filho">
+                        <div class="chart-container-alert">
+                            <canvas id="saudeComputador"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="container-filho">
+                        <div class="chart-container-alert">
+                            <canvas id="cargaTemperatura"></canvas>
+                        </div>
+                    </div>
+                    <div class="container-filho">
+                        <div class="chart-container-alert">
+                            <canvas id="distribuicaoTemperatura"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+</body>
+
+<!-- SCRIPTS GERAIS -->
+<script src="../js/lote.js"></script>
+<script src="../js/usuario/verificadorCargo.js"></script>
+<script src="../js/redirecionar.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        let saudeComputadorChart;
+        let velocidadeConsumoChart;
+        let cargaTemperaturaChart;
+        let distribuicaoTemperaturaChart;
+
+        const ctx = document.getElementById('saudeComputador').getContext('2d');
+        const ctx2 = document.getElementById('velocidadeConsumo').getContext('2d');
+        const ctx3 = document.getElementById('cargaTemperatura').getContext('2d');
+        const ctx4 = document.getElementById('distribuicaoTemperatura').getContext('2d');
+
+        saudeComputadorChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Tesla T3', 'Tesla T4', 'Tesla T5', 'BYD 01', 'BYD 02', 'BYD 03', 'BYD 04'],
+                datasets: [
+                    {
+                        label: 'Bateria',
+                        data: [50, 70, 90, 60, 80, 40, 50],
+                        backgroundColor: '#001D3D'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: 'black'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'SAÚDE BATERIA X MODELO',
+                        color: 'black',
+                        font: { size: 18, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true,
+                        ticks: { color: 'black' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        ticks: { color: 'black' },
+                        grid: { color: 'black' },
+                        title: {
+                            display: true,
+                            text: 'Saúde da Bateria (Baixo - Alto)',
+                            color: 'black',
+                            font: { size: 14, }
+                        }
+                    }
+                }
+            }
+        });
+
+        velocidadeConsumoChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Tesla T3', 'Tesla T4', 'Tesla T5', 'BYD 01', 'BYD 02', 'BYD 03', 'BYD 04'],
+                datasets: [
+                    {
+                        label: 'Velocidade (Km/h)',
+                        data: [120, 150, 130, 110, 140, 100, 115],
+                        borderColor: '#00FF00',
+                        fill: false,
+                        tension: 0.1,
+                    },
+                    {
+                        label: 'Consumo de Energia (%)',
+                        data: [50, 70, 60, 65, 50, 80, 55],
+                        borderColor: '#FF6347',
+                        fill: false,
+                        tension: 0.1,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: 'black'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Relação de Velocidade (Km/h) por Consumo de Energia',
+                        color: 'black',
+                        font: { size: 18, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: 'black' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    y: {
+                        ticks: { color: 'black' },
+                        grid: { color: 'black' },
+                        title: {
+                            display: true,
+                            text: 'Valores (%) / Km/h',
+                            color: 'black',
+                            font: { size: 14 }
+                        }
+                    }
+                }
+            }
+        });
+
+        cargaTemperaturaChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: ['Tesla T3', 'Tesla T4', 'Tesla T5', 'BYD 01', 'BYD 02', 'BYD 03', 'BYD 04'],
+                datasets: [
+                    {
+                        label: 'Capacidade de Carga Total (kWh)',
+                        data: [75, 85, 95, 65, 70, 60, 80],
+                        borderColor: '#FFC300',
+                        backgroundColor: 'rgba(255, 195, 0, 0.2)',
+                        fill: true,
+                        tension: 0.1,
+                        yAxisID: 'y1'
+                    },
+                    {
+                        label: 'Temperatura da Bateria (°C)',
+                        data: [25, 30, 28, 35, 27, 40, 32],
+                        borderColor: '#C70039',
+                        backgroundColor: 'rgba(199, 0, 57, 0.2)',
+                        fill: false,
+                        tension: 0.1,
+                        yAxisID: 'y2'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: 'black'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'CAPACIDADE DE CARGA X TEMPERATURA DA BATERIA',
+                        color: 'black',
+                        font: { size: 18, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: 'black' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'left',
+                        ticks: { color: '#FFC300' },
+                        grid: { color: 'black' },
+                        title: {
+                            display: true,
+                            text: 'Capacidade (kWh)',
+                            color: '#FFC300',
+                            font: { size: 14 }
+                        }
+                    },
+                    y2: {
+                        type: 'linear',
+                        position: 'right',
+                        ticks: { color: '#C70039' },
+                        grid: { drawOnChartArea: false },
+                        title: {
+                            display: true,
+                            text: 'Temperatura (°C)',
+                            color: '#C70039',
+                            font: { size: 14 }
+                        }
+                    }
+                }
+            }
+        });
+
+        distribuicaoTemperaturaChart = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                labels: ['10-15°C', '16-20°C', '21-25°C', '26-30°C', '31-35°C', '36-40°C', '41+°C'],
+                datasets: [
+                    {
+                        label: 'Frequência de Ocorrência',
+                        data: [2, 8, 25, 40, 15, 6, 4],
+                        backgroundColor: '#00BFFF',
+                        borderColor: '#008B8B',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'DISTRIBUIÇÃO DA TEMPERATURA DA BATERIA (HISTOGRAMA)',
+                        color: 'black',
+                        font: { size: 18, weight: 'bold' }
+                    }
+                },
+                scales: {
+                    x: {
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.6,
+
+                        ticks: { color: 'black' },
+                        grid: { display: false },
+                        title: {
+                            display: true,
+                            text: 'Faixas de Temperatura (°C)',
+                            color: 'black',
+                            font: { size: 14 }
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: 'black' },
+                        grid: { color: 'black' },
+                        title: {
+                            display: true,
+                            text: 'Frequência de Ocorrência',
+                            color: 'black',
+                            font: { size: 14 }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    var nomeEmpresa = sessionStorage.getItem("nome_ss");
+    var cargo = sessionStorage.getItem("cargo_ss");
+    var emailEmpresa = sessionStorage.getItem("email_ss");
+
+    var nomeProfissao = document.getElementById("nomeProfissao");
+    var nomeEmpresaa = document.getElementById("nomeEmpresaa");
+    var emailEmpresaEl = document.getElementById("emailEmpresa");
+    var textoInicio = document.getElementById("textoInicio");
+
+    nomeProfissao.innerHTML = `
+    <p class="font-bold text-blue-900">${nomeEmpresa}</p>
+    <p class="mb-4 text-blue-900">Cargo: ${cargo}</p>
+  `;
+
+    nomeEmpresaa.innerHTML = `<p class="text-blue-950">${nomeEmpresa}</p>`;
+    emailEmpresaEl.innerHTML = `<p class="text-blue-950">${emailEmpresa}</p>`;
+
+    textoInicio.innerHTML = `<p class="text-4xl font-semibold text-blue-950 mb-6">Olá, ${nomeEmpresa}</p>`;
+
+    function abrirTela() {
+        document.getElementById("telaAtualizar").style.display = "flex";
+    }
+
+    function fecharTela() {
+        document.getElementById("telaAtualizar").style.display = "none";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var nomeEmpresa = sessionStorage.getItem("nome_ss");
+        var cargo = sessionStorage.getItem("cargo_ss");
+        var nomeProfissao = document.getElementById("nomeProfissao");
+    });
+</script>
+
+</html>
