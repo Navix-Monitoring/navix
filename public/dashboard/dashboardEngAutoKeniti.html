@@ -188,7 +188,7 @@
 </html>
 <script src="../js/redirecionar.js"></script>
 <script>
-    
+
     function atualizarDataHora() {
         const agora = new Date();
         const dataHoraFormatada = agora.toLocaleString("pt-BR");
@@ -319,11 +319,45 @@
         }
 
         const DADOS_RELACAO = {
-            semana: {
-                labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-                titulo: 'Uso CPU x Temp. CPU (Semana)',
-                cpu: [3, 5, 2, 4, 6, 3, 4],
-                temp: [5, 7, 9, 6, 8, 4, 5]
+            cpu: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Uso CPU (%) x Temp. CPU (°C)',
+                    cpu: [3, 5, 2, 4, 6, 3, 4],
+                    temp: [5, 7, 9, 6, 8, 4, 5]
+                }
+            },
+            temp: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Temp. CPU (°C) x Uso CPU (%)',
+                    temp: [3, 5, 2, 4, 6, 3, 4],
+                    cpu: [5, 7, 9, 6, 8, 4, 5]
+                }
+            },
+            ram: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Uso de RAM (%) x Qtd. Média de Processos',
+                    ram: [3, 5, 2, 4, 6, 3, 4],
+                    procecssos: [5, 7, 9, 6, 8, 4, 5]
+                }
+            },
+            disco: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Uso de Disco (%) x Qtd. Média de Processos',
+                    disco: [3, 5, 2, 4, 6, 3, 4],
+                    processos: [5, 7, 9, 6, 8, 4, 5]
+                }
+            },
+            processo: {
+                semana: {
+                    labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+                    titulo: 'Qtd. Média de Processos x Uso de Disco (%)',
+                    processos: [3, 5, 2, 4, 6, 3, 4],
+                    disco: [5, 7, 9, 6, 8, 4, 5]
+                }
             }
         };
 
@@ -405,11 +439,32 @@
 
             // Atualizando gráfico relacao
             if (graficoRelacao) {
-                const dados = DADOS_RELACAO.semana;
+                const dados = DADOS_RELACAO[metrica].semana;
+
                 graficoRelacao.data.labels = dados.labels;
-                graficoRelacao.data.datasets[0].data = dados.cpu;
-                graficoRelacao.data.datasets[1].data = dados.temp;
                 graficoRelacao.options.plugins.title.text = dados.titulo;
+                
+                if (metrica === 'cpu' || metrica === 'temp') {
+                    graficoRelacao.data.datasets[0].label = 'CPU';
+                    graficoRelacao.data.datasets[0].data = dados.cpu;
+                    graficoRelacao.data.datasets[1].label = 'Temperatura';
+                    graficoRelacao.data.datasets[1].data = dados.temp;
+                } else if (metrica === 'ram') {
+                    graficoRelacao.data.datasets[0].label = 'RAM';
+                    graficoRelacao.data.datasets[0].data = dados.ram;
+                    graficoRelacao.data.datasets[1].label = 'Processos';
+                    graficoRelacao.data.datasets[1].data = dados.processos;
+                } else if (metrica === 'disco') {
+                    graficoRelacao.data.datasets[0].label = 'Disco';
+                    graficoRelacao.data.datasets[0].data = dados.disco;
+                    graficoRelacao.data.datasets[1].label = 'Processos';
+                    graficoRelacao.data.datasets[1].data = dados.processos;
+                } else if (metrica === 'processo') {
+                    graficoRelacao.data.datasets[0].label = 'Processos';
+                    graficoRelacao.data.datasets[0].data = dados.processos;
+                    graficoRelacao.data.datasets[1].label = 'Disco';
+                    graficoRelacao.data.datasets[1].data = dados.disco;
+                }
                 graficoRelacao.update();
             }
 
@@ -453,16 +508,16 @@
             listarLotes();
         }
 
-        // Relação CPU x Temp
+        // Relação 
         if (ctxRelacao) {
-            const dadosIniciais = DADOS_RELACAO.semana;
+            const dadosIniciais = DADOS_RELACAO.cpu.semana;
             graficoRelacao = new Chart(ctxRelacao, {
                 type: 'line',
                 data: {
                     labels: dadosIniciais.labels,
                     datasets: [
-                        { label: 'CPU', data: dadosIniciais.cpu, backgroundColor: 'red', borderColor: 'red', fill: false },
-                        { label: 'Temperatura', data: dadosIniciais.temp, backgroundColor: 'blue', borderColor: 'blue', fill: false }
+                        { label: 'CPU', data: dadosIniciais.cpu, backgroundColor: 'blue', borderColor: 'blue', fill: false },
+                        { label: 'Temperatura', data: dadosIniciais.temp, backgroundColor: 'red', borderColor: 'red', fill: false }
                     ]
                 },
                 options: {
