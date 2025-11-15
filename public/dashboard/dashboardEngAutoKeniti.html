@@ -173,7 +173,7 @@
                             <canvas id="relacao"></canvas>
                         </div>
                     </div>
-                    <div class="container-filho">
+                    <div class="container-filho" id="containerCarga">
                         <div class="chart-container-alert">
                             <canvas id="carga"></canvas>
                         </div>
@@ -322,7 +322,7 @@
             cpu: {
                 semana: {
                     labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-                    titulo: 'Uso CPU (%) x Temp. CPU (°C)',
+                    titulo: 'Visão Agregada: CPU (%) x Temp. CPU (°C)',
                     cpu: [3, 5, 2, 4, 6, 3, 4],
                     temp: [5, 7, 9, 6, 8, 4, 5]
                 }
@@ -330,7 +330,7 @@
             temp: {
                 semana: {
                     labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-                    titulo: 'Temp. CPU (°C) x Uso CPU (%)',
+                    titulo: 'Visão Agregada: Temp. CPU (°C) x CPU (%)',
                     temp: [3, 5, 2, 4, 6, 3, 4],
                     cpu: [5, 7, 9, 6, 8, 4, 5]
                 }
@@ -338,15 +338,15 @@
             ram: {
                 semana: {
                     labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-                    titulo: 'Uso de RAM (%) x Qtd. Média de Processos',
+                    titulo: 'Visão Agregada: RAM (%) x Qtd. Média de Processos',
                     ram: [3, 5, 2, 4, 6, 3, 4],
-                    procecssos: [5, 7, 9, 6, 8, 4, 5]
+                    processos: [5, 7, 9, 6, 8, 4, 5]
                 }
             },
             disco: {
                 semana: {
                     labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-                    titulo: 'Uso de Disco (%) x Qtd. Média de Processos',
+                    titulo: 'Visão Agregada: Disco (%) x Qtd. Média de Processos',
                     disco: [3, 5, 2, 4, 6, 3, 4],
                     processos: [5, 7, 9, 6, 8, 4, 5]
                 }
@@ -354,7 +354,7 @@
             processo: {
                 semana: {
                     labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
-                    titulo: 'Qtd. Média de Processos x Uso de Disco (%)',
+                    titulo: 'Visão Agregada: Qtd. Média de Processos x Disco (%)',
                     processos: [3, 5, 2, 4, 6, 3, 4],
                     disco: [5, 7, 9, 6, 8, 4, 5]
                 }
@@ -434,8 +434,48 @@
             }
         };
 
+        const DADOS_CARGA = {
+            cpu: {
+                labels: ['CPU'],
+                data: [
+                    [10, 8, 3]
+                ],
+                titulo: 'Uso do sistema - CPU'
+            },
+            ram: {
+                labels: ['RAM'],
+                data: [
+                    [9, 3, 7]
+                ],
+                titulo: 'Uso do sistema - RAM'
+            },
+            disco: {
+                labels: ['Disco'],
+                data: [
+                    [12, 1, 6]
+                ],
+                titulo: 'Uso do sistema - Disco'
+            },
+            temp: {
+                labels: ['Temperatura'],
+                data: [
+                    [60, 65, 70, 72, 78]
+                ],
+                titulo: 'Uso do sistema - Temperatura'
+            },
+            processos: {
+                labels: ['Processos'],
+                data: [
+                    [150, 210, 240, 270, 310]
+                ],
+                titulo: 'Uso do sistema - Processos'
+            }
+        };
+
         function atualizarGraficos() {
             const metrica = document.getElementById('escolhaVisu').value;
+
+            const containerCarga = document.getElementById('containerCarga');
 
             // Atualizando gráfico relacao
             if (graficoRelacao) {
@@ -443,17 +483,23 @@
 
                 graficoRelacao.data.labels = dados.labels;
                 graficoRelacao.options.plugins.title.text = dados.titulo;
-                
-                if (metrica === 'cpu' || metrica === 'temp') {
+
+                if (metrica === 'cpu') {
                     graficoRelacao.data.datasets[0].label = 'CPU';
                     graficoRelacao.data.datasets[0].data = dados.cpu;
                     graficoRelacao.data.datasets[1].label = 'Temperatura';
                     graficoRelacao.data.datasets[1].data = dados.temp;
+                } else if (metrica === 'temp') {
+                    graficoRelacao.data.datasets[0].label = 'Temperatura';
+                    graficoRelacao.data.datasets[0].data = dados.temp;
+                    graficoRelacao.data.datasets[1].label = 'CPU';
+                    graficoRelacao.data.datasets[1].data = dados.cpu;
                 } else if (metrica === 'ram') {
                     graficoRelacao.data.datasets[0].label = 'RAM';
                     graficoRelacao.data.datasets[0].data = dados.ram;
                     graficoRelacao.data.datasets[1].label = 'Processos';
                     graficoRelacao.data.datasets[1].data = dados.processos;
+
                 } else if (metrica === 'disco') {
                     graficoRelacao.data.datasets[0].label = 'Disco';
                     graficoRelacao.data.datasets[0].data = dados.disco;
@@ -485,6 +531,17 @@
                 } else {
                     console.warn(`Dados não encontrados.`);
                 }
+            }
+
+            if (graficoCarga && containerCarga) {
+                const dados = DADOS_CARGA[metrica];
+
+                graficoCarga.data.labels = dados.labels;
+                graficoCarga.data.datasets[0].data = dados.data;
+                graficoCarga.options.plugins.title.text = dados.titulo;
+
+                containerCarga.style.display = 'block';
+                graficoCarga.update();
             }
             ordenarTabela(metrica);
         }
@@ -571,25 +628,24 @@
         }
 
         if (ctxCarga) {
+            const dadosIniciaisrelacao = DADOS_CARGA.cpu;
+
             graficoCarga = new Chart(ctxCarga, {
                 type: 'boxplot',
                 data: {
-                    labels: ['CPU', 'RAM', 'Disco'],
+                    labels: dadosIniciaisrelacao.labels,
                     datasets: [{
-                        label: 'Média',
-                        data: [
-                            [10, 8, 3],
-                            [9, 3, 7],
-                            [12, 1, 6]
-                        ],
+                        label: 'Quartil',
+                        data: dadosIniciaisrelacao.data,
                         backgroundColor: ['blue'],
-                        borderColor: ['black']
+                        borderColor: ['black'],
+                        outlierBackgroundColor: 'red'
                     }]
                 },
                 options: {
                     indexAxis: 'x',
                     plugins: {
-                        title: { display: true, text: 'Carga do Modelo', color: 'black', font: { size: 18, weight: 'bold' }, padding: { bottom: 20 } },
+                        title: { display: true, text: 'Uso do sitema do modelo', color: 'black', font: { size: 18, weight: 'bold' }, padding: { bottom: 20 } },
                         legend: { position: 'top', labels: { color: 'black' } }
                     },
                     scales: {
@@ -597,7 +653,6 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Frequência',
                                 color: 'black',
                                 font: { size: 14 }
                             }
