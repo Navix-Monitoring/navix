@@ -217,7 +217,6 @@
 
     document.addEventListener('DOMContentLoaded', () => {
 
-        // 1. DADOS MOCADOS PARA OS GRÁFICOS
         const DADOS_RELACAO = {
             semana: {
                 labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
@@ -476,7 +475,8 @@
                     data: loteOriginal.data,
                     borderColor: loteOriginal.borderColor,
                     backgroundColor: loteOriginal.borderColor,
-                    fill: false
+                    fill: false,
+                    tension: 0.6
                 };
 
                 datasetsIniciais.push(novoLote);
@@ -496,9 +496,9 @@
                         title: { display: true, text: dadosIniciais.titulo, color: 'black', font: { size: 18, weight: 'bold' } }
                     },
                     scales: {
-                        x: { stacked: true, ticks: { color: 'black' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        x: { stacked: true, ticks: { color: 'black' }, grid: { color: 'transparent' } },
                         y: {
-                            stacked: true, beginAtZero: true, ticks: { color: 'black' }, grid: { color: 'black' },
+                            stacked: true, beginAtZero: true, ticks: { color: 'black' }, grid: { color: '#e9e9e9' },
                             title: { display: true, text: dadosIniciais.eixoY, color: 'black', font: { size: 14 } }
                         }
                     }
