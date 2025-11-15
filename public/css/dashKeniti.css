@@ -340,3 +340,11 @@
     display: flex;
     justify-content: space-between;
 }
+
+.kpiData {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.589);
+}

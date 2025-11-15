@@ -65,6 +65,7 @@
 
             <div class="topoTitulo">
                 <h1 class="tituloLote" id="tituloLote">Análise de Desempenho - Modelo Keniti</h1>
+                <div class="kpiData">Última Atualização: <span id="dataHora"></span></div>
             </div>
 
             <main class="card">
@@ -187,6 +188,15 @@
 </html>
 <script src="../js/redirecionar.js"></script>
 <script>
+    
+    function atualizarDataHora() {
+        const agora = new Date();
+        const dataHoraFormatada = agora.toLocaleString("pt-BR");
+        document.getElementById("dataHora").textContent = dataHoraFormatada;
+    }
+
+    atualizarDataHora();
+
 
     function carregarUsuarioSessao() {
         var imagemUsuarioNavbar = document.getElementById("imagemUsuarioNavbar");
