@@ -320,21 +320,9 @@
     text-align: center;
 }
 
-.heatmap-table td.hot {
-    background-color: #FEE2E2;
-    color: #B91C1C;
-    font-weight: 600;
-}
-
-.heatmap-table td.medium {
-    background-color: #FEF9C3;
-    color: #713F12;
-    font-weight: 600;
-}
-
-.heatmap-table td.cold {
-    background-color: #DCFCE7;
-    color: #166534;
+.heatmap-table tbody tr.lote-destaque {
+    opacity: 1;
+    background-color: #ffe3df;
     font-weight: 600;
 }
 
